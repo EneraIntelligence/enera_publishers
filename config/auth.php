@@ -28,7 +28,7 @@ return [
     |
     */
 
-    'model' => Publishers\User::class,
+    'model' => Publishers\Administrator::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -41,7 +41,7 @@ return [
     |
     */
 
-    'table' => 'users',
+    'table' => 'administrator',
 
     /*
     |--------------------------------------------------------------------------

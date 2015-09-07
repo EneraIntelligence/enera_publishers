@@ -11,11 +11,19 @@ use Validator;
 
 class AuthController extends Controller
 {
+    /**
+     * Vista del formulario
+     * @return \Illuminate\View\View
+     */
     public function index()
     {
         return view('auth.index');
     }
 
+    /**
+     * Recepcion y comprobacion de usuario y contraseña
+     * @return $this|\Illuminate\Http\RedirectResponse
+     */
     public function login()
     {
         $validator = Validator::make(Input::all(), [
@@ -23,7 +31,7 @@ class AuthController extends Controller
             'password' => 'required|alphanum|min:8|max:16',
         ]);
         if ($validator->passes()) {
-            if (auth()->attempt(['email' => Input::get('email'), 'password' => Input::get('password')])) {
+            if (auth()->attempt(['email' => Input::get('email'), 'password' => Input::get('password')], Input::get('login_page_stay_signed'))) {
                 return redirect()->route('home');
             } else {
                 return redirect()->route('auth.index')->with('error', 'El correo y/o la contraseña es incorrecta.');
@@ -31,5 +39,15 @@ class AuthController extends Controller
         } else {
             return redirect()->route('auth.index')->withErrors($validator);
         }
+    }
+
+    /**
+     * Salir del sistema
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function logout()
+    {
+        auth()->logout();
+        return redirect()->route('auth.index');
     }
 }

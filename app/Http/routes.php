@@ -12,9 +12,11 @@
 */
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/', function () {
-        return view('welcome');
-    });
+    Route::get('/', ['as' => 'home', function () {
+        return "HOLA MUNDO [HOME]";
+    }]);
+
+    Route::match(['get', 'post'], 'logout', ['as' => 'auth.logout', 'uses' => 'AuthController@logout']);
 });
 
 Route::group(['middleware' => 'auth.ready'], function () {
