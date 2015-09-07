@@ -1,0 +1,5 @@
+suites:
+    main:
+        namespace: Publishers
+        psr4_prefix: Publishers
+        src_path: app
