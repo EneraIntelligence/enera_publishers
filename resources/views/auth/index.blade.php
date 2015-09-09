@@ -15,14 +15,13 @@
     <link rel="icon" type="image/png" href="{!! URL::asset('images/favicon.png') !!}" sizes="32x32">
 
     <title>Enera Publishers</title>
-
     <link href='http://fonts.googleapis.com/css?family=Roboto:300,400,500' rel='stylesheet' type='text/css'>
-
     <!-- uikit -->
     {!! HTML::style('bower_components/uikit/css/uikit.almost-flat.min.css') !!}
 
             <!-- altair admin login page -->
     {!! HTML::style('assets/css/login_page.min.css') !!}
+    {!! HTML::style('assets/css/main.min.css') !!}
 
 </head>
 <body class="login_page">
