@@ -33,20 +33,23 @@
                 <div class="user_avatar"></div>
             </div>
             {!! Form::open(['route'=>'auth.login', 'class'=>'uk-form-stacked', 'id'=>'form_validation']) !!}
-                    <div class="parsley-row">
-                        <div class="md-input-wrapper">
-                            <label for="email">Email <span class="req"></span></label>
-                            <input class="md-input" type="email" name="email" required data-parsley-trigger="change"  data-parsley-id="6"/>
-                            <span class="md-input-bar"> </span>
-                        </div>
+                <div class="uK-form-row">
+                    <div class="md-input-wrapper">
+                        <label for="email">Email <span class="req"></span></label>
+                        <input class="md-input" type="email" name="email" required data-parsley-trigger="change"  data-parsley-id="6"/>
+                        <span class="md-input-bar"> </span>
                     </div>
+                </div>
 
-                <div class="uk-form-row">
-                    <label for="login_password">Contraseña</label>
-                    <input type="password" id="login_password" name="password" required data-parsley-trigger="change" class="md-input" data-parsley-trigger="change"
-                           data-parsley-minlength="8" data-parsley-minlength-message="minimo 8 caracteres" data-parsley-validation-threshold="10"
-                           data-parsley-minlength="20" data-parsley-id="6"
-                    />
+                <div class="" style="margin-top: 10px" data-uk-grid-margin>
+                    <div class="md-input-wrapper">
+                        <label for="login_password">Contraseña</label>
+                        <input type="password" id="login_password" name="password" required data-parsley-trigger="change" class="md-input" data-parsley-trigger="change"
+                               data-parsley-minlength="8" data-parsley-minlength-message="minimo 8 caracteres" data-parsley-validation-threshold="10"
+                               data-parsley-minlength="20" data-parsley-id="6"
+                        />
+                        <span class="md-input-bar"> </span>
+                    </div>
                 </div>
                 <div class="uk-margin-medium-top">
                     <button type="submit" class="md-btn md-btn-primary md-btn-block md-btn-large">Entrar</button>
