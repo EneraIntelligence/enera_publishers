@@ -10,8 +10,9 @@
     <!-- Remove Tap Highlight on Windows Phone IE -->
     <meta name="msapplication-tap-highlight" content="no"/>
 
-    <link rel="icon" type="image/png" href="{!! URL::asset('assets/img/favicon-16x16.png') !!}" sizes="16x16">
-    <link rel="icon" type="image/png" href="{!! URL::asset('assets/img/favicon-16x16.png') !!}" sizes="32x32">
+    {{--<link rel="icon" type="image/png" href="{!! URL::asset('assets/img/favicon-16x16.png') !!}" sizes="16x16">
+    <link rel="icon" type="image/png" href="{!! URL::asset('assets/img/favicon-16x16.png') !!}" sizes="32x32">--}}
+    <link rel="icon" type="image/png" href="{!! URL::asset('images/favicon.png') !!}" sizes="32x32">
 
     <title>Enera Publishers</title>
 
@@ -32,25 +33,30 @@
             <div class="login_heading">
                 <div class="user_avatar"></div>
             </div>
-            {!! Form::open(['route'=>'auth.login']) !!}
-            <div class="uk-form-row">
-                <label for="login_username">Email</label>
-                <input class="md-input" type="text" id="login_username" name="email"/>
-            </div>
-            <div class="uk-form-row">
-                <label for="login_password">Contraseña</label>
-                <input class="md-input" type="password" id="login_password" name="password"/>
-            </div>
-            <div class="uk-margin-medium-top">
-                <button type="submit" class="md-btn md-btn-primary md-btn-block md-btn-large">Entrar</button>
-            </div>
-            <div class="uk-margin-top">
-                <a href="#" id="login_help_show" class="uk-float-right">Necesitas ayuda?</a>
+            {!! Form::open(['route'=>'auth.login', 'class'=>'uk-form-stacked', 'id'=>'form_validation']) !!}
+                    <div class="parsley-row">
+                        <div class="md-input-wrapper">
+                            <label for="email">Email</label>
+                            <input class="md-input" type="email" name="email" required data-parsley-trigger="change"  data-parsley-id="6"/>
+                            <span class="md-input-bar"> </span>
+                        </div>
+                    </div>
+
+                <div class="uk-form-row">
+                    <label for="login_password">Contraseña</label>
+                    <input data-parsley-trigger="change" class="md-input" type="password" id="login_password" name="password"/>
+                </div>
+                <div class="uk-margin-medium-top">
+                    <button type="submit" class="md-btn md-btn-primary md-btn-block md-btn-large">Entrar</button>
+                </div>
+                <div class="uk-margin-top">
+                    <a href="#" id="login_help_show" class="uk-float-right">Necesitas ayuda?</a>
                 <span class="icheck-inline">
                     <input type="checkbox" name="login_page_stay_signed" id="login_page_stay_signed" data-md-icheck/>
                     <label for="login_page_stay_signed" class="inline-label">Mantener sesión</label>
                 </span>
-            </div>
+                </div>
+
             {!! Form::close() !!}
         </div>
         <div class="md-card-content large-padding uk-position-relative" id="login_help" style="display: none">
@@ -117,9 +123,26 @@
     {!! HTML::script('assets/js/common.min.js') !!}
     <!-- altair core functions -->
     {!! HTML::script('assets/js/altair_admin_common.min.js') !!}
-
     <!-- altair login page functions -->
-    {!! HTML::script('assets/js/pages/login.min.js') !!}
+
+    <script>
+        // load parsley config (altair_admin_common.js)
+        altair_forms.parsley_validation_config();
+    </script>
+    {!! HTML::script('bower_components/parsleyjs/dist/parsley.min.js') !!}
+    {!! HTML::script('assets/js/pages/forms_validation.js') !!}
+    <script>
+        $(function() {
+            // enable hires images
+            altair_helpers.retina_images();
+            // fastClick (touch devices)
+            if(Modernizr.touch) {
+                FastClick.attach(document.body);
+            }
+        });
+    </script>
+
+
 
 </body>
 </html>

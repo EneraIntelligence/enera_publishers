@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.1.16 (LTS) on 2015-09-07.
+ * Generated for Laravel 5.1.16 (LTS) on 2015-09-08.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -1247,315 +1247,6 @@ namespace {
             return \Illuminate\Auth\AuthManager::getDrivers();
         }
         
-        /**
-         * Determine if the current user is authenticated.
-         *
-         * @return bool 
-         * @static 
-         */
-        public static function check(){
-            return \Illuminate\Auth\Guard::check();
-        }
-        
-        /**
-         * Determine if the current user is a guest.
-         *
-         * @return bool 
-         * @static 
-         */
-        public static function guest(){
-            return \Illuminate\Auth\Guard::guest();
-        }
-        
-        /**
-         * Get the currently authenticated user.
-         *
-         * @return \Publishers\User|null 
-         * @static 
-         */
-        public static function user(){
-            return \Illuminate\Auth\Guard::user();
-        }
-        
-        /**
-         * Get the ID for the currently authenticated user.
-         *
-         * @return int|null 
-         * @static 
-         */
-        public static function id(){
-            return \Illuminate\Auth\Guard::id();
-        }
-        
-        /**
-         * Log a user into the application without sessions or cookies.
-         *
-         * @param array $credentials
-         * @return bool 
-         * @static 
-         */
-        public static function once($credentials = array()){
-            return \Illuminate\Auth\Guard::once($credentials);
-        }
-        
-        /**
-         * Validate a user's credentials.
-         *
-         * @param array $credentials
-         * @return bool 
-         * @static 
-         */
-        public static function validate($credentials = array()){
-            return \Illuminate\Auth\Guard::validate($credentials);
-        }
-        
-        /**
-         * Attempt to authenticate using HTTP Basic Auth.
-         *
-         * @param string $field
-         * @return \Symfony\Component\HttpFoundation\Response|null 
-         * @static 
-         */
-        public static function basic($field = 'email'){
-            return \Illuminate\Auth\Guard::basic($field);
-        }
-        
-        /**
-         * Perform a stateless HTTP Basic login attempt.
-         *
-         * @param string $field
-         * @return \Symfony\Component\HttpFoundation\Response|null 
-         * @static 
-         */
-        public static function onceBasic($field = 'email'){
-            return \Illuminate\Auth\Guard::onceBasic($field);
-        }
-        
-        /**
-         * Attempt to authenticate a user using the given credentials.
-         *
-         * @param array $credentials
-         * @param bool $remember
-         * @param bool $login
-         * @return bool 
-         * @static 
-         */
-        public static function attempt($credentials = array(), $remember = false, $login = true){
-            return \Illuminate\Auth\Guard::attempt($credentials, $remember, $login);
-        }
-        
-        /**
-         * Register an authentication attempt event listener.
-         *
-         * @param mixed $callback
-         * @return void 
-         * @static 
-         */
-        public static function attempting($callback){
-            \Illuminate\Auth\Guard::attempting($callback);
-        }
-        
-        /**
-         * Log a user into the application.
-         *
-         * @param \Illuminate\Contracts\Auth\Authenticatable $user
-         * @param bool $remember
-         * @return void 
-         * @static 
-         */
-        public static function login($user, $remember = false){
-            \Illuminate\Auth\Guard::login($user, $remember);
-        }
-        
-        /**
-         * Log the given user ID into the application.
-         *
-         * @param mixed $id
-         * @param bool $remember
-         * @return \Publishers\User 
-         * @static 
-         */
-        public static function loginUsingId($id, $remember = false){
-            return \Illuminate\Auth\Guard::loginUsingId($id, $remember);
-        }
-        
-        /**
-         * Log the given user ID into the application without sessions or cookies.
-         *
-         * @param mixed $id
-         * @return bool 
-         * @static 
-         */
-        public static function onceUsingId($id){
-            return \Illuminate\Auth\Guard::onceUsingId($id);
-        }
-        
-        /**
-         * Log the user out of the application.
-         *
-         * @return void 
-         * @static 
-         */
-        public static function logout(){
-            \Illuminate\Auth\Guard::logout();
-        }
-        
-        /**
-         * Get the cookie creator instance used by the guard.
-         *
-         * @return \Illuminate\Contracts\Cookie\QueueingFactory 
-         * @throws \RuntimeException
-         * @static 
-         */
-        public static function getCookieJar(){
-            return \Illuminate\Auth\Guard::getCookieJar();
-        }
-        
-        /**
-         * Set the cookie creator instance used by the guard.
-         *
-         * @param \Illuminate\Contracts\Cookie\QueueingFactory $cookie
-         * @return void 
-         * @static 
-         */
-        public static function setCookieJar($cookie){
-            \Illuminate\Auth\Guard::setCookieJar($cookie);
-        }
-        
-        /**
-         * Get the event dispatcher instance.
-         *
-         * @return \Illuminate\Contracts\Events\Dispatcher 
-         * @static 
-         */
-        public static function getDispatcher(){
-            return \Illuminate\Auth\Guard::getDispatcher();
-        }
-        
-        /**
-         * Set the event dispatcher instance.
-         *
-         * @param \Illuminate\Contracts\Events\Dispatcher $events
-         * @return void 
-         * @static 
-         */
-        public static function setDispatcher($events){
-            \Illuminate\Auth\Guard::setDispatcher($events);
-        }
-        
-        /**
-         * Get the session store used by the guard.
-         *
-         * @return \Illuminate\Session\Store 
-         * @static 
-         */
-        public static function getSession(){
-            return \Illuminate\Auth\Guard::getSession();
-        }
-        
-        /**
-         * Get the user provider used by the guard.
-         *
-         * @return \Illuminate\Contracts\Auth\UserProvider 
-         * @static 
-         */
-        public static function getProvider(){
-            return \Illuminate\Auth\Guard::getProvider();
-        }
-        
-        /**
-         * Set the user provider used by the guard.
-         *
-         * @param \Illuminate\Contracts\Auth\UserProvider $provider
-         * @return void 
-         * @static 
-         */
-        public static function setProvider($provider){
-            \Illuminate\Auth\Guard::setProvider($provider);
-        }
-        
-        /**
-         * Return the currently cached user.
-         *
-         * @return \Publishers\User|null 
-         * @static 
-         */
-        public static function getUser(){
-            return \Illuminate\Auth\Guard::getUser();
-        }
-        
-        /**
-         * Set the current user.
-         *
-         * @param \Illuminate\Contracts\Auth\Authenticatable $user
-         * @return void 
-         * @static 
-         */
-        public static function setUser($user){
-            \Illuminate\Auth\Guard::setUser($user);
-        }
-        
-        /**
-         * Get the current request instance.
-         *
-         * @return \Symfony\Component\HttpFoundation\Request 
-         * @static 
-         */
-        public static function getRequest(){
-            return \Illuminate\Auth\Guard::getRequest();
-        }
-        
-        /**
-         * Set the current request instance.
-         *
-         * @param \Symfony\Component\HttpFoundation\Request $request
-         * @return $this 
-         * @static 
-         */
-        public static function setRequest($request){
-            return \Illuminate\Auth\Guard::setRequest($request);
-        }
-        
-        /**
-         * Get the last user we attempted to authenticate.
-         *
-         * @return \Publishers\User 
-         * @static 
-         */
-        public static function getLastAttempted(){
-            return \Illuminate\Auth\Guard::getLastAttempted();
-        }
-        
-        /**
-         * Get a unique identifier for the auth session value.
-         *
-         * @return string 
-         * @static 
-         */
-        public static function getName(){
-            return \Illuminate\Auth\Guard::getName();
-        }
-        
-        /**
-         * Get the name of the cookie used to store the "recaller".
-         *
-         * @return string 
-         * @static 
-         */
-        public static function getRecallerName(){
-            return \Illuminate\Auth\Guard::getRecallerName();
-        }
-        
-        /**
-         * Determine if the user was authenticated via "remember me" cookie.
-         *
-         * @return bool 
-         * @static 
-         */
-        public static function viaRemember(){
-            return \Illuminate\Auth\Guard::viaRemember();
-        }
-        
     }
 
 
@@ -2523,45 +2214,6 @@ namespace {
     }
 
 
-    class Crypt extends \Illuminate\Support\Facades\Crypt{
-        
-        /**
-         * Determine if the given key and cipher combination is valid.
-         *
-         * @param string $key
-         * @param string $cipher
-         * @return bool 
-         * @static 
-         */
-        public static function supported($key, $cipher){
-            return \Illuminate\Encryption\Encrypter::supported($key, $cipher);
-        }
-        
-        /**
-         * Encrypt the given value.
-         *
-         * @param string $value
-         * @return string 
-         * @static 
-         */
-        public static function encrypt($value){
-            return \Illuminate\Encryption\Encrypter::encrypt($value);
-        }
-        
-        /**
-         * Decrypt the given value.
-         *
-         * @param string $payload
-         * @return string 
-         * @static 
-         */
-        public static function decrypt($payload){
-            return \Illuminate\Encryption\Encrypter::decrypt($payload);
-        }
-        
-    }
-
-
     class DB extends \Illuminate\Support\Facades\DB{
         
         /**
@@ -2649,725 +2301,6 @@ namespace {
          */
         public static function getConnections(){
             return \Illuminate\Database\DatabaseManager::getConnections();
-        }
-        
-        /**
-         * Begin a fluent query against a database collection.
-         *
-         * @param string $collection
-         * @return \Jenssegers\Mongodb\QueryBuilder 
-         * @static 
-         */
-        public static function collection($collection){
-            return \Jenssegers\Mongodb\Connection::collection($collection);
-        }
-        
-        /**
-         * Begin a fluent query against a database collection.
-         *
-         * @param string $table
-         * @return \Jenssegers\Mongodb\QueryBuilder 
-         * @static 
-         */
-        public static function table($table){
-            return \Jenssegers\Mongodb\Connection::table($table);
-        }
-        
-        /**
-         * Get a MongoDB collection.
-         *
-         * @param string $name
-         * @return \Jenssegers\Mongodb\MongoDB 
-         * @static 
-         */
-        public static function getCollection($name){
-            return \Jenssegers\Mongodb\Connection::getCollection($name);
-        }
-        
-        /**
-         * Get a schema builder instance for the connection.
-         *
-         * @return \Jenssegers\Mongodb\Schema\Builder 
-         * @static 
-         */
-        public static function getSchemaBuilder(){
-            return \Jenssegers\Mongodb\Connection::getSchemaBuilder();
-        }
-        
-        /**
-         * Get the MongoDB database object.
-         *
-         * @return \Jenssegers\Mongodb\MongoDB 
-         * @static 
-         */
-        public static function getMongoDB(){
-            return \Jenssegers\Mongodb\Connection::getMongoDB();
-        }
-        
-        /**
-         * return MongoClient object.
-         *
-         * @return \Jenssegers\Mongodb\MongoClient 
-         * @static 
-         */
-        public static function getMongoClient(){
-            return \Jenssegers\Mongodb\Connection::getMongoClient();
-        }
-        
-        /**
-         * Get the elapsed time since a given starting point.
-         *
-         * @param int $start
-         * @return float 
-         * @static 
-         */
-        public static function getElapsedTime($start){
-            return \Jenssegers\Mongodb\Connection::getElapsedTime($start);
-        }
-        
-        /**
-         * Get the PDO driver name.
-         *
-         * @return string 
-         * @static 
-         */
-        public static function getDriverName(){
-            return \Jenssegers\Mongodb\Connection::getDriverName();
-        }
-        
-        /**
-         * Set the query grammar to the default implementation.
-         *
-         * @return void 
-         * @static 
-         */
-        public static function useDefaultQueryGrammar(){
-            //Method inherited from \Illuminate\Database\Connection            
-            \Jenssegers\Mongodb\Connection::useDefaultQueryGrammar();
-        }
-        
-        /**
-         * Set the schema grammar to the default implementation.
-         *
-         * @return void 
-         * @static 
-         */
-        public static function useDefaultSchemaGrammar(){
-            //Method inherited from \Illuminate\Database\Connection            
-            \Jenssegers\Mongodb\Connection::useDefaultSchemaGrammar();
-        }
-        
-        /**
-         * Set the query post processor to the default implementation.
-         *
-         * @return void 
-         * @static 
-         */
-        public static function useDefaultPostProcessor(){
-            //Method inherited from \Illuminate\Database\Connection            
-            \Jenssegers\Mongodb\Connection::useDefaultPostProcessor();
-        }
-        
-        /**
-         * Get a new raw query expression.
-         *
-         * @param mixed $value
-         * @return \Illuminate\Database\Query\Expression 
-         * @static 
-         */
-        public static function raw($value){
-            //Method inherited from \Illuminate\Database\Connection            
-            return \Jenssegers\Mongodb\Connection::raw($value);
-        }
-        
-        /**
-         * Run a select statement and return a single result.
-         *
-         * @param string $query
-         * @param array $bindings
-         * @return mixed 
-         * @static 
-         */
-        public static function selectOne($query, $bindings = array()){
-            //Method inherited from \Illuminate\Database\Connection            
-            return \Jenssegers\Mongodb\Connection::selectOne($query, $bindings);
-        }
-        
-        /**
-         * Run a select statement against the database.
-         *
-         * @param string $query
-         * @param array $bindings
-         * @return array 
-         * @static 
-         */
-        public static function selectFromWriteConnection($query, $bindings = array()){
-            //Method inherited from \Illuminate\Database\Connection            
-            return \Jenssegers\Mongodb\Connection::selectFromWriteConnection($query, $bindings);
-        }
-        
-        /**
-         * Run a select statement against the database.
-         *
-         * @param string $query
-         * @param array $bindings
-         * @param bool $useReadPdo
-         * @return array 
-         * @static 
-         */
-        public static function select($query, $bindings = array(), $useReadPdo = true){
-            //Method inherited from \Illuminate\Database\Connection            
-            return \Jenssegers\Mongodb\Connection::select($query, $bindings, $useReadPdo);
-        }
-        
-        /**
-         * Run an insert statement against the database.
-         *
-         * @param string $query
-         * @param array $bindings
-         * @return bool 
-         * @static 
-         */
-        public static function insert($query, $bindings = array()){
-            //Method inherited from \Illuminate\Database\Connection            
-            return \Jenssegers\Mongodb\Connection::insert($query, $bindings);
-        }
-        
-        /**
-         * Run an update statement against the database.
-         *
-         * @param string $query
-         * @param array $bindings
-         * @return int 
-         * @static 
-         */
-        public static function update($query, $bindings = array()){
-            //Method inherited from \Illuminate\Database\Connection            
-            return \Jenssegers\Mongodb\Connection::update($query, $bindings);
-        }
-        
-        /**
-         * Run a delete statement against the database.
-         *
-         * @param string $query
-         * @param array $bindings
-         * @return int 
-         * @static 
-         */
-        public static function delete($query, $bindings = array()){
-            //Method inherited from \Illuminate\Database\Connection            
-            return \Jenssegers\Mongodb\Connection::delete($query, $bindings);
-        }
-        
-        /**
-         * Execute an SQL statement and return the boolean result.
-         *
-         * @param string $query
-         * @param array $bindings
-         * @return bool 
-         * @static 
-         */
-        public static function statement($query, $bindings = array()){
-            //Method inherited from \Illuminate\Database\Connection            
-            return \Jenssegers\Mongodb\Connection::statement($query, $bindings);
-        }
-        
-        /**
-         * Run an SQL statement and get the number of rows affected.
-         *
-         * @param string $query
-         * @param array $bindings
-         * @return int 
-         * @static 
-         */
-        public static function affectingStatement($query, $bindings = array()){
-            //Method inherited from \Illuminate\Database\Connection            
-            return \Jenssegers\Mongodb\Connection::affectingStatement($query, $bindings);
-        }
-        
-        /**
-         * Run a raw, unprepared query against the PDO connection.
-         *
-         * @param string $query
-         * @return bool 
-         * @static 
-         */
-        public static function unprepared($query){
-            //Method inherited from \Illuminate\Database\Connection            
-            return \Jenssegers\Mongodb\Connection::unprepared($query);
-        }
-        
-        /**
-         * Prepare the query bindings for execution.
-         *
-         * @param array $bindings
-         * @return array 
-         * @static 
-         */
-        public static function prepareBindings($bindings){
-            //Method inherited from \Illuminate\Database\Connection            
-            return \Jenssegers\Mongodb\Connection::prepareBindings($bindings);
-        }
-        
-        /**
-         * Execute a Closure within a transaction.
-         *
-         * @param \Closure $callback
-         * @return mixed 
-         * @throws \Throwable
-         * @static 
-         */
-        public static function transaction($callback){
-            //Method inherited from \Illuminate\Database\Connection            
-            return \Jenssegers\Mongodb\Connection::transaction($callback);
-        }
-        
-        /**
-         * Start a new database transaction.
-         *
-         * @return void 
-         * @static 
-         */
-        public static function beginTransaction(){
-            //Method inherited from \Illuminate\Database\Connection            
-            \Jenssegers\Mongodb\Connection::beginTransaction();
-        }
-        
-        /**
-         * Commit the active database transaction.
-         *
-         * @return void 
-         * @static 
-         */
-        public static function commit(){
-            //Method inherited from \Illuminate\Database\Connection            
-            \Jenssegers\Mongodb\Connection::commit();
-        }
-        
-        /**
-         * Rollback the active database transaction.
-         *
-         * @return void 
-         * @static 
-         */
-        public static function rollBack(){
-            //Method inherited from \Illuminate\Database\Connection            
-            \Jenssegers\Mongodb\Connection::rollBack();
-        }
-        
-        /**
-         * Get the number of active transactions.
-         *
-         * @return int 
-         * @static 
-         */
-        public static function transactionLevel(){
-            //Method inherited from \Illuminate\Database\Connection            
-            return \Jenssegers\Mongodb\Connection::transactionLevel();
-        }
-        
-        /**
-         * Execute the given callback in "dry run" mode.
-         *
-         * @param \Closure $callback
-         * @return array 
-         * @static 
-         */
-        public static function pretend($callback){
-            //Method inherited from \Illuminate\Database\Connection            
-            return \Jenssegers\Mongodb\Connection::pretend($callback);
-        }
-        
-        /**
-         * Log a query in the connection's query log.
-         *
-         * @param string $query
-         * @param array $bindings
-         * @param float|null $time
-         * @return void 
-         * @static 
-         */
-        public static function logQuery($query, $bindings, $time = null){
-            //Method inherited from \Illuminate\Database\Connection            
-            \Jenssegers\Mongodb\Connection::logQuery($query, $bindings, $time);
-        }
-        
-        /**
-         * Register a database query listener with the connection.
-         *
-         * @param \Closure $callback
-         * @return void 
-         * @static 
-         */
-        public static function listen($callback){
-            //Method inherited from \Illuminate\Database\Connection            
-            \Jenssegers\Mongodb\Connection::listen($callback);
-        }
-        
-        /**
-         * Is Doctrine available?
-         *
-         * @return bool 
-         * @static 
-         */
-        public static function isDoctrineAvailable(){
-            //Method inherited from \Illuminate\Database\Connection            
-            return \Jenssegers\Mongodb\Connection::isDoctrineAvailable();
-        }
-        
-        /**
-         * Get a Doctrine Schema Column instance.
-         *
-         * @param string $table
-         * @param string $column
-         * @return \Doctrine\DBAL\Schema\Column 
-         * @static 
-         */
-        public static function getDoctrineColumn($table, $column){
-            //Method inherited from \Illuminate\Database\Connection            
-            return \Jenssegers\Mongodb\Connection::getDoctrineColumn($table, $column);
-        }
-        
-        /**
-         * Get the Doctrine DBAL schema manager for the connection.
-         *
-         * @return \Doctrine\DBAL\Schema\AbstractSchemaManager 
-         * @static 
-         */
-        public static function getDoctrineSchemaManager(){
-            //Method inherited from \Illuminate\Database\Connection            
-            return \Jenssegers\Mongodb\Connection::getDoctrineSchemaManager();
-        }
-        
-        /**
-         * Get the Doctrine DBAL database connection instance.
-         *
-         * @return \Doctrine\DBAL\Connection 
-         * @static 
-         */
-        public static function getDoctrineConnection(){
-            //Method inherited from \Illuminate\Database\Connection            
-            return \Jenssegers\Mongodb\Connection::getDoctrineConnection();
-        }
-        
-        /**
-         * Get the current PDO connection.
-         *
-         * @return \PDO 
-         * @static 
-         */
-        public static function getPdo(){
-            //Method inherited from \Illuminate\Database\Connection            
-            return \Jenssegers\Mongodb\Connection::getPdo();
-        }
-        
-        /**
-         * Get the current PDO connection used for reading.
-         *
-         * @return \PDO 
-         * @static 
-         */
-        public static function getReadPdo(){
-            //Method inherited from \Illuminate\Database\Connection            
-            return \Jenssegers\Mongodb\Connection::getReadPdo();
-        }
-        
-        /**
-         * Set the PDO connection.
-         *
-         * @param \PDO|null $pdo
-         * @return $this 
-         * @static 
-         */
-        public static function setPdo($pdo){
-            //Method inherited from \Illuminate\Database\Connection            
-            return \Jenssegers\Mongodb\Connection::setPdo($pdo);
-        }
-        
-        /**
-         * Set the PDO connection used for reading.
-         *
-         * @param \PDO|null $pdo
-         * @return $this 
-         * @static 
-         */
-        public static function setReadPdo($pdo){
-            //Method inherited from \Illuminate\Database\Connection            
-            return \Jenssegers\Mongodb\Connection::setReadPdo($pdo);
-        }
-        
-        /**
-         * Set the reconnect instance on the connection.
-         *
-         * @param callable $reconnector
-         * @return $this 
-         * @static 
-         */
-        public static function setReconnector($reconnector){
-            //Method inherited from \Illuminate\Database\Connection            
-            return \Jenssegers\Mongodb\Connection::setReconnector($reconnector);
-        }
-        
-        /**
-         * Get the database connection name.
-         *
-         * @return string|null 
-         * @static 
-         */
-        public static function getName(){
-            //Method inherited from \Illuminate\Database\Connection            
-            return \Jenssegers\Mongodb\Connection::getName();
-        }
-        
-        /**
-         * Get an option from the configuration options.
-         *
-         * @param string $option
-         * @return mixed 
-         * @static 
-         */
-        public static function getConfig($option){
-            //Method inherited from \Illuminate\Database\Connection            
-            return \Jenssegers\Mongodb\Connection::getConfig($option);
-        }
-        
-        /**
-         * Get the query grammar used by the connection.
-         *
-         * @return \Illuminate\Database\Query\Grammars\Grammar 
-         * @static 
-         */
-        public static function getQueryGrammar(){
-            //Method inherited from \Illuminate\Database\Connection            
-            return \Jenssegers\Mongodb\Connection::getQueryGrammar();
-        }
-        
-        /**
-         * Set the query grammar used by the connection.
-         *
-         * @param \Illuminate\Database\Query\Grammars\Grammar $grammar
-         * @return void 
-         * @static 
-         */
-        public static function setQueryGrammar($grammar){
-            //Method inherited from \Illuminate\Database\Connection            
-            \Jenssegers\Mongodb\Connection::setQueryGrammar($grammar);
-        }
-        
-        /**
-         * Get the schema grammar used by the connection.
-         *
-         * @return \Illuminate\Database\Schema\Grammars\Grammar 
-         * @static 
-         */
-        public static function getSchemaGrammar(){
-            //Method inherited from \Illuminate\Database\Connection            
-            return \Jenssegers\Mongodb\Connection::getSchemaGrammar();
-        }
-        
-        /**
-         * Set the schema grammar used by the connection.
-         *
-         * @param \Illuminate\Database\Schema\Grammars\Grammar $grammar
-         * @return void 
-         * @static 
-         */
-        public static function setSchemaGrammar($grammar){
-            //Method inherited from \Illuminate\Database\Connection            
-            \Jenssegers\Mongodb\Connection::setSchemaGrammar($grammar);
-        }
-        
-        /**
-         * Get the query post processor used by the connection.
-         *
-         * @return \Illuminate\Database\Query\Processors\Processor 
-         * @static 
-         */
-        public static function getPostProcessor(){
-            //Method inherited from \Illuminate\Database\Connection            
-            return \Jenssegers\Mongodb\Connection::getPostProcessor();
-        }
-        
-        /**
-         * Set the query post processor used by the connection.
-         *
-         * @param \Illuminate\Database\Query\Processors\Processor $processor
-         * @return void 
-         * @static 
-         */
-        public static function setPostProcessor($processor){
-            //Method inherited from \Illuminate\Database\Connection            
-            \Jenssegers\Mongodb\Connection::setPostProcessor($processor);
-        }
-        
-        /**
-         * Get the event dispatcher used by the connection.
-         *
-         * @return \Illuminate\Contracts\Events\Dispatcher 
-         * @static 
-         */
-        public static function getEventDispatcher(){
-            //Method inherited from \Illuminate\Database\Connection            
-            return \Jenssegers\Mongodb\Connection::getEventDispatcher();
-        }
-        
-        /**
-         * Set the event dispatcher instance on the connection.
-         *
-         * @param \Illuminate\Contracts\Events\Dispatcher $events
-         * @return void 
-         * @static 
-         */
-        public static function setEventDispatcher($events){
-            //Method inherited from \Illuminate\Database\Connection            
-            \Jenssegers\Mongodb\Connection::setEventDispatcher($events);
-        }
-        
-        /**
-         * Determine if the connection in a "dry run".
-         *
-         * @return bool 
-         * @static 
-         */
-        public static function pretending(){
-            //Method inherited from \Illuminate\Database\Connection            
-            return \Jenssegers\Mongodb\Connection::pretending();
-        }
-        
-        /**
-         * Get the default fetch mode for the connection.
-         *
-         * @return int 
-         * @static 
-         */
-        public static function getFetchMode(){
-            //Method inherited from \Illuminate\Database\Connection            
-            return \Jenssegers\Mongodb\Connection::getFetchMode();
-        }
-        
-        /**
-         * Set the default fetch mode for the connection.
-         *
-         * @param int $fetchMode
-         * @return int 
-         * @static 
-         */
-        public static function setFetchMode($fetchMode){
-            //Method inherited from \Illuminate\Database\Connection            
-            return \Jenssegers\Mongodb\Connection::setFetchMode($fetchMode);
-        }
-        
-        /**
-         * Get the connection query log.
-         *
-         * @return array 
-         * @static 
-         */
-        public static function getQueryLog(){
-            //Method inherited from \Illuminate\Database\Connection            
-            return \Jenssegers\Mongodb\Connection::getQueryLog();
-        }
-        
-        /**
-         * Clear the query log.
-         *
-         * @return void 
-         * @static 
-         */
-        public static function flushQueryLog(){
-            //Method inherited from \Illuminate\Database\Connection            
-            \Jenssegers\Mongodb\Connection::flushQueryLog();
-        }
-        
-        /**
-         * Enable the query log on the connection.
-         *
-         * @return void 
-         * @static 
-         */
-        public static function enableQueryLog(){
-            //Method inherited from \Illuminate\Database\Connection            
-            \Jenssegers\Mongodb\Connection::enableQueryLog();
-        }
-        
-        /**
-         * Disable the query log on the connection.
-         *
-         * @return void 
-         * @static 
-         */
-        public static function disableQueryLog(){
-            //Method inherited from \Illuminate\Database\Connection            
-            \Jenssegers\Mongodb\Connection::disableQueryLog();
-        }
-        
-        /**
-         * Determine whether we're logging queries.
-         *
-         * @return bool 
-         * @static 
-         */
-        public static function logging(){
-            //Method inherited from \Illuminate\Database\Connection            
-            return \Jenssegers\Mongodb\Connection::logging();
-        }
-        
-        /**
-         * Get the name of the connected database.
-         *
-         * @return string 
-         * @static 
-         */
-        public static function getDatabaseName(){
-            //Method inherited from \Illuminate\Database\Connection            
-            return \Jenssegers\Mongodb\Connection::getDatabaseName();
-        }
-        
-        /**
-         * Set the name of the connected database.
-         *
-         * @param string $database
-         * @return string 
-         * @static 
-         */
-        public static function setDatabaseName($database){
-            //Method inherited from \Illuminate\Database\Connection            
-            return \Jenssegers\Mongodb\Connection::setDatabaseName($database);
-        }
-        
-        /**
-         * Get the table prefix for the connection.
-         *
-         * @return string 
-         * @static 
-         */
-        public static function getTablePrefix(){
-            //Method inherited from \Illuminate\Database\Connection            
-            return \Jenssegers\Mongodb\Connection::getTablePrefix();
-        }
-        
-        /**
-         * Set the table prefix in use by the connection.
-         *
-         * @param string $prefix
-         * @return void 
-         * @static 
-         */
-        public static function setTablePrefix($prefix){
-            //Method inherited from \Illuminate\Database\Connection            
-            \Jenssegers\Mongodb\Connection::setTablePrefix($prefix);
-        }
-        
-        /**
-         * Set the table prefix and return the grammar.
-         *
-         * @param \Illuminate\Database\Grammar $grammar
-         * @return \Illuminate\Database\Grammar 
-         * @static 
-         */
-        public static function withTablePrefix($grammar){
-            //Method inherited from \Illuminate\Database\Connection            
-            return \Jenssegers\Mongodb\Connection::withTablePrefix($grammar);
         }
         
     }
@@ -7619,82 +6552,6 @@ namespace {
     }
 
 
-    class Password extends \Illuminate\Support\Facades\Password{
-        
-        /**
-         * Send a password reset link to a user.
-         *
-         * @param array $credentials
-         * @param \Closure|null $callback
-         * @return string 
-         * @static 
-         */
-        public static function sendResetLink($credentials, $callback = null){
-            return \Illuminate\Auth\Passwords\PasswordBroker::sendResetLink($credentials, $callback);
-        }
-        
-        /**
-         * Send the password reset link via e-mail.
-         *
-         * @param \Illuminate\Contracts\Auth\CanResetPassword $user
-         * @param string $token
-         * @param \Closure|null $callback
-         * @return int 
-         * @static 
-         */
-        public static function emailResetLink($user, $token, $callback = null){
-            return \Illuminate\Auth\Passwords\PasswordBroker::emailResetLink($user, $token, $callback);
-        }
-        
-        /**
-         * Reset the password for the given token.
-         *
-         * @param array $credentials
-         * @param \Closure $callback
-         * @return mixed 
-         * @static 
-         */
-        public static function reset($credentials, $callback){
-            return \Illuminate\Auth\Passwords\PasswordBroker::reset($credentials, $callback);
-        }
-        
-        /**
-         * Set a custom password validator.
-         *
-         * @param \Closure $callback
-         * @return void 
-         * @static 
-         */
-        public static function validator($callback){
-            \Illuminate\Auth\Passwords\PasswordBroker::validator($callback);
-        }
-        
-        /**
-         * Determine if the passwords match for the request.
-         *
-         * @param array $credentials
-         * @return bool 
-         * @static 
-         */
-        public static function validateNewPassword($credentials){
-            return \Illuminate\Auth\Passwords\PasswordBroker::validateNewPassword($credentials);
-        }
-        
-        /**
-         * Get the user for the given credentials.
-         *
-         * @param array $credentials
-         * @return \Illuminate\Contracts\Auth\CanResetPassword 
-         * @throws \UnexpectedValueException
-         * @static 
-         */
-        public static function getUser($credentials){
-            return \Illuminate\Auth\Passwords\PasswordBroker::getUser($credentials);
-        }
-        
-    }
-
-
     class Queue extends \Illuminate\Support\Facades\Queue{
         
         /**
@@ -7816,294 +6673,6 @@ namespace {
          */
         public static function isDownForMaintenance(){
             return \Illuminate\Queue\QueueManager::isDownForMaintenance();
-        }
-        
-        /**
-         * Push a new job onto the queue.
-         *
-         * @param string $job
-         * @param mixed $data
-         * @param string $queue
-         * @return mixed 
-         * @throws \Throwable
-         * @static 
-         */
-        public static function push($job, $data = '', $queue = null){
-            return \Illuminate\Queue\SyncQueue::push($job, $data, $queue);
-        }
-        
-        /**
-         * Push a raw payload onto the queue.
-         *
-         * @param string $payload
-         * @param string $queue
-         * @param array $options
-         * @return mixed 
-         * @static 
-         */
-        public static function pushRaw($payload, $queue = null, $options = array()){
-            return \Illuminate\Queue\SyncQueue::pushRaw($payload, $queue, $options);
-        }
-        
-        /**
-         * Push a new job onto the queue after a delay.
-         *
-         * @param \DateTime|int $delay
-         * @param string $job
-         * @param mixed $data
-         * @param string $queue
-         * @return mixed 
-         * @static 
-         */
-        public static function later($delay, $job, $data = '', $queue = null){
-            return \Illuminate\Queue\SyncQueue::later($delay, $job, $data, $queue);
-        }
-        
-        /**
-         * Pop the next job off of the queue.
-         *
-         * @param string $queue
-         * @return \Illuminate\Contracts\Queue\Job|null 
-         * @static 
-         */
-        public static function pop($queue = null){
-            return \Illuminate\Queue\SyncQueue::pop($queue);
-        }
-        
-        /**
-         * Push a new job onto the queue.
-         *
-         * @param string $queue
-         * @param string $job
-         * @param mixed $data
-         * @return mixed 
-         * @static 
-         */
-        public static function pushOn($queue, $job, $data = ''){
-            //Method inherited from \Illuminate\Queue\Queue            
-            return \Illuminate\Queue\SyncQueue::pushOn($queue, $job, $data);
-        }
-        
-        /**
-         * Push a new job onto the queue after a delay.
-         *
-         * @param string $queue
-         * @param \DateTime|int $delay
-         * @param string $job
-         * @param mixed $data
-         * @return mixed 
-         * @static 
-         */
-        public static function laterOn($queue, $delay, $job, $data = ''){
-            //Method inherited from \Illuminate\Queue\Queue            
-            return \Illuminate\Queue\SyncQueue::laterOn($queue, $delay, $job, $data);
-        }
-        
-        /**
-         * Marshal a push queue request and fire the job.
-         *
-         * @throws \RuntimeException
-         * @deprecated since version 5.1.
-         * @static 
-         */
-        public static function marshal(){
-            //Method inherited from \Illuminate\Queue\Queue            
-            return \Illuminate\Queue\SyncQueue::marshal();
-        }
-        
-        /**
-         * Push an array of jobs onto the queue.
-         *
-         * @param array $jobs
-         * @param mixed $data
-         * @param string $queue
-         * @return mixed 
-         * @static 
-         */
-        public static function bulk($jobs, $data = '', $queue = null){
-            //Method inherited from \Illuminate\Queue\Queue            
-            return \Illuminate\Queue\SyncQueue::bulk($jobs, $data, $queue);
-        }
-        
-        /**
-         * Set the IoC container instance.
-         *
-         * @param \Illuminate\Container\Container $container
-         * @return void 
-         * @static 
-         */
-        public static function setContainer($container){
-            //Method inherited from \Illuminate\Queue\Queue            
-            \Illuminate\Queue\SyncQueue::setContainer($container);
-        }
-        
-        /**
-         * Set the encrypter instance.
-         *
-         * @param \Illuminate\Contracts\Encryption\Encrypter $crypt
-         * @return void 
-         * @static 
-         */
-        public static function setEncrypter($crypt){
-            //Method inherited from \Illuminate\Queue\Queue            
-            \Illuminate\Queue\SyncQueue::setEncrypter($crypt);
-        }
-        
-    }
-
-
-    class Redirect extends \Illuminate\Support\Facades\Redirect{
-        
-        /**
-         * Create a new redirect response to the "home" route.
-         *
-         * @param int $status
-         * @return \Illuminate\Http\RedirectResponse 
-         * @static 
-         */
-        public static function home($status = 302){
-            return \Illuminate\Routing\Redirector::home($status);
-        }
-        
-        /**
-         * Create a new redirect response to the previous location.
-         *
-         * @param int $status
-         * @param array $headers
-         * @return \Illuminate\Http\RedirectResponse 
-         * @static 
-         */
-        public static function back($status = 302, $headers = array()){
-            return \Illuminate\Routing\Redirector::back($status, $headers);
-        }
-        
-        /**
-         * Create a new redirect response to the current URI.
-         *
-         * @param int $status
-         * @param array $headers
-         * @return \Illuminate\Http\RedirectResponse 
-         * @static 
-         */
-        public static function refresh($status = 302, $headers = array()){
-            return \Illuminate\Routing\Redirector::refresh($status, $headers);
-        }
-        
-        /**
-         * Create a new redirect response, while putting the current URL in the session.
-         *
-         * @param string $path
-         * @param int $status
-         * @param array $headers
-         * @param bool $secure
-         * @return \Illuminate\Http\RedirectResponse 
-         * @static 
-         */
-        public static function guest($path, $status = 302, $headers = array(), $secure = null){
-            return \Illuminate\Routing\Redirector::guest($path, $status, $headers, $secure);
-        }
-        
-        /**
-         * Create a new redirect response to the previously intended location.
-         *
-         * @param string $default
-         * @param int $status
-         * @param array $headers
-         * @param bool $secure
-         * @return \Illuminate\Http\RedirectResponse 
-         * @static 
-         */
-        public static function intended($default = '/', $status = 302, $headers = array(), $secure = null){
-            return \Illuminate\Routing\Redirector::intended($default, $status, $headers, $secure);
-        }
-        
-        /**
-         * Create a new redirect response to the given path.
-         *
-         * @param string $path
-         * @param int $status
-         * @param array $headers
-         * @param bool $secure
-         * @return \Illuminate\Http\RedirectResponse 
-         * @static 
-         */
-        public static function to($path, $status = 302, $headers = array(), $secure = null){
-            return \Illuminate\Routing\Redirector::to($path, $status, $headers, $secure);
-        }
-        
-        /**
-         * Create a new redirect response to an external URL (no validation).
-         *
-         * @param string $path
-         * @param int $status
-         * @param array $headers
-         * @return \Illuminate\Http\RedirectResponse 
-         * @static 
-         */
-        public static function away($path, $status = 302, $headers = array()){
-            return \Illuminate\Routing\Redirector::away($path, $status, $headers);
-        }
-        
-        /**
-         * Create a new redirect response to the given HTTPS path.
-         *
-         * @param string $path
-         * @param int $status
-         * @param array $headers
-         * @return \Illuminate\Http\RedirectResponse 
-         * @static 
-         */
-        public static function secure($path, $status = 302, $headers = array()){
-            return \Illuminate\Routing\Redirector::secure($path, $status, $headers);
-        }
-        
-        /**
-         * Create a new redirect response to a named route.
-         *
-         * @param string $route
-         * @param array $parameters
-         * @param int $status
-         * @param array $headers
-         * @return \Illuminate\Http\RedirectResponse 
-         * @static 
-         */
-        public static function route($route, $parameters = array(), $status = 302, $headers = array()){
-            return \Illuminate\Routing\Redirector::route($route, $parameters, $status, $headers);
-        }
-        
-        /**
-         * Create a new redirect response to a controller action.
-         *
-         * @param string $action
-         * @param array $parameters
-         * @param int $status
-         * @param array $headers
-         * @return \Illuminate\Http\RedirectResponse 
-         * @static 
-         */
-        public static function action($action, $parameters = array(), $status = 302, $headers = array()){
-            return \Illuminate\Routing\Redirector::action($action, $parameters, $status, $headers);
-        }
-        
-        /**
-         * Get the URL generator instance.
-         *
-         * @return \Illuminate\Routing\UrlGenerator 
-         * @static 
-         */
-        public static function getUrlGenerator(){
-            return \Illuminate\Routing\Redirector::getUrlGenerator();
-        }
-        
-        /**
-         * Set the active session store.
-         *
-         * @param \Illuminate\Session\Store $session
-         * @return void 
-         * @static 
-         */
-        public static function setSession($session){
-            \Illuminate\Routing\Redirector::setSession($session);
         }
         
     }
@@ -9666,187 +8235,6 @@ namespace {
     }
 
 
-    class Response extends \Illuminate\Support\Facades\Response{
-        
-        /**
-         * Return a new response from the application.
-         *
-         * @param string $content
-         * @param int $status
-         * @param array $headers
-         * @return \Illuminate\Http\Response 
-         * @static 
-         */
-        public static function make($content = '', $status = 200, $headers = array()){
-            return \Illuminate\Routing\ResponseFactory::make($content, $status, $headers);
-        }
-        
-        /**
-         * Return a new view response from the application.
-         *
-         * @param string $view
-         * @param array $data
-         * @param int $status
-         * @param array $headers
-         * @return \Illuminate\Http\Response 
-         * @static 
-         */
-        public static function view($view, $data = array(), $status = 200, $headers = array()){
-            return \Illuminate\Routing\ResponseFactory::view($view, $data, $status, $headers);
-        }
-        
-        /**
-         * Return a new JSON response from the application.
-         *
-         * @param string|array $data
-         * @param int $status
-         * @param array $headers
-         * @param int $options
-         * @return \Illuminate\Http\JsonResponse 
-         * @static 
-         */
-        public static function json($data = array(), $status = 200, $headers = array(), $options = 0){
-            return \Illuminate\Routing\ResponseFactory::json($data, $status, $headers, $options);
-        }
-        
-        /**
-         * Return a new JSONP response from the application.
-         *
-         * @param string $callback
-         * @param string|array $data
-         * @param int $status
-         * @param array $headers
-         * @param int $options
-         * @return \Illuminate\Http\JsonResponse 
-         * @static 
-         */
-        public static function jsonp($callback, $data = array(), $status = 200, $headers = array(), $options = 0){
-            return \Illuminate\Routing\ResponseFactory::jsonp($callback, $data, $status, $headers, $options);
-        }
-        
-        /**
-         * Return a new streamed response from the application.
-         *
-         * @param \Closure $callback
-         * @param int $status
-         * @param array $headers
-         * @return \Symfony\Component\HttpFoundation\StreamedResponse 
-         * @static 
-         */
-        public static function stream($callback, $status = 200, $headers = array()){
-            return \Illuminate\Routing\ResponseFactory::stream($callback, $status, $headers);
-        }
-        
-        /**
-         * Create a new file download response.
-         *
-         * @param \SplFileInfo|string $file
-         * @param string $name
-         * @param array $headers
-         * @param string|null $disposition
-         * @return \Symfony\Component\HttpFoundation\BinaryFileResponse 
-         * @static 
-         */
-        public static function download($file, $name = null, $headers = array(), $disposition = 'attachment'){
-            return \Illuminate\Routing\ResponseFactory::download($file, $name, $headers, $disposition);
-        }
-        
-        /**
-         * Create a new redirect response to the given path.
-         *
-         * @param string $path
-         * @param int $status
-         * @param array $headers
-         * @param bool|null $secure
-         * @return \Illuminate\Http\RedirectResponse 
-         * @static 
-         */
-        public static function redirectTo($path, $status = 302, $headers = array(), $secure = null){
-            return \Illuminate\Routing\ResponseFactory::redirectTo($path, $status, $headers, $secure);
-        }
-        
-        /**
-         * Create a new redirect response to a named route.
-         *
-         * @param string $route
-         * @param array $parameters
-         * @param int $status
-         * @param array $headers
-         * @return \Illuminate\Http\RedirectResponse 
-         * @static 
-         */
-        public static function redirectToRoute($route, $parameters = array(), $status = 302, $headers = array()){
-            return \Illuminate\Routing\ResponseFactory::redirectToRoute($route, $parameters, $status, $headers);
-        }
-        
-        /**
-         * Create a new redirect response to a controller action.
-         *
-         * @param string $action
-         * @param array $parameters
-         * @param int $status
-         * @param array $headers
-         * @return \Illuminate\Http\RedirectResponse 
-         * @static 
-         */
-        public static function redirectToAction($action, $parameters = array(), $status = 302, $headers = array()){
-            return \Illuminate\Routing\ResponseFactory::redirectToAction($action, $parameters, $status, $headers);
-        }
-        
-        /**
-         * Create a new redirect response, while putting the current URL in the session.
-         *
-         * @param string $path
-         * @param int $status
-         * @param array $headers
-         * @param bool|null $secure
-         * @return \Illuminate\Http\RedirectResponse 
-         * @static 
-         */
-        public static function redirectGuest($path, $status = 302, $headers = array(), $secure = null){
-            return \Illuminate\Routing\ResponseFactory::redirectGuest($path, $status, $headers, $secure);
-        }
-        
-        /**
-         * Create a new redirect response to the previously intended location.
-         *
-         * @param string $default
-         * @param int $status
-         * @param array $headers
-         * @param bool|null $secure
-         * @return \Illuminate\Http\RedirectResponse 
-         * @static 
-         */
-        public static function redirectToIntended($default = '/', $status = 302, $headers = array(), $secure = null){
-            return \Illuminate\Routing\ResponseFactory::redirectToIntended($default, $status, $headers, $secure);
-        }
-        
-        /**
-         * Register a custom macro.
-         *
-         * @param string $name
-         * @param callable $macro
-         * @return void 
-         * @static 
-         */
-        public static function macro($name, $macro){
-            \Illuminate\Routing\ResponseFactory::macro($name, $macro);
-        }
-        
-        /**
-         * Checks if macro is registered.
-         *
-         * @param string $name
-         * @return bool 
-         * @static 
-         */
-        public static function hasMacro($name){
-            return \Illuminate\Routing\ResponseFactory::hasMacro($name);
-        }
-        
-    }
-
-
     class Route extends \Illuminate\Support\Facades\Route{
         
         /**
@@ -10496,178 +8884,6 @@ namespace {
          */
         public static function hasMacro($name){
             return \Illuminate\Routing\Router::hasMacro($name);
-        }
-        
-    }
-
-
-    class Schema extends \Illuminate\Support\Facades\Schema{
-        
-        /**
-         * Determine if the given collection exists.
-         *
-         * @param string $collection
-         * @return bool 
-         * @static 
-         */
-        public static function hasCollection($collection){
-            return \Jenssegers\Mongodb\Schema\Builder::hasCollection($collection);
-        }
-        
-        /**
-         * Determine if the given collection exists.
-         *
-         * @param string $collection
-         * @return bool 
-         * @static 
-         */
-        public static function hasTable($collection){
-            return \Jenssegers\Mongodb\Schema\Builder::hasTable($collection);
-        }
-        
-        /**
-         * Modify a collection on the schema.
-         *
-         * @param string $collection
-         * @param \Closure $callback
-         * @return bool 
-         * @static 
-         */
-        public static function collection($collection, $callback){
-            return \Jenssegers\Mongodb\Schema\Builder::collection($collection, $callback);
-        }
-        
-        /**
-         * Modify a collection on the schema.
-         *
-         * @param string $collection
-         * @param \Closure $callback
-         * @return bool 
-         * @static 
-         */
-        public static function table($collection, $callback){
-            return \Jenssegers\Mongodb\Schema\Builder::table($collection, $callback);
-        }
-        
-        /**
-         * Create a new collection on the schema.
-         *
-         * @param string $collection
-         * @param \Closure $callback
-         * @return bool 
-         * @static 
-         */
-        public static function create($collection, $callback = null){
-            return \Jenssegers\Mongodb\Schema\Builder::create($collection, $callback);
-        }
-        
-        /**
-         * Drop a collection from the schema.
-         *
-         * @param string $collection
-         * @return bool 
-         * @static 
-         */
-        public static function drop($collection){
-            return \Jenssegers\Mongodb\Schema\Builder::drop($collection);
-        }
-        
-        /**
-         * Determine if the given table has a given column.
-         *
-         * @param string $table
-         * @param string $column
-         * @return bool 
-         * @static 
-         */
-        public static function hasColumn($table, $column){
-            //Method inherited from \Illuminate\Database\Schema\Builder            
-            return \Jenssegers\Mongodb\Schema\Builder::hasColumn($table, $column);
-        }
-        
-        /**
-         * Determine if the given table has given columns.
-         *
-         * @param string $table
-         * @param array $columns
-         * @return bool 
-         * @static 
-         */
-        public static function hasColumns($table, $columns){
-            //Method inherited from \Illuminate\Database\Schema\Builder            
-            return \Jenssegers\Mongodb\Schema\Builder::hasColumns($table, $columns);
-        }
-        
-        /**
-         * Get the column listing for a given table.
-         *
-         * @param string $table
-         * @return array 
-         * @static 
-         */
-        public static function getColumnListing($table){
-            //Method inherited from \Illuminate\Database\Schema\Builder            
-            return \Jenssegers\Mongodb\Schema\Builder::getColumnListing($table);
-        }
-        
-        /**
-         * Drop a table from the schema if it exists.
-         *
-         * @param string $table
-         * @return \Illuminate\Database\Schema\Blueprint 
-         * @static 
-         */
-        public static function dropIfExists($table){
-            //Method inherited from \Illuminate\Database\Schema\Builder            
-            return \Jenssegers\Mongodb\Schema\Builder::dropIfExists($table);
-        }
-        
-        /**
-         * Rename a table on the schema.
-         *
-         * @param string $from
-         * @param string $to
-         * @return \Illuminate\Database\Schema\Blueprint 
-         * @static 
-         */
-        public static function rename($from, $to){
-            //Method inherited from \Illuminate\Database\Schema\Builder            
-            return \Jenssegers\Mongodb\Schema\Builder::rename($from, $to);
-        }
-        
-        /**
-         * Get the database connection instance.
-         *
-         * @return \Illuminate\Database\Connection 
-         * @static 
-         */
-        public static function getConnection(){
-            //Method inherited from \Illuminate\Database\Schema\Builder            
-            return \Jenssegers\Mongodb\Schema\Builder::getConnection();
-        }
-        
-        /**
-         * Set the database connection instance.
-         *
-         * @param \Illuminate\Database\Connection $connection
-         * @return $this 
-         * @static 
-         */
-        public static function setConnection($connection){
-            //Method inherited from \Illuminate\Database\Schema\Builder            
-            return \Jenssegers\Mongodb\Schema\Builder::setConnection($connection);
-        }
-        
-        /**
-         * Set the Schema Blueprint resolver callback.
-         *
-         * @param \Closure $resolver
-         * @return void 
-         * @static 
-         */
-        public static function blueprintResolver($resolver){
-            //Method inherited from \Illuminate\Database\Schema\Builder            
-            \Jenssegers\Mongodb\Schema\Builder::blueprintResolver($resolver);
         }
         
     }
@@ -12090,6 +10306,286 @@ namespace {
          */
         public static function getNames(){
             return \Illuminate\View\Factory::getNames();
+        }
+        
+    }
+
+
+    class HTML extends \Collective\Html\HtmlFacade{
+        
+        /**
+         * Convert an HTML string to entities.
+         *
+         * @param string $value
+         * @return string 
+         * @static 
+         */
+        public static function entities($value){
+            return \Collective\Html\HtmlBuilder::entities($value);
+        }
+        
+        /**
+         * Convert entities to HTML characters.
+         *
+         * @param string $value
+         * @return string 
+         * @static 
+         */
+        public static function decode($value){
+            return \Collective\Html\HtmlBuilder::decode($value);
+        }
+        
+        /**
+         * Generate a link to a JavaScript file.
+         *
+         * @param string $url
+         * @param array $attributes
+         * @param bool $secure
+         * @return string 
+         * @static 
+         */
+        public static function script($url, $attributes = array(), $secure = null){
+            return \Collective\Html\HtmlBuilder::script($url, $attributes, $secure);
+        }
+        
+        /**
+         * Generate a link to a CSS file.
+         *
+         * @param string $url
+         * @param array $attributes
+         * @param bool $secure
+         * @return string 
+         * @static 
+         */
+        public static function style($url, $attributes = array(), $secure = null){
+            return \Collective\Html\HtmlBuilder::style($url, $attributes, $secure);
+        }
+        
+        /**
+         * Generate an HTML image element.
+         *
+         * @param string $url
+         * @param string $alt
+         * @param array $attributes
+         * @param bool $secure
+         * @return string 
+         * @static 
+         */
+        public static function image($url, $alt = null, $attributes = array(), $secure = null){
+            return \Collective\Html\HtmlBuilder::image($url, $alt, $attributes, $secure);
+        }
+        
+        /**
+         * Generate a link to a Favicon file.
+         *
+         * @param string $url
+         * @param array $attributes
+         * @param bool $secure
+         * @return string 
+         * @static 
+         */
+        public static function favicon($url, $attributes = array(), $secure = null){
+            return \Collective\Html\HtmlBuilder::favicon($url, $attributes, $secure);
+        }
+        
+        /**
+         * Generate a HTML link.
+         *
+         * @param string $url
+         * @param string $title
+         * @param array $attributes
+         * @param bool $secure
+         * @return string 
+         * @static 
+         */
+        public static function link($url, $title = null, $attributes = array(), $secure = null){
+            return \Collective\Html\HtmlBuilder::link($url, $title, $attributes, $secure);
+        }
+        
+        /**
+         * Generate a HTTPS HTML link.
+         *
+         * @param string $url
+         * @param string $title
+         * @param array $attributes
+         * @return string 
+         * @static 
+         */
+        public static function secureLink($url, $title = null, $attributes = array()){
+            return \Collective\Html\HtmlBuilder::secureLink($url, $title, $attributes);
+        }
+        
+        /**
+         * Generate a HTML link to an asset.
+         *
+         * @param string $url
+         * @param string $title
+         * @param array $attributes
+         * @param bool $secure
+         * @return string 
+         * @static 
+         */
+        public static function linkAsset($url, $title = null, $attributes = array(), $secure = null){
+            return \Collective\Html\HtmlBuilder::linkAsset($url, $title, $attributes, $secure);
+        }
+        
+        /**
+         * Generate a HTTPS HTML link to an asset.
+         *
+         * @param string $url
+         * @param string $title
+         * @param array $attributes
+         * @return string 
+         * @static 
+         */
+        public static function linkSecureAsset($url, $title = null, $attributes = array()){
+            return \Collective\Html\HtmlBuilder::linkSecureAsset($url, $title, $attributes);
+        }
+        
+        /**
+         * Generate a HTML link to a named route.
+         *
+         * @param string $name
+         * @param string $title
+         * @param array $parameters
+         * @param array $attributes
+         * @return string 
+         * @static 
+         */
+        public static function linkRoute($name, $title = null, $parameters = array(), $attributes = array()){
+            return \Collective\Html\HtmlBuilder::linkRoute($name, $title, $parameters, $attributes);
+        }
+        
+        /**
+         * Generate a HTML link to a controller action.
+         *
+         * @param string $action
+         * @param string $title
+         * @param array $parameters
+         * @param array $attributes
+         * @return string 
+         * @static 
+         */
+        public static function linkAction($action, $title = null, $parameters = array(), $attributes = array()){
+            return \Collective\Html\HtmlBuilder::linkAction($action, $title, $parameters, $attributes);
+        }
+        
+        /**
+         * Generate a HTML link to an email address.
+         *
+         * @param string $email
+         * @param string $title
+         * @param array $attributes
+         * @return string 
+         * @static 
+         */
+        public static function mailto($email, $title = null, $attributes = array()){
+            return \Collective\Html\HtmlBuilder::mailto($email, $title, $attributes);
+        }
+        
+        /**
+         * Obfuscate an e-mail address to prevent spam-bots from sniffing it.
+         *
+         * @param string $email
+         * @return string 
+         * @static 
+         */
+        public static function email($email){
+            return \Collective\Html\HtmlBuilder::email($email);
+        }
+        
+        /**
+         * Generate an ordered list of items.
+         *
+         * @param array $list
+         * @param array $attributes
+         * @return string 
+         * @static 
+         */
+        public static function ol($list, $attributes = array()){
+            return \Collective\Html\HtmlBuilder::ol($list, $attributes);
+        }
+        
+        /**
+         * Generate an un-ordered list of items.
+         *
+         * @param array $list
+         * @param array $attributes
+         * @return string 
+         * @static 
+         */
+        public static function ul($list, $attributes = array()){
+            return \Collective\Html\HtmlBuilder::ul($list, $attributes);
+        }
+        
+        /**
+         * Generate a description list of items.
+         *
+         * @param array $list
+         * @param array $attributes
+         * @return string 
+         * @static 
+         */
+        public static function dl($list, $attributes = array()){
+            return \Collective\Html\HtmlBuilder::dl($list, $attributes);
+        }
+        
+        /**
+         * Build an HTML attribute string from an array.
+         *
+         * @param array $attributes
+         * @return string 
+         * @static 
+         */
+        public static function attributes($attributes){
+            return \Collective\Html\HtmlBuilder::attributes($attributes);
+        }
+        
+        /**
+         * Obfuscate a string to prevent spam-bots from sniffing it.
+         *
+         * @param string $value
+         * @return string 
+         * @static 
+         */
+        public static function obfuscate($value){
+            return \Collective\Html\HtmlBuilder::obfuscate($value);
+        }
+        
+        /**
+         * Generate a meta tag.
+         *
+         * @param string $name
+         * @param string $content
+         * @param array $attributes
+         * @return string 
+         * @static 
+         */
+        public static function meta($name, $content, $attributes = array()){
+            return \Collective\Html\HtmlBuilder::meta($name, $content, $attributes);
+        }
+        
+        /**
+         * Register a custom macro.
+         *
+         * @param string $name
+         * @param callable $macro
+         * @return void 
+         * @static 
+         */
+        public static function macro($name, $macro){
+            \Collective\Html\HtmlBuilder::macro($name, $macro);
+        }
+        
+        /**
+         * Checks if macro is registered.
+         *
+         * @param string $name
+         * @return bool 
+         * @static 
+         */
+        public static function hasMacro($name){
+            return \Collective\Html\HtmlBuilder::hasMacro($name);
         }
         
     }
