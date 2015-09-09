@@ -40,7 +40,8 @@
                         <div class="parsley-row">
                             <div class="md-input-wrapper">
                                 <label for="email">Email <span class="req"></span></label>
-                                <input type="email" id="email" name="email" required data-parsley-trigger="change" class="md-input" data-parsley-id="6"/>
+                                <input data-parsley-type="email" id="email" name="email" required data-parsley-trigger="change" class="md-input" data-parsley-id="6"
+                                       data-parsley-type-message="ingresa un correo valido" data-parsley-required-message="Ingresa tu correo" />
                                 <span class="md-input-bar"> </span>
                             </div>
                         </div>
@@ -54,7 +55,7 @@
                                 <label for="login_password">Contraseña</label>
                                 <input type="password" id="login_password" name="password" required data-parsley-trigger="change" class="md-input" data-parsley-trigger="change"
                                        data-parsley-minlength="8" data-parsley-minlength-message="minimo 8 caracteres" data-parsley-validation-threshold="10"
-                                       data-parsley-minlength="20" data-parsley-id="6"
+                                       data-parsley-minlength="20" data-parsley-id="6" data-parsley-required-message="No olvides tu contraseña"
                                 />
                                 <span class="md-input-bar"> </span>
                             </div>
