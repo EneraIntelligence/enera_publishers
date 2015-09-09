@@ -12,9 +12,7 @@
 */
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/', ['as' => 'home', function () {
-        return "HOLA MUNDO [HOME]";
-    }]);
+    Route::get('/', ['as' => 'home', 'uses' => 'DashboardController@index']);
 
     Route::match(['get', 'post'], 'logout', ['as' => 'auth.logout', 'uses' => 'AuthController@logout']);
 });
