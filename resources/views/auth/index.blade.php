@@ -30,7 +30,9 @@
     <div class="md-card" id="login_card">
         <div class="md-card-content large-padding" id="login_form">
             <div class="login_heading">
-                <div class="user_avatar"></div>
+                <div style="width: 290px;height: 100px; display:inline-block;text-align:center;">
+                    <img src="images/Enera_logo_400x130.png" alt="">
+                </div>
             </div>
             {!! Form::open(['route'=>'auth.login', 'class'=>'uk-form-stacked', 'id'=>'form_validation']) !!}
                 <div class="uK-form-row">
@@ -41,14 +43,18 @@
                     </div>
                 </div>
 
-                <div class="" style="margin-top: 10px" data-uk-grid-margin>
-                    <div class="md-input-wrapper">
-                        <label for="login_password">Contraseña</label>
-                        <input type="password" id="login_password" name="password" required data-parsley-trigger="change" class="md-input" data-parsley-trigger="change"
-                               data-parsley-minlength="8" data-parsley-minlength-message="minimo 8 caracteres" data-parsley-validation-threshold="10"
-                               data-parsley-minlength="20" data-parsley-id="6"
-                        />
-                        <span class="md-input-bar"> </span>
+                <div class="uk-grid" data-uk-grid-margin>
+                    <div class="uk-width-medium-1-1">
+                        <div class="parsley-row uk-margin-top">
+                            <div class="md-input-wrapper">
+                                <label for="login_password">Contraseña</label>
+                                <input type="password" id="login_password" name="password" required data-parsley-trigger="change" class="md-input" data-parsley-trigger="change"
+                                       data-parsley-minlength="8" data-parsley-minlength-message="minimo 8 caracteres" data-parsley-validation-threshold="10"
+                                       data-parsley-minlength="20" data-parsley-id="6"
+                                />
+                                <span class="md-input-bar"> </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="uk-margin-medium-top">
