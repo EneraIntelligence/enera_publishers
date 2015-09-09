@@ -35,11 +35,15 @@
                 </div>
             </div>
             {!! Form::open(['route'=>'auth.login', 'class'=>'uk-form-stacked', 'id'=>'form_validation']) !!}
-                <div class="uK-form-row">
-                    <div class="md-input-wrapper">
-                        <label for="email">Email <span class="req"></span></label>
-                        <input class="md-input" type="email" name="email" required data-parsley-trigger="change"  data-parsley-id="6"/>
-                        <span class="md-input-bar"> </span>
+                <div class="uk-grid" data-uk-grid-margin>
+                    <div class="uk-width-medium-1-1">
+                        <div class="parsley-row">
+                            <div class="md-input-wrapper">
+                                <label for="email">Email <span class="req"></span></label>
+                                <input type="email" id="email" name="email" required data-parsley-trigger="change" class="md-input" data-parsley-id="6"/>
+                                <span class="md-input-bar"> </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
