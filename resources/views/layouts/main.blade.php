@@ -40,15 +40,15 @@
         <nav class="uk-navbar">
             <!-- main sidebar switch -->
             {{-- OLD ID sidebar_main_toggle --}}
-            <a href="#" id="" class="sSwitch sSwitch_left">
-                <span class="sSwitchIcon"></span>
-            </a>
+            {{--<a href="#" id="" class="sSwitch sSwitch_left">--}}
+                {{--<span class="sSwitchIcon"></span>--}}
+            {{--</a>--}}
             <!-- secondary sidebar switch -->
             <a href="#" id="sidebar_secondary_toggle" class="sSwitch sSwitch_right sidebar_secondary_check">
                 <span class="sSwitchIcon"></span>
             </a>
 
-            <div id="menu_top" class="uk-float-left uk-hidden-small">
+            <div id="menu_top" class="uk-float-left ">
                 <div class="uk-button-dropdown" data-uk-dropdown="{mode:'click'}">
                     <a href="#" class="top_menu_toggle">
                         <i class="material-icons md-24">&#xE8F0;</i> Publishers
@@ -76,7 +76,7 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="uk-width-1-3">
+                            <div class="uk-width-1-3 uk-hidden-small">
                                 <ul class="uk-nav uk-nav-dropdown uk-panel">
                                     <li class="uk-nav-header">Recientes</li>
                                     <li><a href="#">Accordions</a></li>
