@@ -9,14 +9,14 @@
                     <li class="uk-active" data-uk-filter="">
                         <a href="#">Todas</a>
                     </li>
-                    <li data-uk-filter="snippets-lang-php">
-                        <a href="#">PHP</a>
+                    <li data-uk-filter="campaign-active">
+                        <a href="#">Activas</a>
                     </li>
-                    <li data-uk-filter="snippets-lang-css">
-                        <a href="#">CSS</a>
+                    <li data-uk-filter="campaign-paused">
+                        <a href="#">Pausadas</a>
                     </li>
-                    <li data-uk-filter="snippets-lang-javascript">
-                        <a href="#">jQuery</a>
+                    <li data-uk-filter="campaign-ended">
+                        <a href="#">Terminadas</a>
                     </li>
                 </ul>
             </div>
@@ -34,8 +34,13 @@
 
                         @foreach($campaigns as $campaign)
 
-                            <div data-uk-filter="snippets-lang-javascript">
-                                <div class="scrum_task critical md-card md-card-hover md-card-overlay" data-snippet-title="{{$campaign->name}}">
+                            <div data-uk-filter="campaign-{{$campaign->status}}">
+                                <!-- minor critical blocker -->
+                                <?
+                                      $campaign_colors = array('active'=>'minor')
+                                ?>
+
+                                <div class="scrum_task {{$campaing_colors[$campaign->status]}}  md-card md-card-hover md-card-overlay" data-snippet-title="{{$campaign->name}}">
                                     <div class="md-card-content uk-grid">
 
                                         <div class="interaction-icon uk-width-1-10" data-uk-tooltip="{cls:'long-text'}" title="{{$campaign->action}}">
@@ -43,7 +48,7 @@
                                             <img src="http://placehold.it/75x100" alt="">
                                         </div>
 
-                                        <div id="campagin-title" class="uk-width-3-10">
+                                        <div id="campagin-title" class="uk-width-2-10">
                                             <h2>{{$campaign->name}}</h2>
                                             <h4>Company</h4>
                                         </div>
@@ -74,11 +79,11 @@
 
                                         </div>
 
-                                        <div class="uk-width-3-10">
+                                        <div class="uk-width-4-10" id="chart_{{$campaign->_id}}">
 
                                         </div>
 
-                                        <div class="uk-width-1-10" data-uk-tooltip="{cls:'long-text'}" title="Campaña activa">
+                                        <div style="text-align: right" class="uk-width-1-10" data-uk-tooltip="{cls:'long-text'}" title="Campaña activa">
                                             status
                                             <br>
                                             <i class="material-icons md-36 uk-text-primary">play_circle_filled</i>
@@ -126,4 +131,31 @@
     </div>
 
     <!-- end campaigns content -->
+@stop
+
+@section('scripts')
+    <script>
+        @foreach($campaigns as $campaign)
+
+            var chart = c3.generate({
+                bindto: '#chart_{{$campaign->_id}}',
+                data: {
+                    columns: [
+                        ['data1', 30, 200, 100, 400, 150, 250],
+                        ['data2', 130, 100, 140, 200, 150, 50]
+                    ],
+                    type: 'bar'
+                },
+                bar: {
+                    width: {
+                        ratio: 0.5 // this makes bar width 50% of length between ticks
+                    }
+                    // or
+                    //width: 100 // this makes bar width 100px
+                }
+            });
+
+        @endforeach
+
+    </script>
 @stop

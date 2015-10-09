@@ -31,6 +31,10 @@
     {!! HTML::script('bower_components/matchMedia/matchMedia.addListener.js') !!}
     <![endif]-->
 
+    <!-- c3 charts -->
+    {!! HTML::style('bower_components/c3js-chart/c3.min.css') !!}
+
+
 </head>
 <body class="sidebar_main_swipe">
 
@@ -254,6 +258,7 @@
 
 @yield('content')
 
+
 <!-- google web fonts -->
 <script>
     WebFontConfig = {
@@ -281,6 +286,10 @@
 {!! HTML::script('assets/js/uikit_custom.min.js') !!}
         <!-- altair common functions/helpers -->
 {!! HTML::script('assets/js/altair_admin_common.min.js') !!}
+
+
+{!! HTML::script('bower_components/d3/d3.min.js') !!}
+{!! HTML::script('bower_components/c3js-chart/c3.min.js') !!}
 
 
 <script>
@@ -337,5 +346,8 @@
         }
     });
 </script>
+
+@yield('scripts')
+
 </body>
 </html>
