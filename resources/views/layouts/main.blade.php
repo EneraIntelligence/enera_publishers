@@ -103,9 +103,9 @@
             <div class="uk-navbar-flip">
                 <ul class="uk-navbar-nav user_actions">
                     <li><a href="#" id="main_search_btn" class="user_action_icon"><i
-                                    class="material-icons md-24 md-light">&#xE8B6;</i></a></li>
+                                    class="material-icons md-20 md-light">&#xE8B6;</i></a></li>
                     <li data-uk-dropdown="{mode:'click'}">
-                        <a href="#" class="user_action_icon"><i class="material-icons md-24 md-light">&#xE7F4;</i><span
+                        <a href="#" class="user_action_icon"><i class="material-icons md-20 md-light">&#xE7F4;</i><span
                                     class="uk-badge">99</span></a>
 
                         <div class="uk-dropdown uk-dropdown-xlarge uk-dropdown-flip">
