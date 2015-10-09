@@ -33,8 +33,14 @@
 
 </head>
 <body class="sidebar_main_swipe">
+
+
+<div class="md-fab-wrapper .user_heading .md-fab">
+    <a class="md-fab md-fab-danger" href="#" id="note_add">
+        <i class="material-icons"></i>
+    </a>
+</div>
 <!-- main header -->
-@yield('content')
 <header id="header_main">
     <div class="header_main_content">
         <nav class="uk-navbar">
@@ -246,34 +252,7 @@
     </div>
 </header><!-- main header end -->
 
-<!-- main sidebar -->
-
-<!-- main sidebar end -->
-
-<div id="page_content">
-    <div id="page_content_inner">
-
-        {{--<h3 class="heading_b uk-margin-bottom">Blank Page</h3>--}}
-
-        <div class="uk-grid" data-uk-grid-margin="" data-uk-grid-match="{target:'.md-card'}">
-            <div class="uk-width-medium-1-6">
-                <div class="md-card" style="">
-                    <div class="md-card-content">
-                        <img src="{!! URL::asset('images/Enera_logo_400x130.png') !!}">
-                    </div>
-                </div>
-            </div>
-            <div class="uk-width-medium-5-6">
-                <div class="md-card" style="">
-                    <div class="md-card-content">
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-</div>
+@yield('content')
 
 <!-- google web fonts -->
 <script>
