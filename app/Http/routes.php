@@ -13,8 +13,16 @@
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', ['as' => 'home', 'uses' => 'DashboardController@index']);
-    Route::get('/campaigns', ['as' => 'campaigns', 'uses' => 'CampaignsController@index']);
-    Route::get('/profile', ['as' => 'profile', 'uses' => 'UserController@index']);
+
+    Route::group(['prefix' => 'campaigns', 'as' => 'campaigns::'], function () {
+        Route::get('/', ['as' => 'index', 'uses' => 'CampaignsController@index']);
+        Route::get('/{id}', ['as' => 'show', 'uses' => 'CampaignsController@show']);
+    });
+
+    Route::group(['prefix' => 'profile', 'as' => 'profile::'], function () {
+        Route::get('/', ['as' => 'index', 'uses' => 'UserController@index']);
+    });
+
     Route::match(['get', 'post'], 'logout', ['as' => 'auth.logout', 'uses' => 'AuthController@logout']);
 });
 
