@@ -21,6 +21,34 @@ class CampaignsController extends Controller
         //Auth::user()->_id
 
         $campaigns = Campaign::all();
+        $campaigns[1]->status="pending";
+        $campaigns[2]->status="rejected";
+        $campaigns[3]->status="ended";
+        $campaigns[4]->status="canceled";
+
+        $campaigns[4]->name="Encuesta fb";
+
+        $campaigns[0]->company="Coca-cola";
+        $campaigns[1]->company="Biozoo";
+        $campaigns[2]->company="Peisi";
+        $campaigns[3]->company="Enera";
+        $campaigns[4]->company="Facebook xD";
+
+        $campaigns[2]->action="mailing_list";
+        $campaigns[3]->action="captcha";
+        $campaigns[4]->action="survey";
+/*
+        $campaigns[] = $campaigns[0];
+        $campaigns[] = $campaigns[1];
+        $campaigns[] = $campaigns[2];
+        $campaigns[] = $campaigns[3];
+        $campaigns[] = $campaigns[4];
+
+        $campaigns[] = $campaigns[0];
+        $campaigns[] = $campaigns[1];
+        $campaigns[] = $campaigns[2];
+        $campaigns[] = $campaigns[3];
+        $campaigns[] = $campaigns[4];*/
 
         return view('campaigns.index',compact('campaigns'));
     }

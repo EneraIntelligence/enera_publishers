@@ -16,7 +16,10 @@
     <title>Enera Publishers</title>
 
 
-    <!-- uikit -->
+
+            <!-- uikit -->
+    {!! HTML::style('bower_components/kendo-ui-core/styles/kendo.common-material.min.css') !!}
+    {!! HTML::style('bower_components/kendo-ui-core/styles/kendo.material.min.css') !!}
     {!! HTML::style('bower_components/uikit/css/uikit.almost-flat.min.css') !!}
 
             <!-- flag icons -->
@@ -284,6 +287,8 @@
 {!! HTML::script('assets/js/common.min.js') !!}
         <!-- uikit functions -->
 {!! HTML::script('assets/js/uikit_custom.min.js') !!}
+        <!-- kendo functions -->
+{!! HTML::script('assets/js/kendoui_custom.min.js') !!}
         <!-- altair common functions/helpers -->
 {!! HTML::script('assets/js/altair_admin_common.min.js') !!}
 
