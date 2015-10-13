@@ -102,7 +102,7 @@ class CampaignsController extends Controller
      */
     public function create()
     {
-        //
+        return view('campaigns.create');
     }
 
     /**
@@ -124,7 +124,10 @@ class CampaignsController extends Controller
      */
     public function show($id)
     {
-        //
+        $campaign = Campaign::find($id);
+        $campaign = $campaign['original'];
+//        dd($campaign);
+        return view('campaigns.show',compact('campaign'));
     }
 
     /**
