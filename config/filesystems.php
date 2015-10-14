@@ -80,6 +80,17 @@ return [
             'url_type'  => 'publicURL',
         ],
 
+        'sftp' => [
+            'host' => '192.241.236.240',
+            'port' => 80,
+            'username' => 'username',
+            'password' => 'password',
+            'privateKey' => '/Users/usuario/.ssh/id_rsa',
+            'root' => '/var/pruebaCloud',
+            'timeout' => 10,
+            'directoryPerm' => 0755
+        ],
+
     ],
 
 ];

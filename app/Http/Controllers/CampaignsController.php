@@ -17,10 +17,41 @@ class CampaignsController extends Controller
      */
     public function index()
     {
-        //TODO consultar db con user id y solo9 traer campañas correspondientes
-        //Auth::user()->_id
+        //colors and style vars
+        $status_values = array(
+            'active'=>'1',
+            'pending' => '2',
+            'ended' => '3',
+            'close' => '3',
+            'rejected' => '4',
+            'canceled' => '5'
+        );
 
-        $campaigns = Campaign::all();
+        $status_colors = array(
+            'active'=>'uk-text-success',
+            'pending'=>'uk-text-primary',
+            'rejected'=>'uk-text-danger',
+            'ended'=>'md-color-blue-900',
+            'close'=>'md-color-blue-900',
+            'canceled'=>'md-color-grey-500'
+        );
+
+        $campaign_icons = array(
+            ''=>'picture_in_picture',
+            'banner'=>'picture_in_picture',
+            'video'=>'ondemand_video',
+            'mailing_list'=>'mail',
+            'captcha'=>'spellcheck',
+            'survey'=>'assignment'
+        );
+
+        //Obteniendo campañas del user loggeado
+        $admin_id = Auth::user()->_id;
+        $campaigns = Campaign::where('administrator_id', $admin_id)->latest()->get();
+
+
+        //hardcoded testing data
+        /*
         $campaigns[1]->status="pending";
         $campaigns[2]->status="rejected";
         $campaigns[3]->status="ended";
@@ -37,20 +68,23 @@ class CampaignsController extends Controller
         $campaigns[2]->action="mailing_list";
         $campaigns[3]->action="captcha";
         $campaigns[4]->action="survey";
-/*
-        $campaigns[] = $campaigns[0];
-        $campaigns[] = $campaigns[1];
-        $campaigns[] = $campaigns[2];
-        $campaigns[] = $campaigns[3];
-        $campaigns[] = $campaigns[4];
 
-        $campaigns[] = $campaigns[0];
-        $campaigns[] = $campaigns[1];
-        $campaigns[] = $campaigns[2];
-        $campaigns[] = $campaigns[3];
-        $campaigns[] = $campaigns[4];*/
+        $campaigns[] = new Campaign();
+        $campaigns[6]->_id = "1";
+        $campaigns[6]->status = "active";
+        $campaigns[6]->name = "Mails DQ";
+        $campaigns[6]->company = "Dairy Queen";
+        $campaigns[6]->action = "mailing_list";
 
-        return view('campaigns.index',compact('campaigns'));
+        $campaigns[] = new Campaign();
+        $campaigns[7]->_id = "2";
+        $campaigns[7]->status = "pending";
+        $campaigns[7]->name = "adivina la marca";
+        $campaigns[7]->company = "Nike";
+        $campaigns[7]->action = "captcha";
+        */
+
+        return view('campaigns.index',compact('campaigns','campaign_icons', 'status_colors', 'status_values'));
     }
 
     /**
@@ -60,7 +94,7 @@ class CampaignsController extends Controller
      */
     public function create()
     {
-        //
+        return view('campaigns.create');
     }
 
     /**
@@ -71,7 +105,7 @@ class CampaignsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return $_FILES;
     }
 
     /**
@@ -82,7 +116,10 @@ class CampaignsController extends Controller
      */
     public function show($id)
     {
-        //
+        $campaign = Campaign::find($id);
+        $campaign = $campaign['original'];
+//        dd($campaign);
+        return view('campaigns.show',compact('campaign'));
     }
 
     /**
