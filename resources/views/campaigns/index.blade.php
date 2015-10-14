@@ -135,16 +135,13 @@
                                                  data-uk-tooltip="{cls:'long-text'}"
                                                  title="{{$campaign->action}} - {{$campaign->status}}"
                                                  style="margin-bottom: 10px">
-                                                <i class="uk-vertical-align-middle material-icons md-36 {!! $status_colors[$campaign->status]!!}"> {{$campaign_icons[$campaign->interaction['name']]}}</i>
+                                                <i class="uk-vertical-align-middle
+                                                material-icons md-36
+                                                {!! $status_colors[$campaign->status]!!}">
+                                                    {{$campaign_icons[$campaign->interaction['name']]}}
+                                                </i>
 
                                             </div>
-
-                                            {{--
-                                            <div data-uk-tooltip="{cls:'long-text'}" title="{{$campaign->status}}">
-                                                <i class="material-icons md-36 {!! $status_colors[$campaign->status]!!}">{{$status_icons[$campaign->status]}}</i>
-                                            </div>
-                                            --}}
-
 
                                         </div>
 

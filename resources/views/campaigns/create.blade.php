@@ -555,10 +555,40 @@
                                     </ul>
                                 </li>
                             </ul>
+
+                            {!! Form::open(['url'=>'campaigns']) !!}
+
+                                <div class="md-card-content">
+                                    <h3 class="heading_a">
+                                        Upload Component
+                                        <span class="sub-heading">Allow users to upload files through a file input form element or a placeholder area.</span>
+                                    </h3>
+                                    <div class="uk-grid">
+                                        <div class="uk-width-1-1">
+                                            <div id="file_upload-drop" class="uk-file-upload">
+                                                <p class="uk-text">Drop file to upload</p>
+                                                <p class="uk-text-muted uk-text-small uk-margin-small-bottom">or</p>
+                                                <a class="uk-form-file md-btn">choose file<input id="file_upload-select" type="file" name="test"></a>
+                                            </div>
+                                            <div id="file_upload-progressbar" class="uk-progress uk-hidden">
+                                                <div class="uk-progress-bar" style="width:0">0%</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {!! Form::submit('Crear', ['class' => 'md-btn']) !!}
+
+
+                            {!! Form::close() !!}
+
+
                         </div>
                     </div>
                 </div>
             </div>
+
+
         </div>
     </div>
 
@@ -566,6 +596,7 @@
 
 @section('scripts')
 
+    {!! HTML::script('assets/js/pages/forms_file_upload.min.js') !!}
 
     <script>
 

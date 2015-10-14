@@ -22,25 +22,17 @@ class CampaignsController extends Controller
             'active'=>'1',
             'pending' => '2',
             'ended' => '3',
+            'close' => '3',
             'rejected' => '4',
             'canceled' => '5'
         );
-
-        /* status icons unused
-        $status_icons = array(
-                'active'=>'fast_forward',
-                'pending'=>'schedule',
-                'rejected'=>'report_problem',
-                'ended'=>'alarm_on',
-                'canceled'=>'not_interested'
-        );
-        */
 
         $status_colors = array(
             'active'=>'uk-text-success',
             'pending'=>'uk-text-primary',
             'rejected'=>'uk-text-danger',
             'ended'=>'md-color-blue-900',
+            'close'=>'md-color-blue-900',
             'canceled'=>'md-color-grey-500'
         );
 
@@ -113,7 +105,7 @@ class CampaignsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return $_FILES;
     }
 
     /**
