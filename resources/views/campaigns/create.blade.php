@@ -556,7 +556,7 @@
                                 </li>
                             </ul>
 
-                            {!! Form::open(['url'=>'campaigns']) !!}
+                            {!! Form::open(['url'=>'campaigns', 'files'=>'true']) !!}
 
                                 <div class="md-card-content">
                                     <h3 class="heading_a">
@@ -568,7 +568,9 @@
                                             <div id="file_upload-drop" class="uk-file-upload">
                                                 <p class="uk-text">Drop file to upload</p>
                                                 <p class="uk-text-muted uk-text-small uk-margin-small-bottom">or</p>
-                                                <a class="uk-form-file md-btn">choose file<input id="file_upload-select" type="file" name="test"></a>
+                                                <a class="uk-form-file md-btn">choose file
+                                                    {!! Form::file('image')!!}
+                                                </a>
                                             </div>
                                             <div id="file_upload-progressbar" class="uk-progress uk-hidden">
                                                 <div class="uk-progress-bar" style="width:0">0%</div>
@@ -595,8 +597,6 @@
 @stop
 
 @section('scripts')
-
-    {!! HTML::script('assets/js/pages/forms_file_upload.min.js') !!}
 
     <script>
 
