@@ -10,10 +10,7 @@
         "jenssegers/mongodb": "^2.1",
         "jenssegers/mongodb-session": "^1.1",
         "barryvdh/laravel-ide-helper": "^2.1",
-        "laravelcollective/html": "5.1.*",
-        "graham-campbell/flysystem": "~3.2",
-        "league/flysystem-sftp": "~1.0",
-        "league/flysystem-aws-s3-v3": "~1.0"
+        "laravelcollective/html": "5.1.*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
