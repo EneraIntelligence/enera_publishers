@@ -72,7 +72,7 @@
                             <div class="uk-width-2-3">
                                 <div class="uk-grid uk-grid-width-medium-1-3 uk-margin-top uk-margin-bottom uk-text-center"
                                      data-uk-grid-margin>
-                                    <a href="#">
+                                    <a href="{!! route('campaigns::index') !!}">
                                         {{--<i class="material-icons md-36">&#xE158;</i>--}}
                                         <i class="material-icons md-36 md-color-light-blue-A700">event</i>
                                         <span class="uk-text-muted uk-display-block">Campañas</span>

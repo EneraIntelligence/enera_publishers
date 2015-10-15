@@ -2,7 +2,7 @@
 
 namespace Publishers;
 
-use Jenssegers\Mongodb\Model as Model;
+use Jenssegers\Mongodb\Model;
 
 class UserFacebook extends Model
 {
