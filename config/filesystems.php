@@ -28,7 +28,7 @@ return [
     |
     */
 
-    'cloud' => 's3',
+    'cloud' => 'sftp',
 
     /*
     |--------------------------------------------------------------------------
@@ -81,11 +81,12 @@ return [
         ],
 
         'sftp' => [
+            'driver' => 'sftpadapter',
             'host' => '192.241.236.240',
             'port' => 80,
-            'username' => 'username',
-            'password' => 'password',
-            'privateKey' => '/Users/usuario/.ssh/id_rsa',
+            'username' => 'forge',
+            'password' => '9X0I9k3EFgYIejMRT0T8',
+            //'privateKey' => '/Users/usuario/.ssh/id_rsa',
             'root' => '/var/pruebaCloud',
             'timeout' => 10,
             'directoryPerm' => 0755

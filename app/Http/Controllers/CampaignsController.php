@@ -2,9 +2,11 @@
 
 namespace Publishers\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
+use League\Flysystem\Sftp\SftpAdapter;
+use League\Flysystem\Filesystem;
+use Input;
 use Illuminate\Http\Request;
-use Publishers\Http\Requests;
-use Publishers\Http\Controllers\Controller;
 use Auth;
 use Publishers\Campaign;
 
@@ -105,7 +107,42 @@ class CampaignsController extends Controller
      */
     public function store(Request $request)
     {
-        return $_FILES;
+
+        $adapter = new SftpAdapter([
+            'host' => '192.241.236.240',
+            'port' => 22,
+            'username' => 'forge',
+            'password' => '9X0I9k3EFgYIejMRT0T8',
+            'privateKey' => 'c:/Users/Eder/key',
+            'root' => '/home/forge/prueba',
+            'timeout' => 10,
+            'directoryPerm' => 0755
+        ]);
+
+        $filesystem = new Filesystem($adapter);
+
+        $file = Input::file('image');
+
+        if($file->isValid())
+        {
+            $ext = $file->getClientOriginalExtension();
+            $filename = time().'.'.$ext;
+            $file->move(storage_path().'/app',$filename);
+
+            $uploadedFile = Storage::get($filename);
+
+            $fileSaved = $filesystem->put($filename, $uploadedFile );
+
+            Storage::delete($filename);
+
+            return "File ". $filename ." saved: ".$fileSaved;
+        }
+        else
+        {
+            return 'error! File not valid';
+        }
+
+
     }
 
     /**
