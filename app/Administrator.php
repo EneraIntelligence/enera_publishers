@@ -43,7 +43,7 @@ class Administrator extends Model implements AuthenticatableContract, Authorizab
 
     public function role()
     {
-        return $this->belongsTo('Publishers\Rol');
+        return $this->belongsTo('Publishers\Role');
     }
 
     public function campaigns()
