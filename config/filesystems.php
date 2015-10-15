@@ -81,12 +81,12 @@ return [
         ],
 
         'sftp' => [
-            'driver' => 'sftpadapter',
+            'driver'    => 'sftp',
             'host' => '192.241.236.240',
-            'port' => 80,
+            'port' => 22,
             'username' => 'forge',
             'password' => '9X0I9k3EFgYIejMRT0T8',
-            //'privateKey' => '/Users/usuario/.ssh/id_rsa',
+            'privateKey' => '/Users/usuario/.ssh/id_rsa',
             'root' => '/var/pruebaCloud',
             'timeout' => 10,
             'directoryPerm' => 0755
