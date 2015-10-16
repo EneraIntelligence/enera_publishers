@@ -124,7 +124,7 @@ class CampaignsController extends Controller
 
         $file = Input::file('image');
 
-        if($file->isValid())
+        if($file && $file->isValid() && $this->correct_size($file))
         {
             //set newly generated filename and upload to server storage
             $ext = $file->getClientOriginalExtension();
@@ -152,6 +152,7 @@ class CampaignsController extends Controller
             //created item related to campaign
             $item = new Item();
             $item->filename = $filename;
+            $item->administrator_id = Auth::user()->_id;
             $item->type = 'image';
             $item->campaign_id = $campaign->_id;
             $item->save();
@@ -160,9 +161,22 @@ class CampaignsController extends Controller
         }
         else
         {
-            return 'error! File not valid';
+            if(!$file->isValid())
+                return 'error! no file uploaded';
+            if(!$file->isValid())
+               return 'error! File not valid';
+            if(!$this->correct_size($file))
+                return 'error! File size must be 100x100';
         }
 
+    }
+
+    private function correct_size($photo)
+    {
+        $maxHeight = 100;
+        $maxWidth = 100;
+        list($width, $height) = getimagesize($photo);
+        return ( ($width <= $maxWidth) && ($height <= $maxHeight) );
     }
 
     /**
