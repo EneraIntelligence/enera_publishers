@@ -9,6 +9,7 @@ use Input;
 use Illuminate\Http\Request;
 use Auth;
 use Publishers\Campaign;
+use Publishers\Item;
 
 class CampaignsController extends Controller
 {
@@ -113,7 +114,7 @@ class CampaignsController extends Controller
             'port' => 22,
             'username' => 'forge',
             'password' => '9X0I9k3EFgYIejMRT0T8',
-            'privateKey' => '/Users/usuario/.ssh/id_rsa',
+            'privateKey' => 'c:/Users/Eder/key',
             'root' => '/home/forge/prueba',
             'timeout' => 10,
             'directoryPerm' => 0755
@@ -135,13 +136,31 @@ class CampaignsController extends Controller
 
             Storage::delete($filename);
 
+            //creating campaign
+            $campaign = new Campaign();
+            $campaign->administrator_id=Auth::user()->_id;
+            $campaign->client_id = "???";//TODO tomar esto
+            $campaign->name = "test ".time();//TODO tomar de input
+            $campaign->branches = [];
+            $campaign->filters = (object) array();
+            $campaign->interaction = (object) array('name' => "banner");
+            $campaign->content = (object) array('image' => $filename);
+            $campaign->status="pending";
+            $campaign->save();
+
+            //created item related to campaign
+            $item = new Item();
+            $item->filename = $filename;
+            $item->type = 'image';
+            $item->campaign_id = $campaign->_id;
+            $item->save();
+
             return "File ". $filename ." saved: ".$fileSaved;
         }
         else
         {
             return 'error! File not valid';
         }
-
 
     }
 
