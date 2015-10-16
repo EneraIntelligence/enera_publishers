@@ -309,7 +309,7 @@
 </script>
 
 <script>
-    $(function () {
+    /*$(function () {
         $switcher_toggle.click(function (e) {
             e.preventDefault();
             $switcher.toggleClass('switcher_active');
@@ -349,7 +349,7 @@
         if (localStorage.getItem("altair_theme") !== null) {
             $theme_switcher.children('li[data-app-theme=' + localStorage.getItem("altair_theme") + ']').click();
         }
-    });
+    });*/
 </script>
 
 @yield('scripts')
