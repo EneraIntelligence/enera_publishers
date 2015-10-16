@@ -126,14 +126,15 @@ class CampaignsController extends Controller
 
         if($file->isValid())
         {
+            //set newly generated filename and upload to server storage
             $ext = $file->getClientOriginalExtension();
             $filename = time().'.'.$ext;
             $file->move(storage_path().'/app',$filename);
 
+            //get uploaded file and copy it to cloud
             $uploadedFile = Storage::get($filename);
-
             $fileSaved = $filesystem->put($filename, $uploadedFile );
-
+            //delete server file
             Storage::delete($filename);
 
             //creating campaign
