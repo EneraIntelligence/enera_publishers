@@ -18,6 +18,7 @@
                                     @include('campaigns.create_wizard.step_2')
 
                                     @include('campaigns.create_wizard.step_3')
+
                                     @include('campaigns.create_wizard.step_4')
 
                                 </div>
@@ -110,7 +111,8 @@
 
     {!! HTML::script('bower_components/parsleyjs/dist/parsley.min.js') !!}
             <!-- jquery steps -->
-    {!! HTML::script('assets/js/custom/wizard_steps.min.js') !!}
+    {!! HTML::script('assets/js/custom/wizard_steps.js') !!}
     <!--  forms wizard functions -->
-    {!! HTML::script('assets/js/pages/forms_wizard.min.js') !!}
+    {!! HTML::script('assets/js/pages/forms_wizard.js') !!}
+
 @stop
