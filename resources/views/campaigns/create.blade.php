@@ -29,69 +29,27 @@
                 <div class="uk-width-large-3-10">
                     <div class="md-card">
                         <div class="md-card-content">
+
                             <div class="uk-margin-medium-bottom">
-                                <h3 class="heading_c uk-margin-bottom">Alerts</h3>
-                                <ul class="md-list md-list-addon">
-                                    <li>
-                                        <div class="md-list-addon-element">
-                                            <i class="md-list-addon-icon material-icons uk-text-warning">&#xE8B2;</i>
-                                        </div>
-                                        <div class="md-list-content">
-                                            <span class="md-list-heading">Ab ut aut.</span>
-                                            <span class="uk-text-small uk-text-muted uk-text-truncate">Sequi omnis voluptatem quibusdam vel repellat dolor corporis.</span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="md-list-addon-element">
-                                            <i class="md-list-addon-icon material-icons uk-text-success">&#xE88F;</i>
-                                        </div>
-                                        <div class="md-list-content">
-                                            <span class="md-list-heading">Ipsa nulla.</span>
-                                            <span class="uk-text-small uk-text-muted uk-text-truncate">Sequi exercitationem debitis delectus.</span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="md-list-addon-element">
-                                            <i class="md-list-addon-icon material-icons uk-text-danger">&#xE001;</i>
-                                        </div>
-                                        <div class="md-list-content">
-                                            <span class="md-list-heading">Aut natus.</span>
-                                            <span class="uk-text-small uk-text-muted uk-text-truncate">Sed sunt occaecati et velit quas.</span>
-                                        </div>
-                                    </li>
-                                </ul>
+                                <h3 class="heading_c uk-margin-bottom">Vista previa</h3>
+
+                                <img class="uk-align-center" src="{!! URL::asset('images/android_placeholder.png') !!}" alt="">
+
+                                <div class="banner" style="display:none">
+                                    <img class="banner-1" style="max-width:200px; max-height:250px; position: absolute; top: 136px; margin: 0 50% 0; left: -100px;" src="http://placehold.it/200x250?text=Tu+banner" alt="Tu banner">
+                                    <div style="pointer-events:none; width: 190px; position: absolute; top: 409px; margin: 0 50% 0; left: -95px;" class="md-btn md-btn-primary">Navegar en internet</div>
+                                </div>
+
+                                <div class="mailing-list">
+                                    <img class="banner-1" style="max-width:200px; max-height:250px; position: absolute; top: 130px; margin: 0 50% 0; left: -100px;" src="http://placehold.it/200x250?text=Tu+banner" alt="Tu banner">
+                                    <div style="pointer-events:none; width: 190px; position: absolute; top: 390px; margin: 0 50% 0; left: -95px;" class="md-btn md-btn-primary">Suscribirme</div>
+                                    <a style="font-size:10px; pointer-events:none; width: 190px; position: absolute; top: 430px; margin: 0 50% 0; left: -95px;" href="">Deseo navegar en internet sin suscribirme</a>
+
+                                </div>
+
+
                             </div>
-                            <h3 class="heading_c uk-margin-bottom">Friends</h3>
-                            <ul class="md-list md-list-addon uk-margin-bottom">
-                                <li>
-                                    <div class="md-list-addon-element">
-                                        <img class="md-user-image md-list-addon-avatar" src="assets/img/avatars/avatar_02_tn.png" alt=""/>
-                                    </div>
-                                    <div class="md-list-content">
-                                        <span class="md-list-heading">Geovanni Deckow</span>
-                                        <span class="uk-text-small uk-text-muted">Optio rerum fugiat voluptates animi.</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="md-list-addon-element">
-                                        <img class="md-user-image md-list-addon-avatar" src="assets/img/avatars/avatar_07_tn.png" alt=""/>
-                                    </div>
-                                    <div class="md-list-content">
-                                        <span class="md-list-heading">Rebeka Olson</span>
-                                        <span class="uk-text-small uk-text-muted">Voluptas iusto atque tenetur earum.</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="md-list-addon-element">
-                                        <img class="md-user-image md-list-addon-avatar" src="assets/img/avatars/avatar_06_tn.png" alt=""/>
-                                    </div>
-                                    <div class="md-list-content">
-                                        <span class="md-list-heading">Letha Witting MD</span>
-                                        <span class="uk-text-small uk-text-muted">Nihil rem molestiae minus cum.</span>
-                                    </div>
-                                </li>
-                            </ul>
-                            <a class="md-btn md-btn-flat md-btn-flat-primary" href="#">Show all</a>
+
                         </div>
                     </div>
                 </div>
@@ -107,6 +65,7 @@
         altair_forms.parsley_validation_config();
         // load extra validators
         altair_forms.parsley_extra_validators();
+
     </script>
 
     {!! HTML::script('bower_components/parsleyjs/dist/parsley.min.js') !!}
@@ -114,5 +73,34 @@
     {!! HTML::script('assets/js/custom/wizard_steps.js') !!}
     <!--  forms wizard functions -->
     {!! HTML::script('assets/js/pages/forms_wizard.js') !!}
+
+    <script>
+        $(document).ready()
+        {
+
+        }
+
+
+        function showPreview(event, id)
+        {
+            var input = event.target;
+
+            var reader = new FileReader();
+            reader.onload = function(){
+                var dataURL = reader.result;
+                var output = $(id);//'.banner-android');
+
+                output.each(function()
+                {
+                    $(this).attr("src", dataURL);
+                });
+            };
+            reader.readAsDataURL(input.files[0]);
+            //console.log("changed");
+
+        }
+    </script>
+
+    {{--{!! HTML::script('assets/js/pages/forms_file_upload.js') !!}--}}
 
 @stop

@@ -286,7 +286,7 @@
 <!-- common functions -->
 {!! HTML::script('assets/js/common.min.js') !!}
         <!-- uikit functions -->
-{!! HTML::script('assets/js/uikit_custom.min.js') !!}
+{!! HTML::script('assets/js/uikit_custom.js') !!}
         <!-- kendo functions -->
 {!! HTML::script('assets/js/kendoui_custom.min.js') !!}
         <!-- altair common functions/helpers -->
