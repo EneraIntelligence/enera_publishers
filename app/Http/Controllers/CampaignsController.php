@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use Auth;
 use Publishers\Campaign;
 use Publishers\Item;
+use Publishers\Libraries\FileCloud;
+
 
 class CampaignsController extends Controller
 {
@@ -109,18 +111,7 @@ class CampaignsController extends Controller
     public function store(Request $request)
     {
 
-        $adapter = new SftpAdapter([
-            'host' => '192.241.236.240',
-            'port' => 22,
-            'username' => 'forge',
-            'password' => '9X0I9k3EFgYIejMRT0T8',
-            'privateKey' => 'c:/Users/Eder/key',
-            'root' => '/home/forge/prueba',
-            'timeout' => 10,
-            'directoryPerm' => 0755
-        ]);
-
-        $filesystem = new Filesystem($adapter);
+        $filesystem = new FileCloud();
 
         $file = Input::file('image');
 

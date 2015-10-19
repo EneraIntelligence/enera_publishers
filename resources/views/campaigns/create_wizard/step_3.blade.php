@@ -1,60 +1,53 @@
-<!-- third section -->
-<h3>Additional information</h3>
+<!-- second section -->
+<h3>Vehicle information</h3>
 <section>
     <h2 class="heading_a">
-        Additional information
+        Vehicle information
         <span class="sub-heading">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</span>
     </h2>
     <hr class="md-hr"/>
-    <div class="uk-grid uk-margin-large-bottom" data-uk-grid-margin>
-        <div class="uk-width-1-1">
-            <label class="uk-form-label">Location Where Vehicle is Principally Garaged</label>
-            <div class="uk-grid" data-uk-grid-margin="">
-                <div class="uk-width-medium-2-10 parsley-row">
-                                                    <span class="icheck-inline uk-margin-top uk-margin-left">
-                                                        <input type="radio" name="wizard_additional_location" id="wizard_status_location_city" class="wizard-icheck" value="City" />
-                                                        <label for="wizard_status_location_city" class="inline-label">City</label>
-                                                    </span>
-                </div>
-                <div class="uk-width-medium-2-10 parsley-row">
-                                                    <span class="icheck-inline uk-margin-top uk-margin-left">
-                                                        <input type="radio" name="wizard_additional_location" id="wizard_status_location_county" class="wizard-icheck" value="County" />
-                                                        <label for="wizard_status_location_county" class="inline-label">County</label>
-                                                    </span>
-                </div>
-                <div class="uk-width-medium-3-10 parsley-row">
-                    <div class="uk-input-group">
-                                                        <span class="uk-input-group-addon">
-                                                           <input type="radio" name="wizard_additional_location" class="wizard-icheck" value="town" />
-                                                        </span>
-                        <label for="wizard_location_town">Town of</label>
-                        <input type="text" class="md-input" name="wizard_location_town" id="wizard_location_town" />
-                    </div>
-                </div>
-            </div>
+    <div class="uk-grid uk-grid-width-large-1-2 uk-grid-width-xlarge-1-4" data-uk-grid-margin>
+        <div class="parsley-row">
+            <label for="wizard_vehicle_title_number">Title Number<span class="req">*</span></label>
+            <input type="text" name="wizard_vehicle_title_number" id="wizard_vehicle_title_number" required class="md-input" />
+        </div>
+        <div class="parsley-row">
+            <label for="wizard_vehicle_vin">VIN<span class="req">*</span></label>
+            <input type="text" name="wizard_vehicle_vin" id="wizard_vehicle_vin" required class="md-input" />
+        </div>
+        <div class="parsley-row">
+            <label for="wizard_vehicle_plate_number">Current Plate Number<span class="req">*</span></label>
+            <input type="text" name="wizard_vehicle_plate_number" id="wizard_vehicle_plate_number" required class="md-input" />
+        </div>
+        <div class="parsley-row">
+            <label for="wizard_vehicle_expiration">Expiration Date<span class="req">*</span></label>
+            <input type="text" name="wizard_vehicle_expiration" id="wizard_vehicle_expiration" required class="md-input" data-parsley-americandate data-parsley-americandate-message="This value should be a valid date (MM.DD.YYYY)" data-uk-datepicker="{format:'MM.DD.YYYY'}" />
         </div>
     </div>
-    <span class="uk-alert uk-alert-info">If you would like your registration renewals sent to an address other than your residence/business address, enter it below.</span>
-    <div class="uk-grid" data-uk-grid-margin>
-        <div class="uk-width-medium-2-6 parsley-row">
-            <label for="wizard_vehicle_registration_address">Registration Mailing Address</label>
-            <input type="text" name="wizard_vehicle_registration_address" id="wizard_vehicle_registration_address" required class="md-input" />
+    <div class="uk-grid uk-grid-width-large-1-3 uk-grid-width-xlarge-1-6" data-uk-grid-margin>
+        <div class="parsley-row">
+            <label for="wizard_vehicle_year">Registration Year</label>
+            <input type="text" name="wizard_vehicle_year" id="wizard_vehicle_year" class="md-input" data-uk-datepicker="{format:'MM.YYYY'}" />
         </div>
-        <div class="uk-width-medium-1-6 parsley-row">
-            <label for="wizard_vehicle_registration_city">City<span class="req">*</span></label>
-            <input type="text" name="wizard_vehicle_registration_city" id="wizard_vehicle_registration_city" required class="md-input" />
+        <div class="parsley-row">
+            <label for="wizard_vehicle_make">Make</label>
+            <input type="text" name="wizard_vehicle_make" id="wizard_vehicle_make" class="md-input" />
         </div>
-        <div class="uk-width-medium-1-6 parsley-row">
-            <label for="wizard_vehicle_registration_state">State<span class="req">*</span></label>
-            <input type="text" name="wizard_vehicle_registration_state" id="wizard_vehicle_registration_state" required class="md-input" />
+        <div class="parsley-row">
+            <label for="wizard_vehicle_model">Model<span class="req">*</span></label>
+            <input type="text" name="wizard_vehicle_model" id="wizard_vehicle_model" required class="md-input" />
         </div>
-        <div class="uk-width-medium-1-6 parsley-row">
-            <label for="wizard_vehicle_registration_zip">ZIP<span class="req">*</span></label>
-            <input type="text" name="wizard_vehicle_registration_zip" id="wizard_vehicle_registration_zip" required class="md-input" />
+        <div class="parsley-row">
+            <label for="wizard_vehicle_body">Body Type<span class="req">*</span></label>
+            <input type="text" name="wizard_vehicle_body" id="wizard_vehicle_body" required class="md-input" />
         </div>
-        <div class="uk-width-medium-1-6 parsley-row">
-            <label for="wizard_vehicle_registration_code">Code<span class="req">*</span></label>
-            <input type="text" name="wizard_vehicle_registration_code" id="wizard_vehicle_registration_code" required class="md-input" />
+        <div class="parsley-row">
+            <label for="wizard_vehicle_axles">Axles</label>
+            <input type="text" name="wizard_vehicle_axles" id="wizard_vehicle_axles" class="md-input" />
+        </div>
+        <div class="parsley-row">
+            <label for="wizard_vehicle_fuel">Fuel<span class="req">*</span></label>
+            <input type="text" name="wizard_vehicle_fuel" id="wizard_vehicle_fuel" required class="md-input" />
         </div>
     </div>
 </section>

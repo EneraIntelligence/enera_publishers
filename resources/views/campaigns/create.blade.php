@@ -4,7 +4,7 @@
     <div id="page_content">
         <div id="page_content_inner">
 
-            <h2 class="heading_b uk-margin-bottom">Nombre de campaña</h2>
+            <h2 class="heading_b uk-margin-bottom">Nueva campaña</h2>
 
             <div class="uk-grid" data-uk-grid-margin data-uk-grid-match id="user_profile">
                 <div class="uk-width-large-7-10">
@@ -18,6 +18,7 @@
                                     @include('campaigns.create_wizard.step_2')
 
                                     @include('campaigns.create_wizard.step_3')
+                                    @include('campaigns.create_wizard.step_4')
 
                                 </div>
                             </form>
