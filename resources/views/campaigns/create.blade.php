@@ -35,6 +35,13 @@
                                 <h3 class="heading_c uk-margin-bottom">Vista previa</h3>
                                 <img class="uk-align-center" src="{!! URL::asset('images/android_placeholder.png') !!}" alt="">
 
+                                <div class="preview">
+                                    <img class="banner-1" style="max-width:206px; max-height:325px; position: absolute; top: 125px; margin: 0 50% 0; left: -102px;" src="http://placehold.it/206x325/444444?text=+" alt="vista previa">
+                                    <div class="uk-text-center" style="padding: 10px 60px 0 60px;">
+                                        Elige una interacción.
+                                    </div>
+                                </div>
+
                                 <!-- banner preview -->
                                 <div class="preview banner" style="display:none">
                                     <img class="banner-1" style="max-width:200px; max-height:250px; position: absolute; top: 136px; margin: 0 50% 0; left: -100px;" src="http://placehold.it/200x250?text=Tu+banner" alt="Tu banner">
