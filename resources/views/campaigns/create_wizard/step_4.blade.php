@@ -1,5 +1,5 @@
 <!-- third section -->
-<h3>Additional information</h3>
+<h3>Confirmar y enviar</h3>
 <section>
     <h2 class="heading_a">
         Additional information

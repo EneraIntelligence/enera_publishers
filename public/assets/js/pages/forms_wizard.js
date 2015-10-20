@@ -52,6 +52,10 @@ altair_wizard = {
                         }
                         return true;
                     }
+                    else if(altair_wizard.interaction==null)
+                    {
+                        return false;
+                    }
 
                     // check input fields for errors
                     $current_step.find('[data-parsley-id]').each(function () {

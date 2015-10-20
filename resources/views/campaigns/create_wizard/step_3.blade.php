@@ -1,5 +1,5 @@
 <!-- second section -->
-<h3>Vehicle information</h3>
+<h3>Alcance de la interacción</h3>
 <section>
     <h2 class="heading_a">
         Vehicle information

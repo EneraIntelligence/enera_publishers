@@ -1,46 +1,44 @@
 <!-- first section -->
-<h3>Datos de interacción</h3>
+<h3>Detalles de la interacción</h3>
 <section>
     <h2 class="heading_a">
         Datos de interacción
-        <span class="sub-heading">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</span>
     </h2>
     <hr class="md-hr"/>
-    <div>
-        {{--<link rel="icon" type="image/png" href="" sizes="32x32">--}}
-        {{--<img src="{!! URL::asset('images/64x64.png') !!}" alt="">--}}
-        <img src="{!! URL::asset('images/icono_captcha.png') !!}" alt="">
-    </div>
+
     <div class="uk-grid">
 
         <div class="uk-width-1-3">
+            <img class="banner-1" src="http://placehold.it/300x300?text=300x300" alt="">
+
             <div id="file_upload-drop" class="uk-file-upload">
                 <p class="uk-text">Banner dispositivos pequeños</p>
                 <a class="uk-form-file md-btn">elige un archivo
                     <input onchange="showPreview(event,'.banner-1')" id="file_upload-select" type="file" accept='image/*'>
                 </a>
             </div>
-            <img class="banner-1" src="http://placehold.it/300x300?text=300x300" alt="">
         </div>
 
         <div class="uk-width-1-3">
+            <img class="banner-2" src="http://placehold.it/400x400?text=400x400" alt="">
+
             <div id="file_upload-drop2" class="uk-file-upload">
                 <p class="uk-text">Banner dispositivos altos</p>
                 <a class="uk-form-file md-btn">elige un archivo
                     <input onchange="showPreview(event,'.banner-2')" id="file_upload-select_2" type="file" accept='image/*'>
                 </a>
             </div>
-            <img class="banner-2" src="http://placehold.it/400x400?text=400x400" alt="">
         </div>
 
         <div class="uk-width-1-3">
+            <img class="banner-3" src="http://placehold.it/500x500?text=500x500" alt="">
+
             <div id="file_upload-drop3" class="uk-file-upload">
                 <p class="uk-text">Banner tablets</p>
                 <a class="uk-form-file md-btn">elige un archivo
                     <input onchange="showPreview(event,'.banner-3')" id="file_upload-select_3" type="file" accept='image/*'>
                 </a>
             </div>
-            <img class="banner-3" src="http://placehold.it/500x500?text=500x500" alt="">
         </div>
 
 
