@@ -12,7 +12,9 @@ use League\Flysystem\Filesystem;
 
 class FileCloud
 {
-    var $adapter;
+    protected $adapter;
+    protected $filesysteam;
+
     public function __construct()
     {
         $this->adapter = new SftpAdapter([
@@ -25,10 +27,14 @@ class FileCloud
             'timeout' => 10,
             'directoryPerm' => 0755
         ]);
+
+        $this->filesystem = new Filesystem($adapter);
     }
 
-    public function subir(){
-
+    public function subir($filename,$uploadfile){
+        $filesystem->put($filename, $uploadedfile );
     }
+
+
 
 }

@@ -6,21 +6,56 @@
         <span class="sub-heading">escoje un tipo de interaccion</span>
     </h2>
     <hr class="md-hr"/>
-    <div>
-        {{--<link rel="icon" type="image/png" href="" sizes="32x32">--}}
-        {{--<img src="{!! URL::asset('images/64x64.png') !!}" alt="">--}}
-        <img src="{!! URL::asset('images/icono_captcha.png') !!}" alt="">
-    </div>
-    <div class="uk-grid">
-        <div class="uk-width-medium-1-1 parsley-row">
-            <label for="wizard_fullname">Full Name<span class="req">*</span></label>
-            <input type="text" name="wizard_fullname" id="wizard_fullname" required class="md-input" />
+
+    <div class="uk-grid uk-grid-medium" data-uk-grid-margin data-uk-grid-match="{target:'.md-card'}">
+        <div id="banner" class="uk-width-medium-1-3">
+            <div class="md-card md-btn" style="width: 100%">
+                <div class="md-card-content">
+                    <img src="{!! URL::asset('images/icono_captcha.png') !!}" alt="">
+                    <span>banner</span>
+                </div>
+            </div>
+        </div>
+        <div id="banner+link" class="uk-width-medium-1-3">
+            <div class="md-card md-btn" style="width: 100%">
+                <div class="md-card-content">
+                    <img src="{!! URL::asset('images/icono_captcha.png') !!}" alt="">
+                    <span>banner+link</span>
+                </div>
+            </div>
+        </div>
+        <div id="mailingList" class="uk-width-medium-1-3">
+            <div class="md-card md-btn" style="width: 100%">
+                <div class="md-card-content">
+                    <img src="{!! URL::asset('images/icono_captcha.png') !!}" alt="">
+                    <span>mailingList</span>
+                </div>
+            </div>
+        </div>
+        <div id="captcha" class="uk-width-medium-1-3">
+            <div class="md-card md-btn" style="width: 100%">
+                <div class="md-card-content">
+                    <img src="{!! URL::asset('images/icono_captcha.png') !!}" alt="">
+                    <span>captcha</span>
+                </div>
+            </div>
+        </div>
+        <div id="encuesta" class="uk-width-medium-1-3">
+            <div class="md-card md-btn" style="width: 100%">
+                <div class="md-card-content">
+                    <img src="{!! URL::asset('images/icono_captcha.png') !!}" alt="">
+                    <span>encuesta</span>
+                </div>
+            </div>
+        </div>
+        <div id="video" class="uk-width-medium-1-3">
+            <div class="md-card md-btn" style="width: 100%">
+                <div class="md-card-content">
+                    <img src="{!! URL::asset('images/icono_captcha.png') !!}" alt="">
+                    <span> video</span>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="uk-grid">
-        <div class="uk-width-medium-1-1 parsley-row">
-            <label for="wizard_address">Address<span class="req">*</span></label>
-            <input type="text" name="wizard_address" id="wizard_address" required class="md-input" />
-        </div>
-    </div>
+
 </section>
