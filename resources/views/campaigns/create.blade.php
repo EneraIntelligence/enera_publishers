@@ -33,10 +33,10 @@
                             <!-- preview -->
                             <div class="uk-margin-medium-bottom">
                                 <h3 class="heading_c uk-margin-bottom">Vista previa</h3>
-                                <img class="uk-align-center" src="{!! URL::asset('images/android_placeholder.png') !!}" alt="">
+                                <img class="uk-align-center" style="min-width:239px" src="{!! URL::asset('images/android_placeholder.png') !!}" alt="">
 
                                 <div class="preview">
-                                    <img class="banner-1" style="max-width:206px; max-height:325px; position: absolute; top: 125px; margin: 0 50% 0; left: -102px;" src="http://placehold.it/206x325/444444?text=+" alt="vista previa">
+                                    <img class="banner-1" style="max-width:207px; max-height:325px; position: absolute; top: 125px; margin: 0 50% 0; left: -103px;" src="http://placehold.it/207x325/444444?text=+" alt="vista previa">
                                     <div class="uk-text-center" style="padding: 10px 60px 0 60px;">
                                         Elige una interacción.
                                     </div>
@@ -47,7 +47,7 @@
                                     <img class="banner-1" style="max-width:200px; max-height:250px; position: absolute; top: 136px; margin: 0 50% 0; left: -100px;" src="http://placehold.it/200x250?text=Tu+banner" alt="Tu banner">
                                     <div style="pointer-events:none; width: 190px; position: absolute; top: 409px; margin: 0 50% 0; left: -95px;" class="md-btn md-btn-primary">Navegar en internet</div>
 
-                                    <div class="uk-text-center" style="padding: 10px 60px 0 60px;">
+                                    <div class="uk-text-center" style="padding: 10px 10% 0 10%;">
                                         Promociónate con un banner que será visto por los usuarios de redes Enera.
                                     </div>
                                 </div>
@@ -57,7 +57,7 @@
                                     <img class="banner-1" style="max-width:200px; max-height:250px; position: absolute; top: 136px; margin: 0 50% 0; left: -100px;" src="http://placehold.it/200x250?text=Tu+banner" alt="Tu banner">
                                     <div style="pointer-events:none; width: 190px; position: absolute; top: 409px; margin: 0 50% 0; left: -95px;" class="md-btn md-btn-primary">Navegar en internet</div>
 
-                                    <div class="uk-text-center" style="padding: 10px 60px 0 60px;">
+                                    <div class="uk-text-center" style="padding: 10px 10% 0 10%;">
                                         Promociónate con un banner y recibe a los usuarios de redes Enera en tu sitio.
                                     </div>
                                 </div>
@@ -68,7 +68,7 @@
                                     <div style="pointer-events:none; width: 190px; position: absolute; top: 390px; margin: 0 50% 0; left: -95px;" class="md-btn md-btn-primary">Suscribirme</div>
                                     <a style="font-size:10px; pointer-events:none; width: 190px; position: absolute; top: 430px; margin: 0 50% 0; left: -95px;" href="">Deseo navegar en internet sin suscribirme</a>
 
-                                    <div class="uk-text-center" style="padding: 10px 60px 0 60px;">
+                                    <div class="uk-text-center" style="padding: 10px 10% 0 10%;">
                                         Invita a los usuarios de redes Enera a unirse a una lista de correos para contactarlos aún terminada la campaña.
                                     </div>
 
@@ -80,7 +80,7 @@
                                     <input style="pointer-events:none; width: 190px; position: absolute; top: 383px; margin: 0 50% 0; left: -95px;" class="uk-text-center" type="text" value="Mi producto">
                                     <div style="pointer-events:none; width: 190px; position: absolute; top: 409px; margin: 0 50% 0; left: -95px;" class="md-btn md-btn-primary">Navegar en internet</div>
 
-                                    <div class="uk-text-center" style="padding: 10px 60px 0 60px;">
+                                    <div class="uk-text-center" style="padding: 10px 10% 0 10%;">
                                         Haz que los usuarios de redes Enera escriban una palabra relacionada con tu producto.
                                     </div>
 
@@ -91,18 +91,19 @@
                                     <img class="banner-1" style="max-width:200px; max-height:250px; position: absolute; top: 136px; margin: 0 50% 0; left: -100px;" src="http://placehold.it/200x250?text=Tu+banner" alt="Tu banner">
                                     <div style="pointer-events:none; width: 190px; position: absolute; top: 409px; margin: 0 50% 0; left: -95px;" class="md-btn md-btn-primary">Navegar en internet</div>
 
-                                    <div class="uk-text-center" style="padding: 10px 60px 0 60px;">
+                                    <div class="uk-text-center" style="padding: 10px 10% 0 10%;">
                                         Crea una encuesta que contestarán los usuarios de redes Enera.
                                     </div>
                                 </div>
 
                                 <!-- video preview -->
                                 <div class="preview video" style="display:none">
-                                    <img class="banner-1" style="max-width:200px; max-height:250px; position: absolute; top: 136px; margin: 0 50% 0; left: -100px;" src="http://placehold.it/200x250?text=Tu+banner" alt="Tu banner">
+                                    <img class="banner-1" style="max-width:200px; max-height:250px; position: absolute; top: 136px; margin: 0 50% 0; left: -100px;" src="http://placehold.it/200x250/010101?text=+" alt="Tu video">
+                                    <img style="position: absolute; top: 163px; margin: 0 50% 0; left: -100px;" src="{!! URL::asset('images/icons/video.svg') !!}" alt="">
                                     <div style="pointer-events:none; width: 190px; position: absolute; top: 409px; margin: 0 50% 0; left: -95px;" class="md-btn md-btn-primary">Navegar en internet</div>
 
-                                    <div class="uk-text-center" style="padding: 10px 60px 0 60px;">
-                                        Muestra un video que verán nuestros usuarios para aceeder a las redes Enera.
+                                    <div class="uk-text-center" style="padding: 10px 10% 0 10%;">
+                                        Muestra un video que verán nuestros usuarios para acceder a las redes Enera.
                                     </div>
                                 </div>
 
@@ -203,6 +204,7 @@
                     altair_wizard.interaction = interaction;
 //                    console.log(interaction);
                     $(".preview").css("display","none");
+                    $(".step2-field").css("display","none");
                     $("."+interaction).css("display","block");
 
                     $(".button_next").removeClass("disabled");

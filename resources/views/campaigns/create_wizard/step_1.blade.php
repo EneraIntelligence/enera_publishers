@@ -41,7 +41,7 @@
             <div class="interaction-btn md-card md-btn" data-interaction="banner-link" style="width: 100%">
                 <div class="md-card-content">
 {{--                    <img src="{!! URL::asset('images/icons/banner_link.svg') !!}" alt="">--}}
-                    <svg style="height:115px; fill: #737373; stroke: #737373" viewBox="20 30 150 140">
+                    <svg style="height:115px; fill: #737373; stroke: #737373" viewBox="35 30 125 140">
 <g>
     <path fill="none" stroke-width="4" stroke-miterlimit="10" d="M134.193,85.552v70.019
 		c0,4.375-3.547,7.923-7.922,7.923H72.864c-4.374,0-7.921-3.548-7.921-7.923V44.428c0-4.375,3.547-7.92,7.921-7.92h53.408
@@ -108,7 +108,7 @@
             <div class="interaction-btn md-card md-btn" data-interaction="captcha" style="width: 100%">
                 <div class="md-card-content">
 {{--                    <img src="{!! URL::asset('images/icons/captcha.svg') !!}" alt="">--}}
-                    <svg style="height:115px; fill: #737373; stroke: #737373" viewBox="0 35 200 120">
+                    <svg style="max-width:100%; height:115px; fill: #737373; stroke: #737373" viewBox="0 35 200 120">
 <g>
     <path fill="none" stroke-width="4" stroke-miterlimit="10" d="M149.26,94.208h30.807
 		c4.976,0,7.922,3.325,7.922,9.806v20.233c0,4.376-3.547,7.924-7.922,7.924H88.91c-6.291,0-8.426-3.69-8.426-9.17
@@ -116,7 +116,7 @@
     <circle fill="none" stroke-width="4" stroke-miterlimit="10" cx="30.879" cy="98.427" r="7.549"/>
     <g>
         <g>
-            <path d="M42.607,67.829c13.203,0,24.453,8.362,28.742,20.08h33.766v-8.881c0-2.453,1.988-4.441,4.441-4.441
+            <path stroke-width="0" d="M42.607,67.829c13.203,0,24.453,8.362,28.742,20.08h33.766v-8.881c0-2.453,1.988-4.441,4.441-4.441
 				c2.452,0,4.44,1.988,4.44,4.441v8.881h10.047v-4.97c0-2.453,1.988-4.441,4.44-4.441c2.453,0,4.441,1.988,4.441,4.441v5.82
 				c3.748,1.609,6.373,5.33,6.373,9.667c0,5.809-4.709,8.316-10.518,8.316H71.35c-1.891,12.99-15.539,22.281-28.742,22.281
 				c-16.898,0-30.596-13.699-30.596-30.599C12.012,81.526,25.709,67.829,42.607,67.829 M42.607,63.829
@@ -152,7 +152,7 @@
             <div class="interaction-btn md-card md-btn" data-interaction="survey" style="width: 100%">
                 <div class="md-card-content">
 {{--                    <img src="{!! URL::asset('images/icons/encuesta.svg') !!}" alt="">--}}
-                    <svg style="height:115px; fill: #737373; stroke: #737373" viewBox="0 35 200 130">
+                    <svg style="height:115px; fill: #737373; stroke: #737373" viewBox="50 35 100 130">
 <g>
     <g>
         <path fill="none" stroke-width="4" stroke-miterlimit="10" d="M132.842,52.108h-5.148v3.893
@@ -193,7 +193,7 @@
             <div class="interaction-btn md-card md-btn" data-interaction="video" style="width: 100%">
                 <div class="md-card-content">
                     {{--<img src="{!! URL::asset('images/icons/video.svg') !!}" alt="">--}}
-                    <svg style="height:115px; fill: #737373; stroke: #737373" viewBox="0 45 200 110">
+                    <svg style="height:115px; fill: #737373; stroke: #737373" viewBox="50 45 100 110">
 <g>
     <circle fill="none" stroke-width="4" stroke-miterlimit="10" cx="100" cy="100" r="47.233"/>
 
