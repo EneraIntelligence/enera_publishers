@@ -56,23 +56,35 @@
         <div class="uk-width-1-2">
             <img style="max-height:200px" class="uk-align-center banner-1" src="http://placehold.it/600x602?text=600x602" alt="">
 
-            <div id="file_upload-drop" class="uk-file-upload">
+            <div id="file_upload-drop" class="uk-file-upload parsley-row">
                 <p class="uk-text">Banner dispositivos pequeños</p>
                 <a class="uk-form-file md-btn">elige un archivo
-                    <input onchange="showPreview(event,'.banner-1')" id="file_upload-select" type="file" accept='image/*'>
+                    <input id="file_upload-select" type="file" required accept='image/*'>
                 </a>
+                <div class="parsley-errors-list filled banner-1-errors">
+
+                </div>
             </div>
         </div>
 
+
         <div class="uk-width-1-2">
+
             <img style="max-height:200px" class="uk-align-center banner-2" src="http://placehold.it/684x864?text=684x864" alt="">
 
-            <div id="file_upload-drop2" class="uk-file-upload">
+            <div id="file_upload-drop2" class="uk-file-upload parsley-row">
                 <p class="uk-text">Banner dispositivos altos</p>
                 <a class="uk-form-file md-btn">elige un archivo
-                    <input onchange="showPreview(event,'.banner-2')" id="file_upload-select_2" type="file" accept='image/*'>
+                    <input class="" id="file_upload-select_2" type="file" required accept='image/*'>
                 </a>
+                <div class="parsley-errors-list filled banner-2-errors">
+
+                </div>
             </div>
+
+
+            {{--<p class="uk-text-center md-input-danger">El tamaño de la imagen no coincide</p>--}}
+
         </div>
 
 

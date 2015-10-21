@@ -52,7 +52,7 @@ altair_wizard = {
                         }
                         return true;
                     }
-                    else if(altair_wizard.interaction==null)
+                    else if(create_campaign_helper.interaction==null)
                     {
                         return false;
                     }
