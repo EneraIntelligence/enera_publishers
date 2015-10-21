@@ -39,6 +39,9 @@ altair_wizard = {
                 },
                 onStepChanging: function (event, currentIndex, newIndex) {
 
+                    //quick test, remove!!!!
+                    return true;
+
                     var step = $wizard_advanced.find('.body.current').attr('data-step'),
                         $current_step = $('.body[data-step=\"' + step + '\"]');
 
@@ -65,7 +68,7 @@ altair_wizard = {
                     // adjust content height
                     $window.resize();
 
-                    return $current_step.find('.md-input-danger').length ? false : true;
+                    return $current_step.find('.md-input-danger:visible').length ? false : true;
                 },
                 onFinished: function () {
                     var form_serialized = JSON.stringify($wizard_advanced_form.serializeObject(), null, 2);

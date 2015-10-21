@@ -1,53 +1,169 @@
 <!-- second section -->
-<h3>Alcance de la interacción</h3>
+<h3>Alcance de la campaña</h3>
 <section>
+
     <h2 class="heading_a">
-        Vehicle information
-        <span class="sub-heading">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</span>
+        Duración
     </h2>
+
+
+    <div class="uk-grid">
+        <div class="uk-width-medium-1-2">
+            <div class="uk-input-group">
+                <span class="uk-input-group-addon"><i class="uk-input-group-icon uk-icon-calendar"></i></span>
+                <label for="uk_dp_1">Fecha de inicio</label>
+                <input class="md-input" type="text" id="uk_dp_1" data-uk-datepicker="{format:'DD.MM.YYYY'}">
+            </div>
+        </div>
+
+        <div class="uk-width-medium-1-2">
+            <div class="uk-input-group">
+                <span class="uk-input-group-addon"><i class="uk-input-group-icon uk-icon-calendar"></i></span>
+                <label for="uk_dp_1">Fecha final</label>
+                <input class="md-input" type="text" id="uk_dp_1" data-uk-datepicker="{format:'DD.MM.YYYY'}">
+            </div>
+        </div>
+    </div>
     <hr class="md-hr"/>
-    <div class="uk-grid uk-grid-width-large-1-2 uk-grid-width-xlarge-1-4" data-uk-grid-margin>
-        <div class="parsley-row">
-            <label for="wizard_vehicle_title_number">Title Number<span class="req">*</span></label>
-            <input type="text" name="wizard_vehicle_title_number" id="wizard_vehicle_title_number" required class="md-input" />
+
+    <h2 class="heading_a">
+        Segmentación
+    </h2>
+
+    <div class="uk-grid">
+
+        <div class="uk-width-medium-1-10">
         </div>
-        <div class="parsley-row">
-            <label for="wizard_vehicle_vin">VIN<span class="req">*</span></label>
-            <input type="text" name="wizard_vehicle_vin" id="wizard_vehicle_vin" required class="md-input" />
+
+        <div class="uk-width-medium-3-10">
+            <input type="text" id="age_slider" name="age_slider"
+                   data-ion-slider
+                   data-min="0" data-max="100"
+                   data-from="13" data-to="60"
+                   data-from-min="13"
+                   data-type="int" data-grid="true" data-postfix=" años"/>
         </div>
-        <div class="parsley-row">
-            <label for="wizard_vehicle_plate_number">Current Plate Number<span class="req">*</span></label>
-            <input type="text" name="wizard_vehicle_plate_number" id="wizard_vehicle_plate_number" required class="md-input" />
+
+        <div class="uk-width-medium-2-10">
         </div>
-        <div class="parsley-row">
-            <label for="wizard_vehicle_expiration">Expiration Date<span class="req">*</span></label>
-            <input type="text" name="wizard_vehicle_expiration" id="wizard_vehicle_expiration" required class="md-input" data-parsley-americandate data-parsley-americandate-message="This value should be a valid date (MM.DD.YYYY)" data-uk-datepicker="{format:'MM.DD.YYYY'}" />
+
+
+        <div class="uk-width-medium-3-10">
+            <input type="text" id="gender_slider" name="gender_slider"
+                   data-ion-slider
+                   data-min="0" data-max="2"
+                   data-values="mujeres, -, hombres"
+                   data-type="int" data-grid="true"
+                   data-from-max="1" data-to-min="1"
+                   data-step='1' data-force_edges="true"/>
+        </div>
+
+        <div class="uk-width-medium-1-10">
+        </div>
+
+    </div>
+
+    <div class="uk-grid">
+
+        <div class="uk-width-1-1">
+            <div style="margin: 0 auto; width:677px;">
+                <span class="icheck-inline">
+                    <input class="wizard-icheck" type="checkbox" name="checkbox_demo_inline" id="checkbox_demo_inline_1"/>
+                    <label for="checkbox_demo_inline_1" class="inline-label">Lunes</label>
+                </span>
+                <span class="icheck-inline">
+                    <input class="wizard-icheck" type="checkbox" name="checkbox_demo_inline" id="checkbox_demo_inline_2"/>
+                    <label for="checkbox_demo_inline_2" class="inline-label">Martes</label>
+                </span>
+                <span class="icheck-inline">
+                    <input class="wizard-icheck" type="checkbox" name="checkbox_demo_inline" id="checkbox_demo_inline_3"/>
+                    <label for="checkbox_demo_inline_3" class="inline-label">Miercoles</label>
+                </span>
+                <span class="icheck-inline">
+                    <input class="wizard-icheck" type="checkbox" name="checkbox_demo_inline" id="checkbox_demo_inline_4"/>
+                    <label for="checkbox_demo_inline_4" class="inline-label">Jueves</label>
+                </span>
+                <span class="icheck-inline">
+                    <input class="wizard-icheck" type="checkbox" name="checkbox_demo_inline" id="checkbox_demo_inline_5"/>
+                    <label for="checkbox_demo_inline_5" class="inline-label">Viernes</label>
+                </span>
+                <span class="icheck-inline">
+                    <input class="wizard-icheck" type="checkbox" name="checkbox_demo_inline" id="checkbox_demo_inline_6"/>
+                    <label for="checkbox_demo_inline_6" class="inline-label">Sábado</label>
+                </span>
+                <span class="icheck-inline">
+                    <input class="wizard-icheck" type="checkbox" name="checkbox_demo_inline" id="checkbox_demo_inline_7"/>
+                    <label for="checkbox_demo_inline_7" class="inline-label">Domingo</label>
+                </span>
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+    <div class="uk-grid">
+        <div class="uk-width-1-1">
+            horas del dia
+            <div class="uk-width-1-4">
+                <div class="uk-width-1-6"></div>
+                <div class="uk-width-1-6"></div>
+                <div class="uk-width-1-6"></div>
+                <div class="uk-width-1-6"></div>
+                <div class="uk-width-1-6"></div>
+                <div class="uk-width-1-6"></div>
+            </div>
+            <div class="uk-width-1-4">
+                <div class="uk-width-1-6"></div>
+                <div class="uk-width-1-6"></div>
+                <div class="uk-width-1-6"></div>
+                <div class="uk-width-1-6"></div>
+                <div class="uk-width-1-6"></div>
+                <div class="uk-width-1-6"></div>
+            </div>
+            <div class="uk-width-1-4">
+                <div class="uk-width-1-6"></div>
+                <div class="uk-width-1-6"></div>
+                <div class="uk-width-1-6"></div>
+                <div class="uk-width-1-6"></div>
+                <div class="uk-width-1-6"></div>
+                <div class="uk-width-1-6"></div>
+            </div>
+            <div class="uk-width-1-4">
+                <div class="uk-width-1-6"></div>
+                <div class="uk-width-1-6"></div>
+                <div class="uk-width-1-6"></div>
+                <div class="uk-width-1-6"></div>
+                <div class="uk-width-1-6"></div>
+                <div class="uk-width-1-6"></div>
+            </div>
         </div>
     </div>
-    <div class="uk-grid uk-grid-width-large-1-3 uk-grid-width-xlarge-1-6" data-uk-grid-margin>
-        <div class="parsley-row">
-            <label for="wizard_vehicle_year">Registration Year</label>
-            <input type="text" name="wizard_vehicle_year" id="wizard_vehicle_year" class="md-input" data-uk-datepicker="{format:'MM.YYYY'}" />
+
+
+    <div class="uk-grid">
+        <div class="uk-width-1-3">
+            <label class="uk-form-label">Restricciones por persona</label>
+            <span class="icheck">
+                <input type="radio" name="wizard_status" id="wizard_status_repeat" checked class="wizard-icheck" value="repeat" />
+                <label for="wizard_status_repeat" class="inline-label">Mostrar sin restricciones</label>
+            </span>
+            <div class="clearfix"></div>
+            <span class="icheck">
+                <input type="radio" name="wizard_status" id="wizard_status_unique_day" class="wizard-icheck" value="unique_day" />
+                <label for="wizard_status_unique_day" class="inline-label">Mostrar sólo una vez al día</label>
+            </span>
+            <div class="clearfix"></div>
+            <span class="icheck">
+                <input type="radio" name="wizard_status" id="wizard_status_unique" class="wizard-icheck" value="unique" />
+                <label for="wizard_status_unique" class="inline-label">Mostrar sólo una vez por persona</label>
+            </span>
         </div>
-        <div class="parsley-row">
-            <label for="wizard_vehicle_make">Make</label>
-            <input type="text" name="wizard_vehicle_make" id="wizard_vehicle_make" class="md-input" />
-        </div>
-        <div class="parsley-row">
-            <label for="wizard_vehicle_model">Model<span class="req">*</span></label>
-            <input type="text" name="wizard_vehicle_model" id="wizard_vehicle_model" required class="md-input" />
-        </div>
-        <div class="parsley-row">
-            <label for="wizard_vehicle_body">Body Type<span class="req">*</span></label>
-            <input type="text" name="wizard_vehicle_body" id="wizard_vehicle_body" required class="md-input" />
-        </div>
-        <div class="parsley-row">
-            <label for="wizard_vehicle_axles">Axles</label>
-            <input type="text" name="wizard_vehicle_axles" id="wizard_vehicle_axles" class="md-input" />
-        </div>
-        <div class="parsley-row">
-            <label for="wizard_vehicle_fuel">Fuel<span class="req">*</span></label>
-            <input type="text" name="wizard_vehicle_fuel" id="wizard_vehicle_fuel" required class="md-input" />
+
+        <div class="uk-width-2-3">
+            google maps
         </div>
     </div>
+
 </section>

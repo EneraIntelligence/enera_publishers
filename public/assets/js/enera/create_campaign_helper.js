@@ -26,6 +26,9 @@ create_campaign_helper =
         $("#file_upload-select_2").change(function(){
             create_campaign_helper.showPreview(event,'.banner-2', 684, 864)
         });
+
+        //startup slider
+        $('[data-ion-slider]').ionRangeSlider();
     },
     setInteraction: function(interactionId)
     {

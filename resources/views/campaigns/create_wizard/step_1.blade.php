@@ -2,8 +2,8 @@
 <h3>Tipo de campaña</h3>
 <section>
     <h2 class="heading_a">
-        Escoje un tipo de campaña
-        <span class="sub-heading">escoje un tipo de interaccion</span>
+        Elige una interacción
+        <span class="sub-heading"></span>
     </h2>
     <hr class="md-hr"/>
 

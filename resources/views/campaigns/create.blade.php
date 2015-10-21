@@ -11,6 +11,7 @@
                     <div class="md-card uk-margin-large-bottom">
                         <div class="md-card-content">
                             <form class="uk-form-stacked" id="wizard_advanced_form">
+
                                 <div id="wizard_advanced">
 
                                     @include('campaigns.create_wizard.step_1')
@@ -118,6 +119,9 @@
             </div>
         </div>
     </div>
+
+
+
 @stop
 
 @section('scripts')
@@ -135,8 +139,11 @@
     {!! HTML::script('assets/js/custom/wizard_steps.js') !!}
     <!--  forms wizard functions -->
     {!! HTML::script('assets/js/pages/forms_wizard.js') !!}
+            <!-- slider script -->
+    {!! HTML::script('bower_components/ionrangeslider/js/ion.rangeSlider.min.js') !!}
 
-            <!-- animation library -->
+
+    <!-- animation library -->
     {!! HTML::script('assets/js/gsap/TweenLite.min.js') !!}
     {!! HTML::script('assets/js/gsap/plugins/CSSPlugin.min.js') !!}
     {!! HTML::script('assets/js/gsap/easing/EasePack.min.js') !!}
@@ -147,5 +154,6 @@
 
 
     {{--{!! HTML::script('assets/js/pages/forms_file_upload.js') !!}--}}
+
 
 @stop
