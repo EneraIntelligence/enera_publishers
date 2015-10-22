@@ -3,8 +3,75 @@ $(function() {
 
     // page onload functions
     create_campaign_helper.init();
+    //input_hours.init();
+
+
+    $("#time_1_slider").ionRangeSlider({
+        type: "double",
+        min:0,
+        max:24,
+        postfix:":00",
+        from_min:5,
+        from:5,
+        to:24,
+        step:1,
+        force_edges: true,
+        onChange: function(data)
+        {
+            var slider2 = $("#time_2_slider").data("ionRangeSlider");
+            slider2.update({
+                from_min: data.to,
+                to_min: data.to,
+            });
+
+
+            //console.log(data.to);
+        }
+    });
 
 });
+
+input_hours =
+{
+    init: function()
+    {
+        var container = $("#input-hours");
+        console.log("input_hours.init: "+container);
+        container.append(input_hours.createBtns(0,5));
+        container.append(input_hours.createBtns(6,11));
+        container.append(input_hours.createBtns(12,17));
+        container.append(input_hours.createBtns(18,23));
+
+        //activate buttons actions
+        $(".time-btn").each(function()
+        {
+            $(this).hover(function()
+            {
+                $(this).css("background-color","#C0C0C0")
+            }, function()
+            {
+                $(this).css("background-color","#F0F0F0")
+            });
+            //$(this).click()
+        });
+
+    },
+    createBtns: function(start, end)
+    {
+        var content = '<div class="uk-width-1-4 uk-width-small-1-1">';
+        content += '<div class="uk-grid uk-grid-collapse">';
+
+
+        for(var i = start; i<=end;i++)
+        {
+            content+='<div id="time_'+i+'" class="time-btn uk-width-1-6 uk-text-center" style="cursor:pointer; background-color: #F0F0F0"><span>'+i+'</span></div>';
+        }
+
+        content += '</div>';
+        content += '</div>';
+        return content;
+    }
+}
 
 create_campaign_helper =
 {

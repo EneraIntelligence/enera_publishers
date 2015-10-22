@@ -53,7 +53,7 @@
 
     <div class="uk-grid">
 
-        <div class="uk-width-1-2">
+        <div class="uk-width-medium-1-2 uk-small-width-1-1">
             <img style="max-height:200px" class="uk-align-center banner-1" src="http://placehold.it/600x602?text=600x602" alt="">
 
             <div id="file_upload-drop" class="uk-file-upload parsley-row">
@@ -68,7 +68,8 @@
         </div>
 
 
-        <div class="uk-width-1-2">
+
+        <div class="uk-width-medium-1-2 uk-small-width-1-1">
 
             <img style="max-height:200px" class="uk-align-center banner-2" src="http://placehold.it/684x864?text=684x864" alt="">
 
