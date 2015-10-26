@@ -118,6 +118,12 @@
 
                         @foreach($campaigns as $campaign)
 
+                            @if(array_key_exists($campaign->interaction['name'], $campaign_icons))
+                                <?php $campaign_icon = $campaign_icons[ $campaign->interaction['name'] ]; ?>
+                            @else
+                                <?php $campaign_icon = $campaign_icons['']; ?>
+                            @endif
+
                             <div data-uk-filter="campaign-{{$campaign->status}}, action-{{$campaign->interaction['name']}}"
                                  data-name="{{$campaign->name}}"
                                  data-action="{{$campaign->interaction['name']}}"
@@ -133,12 +139,12 @@
                                         <div class="interaction-icon uk-width-large-1-10 uk-hidden-small">
                                             <div class="uk-vertical-align" style="height:80px"
                                                  data-uk-tooltip="{cls:'long-text'}"
-                                                 title="{{$campaign->action}} - {{$campaign->status}}"
+                                                 title="{{$campaign->interaction['name']}} - {{$campaign->status}}"
                                                  style="margin-bottom: 10px">
                                                 <i class="uk-vertical-align-middle
                                                 material-icons md-36
                                                 {!! $status_colors[$campaign->status]!!}">
-                                                    {{$campaign_icons[$campaign->interaction['name']]}}
+                                                    {{ $campaign_icon }}
                                                 </i>
 
                                             </div>
