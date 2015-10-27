@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <div class="uk-width-large-3-10 uk-hidden-small">
-                    <div class="md-card">
+                    <div class="md-card preview-container">
                         <div class="md-card-content">
 
                             <!-- preview -->

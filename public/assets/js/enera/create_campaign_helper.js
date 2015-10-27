@@ -3,34 +3,167 @@ $(function() {
 
     // page onload functions
     create_campaign_helper.init();
-    //input_hours.init();
-
-
-    $("#time_1_slider").ionRangeSlider({
-        type: "double",
-        min:0,
-        max:24,
-        postfix:":00",
-        from_min:5,
-        from:5,
-        to:24,
-        step:1,
-        force_edges: true,
-        onChange: function(data)
-        {
-            var slider2 = $("#time_2_slider").data("ionRangeSlider");
-            slider2.update({
-                from_min: data.to,
-                to_min: data.to,
-            });
-
-
-            //console.log(data.to);
-        }
-    });
+    survey.init();
+    time_sliders.setup();
+    preview.init();
+    //input_hours.init(); //not used anymore
 
 });
 
+survey=
+{
+    currentQuestion: 5,
+    questionTemplate: null,
+    init: function()
+    {
+        addQuestionBtn = $("#add_question");
+        removeQuestionBtn = $("#remove_question");
+
+        addQuestionBtn.click(function()
+        {
+            survey.showQuestion();
+        });
+
+        removeQuestionBtn.click(function()
+        {
+            survey.hideQuestion();
+        });
+
+        survey.questionTemplate = $(".question").first().clone();
+
+        for(var i=2; i<=5;i++)
+        {
+            //survey.addQuestion();
+            survey.hideQuestion();
+        }
+    },
+
+    addQuestion: function()
+    {
+        //no more than 5 questions
+        if(survey.currentQuestion>=5)
+            return;
+
+        removeQuestionBtn = $("#remove_question");
+        removeQuestionBtn.removeClass("disabled");
+
+        survey.currentQuestion++;
+
+        questionContainer = $(".questionContainer");
+
+
+        newQuestion = survey.questionTemplate.clone();
+        questionHtml = newQuestion.html();
+
+        //replacing identifiers
+        questionHtml = questionHtml.replace(/q1/g,"q"+survey.currentQuestion);
+        questionHtml = questionHtml.replace("Pregunta 1","Pregunta "+survey.currentQuestion);
+
+        newQuestion.html(questionHtml);
+
+        newQuestion.appendTo(questionContainer);
+
+        if(survey.currentQuestion==5)
+        {
+            addQuestionBtn = $("#add_question");
+            addQuestionBtn.addClass("disabled");
+        }
+
+        $window.resize();
+    },
+
+    showQuestion: function()
+    {
+        //no more than 5 questions
+        if(survey.currentQuestion>=5)
+            return;
+
+
+        var removeQuestionBtn = $("#remove_question");
+        removeQuestionBtn.removeClass("disabled");
+
+        var question = $(".question").eq(survey.currentQuestion);
+        question.css('display','block');
+
+        survey.currentQuestion++;
+
+        if(survey.currentQuestion==5)
+        {
+            var addQuestionBtn = $("#add_question");
+            addQuestionBtn.addClass("disabled");
+        }
+
+
+        $window.resize();
+    },
+
+    hideQuestion: function()
+    {
+        if(survey.currentQuestion<=1)
+            return;
+
+        var addQuestionBtn = $("#add_question");
+        addQuestionBtn.removeClass("disabled");
+
+        console.log("removing q"+survey.currentQuestion);
+
+        survey.currentQuestion--;
+
+        var question = $(".question").eq(survey.currentQuestion);
+        question.css('display','none');
+
+        if(survey.currentQuestion==1)
+        {
+            var removeQuestionBtn = $("#remove_question");
+            removeQuestionBtn.addClass("disabled");
+        }
+
+        $window.resize();
+    }
+}
+
+time_sliders=
+{
+    setup: function()
+    {
+        $("#time_1_slider").ionRangeSlider({
+            type: "double",
+            min:0,
+            max:24,
+            postfix:":00",
+            from_min:5,
+            from:5,
+            to:24,
+            step:1,
+            force_edges: true,
+            onChange: function(data)
+            {
+                var slider2 = $("#time_2_slider").data("ionRangeSlider");
+                slider2.update({
+                    from_min: data.to,
+                    to_min: data.to,
+                });
+
+            }
+        });
+    }
+}
+
+preview =
+{
+    init:function()
+    {
+        var prevContainer = $(".preview-container");
+        $(window).scroll(function() {
+            //console.log( "Handler for .scroll() called. "+ prevContainer.scrollTop() );
+            prevContainer
+                .stop()
+                .animate({"marginTop": ($(window).scrollTop() )}, "slow" );
+        });
+    }
+}
+
+/*
 input_hours =
 {
     init: function()
@@ -72,6 +205,7 @@ input_hours =
         return content;
     }
 }
+*/
 
 create_campaign_helper =
 {

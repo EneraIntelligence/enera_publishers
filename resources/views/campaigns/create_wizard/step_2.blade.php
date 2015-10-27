@@ -20,36 +20,187 @@
         </div>
     </div>
 
-    <div class="uk-grid step2-field survey">
-        <div class="uk-width-medium-1-1 parsley-row">
-            <label for="wizard_fullname">Pregunta 1<span class="req">*</span></label>
-            <input type="text" name="wizard_q1" id="wizard_q1" required class="md-input" />
+    <div class="uk-block step2-field survey questionContainer">
+
+        <!-- q1 -->
+        <div class="uk-grid question">
+            <div class="uk-grid uk-width-medium-1-1">
+                <div class="uk-width-medium-1-1 parsley-row">
+                    <label for="wizard_q1">Pregunta 1<span class="req">*</span></label>
+                    <input type="text" name="wizard_q1" id="wizard_q1" required class="md-input" />
+                </div>
+            </div>
+
+            <div class="uk-grid uk-width-medium-1-1">
+
+                <div class="uk-width-medium-1-4 parsley-row">
+                    <label id="q1_label" for="wizard_q1_a1">Respuesta 1<span class="req">*</span></label>
+                    <input type="text" name="wizard_q1_a1" id="wizard_q2_a1" required class="md-input" />
+                </div>
+
+                <div class="uk-width-medium-1-4 parsley-row">
+                    <label for="wizard_q1_a2">Respuesta 2<span class="req">*</span></label>
+                    <input type="text" name="wizard_q1_a2" id="wizard_q2_a2" required class="md-input" />
+                </div>
+
+                <div class="uk-width-medium-1-4 parsley-row">
+                    <label for="wizard_q1_a3">Respuesta 3</label>
+                    <input type="text" name="wizard_q1_a3" id="wizard_q2_a3" class="md-input" />
+                </div>
+
+                <div class="uk-width-medium-1-4 parsley-row">
+                    <label for="wizard_q1_a4">Respuesta 4</label>
+                    <input type="text" name="wizard_q1_a4" id="wizard_q2_a4" class="md-input" />
+                </div>
+
+            </div>
         </div>
+
+        <!-- q2 -->
+        <div class="uk-grid question">
+            <div class="uk-grid uk-width-medium-1-1">
+                <div class="uk-width-medium-1-1 parsley-row">
+                    <label for="wizard_q2">Pregunta 2<span class="req">*</span></label>
+                    <input type="text" name="wizard_q2" id="wizard_q2" required class="md-input" />
+                </div>
+            </div>
+
+            <div class="uk-grid uk-width-medium-1-1">
+
+                <div class="uk-width-medium-1-4 parsley-row">
+                    <label id="q2_label" for="wizard_q2_a1">Respuesta 1<span class="req">*</span></label>
+                    <input type="text" name="wizard_q2_a1" id="wizard_q2_a1" required class="md-input" />
+                </div>
+
+                <div class="uk-width-medium-1-4 parsley-row">
+                    <label for="wizard_q2_a2">Respuesta 2<span class="req">*</span></label>
+                    <input type="text" name="wizard_q2_a2" id="wizard_q2_a2" required class="md-input" />
+                </div>
+
+                <div class="uk-width-medium-1-4 parsley-row">
+                    <label for="wizard_q2_a3">Respuesta 3</label>
+                    <input type="text" name="wizard_q2_a3" id="wizard_q2_a3" class="md-input" />
+                </div>
+
+                <div class="uk-width-medium-1-4 parsley-row">
+                    <label for="wizard_q2_a4">Respuesta 4</label>
+                    <input type="text" name="wizard_q2_a4" id="wizard_q2_a4" class="md-input" />
+                </div>
+
+            </div>
+        </div>
+
+        <!-- q3 -->
+        <div class="uk-grid question">
+            <div class="uk-grid uk-width-medium-1-1">
+                <div class="uk-width-medium-1-1 parsley-row">
+                    <label for="wizard_q3">Pregunta 3<span class="req">*</span></label>
+                    <input type="text" name="wizard_q3" id="wizard_q3" required class="md-input" />
+                </div>
+            </div>
+
+            <div class="uk-grid uk-width-medium-1-1">
+
+                <div class="uk-width-medium-1-4 parsley-row">
+                    <label id="q3_label" for="wizard_q3_a1">Respuesta 1<span class="req">*</span></label>
+                    <input type="text" name="wizard_q3_a1" id="wizard_q2_a1" required class="md-input" />
+                </div>
+
+                <div class="uk-width-medium-1-4 parsley-row">
+                    <label for="wizard_q3_a2">Respuesta 2<span class="req">*</span></label>
+                    <input type="text" name="wizard_q3_a2" id="wizard_q2_a2" required class="md-input" />
+                </div>
+
+                <div class="uk-width-medium-1-4 parsley-row">
+                    <label for="wizard_q3_a3">Respuesta 3</label>
+                    <input type="text" name="wizard_q3_a3" id="wizard_q2_a3" class="md-input" />
+                </div>
+
+                <div class="uk-width-medium-1-4 parsley-row">
+                    <label for="wizard_q3_a4">Respuesta 4</label>
+                    <input type="text" name="wizard_q3_a4" id="wizard_q2_a4" class="md-input" />
+                </div>
+
+            </div>
+        </div>
+
+        <!-- q4 -->
+        <div class="uk-grid question">
+            <div class="uk-grid uk-width-medium-1-1">
+                <div class="uk-width-medium-1-1 parsley-row">
+                    <label for="wizard_q4">Pregunta 4<span class="req">*</span></label>
+                    <input type="text" name="wizard_q4" id="wizard_q4" required class="md-input" />
+                </div>
+            </div>
+
+            <div class="uk-grid uk-width-medium-1-1">
+
+                <div class="uk-width-medium-1-4 parsley-row">
+                    <label id="q4_label" for="wizard_q4_a1">Respuesta 1<span class="req">*</span></label>
+                    <input type="text" name="wizard_q4_a1" id="wizard_q2_a1" required class="md-input" />
+                </div>
+
+                <div class="uk-width-medium-1-4 parsley-row">
+                    <label for="wizard_q4_a2">Respuesta 2<span class="req">*</span></label>
+                    <input type="text" name="wizard_q4_a2" id="wizard_q2_a2" required class="md-input" />
+                </div>
+
+                <div class="uk-width-medium-1-4 parsley-row">
+                    <label for="wizard_q4_a3">Respuesta 3</label>
+                    <input type="text" name="wizard_q4_a3" id="wizard_q2_a3" class="md-input" />
+                </div>
+
+                <div class="uk-width-medium-1-4 parsley-row">
+                    <label for="wizard_q4_a4">Respuesta 4</label>
+                    <input type="text" name="wizard_q4_a4" id="wizard_q2_a4" class="md-input" />
+                </div>
+
+            </div>
+        </div>
+
+        <!-- q5 -->
+        <div class="uk-grid question">
+            <div class="uk-grid uk-width-medium-1-1">
+                <div class="uk-width-medium-1-1 parsley-row">
+                    <label for="wizard_q5">Pregunta 5<span class="req">*</span></label>
+                    <input type="text" name="wizard_q5" id="wizard_q5" required class="md-input" />
+                </div>
+            </div>
+
+            <div class="uk-grid uk-width-medium-1-1">
+
+                <div class="uk-width-medium-1-4 parsley-row">
+                    <label id="q5_label" for="wizard_q5_a1">Respuesta 1<span class="req">*</span></label>
+                    <input type="text" name="wizard_q5_a1" id="wizard_q2_a1" required class="md-input" />
+                </div>
+
+                <div class="uk-width-medium-1-4 parsley-row">
+                    <label for="wizard_q5_a2">Respuesta 2<span class="req">*</span></label>
+                    <input type="text" name="wizard_q5_a2" id="wizard_q2_a2" required class="md-input" />
+                </div>
+
+                <div class="uk-width-medium-1-4 parsley-row">
+                    <label for="wizard_q5_a3">Respuesta 3</label>
+                    <input type="text" name="wizard_q5_a3" id="wizard_q2_a3" class="md-input" />
+                </div>
+
+                <div class="uk-width-medium-1-4 parsley-row">
+                    <label for="wizard_q5_a4">Respuesta 4</label>
+                    <input type="text" name="wizard_q5_a4" id="wizard_q2_a4" class="md-input" />
+                </div>
+
+            </div>
+        </div>
+
     </div>
 
-    <div class="uk-grid step2-field survey">
+    <div class="uk-block step2-field survey">
 
-        <div class="uk-width-medium-1-4 parsley-row">
-            <label for="wizard_fullname">Respuesta 1<span class="req">*</span></label>
-            <input type="text" name="wizard_q1_a1" id="wizard_q2_a1" required class="md-input" />
-        </div>
-
-        <div class="uk-width-medium-1-4 parsley-row">
-            <label for="wizard_fullname">Respuesta 2<span class="req">*</span></label>
-            <input type="text" name="wizard_q1_a2" id="wizard_q2_a2" required class="md-input" />
-        </div>
-
-        <div class="uk-width-medium-1-4 parsley-row">
-            <label for="wizard_fullname">Respuesta 3</label>
-            <input type="text" name="wizard_q1_a3" id="wizard_q2_a3" class="md-input" />
-        </div>
-
-        <div class="uk-width-medium-1-4 parsley-row">
-            <label for="wizard_fullname">Respuesta 4</label>
-            <input type="text" name="wizard_q1_a4" id="wizard_q2_a4" class="md-input" />
-        </div>
+        <div class="md-btn md-btn-danger uk-float-left disabled" id="remove_question">Quitar pregunta</div>
+        <div class="md-btn md-btn-success uk-float-right" id="add_question">Añadir pregunta</div>
 
     </div>
+
 
     <div class="uk-grid">
 
