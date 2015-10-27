@@ -3,6 +3,7 @@
 namespace Publishers\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Publishers\Campaign;
 use Publishers\Http\Requests;
 use Publishers\Http\Controllers\Controller;
 use Auth;
@@ -17,8 +18,12 @@ class UserController extends Controller
      */
     public function index()
     {
-        $this->user = Auth::user();
-        return view('profile.index', ['user' => $this->user]);
+//        $this->user = Auth::user();
+        $all = Campaign::where('client_id', '55846348a826cafe2f905bc1')->limit(10)->get();
+        $active = Campaign::where('administrator_id', Auth::user()->_id)->where('status' , 'active')->count();
+        $closed = Campaign::where('administrator_id', Auth::user()->_id)->where('status' , 'closed')->count();
+        $canceled = Campaign::where('administrator_id', Auth::user()->_id)->where('status' , 'canceled')->count();
+        return view('profile.index', ['user' => Auth::user(), 'all' => $all, 'active' => $active, 'closed' => $closed, 'canceled' => $canceled]);
     }
 
     /**
@@ -56,12 +61,13 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+//     * @param  int  $id
      * @return Response
      */
-    public function edit($id)
+    public function edit()
     {
-        //
+//        $this->user = Auth::user();
+        return view('profile.edit', ['user' => Auth::user()]);
     }
 
     /**
@@ -85,5 +91,16 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    public function charts()
+    {
+        $this->user = Auth::user();
+        $campaigns = Campaign::where('client_id', Auth::user()->id)->where('status' , 'active')->count();
+        $closed = Campaign::where('client_id', Auth::user()->id)->where('status' , 'closed')->count();
+        $canceled = Campaign::where('client_id', Auth::user()->id)->where('status' , 'canceled')->count();
+        $all = Campaign::where('client_id')->get();
+        return view('profile.charts', ['user' => Auth::user(), 'campaign' => $campaigns, 'closed' => $closed, 'canceled' => $canceled, 'all' => $all]);
     }
 }

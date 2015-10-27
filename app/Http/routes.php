@@ -23,6 +23,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['prefix' => 'profile', 'as' => 'profile::'], function () {
         Route::get('/', ['as' => 'index', 'uses' => 'UserController@index']);
+        Route::get('/edit', ['as' => 'edit', 'uses' => 'UserController@edit']);
+        Route::get('/charts', ['as' => 'charts', 'uses' => 'UserController@charts']);
     });
 
     Route::match(['get', 'post'], 'logout', ['as' => 'auth.logout', 'uses' => 'AuthController@logout']);
@@ -32,3 +34,8 @@ Route::group(['middleware' => 'auth.ready'], function () {
     Route::get('login', ['as' => 'auth.index', 'uses' => 'AuthController@index']);
     Route::post('login', ['as' => 'auth.login', 'uses' => 'AuthController@login']);
 });
+
+
+
+
+//Rutas de pruebas
