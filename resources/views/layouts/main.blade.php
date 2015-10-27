@@ -296,7 +296,6 @@
 {!! HTML::script('bower_components/d3/d3.min.js') !!}
 {!! HTML::script('bower_components/c3js-chart/c3.min.js') !!}
 
-{!! HTML::script(asset('js/jquery.min.js')) !!}
 
 <script>
     $(function () {
