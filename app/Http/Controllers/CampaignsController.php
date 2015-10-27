@@ -9,6 +9,7 @@ use Input;
 use Illuminate\Http\Request;
 use Auth;
 use Publishers\Campaign;
+use Publishers\Branche;
 use Publishers\Item;
 use Publishers\Libraries\FileCloud;
 
@@ -99,7 +100,20 @@ class CampaignsController extends Controller
      */
     public function create()
     {
-        return view('campaigns.create');
+        //get branches data
+        $branches = Branche::all();
+//      $branches = Branche::where('accept_ads', true)->get();
+
+        /*
+        foreach($branches as $branch)
+        {
+            echo $branch->_id.": ";
+            echo $branch->name.": ";
+            echo $branch->lat.",";
+            echo $branch->lng."   -   ";
+        }*/
+
+        return view('campaigns.create',compact('branches'));
     }
 
     /**

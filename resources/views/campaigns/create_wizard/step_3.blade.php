@@ -232,11 +232,54 @@
 
     </div>
 
+    <h2 class="heading_a">
+        Ubicaciones
+    </h2>
+
     <div class="uk-grid">
+        <div class="uk-width-1-1 uk-text-center">
+            <label>Selecciona donde aparecerá tu campaña haciendo click en los marcadores</label>
+        </div>
+    </div>
+
+    <div class="uk-grid">
+        <div class="uk-width-medium-1-3 uk-width-small-1-1">
+            <div class="uk-grid uk-grid-collapse">
+
+                <div class="uk-width-1-2">
+
+                    <img style="width:10%;" src="{!! URL::asset('images/enera_map_marker_on.png') !!}" alt="">
+                    <span class="uk-text-left uk-text-middle">Mostrar campaña</span>
 
 
-        <div class="uk-width-2-3">
-            google maps
+                </div>
+
+
+                <div class="uk-width-1-2">
+                    <img style="width:10%;" src="{!! URL::asset('images/enera_map_marker_off.png') !!}" alt="">
+                    No mostrar campaña
+                </div>
+
+                <hr class="uk-grid-divider">
+
+                <div class="uk-width-1-1">
+                    <div class="md-btn md-btn-success" id="select_markers">Seleccionar todo</div>
+                </div>
+
+                <hr class="uk-grid-divider">
+
+                <div class="uk-width-1-1">
+                    <div class="md-btn md-btn-danger" id="deselect_markers">Quitar todo</div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="uk-width-medium-2-3 uk-width-small-1-1">
+
+            <div id="googleMap" style="width:100%;height:380px;"></div>
+
         </div>
     </div>
 

@@ -7,6 +7,9 @@ $(function() {
     time_sliders.setup();
     preview.init();
     //input_hours.init(); //not used anymore
+    branchMap.setup();
+
+
 
 });
 
@@ -291,6 +294,104 @@ create_campaign_helper =
             //console.log("The image width is " +this.width + " and image height is " + this.height);
         };
         image.src = _URL.createObjectURL(input.files[0]);
+
+    }
+}
+
+branchMap =
+{
+    map:null,
+    center:null,
+    base_url:"",
+    branches:null,
+    markers:{},
+    setBranches:function(branchesJSON)
+    {
+        branchMap.branches = JSON.parse(branchesJSON);
+        //console.log( branchMap.branches );
+    },
+    setup:function()
+    {
+        branchMap.center = new google.maps.LatLng(23.8575691,-101.2433993);
+
+        var mapProp = {
+            center:branchMap.center,
+            zoom:5,
+            mapTypeId:google.maps.MapTypeId.ROADMAP
+        };
+
+        branchMap.map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+
+        var iconBase = branchMap.base_url+"/images/";
+
+        for(var i=0; i<branchMap.branches.length; i++)
+        {
+            var branch = branchMap.branches[i];
+
+            var marker=new google.maps.Marker({
+                position: new google.maps.LatLng(branch.lat, branch.lng),
+                animation: google.maps.Animation.DROP,
+                icon: iconBase + 'enera_map_marker_on.png'
+            });
+
+            marker.setMap(branchMap.map);
+
+            branchMap.attachMarkerClick(marker, branch._id);
+
+            branchMap.markers[branch._id] = {"marker":marker, "active":true};
+
+        }
+
+        var selectMarkersBtn = $("#select_markers");
+        var deselectMarkersBtn = $("#deselect_markers");
+
+        selectMarkersBtn.click(function()
+        {
+            for(var key in branchMap.markers)
+            {
+                var markerObj = branchMap.markers[key];
+                markerObj.active = true;
+                markerObj.marker.setIcon( iconBase + 'enera_map_marker_on.png' );
+            }
+        });
+
+        deselectMarkersBtn.click(function()
+        {
+            for(var key in branchMap.markers)
+            {
+                var markerObj = branchMap.markers[key];
+                markerObj.active = false;
+                markerObj.marker.setIcon( iconBase + 'enera_map_marker_off.png' );
+            }
+        });
+
+    },
+    attachMarkerClick:function(marker, _id)
+    {
+
+        google.maps.event.addListener(marker, 'click', function()
+        {
+            var iconBase = branchMap.base_url + "/images/";
+            if(branchMap.markers[_id].active)
+            {
+                marker.setIcon( iconBase + 'enera_map_marker_off.png' );
+                branchMap.markers[_id].active = false;
+            }
+            else
+            {
+                marker.setIcon( iconBase + 'enera_map_marker_on.png' );
+                branchMap.markers[_id].active = true;
+            }
+        });
+
+    },
+    refresh:function()
+    {
+        branchMap.map.panTo(branchMap.center);
+
+
+
+
 
     }
 }
