@@ -39,6 +39,9 @@ altair_wizard = {
                     {
                         google.maps.event.trigger(branchMap.map, 'resize');
                         branchMap.refresh();
+                    }else if(currentIndex==3)
+                    {
+                        finalScreen.fillData();
                     }
 
 

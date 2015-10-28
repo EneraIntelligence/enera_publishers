@@ -1,5 +1,5 @@
 <!-- first section -->
-<h3>Tipo de campaña</h3>
+<h3>Producto</h3>
 <section>
     <h2 class="heading_a">
         Elige una interacción

@@ -1,26 +1,33 @@
 <!-- second section -->
-<h3>Alcance de la campaña</h3>
+<h3>Segmentación</h3>
 <section>
 
     <h2 class="heading_a">
         Duración
     </h2>
 
+    <?php
+        $minDate = date("d.m.Y",mktime(0, 0, 0, date("m")  , date("d")+3, date("Y")));
+        $lang = "{ months: ['Enero','Febrero', 'Marzo', 'Abril', 'Mayo',
+                'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                weekdays:['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'] }";
+
+    ?>
 
     <div class="uk-grid">
         <div class="uk-width-medium-1-2">
             <div class="uk-input-group">
                 <span class="uk-input-group-addon"><i class="uk-input-group-icon uk-icon-calendar"></i></span>
-                <label for="uk_dp_1">Fecha de inicio</label>
-                <input class="md-input" type="text" id="uk_dp_1" data-uk-datepicker="{format:'DD.MM.YYYY'}">
+                <label for="start_date">Fecha de inicio</label>
+                <input class="md-input" type="text" name="start_date" id="start_date" data-uk-datepicker="{format:'DD.MM.YYYY', i18n:{!! $lang !!},  minDate: '{!! $minDate !!}' }">
             </div>
         </div>
 
         <div class="uk-width-medium-1-2">
             <div class="uk-input-group">
                 <span class="uk-input-group-addon"><i class="uk-input-group-icon uk-icon-calendar"></i></span>
-                <label for="uk_dp_1">Fecha final</label>
-                <input class="md-input" type="text" id="uk_dp_1" data-uk-datepicker="{format:'DD.MM.YYYY'}">
+                <label for="end_date">Fecha final</label>
+                <input class="md-input" type="text" name="end_date"   id="end_date"   data-uk-datepicker="{format:'DD.MM.YYYY', i18n:{!! $lang !!}, minDate: '{!! $minDate !!}' }">
             </div>
         </div>
     </div>
@@ -36,17 +43,17 @@
 
             <label class="uk-form-label">Género</label>
             <span class="icheck">
-                <input type="radio" name="wizard_gender" id="wizard_gender_men" class="wizard-icheck" value="men" />
+                <input type="radio" name="gender" id="wizard_gender_men" class="wizard-icheck" value="men" />
                 <label for="wizard_gender_men" class="inline-label">Hombres </label>
             </span>
             <div class="clearfix"></div>
             <span class="icheck">
-                <input type="radio" name="wizard_gender" id="wizard_gender_women" class="wizard-icheck" value="women" />
+                <input type="radio" name="gender" id="wizard_gender_women" class="wizard-icheck" value="women" />
                 <label for="wizard_gender_women" class="inline-label">Mujeres</label>
             </span>
             <div class="clearfix"></div>
             <span class="icheck">
-                <input type="radio" name="wizard_gender" id="wizard_gender_both" checked class="wizard-icheck" value="both" />
+                <input type="radio" name="gender" id="wizard_gender_both" checked class="wizard-icheck" value="both" />
                 <label for="wizard_gender_both" class="inline-label">Ambos</label>
             </span>
 
@@ -55,23 +62,23 @@
         <div class="uk-width-medium-3-10 uk-width-small-1-1">
             <label class="uk-form-label">Restricciones por persona</label>
             <span class="icheck">
-                <input type="radio" name="wizard_status" id="wizard_status_repeat" checked class="wizard-icheck" value="repeat" />
+                <input type="radio" name="unique" id="wizard_status_repeat" checked class="wizard-icheck" value="repeat" />
                 <label for="wizard_status_repeat" class="inline-label">Mostrar sin restricciones</label>
             </span>
             <div class="clearfix"></div>
             <span class="icheck">
-                <input type="radio" name="wizard_status" id="wizard_status_unique_day" class="wizard-icheck" value="unique_day" />
+                <input type="radio" name="unique" id="wizard_status_unique_day" class="wizard-icheck" value="unique_day" />
                 <label for="wizard_status_unique_day" class="inline-label">Mostrar una vez al día</label>
             </span>
             <div class="clearfix"></div>
             <span class="icheck">
-                <input type="radio" name="wizard_status" id="wizard_status_unique" class="wizard-icheck" value="unique" />
+                <input type="radio" name="unique" id="wizard_status_unique" class="wizard-icheck" value="unique" />
                 <label for="wizard_status_unique" class="inline-label">Mostrar sólo una vez por persona</label>
             </span>
         </div>
 
         <div class="uk-width-medium-3-10 uk-width-small-1-1">
-            <input type="text" id="age_slider" name="age_slider"
+            <input type="text" id="age_slider" name="age"
                    data-ion-slider
                    data-min="0" data-max="100"
                    data-from="13" data-to="60"
@@ -90,11 +97,11 @@
             <div class="uk-grid">
 
                 <div class="uk-width-medium-1-1">
-                    <input type="text" id="time_1_slider" name="time_1_slider"/>
+                    <input type="text" id="time_1_slider" name="time_1"/>
                 </div>
 
                 <div class="uk-width-medium-1-1">
-                    <input type="text" id="time_2_slider" name="time_2_slider"
+                    <input type="text" id="time_2_slider" name="time_2"
                            data-ion-slider
                            data-min="0" data-max="24"
                            data-type="int" data-grid="true"
@@ -105,50 +112,7 @@
                 </div>
             </div>
 
-            <div class="uk-grid uk-grid-collapse" id="input-hours">
 
-                {{--<div class="uk-width-1-4">--}}
-                    {{--<div class="uk-grid">--}}
-                        {{--<div class="uk-width-1-6">0am</div>--}}
-                        {{--<div class="uk-width-1-6">1am</div>--}}
-                        {{--<div class="uk-width-1-6">2am</div>--}}
-                        {{--<div class="uk-width-1-6">3am</div>--}}
-                        {{--<div class="uk-width-1-6">4am</div>--}}
-                        {{--<div class="uk-width-1-6">5am</div>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-                {{--<div class="uk-width-1-4">--}}
-                    {{--<div class="uk-grid">--}}
-                        {{--<div class="uk-width-1-6">6am</div>--}}
-                        {{--<div class="uk-width-1-6">7am</div>--}}
-                        {{--<div class="uk-width-1-6">8am</div>--}}
-                        {{--<div class="uk-width-1-6">9am</div>--}}
-                        {{--<div class="uk-width-1-6">10am</div>--}}
-                        {{--<div class="uk-width-1-6">11am</div>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-                {{--<div class="uk-width-1-4">--}}
-                    {{--<div class="uk-grid">--}}
-                        {{--<div class="uk-width-1-6">12pm</div>--}}
-                        {{--<div class="uk-width-1-6">1pm</div>--}}
-                        {{--<div class="uk-width-1-6">2pm</div>--}}
-                        {{--<div class="uk-width-1-6">3pm</div>--}}
-                        {{--<div class="uk-width-1-6">4pm</div>--}}
-                        {{--<div class="uk-width-1-6">5pm</div>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-                {{--<div class="uk-width-1-4">--}}
-                    {{--<div class="uk-grid">--}}
-                        {{--<div class="uk-width-1-6">6pm</div>--}}
-                        {{--<div class="uk-width-1-6">7pm</div>--}}
-                        {{--<div class="uk-width-1-6">8pm</div>--}}
-                        {{--<div class="uk-width-1-6">9pm</div>--}}
-                        {{--<div class="uk-width-1-6">10pm</div>--}}
-                        {{--<div class="uk-width-1-6">11pm</div>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-
-            </div>
         </div>
     </div>
 
@@ -164,35 +128,35 @@
 
                         <div class="uk-width-medium-1-5 uk-width-small-1-2">
                             <span class="icheck-inline">
-                                <input class="wizard-icheck" type="checkbox" name="checkbox_demo_inline" checked id="checkbox_demo_inline_1"/>
+                                <input class="wizard-icheck" type="checkbox" name="days" value="monday" checked id="checkbox_demo_inline_1"/>
                                 <label for="checkbox_demo_inline_1" class="inline-label">Lunes</label>
                             </span>
                         </div>
 
                         <div class="uk-width-medium-1-5 uk-width-small-1-2">
                             <span class="icheck-inline">
-                                <input class="wizard-icheck" type="checkbox" name="checkbox_demo_inline" checked id="checkbox_demo_inline_2"/>
+                                <input class="wizard-icheck" type="checkbox" name="days" value="tuesday" checked id="checkbox_demo_inline_2"/>
                                 <label for="checkbox_demo_inline_2" class="inline-label">Martes</label>
                             </span>
                         </div>
 
                         <div class="uk-width-medium-1-5 uk-width-small-1-2">
                             <span class="icheck-inline">
-                                <input class="wizard-icheck" type="checkbox" name="checkbox_demo_inline" checked id="checkbox_demo_inline_3"/>
+                                <input class="wizard-icheck" type="checkbox" name="days" value="wednesday" checked id="checkbox_demo_inline_3"/>
                                 <label for="checkbox_demo_inline_3" class="inline-label">Miercoles</label>
                             </span>
                         </div>
 
                         <div class="uk-width-medium-1-5 uk-width-small-1-2">
                             <span class="icheck-inline">
-                                <input class="wizard-icheck" type="checkbox" name="checkbox_demo_inline" checked id="checkbox_demo_inline_4"/>
+                                <input class="wizard-icheck" type="checkbox" name="days" value="thursday" checked id="checkbox_demo_inline_4"/>
                                 <label for="checkbox_demo_inline_4" class="inline-label">Jueves</label>
                             </span>
                         </div>
 
                         <div class="uk-width-medium-1-5 uk-width-small-1-2">
                             <span class="icheck-inline">
-                                <input class="wizard-icheck" type="checkbox" name="checkbox_demo_inline" checked id="checkbox_demo_inline_5"/>
+                                <input class="wizard-icheck" type="checkbox" name="days" value="friday" checked id="checkbox_demo_inline_5"/>
                                 <label for="checkbox_demo_inline_5" class="inline-label">Viernes</label>
                             </span>
                         </div>
@@ -207,14 +171,14 @@
 
                         <div class="uk-width-medium-1-5 uk-width-small-1-2">
                             <span class="icheck-inline">
-                                <input class="wizard-icheck" type="checkbox" name="checkbox_demo_inline" checked id="checkbox_demo_inline_6"/>
+                                <input class="wizard-icheck" type="checkbox" name="days" value="saturday" checked id="checkbox_demo_inline_6"/>
                                 <label for="checkbox_demo_inline_6" class="inline-label">Sábado</label>
                             </span>
                         </div>
 
                         <div class="uk-width-medium-1-5 uk-width-small-1-2">
                             <span class="icheck-inline">
-                                <input class="wizard-icheck" type="checkbox" name="checkbox_demo_inline" checked id="checkbox_demo_inline_7"/>
+                                <input class="wizard-icheck" type="checkbox" name="days" value="sunday" checked id="checkbox_demo_inline_7"/>
                                 <label for="checkbox_demo_inline_7" class="inline-label">Domingo</label>
                             </span>
                         </div>
@@ -265,13 +229,13 @@
                 <hr class="uk-grid-divider">
 
                 <div class="uk-width-1-1">
-                    <div style="width:100%;" class="md-btn md-btn-primary" id="select_markers">Seleccionar todo</div>
+                    <div style="width:100%;" class="md-btn md-btn-success" id="select_markers">Seleccionar todo</div>
                 </div>
 
                 <hr class="uk-grid-divider">
 
                 <div class="uk-width-1-1">
-                    <div style="width:100%;" class="md-btn md-btn-danger" id="deselect_markers">Quitar todo</div>
+                    <div style="width:100%;" class="md-btn md-btn-primary" id="deselect_markers">Quitar todo</div>
                 </div>
 
                 <hr class="uk-grid-divider">

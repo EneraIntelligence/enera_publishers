@@ -22,7 +22,7 @@
                             <div class="uk-grid uk-dropdown-grid">
                                 <div class="uk-width-1-2">
                                     <ul class="uk-nav uk-nav-dropdown" id="campaign-filter">
-                                        <li class="uk-nav-header">Status</li>
+                                        <li class="uk-nav-header">Estado</li>
                                         <li class="uk-active" data-uk-filter="">
                                             <a href="#">Todas</a>
                                         </li>
@@ -50,17 +50,27 @@
                                             <a href="#">Banner</a>
                                         </li>
 
+                                        <li data-uk-filter="action-banner_link">
+                                            <a href="#">Banner+Link</a>
+                                        </li>
+
                                         <li data-uk-filter="action-mailing_list">
                                             <a href="#">Mailing list</a>
+                                        </li>
+
+                                        <li data-uk-filter="action-survey">
+                                            <a href="#">Captcha</a>
+                                        </li>
+
+                                        <li data-uk-filter="action-survey">
+                                            <a href="#">Encuesta</a>
                                         </li>
 
                                         <li data-uk-filter="action-video">
                                             <a href="#">Video</a>
                                         </li>
 
-                                        <li data-uk-filter="action-survey">
-                                            <a href="#">Encuesta</a>
-                                        </li>
+
 
                                     </ul>
                                 </div>
@@ -127,7 +137,7 @@
                             <div data-uk-filter="campaign-{{$campaign->status}}, action-{{$campaign->interaction['name']}}"
                                  data-name="{{$campaign->name}}"
                                  data-action="{{$campaign->interaction['name']}}"
-                                 data-company="{{$campaign->company}}"
+                                 data-company="{{$campaign->publishers_summary['client']}}"
                                  data-status="{{$status_values[$campaign->status]}}"
                                  data-date="{{$campaign->created_at}}"
                                  style="cursor: pointer;">
@@ -153,7 +163,7 @@
 
                                         <div id="campaign-title" class="uk-width-large-3-10 uk-grid-width-small-2-3">
                                             <h2>{{$campaign->name}}</h2>
-                                            <h4>{{$campaign->company}}</h4>
+                                            <h4>{{$campaign->publishers_summary['client']}}</h4>
                                         </div>
 
                                         <div class="uk-grid-width-2-10">

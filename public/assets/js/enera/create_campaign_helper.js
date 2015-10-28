@@ -9,9 +9,213 @@ $(function() {
     //input_hours.init(); //not used anymore
     branchMap.setup();
 
-
-
 });
+
+create_campaign_helper =
+{
+    interaction: null,
+    init: function()
+    {
+        console.log("create_campaign_helper.init()");
+
+        //disable button until campaign is selected
+        var btnNext = $(".button_next");
+        btnNext.addClass("disabled");
+        btnNext.attr("aria-disabled","true");
+
+        //set preview when uploading a banner
+        $("#file_upload-select").change(function(){
+            create_campaign_helper.showPreview(event,'.banner-1', 600,602)
+        });
+
+        $("#file_upload-select_2").change(function(){
+            create_campaign_helper.showPreview(event,'.banner-2', 684, 864)
+        });
+
+        //startup slider
+        $('[data-ion-slider]').ionRangeSlider();
+    },
+    setInteraction: function(interactionId)
+    {
+        console.log("campaign selected");
+        create_campaign_helper.interaction = interactionId;
+
+        //show only the fields that the campaign needs
+        $(".preview").css("display","none");
+        $(".step2-field").css("display","none");
+        $("."+interactionId).css("display","block");
+
+        //enable button
+        var btnNext = $(".button_next");
+        btnNext.removeClass("disabled");
+        btnNext.attr("aria-disabled","false");
+    },
+    showPreview: function(event, previewId, width, height)
+    {
+        var input = event.target;
+
+        //load image on input field
+        var reader = new FileReader();
+        reader.onload = function(){
+            var dataURL = reader.result;
+            var output = $(previewId);
+
+            //change every instance where the image should go
+            output.each(function()
+            {
+                $(this).attr("src", dataURL);
+            });
+        };
+        reader.readAsDataURL(input.files[0]);
+
+        //check for image size
+        var _URL = window.URL || window.webkitURL;
+        image = new Image();
+        image.onload = function()
+        {
+            var errorDiv = $(previewId+"-errors");
+
+            if(this.width==width && this.height==height)
+            {
+                //image size ok!
+                errorDiv.html('');
+
+            }
+            else
+            {
+                //image size is different than expected
+                errorDiv.html('<span class="parsley-required uk-text-center md-input-danger">El tamaño de la imagen debe ser de <br>'+width+' pixeles de ancho por '+height+' pixeles de alto.</span>');
+                //parsley-errors-list
+                /*
+                 <span class="parsley-required uk-text-center md-input-danger">
+                 El tamaño de la imagen no coincide
+                 </span>
+                 */
+            }
+            //console.log("The image width is " +this.width + " and image height is " + this.height);
+        };
+        image.src = _URL.createObjectURL(input.files[0]);
+
+    }
+}
+
+finalScreen=
+{
+    grid_1_1:function(content)
+    {
+        return '<div class="uk-width-1-1 uk-grid uk-grid-divider">'+content+'</div>';
+    },
+    grid_2_10:function(content)
+    {
+        return '<div class="uk-width-2-10">'+content+'</div>';
+    },
+
+    grid_1_4:function(content)
+    {
+        return '<div class="uk-width-1-4">'+content+'</div>';
+    },
+    format:function(title, content)
+    {
+        return '<h2 class="heading_a">'+title+'<span class="sub-heading">'+content+'</span></h2>';
+    },
+    fillData:function()
+    {
+        var $wizard_advanced_form = $('#wizard_advanced_form');
+        //var form_serialized = JSON.stringify($wizard_advanced_form.serializeObject(), null, 2);
+        var form_serialized = $wizard_advanced_form.serializeObject();
+
+        var confirmBlock = $("#confirm-block");
+        confirmBlock.html("");
+        confirmBlock.append(finalScreen.grid_1_1( finalScreen.format('Producto',create_campaign_helper.interaction) ) );
+
+        var props =finalScreen.grid_1_1( finalScreen.format("Imágenes","Una imagen para dispositivos pequeños </br> Una imagen para dispositivos largos") );
+        if(create_campaign_helper.interaction=="banner-link")
+            props =finalScreen.grid_1_1( finalScreen.format("Link",form_serialized.banner_link)+props );
+        if(create_campaign_helper.interaction=="captcha")
+            props =finalScreen.grid_1_1( finalScreen.format("Captcha",form_serialized.captcha)+props );
+        if(create_campaign_helper.interaction=="survey")
+            props =finalScreen.grid_1_1( finalScreen.parseQuestions(form_serialized)+props );
+
+//      confirmBlock.append('<h2 class="heading_a">Elementos<span class="sub-heading">'+props+'</span></h2>');
+        confirmBlock.append(props);
+
+        var filters =finalScreen.parseFilters(form_serialized);
+
+        confirmBlock.append(finalScreen.grid_1_1( '<h2 class="heading_a">Segmentación</h2>' ));
+        confirmBlock.append(filters);
+
+        $(".button_finish").addClass("md-btn");
+        $(".button_finish").addClass("md-btn-success");
+        $(".button_finish").find('a').css("color","white");
+
+    },
+    parseQuestions: function(form_serialized)
+    {
+        var result=finalScreen.grid_1_1(finalScreen.format("Preguntas",""));
+        for(var i=1;i<=5;i++)
+        {
+            var q = form_serialized['survey_q'+i];
+            if(q!="" && q!=undefined)
+            {
+                var answers = "";
+                //questions = questions + "Pregunta "+i+": "+q+"</br>";
+
+                for(var j=1;j<=4;j++)
+                {
+                    var a = form_serialized['survey_q'+i+'_a'+j];
+                    if(a!="" && a!=undefined)
+                        answers = answers + "Opción "+j+": "+a+"</br>";
+
+                }
+
+                result = result+finalScreen.grid_2_10( finalScreen.format(i+".-"+q,answers) );
+                //questions = questions + "<hr>";
+            }
+
+        }
+
+        return result;
+    },
+    parseFilters: function(form_serialized)
+    {
+        var res="<div class='uk-grid'>";
+        res = finalScreen.grid_1_4( finalScreen.format( "Fecha de Inicio", form_serialized.start_date.replace(/\./g, "/") ) );
+        res = res+ finalScreen.grid_1_4( finalScreen.format( "Fecha de final", form_serialized.end_date.replace(/\./g, "/") ) );
+
+        res = res+ finalScreen.grid_1_4( finalScreen.format( "Género", form_serialized.gender ) );
+        res = res+ finalScreen.grid_1_4( finalScreen.format( "Restricciones", form_serialized.unique ) );
+
+
+        var age = form_serialized.age.split(";");
+        res = res+ finalScreen.grid_1_4( finalScreen.format( "Edad", " de "+age[0]+" a "+age[1]+" años" ) );
+
+        var hours1 = form_serialized.time_1.split(";");
+        var hours2 = form_serialized.time_2.split(";");
+
+        var lapse1="";
+        if(hours1[0]!=hours1[1])
+        {
+            lapse1="de "+hours1[0]+":00 a "+hours1[1]+':00';
+        }
+
+        var lapse2="";
+        if(hours2[0]!=hours2[1])
+        {
+            if(lapse1!="") {
+                lapse2 = " y ";
+            }
+            lapse2=lapse2+"de "+hours2[0]+":00 a "+hours2[1]+':00';
+        }
+
+        res = res+ finalScreen.grid_1_4( finalScreen.format( "Horario",lapse1+lapse2+" horas" ) );
+
+        res = res+ finalScreen.grid_1_4( finalScreen.format( "Días", form_serialized.days.toString().replace(/\,/g, "<br>") ) );
+        res = res+ finalScreen.grid_1_4( finalScreen.format( "Ubicaciones", branchMap.markersToList() ) );
+
+
+        return res+"</div>";
+    }
+}
 
 survey=
 {
@@ -133,6 +337,7 @@ time_sliders=
             type: "double",
             min:0,
             max:24,
+            min_interval:1,
             postfix:":00",
             from_min:5,
             from:5,
@@ -166,137 +371,7 @@ preview =
     }
 }
 
-/*
-input_hours =
-{
-    init: function()
-    {
-        var container = $("#input-hours");
-        console.log("input_hours.init: "+container);
-        container.append(input_hours.createBtns(0,5));
-        container.append(input_hours.createBtns(6,11));
-        container.append(input_hours.createBtns(12,17));
-        container.append(input_hours.createBtns(18,23));
 
-        //activate buttons actions
-        $(".time-btn").each(function()
-        {
-            $(this).hover(function()
-            {
-                $(this).css("background-color","#C0C0C0")
-            }, function()
-            {
-                $(this).css("background-color","#F0F0F0")
-            });
-            //$(this).click()
-        });
-
-    },
-    createBtns: function(start, end)
-    {
-        var content = '<div class="uk-width-1-4 uk-width-small-1-1">';
-        content += '<div class="uk-grid uk-grid-collapse">';
-
-
-        for(var i = start; i<=end;i++)
-        {
-            content+='<div id="time_'+i+'" class="time-btn uk-width-1-6 uk-text-center" style="cursor:pointer; background-color: #F0F0F0"><span>'+i+'</span></div>';
-        }
-
-        content += '</div>';
-        content += '</div>';
-        return content;
-    }
-}
-*/
-
-create_campaign_helper =
-{
-    interaction: null,
-    init: function()
-    {
-        console.log("create_campaign_helper.init()");
-
-        //disable button until campaign is selected
-        var btnNext = $(".button_next");
-        btnNext.addClass("disabled");
-        btnNext.attr("aria-disabled","true");
-
-        //set preview when uploading a banner
-        $("#file_upload-select").change(function(){
-            create_campaign_helper.showPreview(event,'.banner-1', 600,602)
-        });
-
-        $("#file_upload-select_2").change(function(){
-            create_campaign_helper.showPreview(event,'.banner-2', 684, 864)
-        });
-
-        //startup slider
-        $('[data-ion-slider]').ionRangeSlider();
-    },
-    setInteraction: function(interactionId)
-    {
-        console.log("campaign selected");
-        create_campaign_helper.interaction = interactionId;
-
-        //show only the fields that the campaign needs
-        $(".preview").css("display","none");
-        $(".step2-field").css("display","none");
-        $("."+interactionId).css("display","block");
-
-        //enable button
-        var btnNext = $(".button_next");
-        btnNext.removeClass("disabled");
-        btnNext.attr("aria-disabled","false");
-    },
-    showPreview: function(event, previewId, width, height)
-    {
-        var input = event.target;
-
-        //load image on input field
-        var reader = new FileReader();
-        reader.onload = function(){
-            var dataURL = reader.result;
-            var output = $(previewId);
-
-            //change every instance where the image should go
-            output.each(function()
-            {
-                $(this).attr("src", dataURL);
-            });
-        };
-        reader.readAsDataURL(input.files[0]);
-
-        //check for image size
-        var _URL = window.URL || window.webkitURL;
-        image = new Image();
-        image.onload = function()
-        {
-            var errorDiv = $(previewId+"-errors");
-
-            if(this.width==width && this.height==height)
-            {
-                //image size ok!
-                errorDiv.html('');
-
-            }
-            else
-            {
-                //image size is different than expected
-                errorDiv.html('<span class="parsley-required uk-text-center md-input-danger">El tamaño de la imagen debe ser de <br>'+width+' pixeles de ancho por '+height+' pixeles de alto.</span>');
-                //parsley-errors-list
-                /*
-                 <span class="parsley-required uk-text-center md-input-danger">
-                 El tamaño de la imagen no coincide
-                 </span>
-                 */
-            }
-            //console.log("The image width is " +this.width + " and image height is " + this.height);
-        };
-        image.src = _URL.createObjectURL(input.files[0]);
-
-    }
-}
 
 branchMap =
 {
@@ -305,6 +380,20 @@ branchMap =
     base_url:"",
     branches:null,
     markers:{},
+    markersToList:function()
+    {
+        var list = "";
+        for(var key in branchMap.markers)
+        {
+            var markerObj = branchMap.markers[key];
+            if(markerObj.active == true)
+            {
+                list = list + markerObj.name+"<br>";
+            }
+        }
+
+        return list;
+    },
     setBranches:function(branchesJSON)
     {
         branchMap.branches = JSON.parse(branchesJSON);
@@ -331,7 +420,7 @@ branchMap =
             var marker=new google.maps.Marker({
                 position: new google.maps.LatLng(branch.lat, branch.lng),
                 animation: google.maps.Animation.DROP,
-                icon: iconBase + 'enera_map_marker_on.png',
+                icon: iconBase + 'enera_map_marker_off.png',
                 //title: branch.name,
                 //snippet: "-"
             });
@@ -340,7 +429,7 @@ branchMap =
 
             branchMap.attachMarkerClick(marker, branch._id, branch.name);
 
-            branchMap.markers[branch._id] = {"marker":marker, "active":true};
+            branchMap.markers[branch._id] = {"marker":marker, "active":false, "name":branch.name};
 
         }
 
