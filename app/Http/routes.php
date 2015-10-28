@@ -28,14 +28,19 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     Route::match(['get', 'post'], 'logout', ['as' => 'auth.logout', 'uses' => 'AuthController@logout']);
+
+    //Rutas de ajax
+    Route::group([], function () {
+        Route::match(['get', 'post'] ,'profile_edit' ,['as' => 'edit.profile', 'uses' => 'UserController@editProfile']);
+    });
 });
 
 Route::group(['middleware' => 'auth.ready'], function () {
     Route::get('login', ['as' => 'auth.index', 'uses' => 'AuthController@index']);
     Route::post('login', ['as' => 'auth.login', 'uses' => 'AuthController@login']);
+
 });
 
 
 
 
-//Rutas de pruebas
