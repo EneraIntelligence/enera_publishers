@@ -7,6 +7,7 @@
  */
 
 namespace Publishers\Libraries;
+
 use League\Flysystem\Sftp\SftpAdapter;
 use League\Flysystem\Filesystem;
 
@@ -28,13 +29,13 @@ class FileCloud
             'directoryPerm' => 0755
         ]);
 
-        $this->filesystem = new Filesystem($adapter);
+        $this->filesystem = new Filesystem($this->adapter);
     }
 
-    public function subir($filename,$uploadfile){
-        $filesystem->put($filename, $uploadedfile );
+    public function subir($filename, $uploadedfile)
+    {
+        $this->filesystem->put($filename, $uploadedfile);
     }
-
 
 
 }
