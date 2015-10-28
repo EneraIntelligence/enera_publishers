@@ -238,7 +238,7 @@
 
                         <div class="uk-dropdown uk-dropdown-small uk-dropdown-flip">
                             <ul class="uk-nav js-uk-prevent">
-                                <li><a href="#">Mi cuenta</a></li>
+                                <li><a href="{!! url('profile') !!}">Mi cuenta</a></li>
                                 <li><a href="#">Ajustes</a></li>
                                 <li><a href="{!! URL::route('auth.logout') !!}">Salir</a></li>
                             </ul>

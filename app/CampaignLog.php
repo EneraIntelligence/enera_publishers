@@ -19,4 +19,6 @@ class CampaignLog extends Model
         return $this->embedsOne('Publishers\CampaignLogInteraction');
     }
     // end relations
+
+
 }
