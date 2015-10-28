@@ -331,12 +331,14 @@ branchMap =
             var marker=new google.maps.Marker({
                 position: new google.maps.LatLng(branch.lat, branch.lng),
                 animation: google.maps.Animation.DROP,
-                icon: iconBase + 'enera_map_marker_on.png'
+                icon: iconBase + 'enera_map_marker_on.png',
+                //title: branch.name,
+                //snippet: "-"
             });
 
             marker.setMap(branchMap.map);
 
-            branchMap.attachMarkerClick(marker, branch._id);
+            branchMap.attachMarkerClick(marker, branch._id, branch.name);
 
             branchMap.markers[branch._id] = {"marker":marker, "active":true};
 
@@ -366,12 +368,12 @@ branchMap =
         });
 
     },
-    attachMarkerClick:function(marker, _id)
+    attachMarkerClick:function(marker, _id, name)
     {
+        var iconBase = branchMap.base_url + "/images/";
 
         google.maps.event.addListener(marker, 'click', function()
         {
-            var iconBase = branchMap.base_url + "/images/";
             if(branchMap.markers[_id].active)
             {
                 marker.setIcon( iconBase + 'enera_map_marker_off.png' );
@@ -383,15 +385,57 @@ branchMap =
                 branchMap.markers[_id].active = true;
             }
         });
+/*
+        var infowindow = new google.maps.InfoWindow({
+            content: "<h4>"+name+"</h4>"
+        });*/
+
+        var boxText = document.createElement("div");
+        boxText.style.cssText = "text-align:center; margin-top: 8px; background: white; padding: 3px 0 0px; border-radius: 15px;";
+        boxText.innerHTML = "<h4>"+name+"</h4>";
+
+        var myOptions = {
+            alignBottom: true,
+            content: boxText
+            ,disableAutoPan: false
+            ,maxWidth: 0
+            ,pixelOffset: new google.maps.Size(-140, -50)
+            ,zIndex: null
+            ,boxStyle: {
+                //background: "url('tipbox.gif') no-repeat"
+                opacity: 0.75,
+                width: "280px"
+            },
+            closeBoxMargin: "10px 2px 2px 2px",
+            closeBoxURL: "",
+            infoBoxClearance: new google.maps.Size(1, 1),
+            isHidden: false,
+            pane: "floatPane",
+            enableEventPropagation: false
+        };
+
+        var ib = new InfoBox(myOptions);
+
+        google.maps.event.addListener(marker, 'mouseover', function()
+        {
+            //infowindow.open(branchMap.map, marker);
+            ib.open(branchMap.map, marker);
+
+            //marker.showInfoWindow();
+        });
+
+        google.maps.event.addListener(marker, 'mouseout', function()
+        {
+            //infowindow.close(branchMap.map, marker);
+            ib.close(branchMap.map, marker);
+
+            //marker.hideInfoWindow();
+        });
 
     },
     refresh:function()
     {
         branchMap.map.panTo(branchMap.center);
-
-
-
-
 
     }
 }

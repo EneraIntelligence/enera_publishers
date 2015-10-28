@@ -246,31 +246,35 @@
         <div class="uk-width-medium-1-3 uk-width-small-1-1">
             <div class="uk-grid uk-grid-collapse">
 
-                <div class="uk-width-1-2">
+                <div class="uk-width-1-1 uk-text-truncate">
 
                     <img style="width:10%;" src="{!! URL::asset('images/enera_map_marker_on.png') !!}" alt="">
-                    <span class="uk-text-left uk-text-middle">Mostrar campaña</span>
+                    <label>Mostrar en esta ubicación</label>
 
 
                 </div>
+                <hr class="uk-grid-divider">
 
-
-                <div class="uk-width-1-2">
+                <div class="uk-width-1-1 uk-text-truncate">
                     <img style="width:10%;" src="{!! URL::asset('images/enera_map_marker_off.png') !!}" alt="">
-                    No mostrar campaña
+                    <label>No mostrar en esta ubicación</label>
+                </div>
+
+                <hr class="uk-grid-divider">
+
+                <hr class="uk-grid-divider">
+
+                <div class="uk-width-1-1">
+                    <div style="width:100%;" class="md-btn md-btn-primary" id="select_markers">Seleccionar todo</div>
                 </div>
 
                 <hr class="uk-grid-divider">
 
                 <div class="uk-width-1-1">
-                    <div class="md-btn md-btn-success" id="select_markers">Seleccionar todo</div>
+                    <div style="width:100%;" class="md-btn md-btn-danger" id="deselect_markers">Quitar todo</div>
                 </div>
 
                 <hr class="uk-grid-divider">
-
-                <div class="uk-width-1-1">
-                    <div class="md-btn md-btn-danger" id="deselect_markers">Quitar todo</div>
-                </div>
 
             </div>
         </div>

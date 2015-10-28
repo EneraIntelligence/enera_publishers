@@ -149,6 +149,7 @@
     {!! HTML::script('assets/js/gsap/easing/EasePack.min.js') !!}
 
     {!! HTML::script('http://maps.google.com/maps/api/js?sensor=false') !!}
+    {!! HTML::script('assets/js/maps/infobox_packed.js') !!}
 
     <!-- enera custom scripts -->
     {!! HTML::script('assets/js/enera/create_campaign_helper.js') !!}
