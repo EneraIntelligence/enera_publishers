@@ -36,20 +36,9 @@
                                     </li>
                                 </ul>
                             </div>
-                            <a class="md-fab md-fab-small md-fab-accent" >  {{-- href="page_user_edit.html" --}}
+                            <a class="md-fab md-fab-small md-fab-accent " >  {{-- href="page_user_edit.html" --}}
                                 {{--<i class="material-icons">&#xE150;</i>--}}
-                                {{--<i class="material-icons"></i>--}}
-                                <div class="uk-width-medium-1-2">
-                                    <p>Notification</p>
-                                    <p>
-                                        <span class="uk-badge uk-badge-notification">12</span>
-                                        <span class="uk-badge uk-badge-notification uk-badge-primary">Primary</span>
-                                        <span class="uk-badge uk-badge-success uk-badge-notification">5</span>
-                                        <span class="uk-badge uk-badge-warning uk-badge-notification">26</span>
-                                        <span class="uk-badge uk-badge-danger uk-badge-notification">124</span>
-                                    </p>
-                                </div>
-
+                                <i class="material-icons"></i>
                             </a>
                         </div>
                         <div class="user_content">
