@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <div class="uk-width-large-3-10 uk-hidden-small">
-                    <div class="md-card">
+                    <div class="md-card preview-container">
                         <div class="md-card-content">
 
                             <!-- preview -->
@@ -148,10 +148,18 @@
     {!! HTML::script('assets/js/gsap/plugins/CSSPlugin.min.js') !!}
     {!! HTML::script('assets/js/gsap/easing/EasePack.min.js') !!}
 
-            <!-- enera custom scripts -->
+    {!! HTML::script('http://maps.google.com/maps/api/js?sensor=false') !!}
+    {!! HTML::script('assets/js/maps/infobox_packed.js') !!}
+
+    <!-- enera custom scripts -->
     {!! HTML::script('assets/js/enera/create_campaign_helper.js') !!}
     {!! HTML::script('assets/js/enera/icon_animations.js') !!}
 
+
+    <script>
+        branchMap.base_url="{!! URL::to('/') !!}";
+        branchMap.setBranches( '{!! json_encode($branches) !!}' );
+    </script>
 
     {{--{!! HTML::script('assets/js/pages/forms_file_upload.js') !!}--}}
 

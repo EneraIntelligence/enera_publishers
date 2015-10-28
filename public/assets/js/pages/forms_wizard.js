@@ -33,6 +33,15 @@ altair_wizard = {
                 onStepChanged: function (event, currentIndex) {
 
                     altair_wizard.content_height($wizard_advanced, currentIndex);
+
+
+                    if(currentIndex==2)
+                    {
+                        google.maps.event.trigger(branchMap.map, 'resize');
+                        branchMap.refresh();
+                    }
+
+
                     setTimeout(function () {
                         $window.resize();
                     }, 100)
@@ -44,6 +53,9 @@ altair_wizard = {
 
                     var step = $wizard_advanced.find('.body.current').attr('data-step'),
                         $current_step = $('.body[data-step=\"' + step + '\"]');
+
+
+
 
                     //skip field check when clicking previous steps
                     if (currentIndex > newIndex) {

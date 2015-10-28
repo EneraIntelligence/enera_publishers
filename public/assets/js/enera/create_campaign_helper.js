@@ -3,34 +3,170 @@ $(function() {
 
     // page onload functions
     create_campaign_helper.init();
-    //input_hours.init();
+    survey.init();
+    time_sliders.setup();
+    preview.init();
+    //input_hours.init(); //not used anymore
+    branchMap.setup();
 
 
-    $("#time_1_slider").ionRangeSlider({
-        type: "double",
-        min:0,
-        max:24,
-        postfix:":00",
-        from_min:5,
-        from:5,
-        to:24,
-        step:1,
-        force_edges: true,
-        onChange: function(data)
-        {
-            var slider2 = $("#time_2_slider").data("ionRangeSlider");
-            slider2.update({
-                from_min: data.to,
-                to_min: data.to,
-            });
-
-
-            //console.log(data.to);
-        }
-    });
 
 });
 
+survey=
+{
+    currentQuestion: 5,
+    questionTemplate: null,
+    init: function()
+    {
+        addQuestionBtn = $("#add_question");
+        removeQuestionBtn = $("#remove_question");
+
+        addQuestionBtn.click(function()
+        {
+            survey.showQuestion();
+        });
+
+        removeQuestionBtn.click(function()
+        {
+            survey.hideQuestion();
+        });
+
+        survey.questionTemplate = $(".question").first().clone();
+
+        for(var i=2; i<=5;i++)
+        {
+            //survey.addQuestion();
+            survey.hideQuestion();
+        }
+    },
+
+    addQuestion: function()
+    {
+        //no more than 5 questions
+        if(survey.currentQuestion>=5)
+            return;
+
+        removeQuestionBtn = $("#remove_question");
+        removeQuestionBtn.removeClass("disabled");
+
+        survey.currentQuestion++;
+
+        questionContainer = $(".questionContainer");
+
+
+        newQuestion = survey.questionTemplate.clone();
+        questionHtml = newQuestion.html();
+
+        //replacing identifiers
+        questionHtml = questionHtml.replace(/q1/g,"q"+survey.currentQuestion);
+        questionHtml = questionHtml.replace("Pregunta 1","Pregunta "+survey.currentQuestion);
+
+        newQuestion.html(questionHtml);
+
+        newQuestion.appendTo(questionContainer);
+
+        if(survey.currentQuestion==5)
+        {
+            addQuestionBtn = $("#add_question");
+            addQuestionBtn.addClass("disabled");
+        }
+
+        $window.resize();
+    },
+
+    showQuestion: function()
+    {
+        //no more than 5 questions
+        if(survey.currentQuestion>=5)
+            return;
+
+
+        var removeQuestionBtn = $("#remove_question");
+        removeQuestionBtn.removeClass("disabled");
+
+        var question = $(".question").eq(survey.currentQuestion);
+        question.css('display','block');
+
+        survey.currentQuestion++;
+
+        if(survey.currentQuestion==5)
+        {
+            var addQuestionBtn = $("#add_question");
+            addQuestionBtn.addClass("disabled");
+        }
+
+
+        $window.resize();
+    },
+
+    hideQuestion: function()
+    {
+        if(survey.currentQuestion<=1)
+            return;
+
+        var addQuestionBtn = $("#add_question");
+        addQuestionBtn.removeClass("disabled");
+
+        console.log("removing q"+survey.currentQuestion);
+
+        survey.currentQuestion--;
+
+        var question = $(".question").eq(survey.currentQuestion);
+        question.css('display','none');
+
+        if(survey.currentQuestion==1)
+        {
+            var removeQuestionBtn = $("#remove_question");
+            removeQuestionBtn.addClass("disabled");
+        }
+
+        $window.resize();
+    }
+}
+
+time_sliders=
+{
+    setup: function()
+    {
+        $("#time_1_slider").ionRangeSlider({
+            type: "double",
+            min:0,
+            max:24,
+            postfix:":00",
+            from_min:5,
+            from:5,
+            to:24,
+            step:1,
+            force_edges: true,
+            onChange: function(data)
+            {
+                var slider2 = $("#time_2_slider").data("ionRangeSlider");
+                slider2.update({
+                    from_min: data.to,
+                    to_min: data.to,
+                });
+
+            }
+        });
+    }
+}
+
+preview =
+{
+    init:function()
+    {
+        var prevContainer = $(".preview-container");
+        $(window).scroll(function() {
+            //console.log( "Handler for .scroll() called. "+ prevContainer.scrollTop() );
+            prevContainer
+                .stop()
+                .animate({"marginTop": ($(window).scrollTop() )}, "slow" );
+        });
+    }
+}
+
+/*
 input_hours =
 {
     init: function()
@@ -72,6 +208,7 @@ input_hours =
         return content;
     }
 }
+*/
 
 create_campaign_helper =
 {
@@ -157,6 +294,148 @@ create_campaign_helper =
             //console.log("The image width is " +this.width + " and image height is " + this.height);
         };
         image.src = _URL.createObjectURL(input.files[0]);
+
+    }
+}
+
+branchMap =
+{
+    map:null,
+    center:null,
+    base_url:"",
+    branches:null,
+    markers:{},
+    setBranches:function(branchesJSON)
+    {
+        branchMap.branches = JSON.parse(branchesJSON);
+        //console.log( branchMap.branches );
+    },
+    setup:function()
+    {
+        branchMap.center = new google.maps.LatLng(23.8575691,-101.2433993);
+
+        var mapProp = {
+            center:branchMap.center,
+            zoom:5,
+            mapTypeId:google.maps.MapTypeId.ROADMAP
+        };
+
+        branchMap.map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+
+        var iconBase = branchMap.base_url+"/images/";
+
+        for(var i=0; i<branchMap.branches.length; i++)
+        {
+            var branch = branchMap.branches[i];
+
+            var marker=new google.maps.Marker({
+                position: new google.maps.LatLng(branch.lat, branch.lng),
+                animation: google.maps.Animation.DROP,
+                icon: iconBase + 'enera_map_marker_on.png',
+                //title: branch.name,
+                //snippet: "-"
+            });
+
+            marker.setMap(branchMap.map);
+
+            branchMap.attachMarkerClick(marker, branch._id, branch.name);
+
+            branchMap.markers[branch._id] = {"marker":marker, "active":true};
+
+        }
+
+        var selectMarkersBtn = $("#select_markers");
+        var deselectMarkersBtn = $("#deselect_markers");
+
+        selectMarkersBtn.click(function()
+        {
+            for(var key in branchMap.markers)
+            {
+                var markerObj = branchMap.markers[key];
+                markerObj.active = true;
+                markerObj.marker.setIcon( iconBase + 'enera_map_marker_on.png' );
+            }
+        });
+
+        deselectMarkersBtn.click(function()
+        {
+            for(var key in branchMap.markers)
+            {
+                var markerObj = branchMap.markers[key];
+                markerObj.active = false;
+                markerObj.marker.setIcon( iconBase + 'enera_map_marker_off.png' );
+            }
+        });
+
+    },
+    attachMarkerClick:function(marker, _id, name)
+    {
+        var iconBase = branchMap.base_url + "/images/";
+
+        google.maps.event.addListener(marker, 'click', function()
+        {
+            if(branchMap.markers[_id].active)
+            {
+                marker.setIcon( iconBase + 'enera_map_marker_off.png' );
+                branchMap.markers[_id].active = false;
+            }
+            else
+            {
+                marker.setIcon( iconBase + 'enera_map_marker_on.png' );
+                branchMap.markers[_id].active = true;
+            }
+        });
+/*
+        var infowindow = new google.maps.InfoWindow({
+            content: "<h4>"+name+"</h4>"
+        });*/
+
+        var boxText = document.createElement("div");
+        boxText.style.cssText = "text-align:center; margin-top: 8px; background: white; padding: 3px 0 0px; border-radius: 15px;";
+        boxText.innerHTML = "<h4>"+name+"</h4>";
+
+        var myOptions = {
+            alignBottom: true,
+            content: boxText
+            ,disableAutoPan: false
+            ,maxWidth: 0
+            ,pixelOffset: new google.maps.Size(-140, -50)
+            ,zIndex: null
+            ,boxStyle: {
+                //background: "url('tipbox.gif') no-repeat"
+                opacity: 0.75,
+                width: "280px"
+            },
+            closeBoxMargin: "10px 2px 2px 2px",
+            closeBoxURL: "",
+            infoBoxClearance: new google.maps.Size(1, 1),
+            isHidden: false,
+            pane: "floatPane",
+            enableEventPropagation: false
+        };
+
+        var ib = new InfoBox(myOptions);
+
+        google.maps.event.addListener(marker, 'mouseover', function()
+        {
+            //infowindow.open(branchMap.map, marker);
+            ib.open(branchMap.map, marker);
+
+            //marker.showInfoWindow();
+        });
+
+        google.maps.event.addListener(marker, 'mouseout', function()
+        {
+            //infowindow.close(branchMap.map, marker);
+            ib.close(branchMap.map, marker);
+
+            //marker.hideInfoWindow();
+        });
+
+    },
+    refresh:function()
+    {
+        branchMap.map.panTo(branchMap.center);
 
     }
 }
