@@ -52,7 +52,7 @@ altair_wizard = {
                 onStepChanging: function (event, currentIndex, newIndex) {
 
                     //quick test, remove!!!!
-                    return true;
+                    //return true;
 
                     var step = $wizard_advanced.find('.body.current').attr('data-step'),
                         $current_step = $('.body[data-step=\"' + step + '\"]');

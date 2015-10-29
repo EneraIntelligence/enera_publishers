@@ -24,11 +24,11 @@ create_campaign_helper =
         btnNext.attr("aria-disabled","true");
 
         //set preview when uploading a banner
-        $("#file_upload-select").change(function(){
+        $("#image_small").change(function(){
             create_campaign_helper.showPreview(event,'.banner-1', 600,602)
         });
 
-        $("#file_upload-select_2").change(function(){
+        $("#image_large").change(function(){
             create_campaign_helper.showPreview(event,'.banner-2', 684, 864)
         });
 

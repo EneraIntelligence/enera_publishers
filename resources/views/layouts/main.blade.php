@@ -41,12 +41,18 @@
 </head>
 <body class="sidebar_main_swipe">
 
+<!-- Create campaign button -->
+@if(!isset($noCreateBtn))
 
 <div class="md-fab-wrapper .user_heading .md-fab">
-    <a class="md-fab md-fab-danger" href="#" id="note_add">
+    <a class="md-fab md-fab-danger" href="#" id="note_add" onclick="new_campaign.prompt()">
         <i class="material-icons"></i>
     </a>
 </div>
+
+@endif
+
+
 <!-- main header -->
 <header id="header_main">
     <div class="header_main_content">
@@ -297,6 +303,9 @@
 {!! HTML::script('bower_components/c3js-chart/c3.min.js') !!}
 
 
+{!! HTML::script('js/ajax/new_campaign.js') !!}
+
+
 <script>
     $(function () {
         // enable hires images
@@ -306,6 +315,9 @@
             FastClick.attach(document.body);
         }
     });
+
+    new_campaign.token =  "{!! csrf_token() !!}";
+    new_campaign.url = "{{URL::to('campaigns/new')}}";
 </script>
 
 <script>

@@ -4,7 +4,10 @@
     <div id="page_content">
         <div id="page_content_inner">
 
-            <h2 class="heading_b uk-margin-bottom">Nueva campaña</h2>
+            <h2 class="heading_b uk-margin-bottom">
+                {!! $campaignName !!}
+                <span class="sub-heading">Nueva campaña</span>
+            </h2>
 
             <div class="uk-grid" data-uk-grid-margin data-uk-grid-match id="user_profile">
                 <div class="uk-width-large-7-10">

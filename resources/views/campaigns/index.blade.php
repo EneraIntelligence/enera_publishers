@@ -121,9 +121,33 @@
                          data-uk-grid="{ gutter: 16, controls: '#campaign-filter, #action-filter, #campaign-sort' }">
 
                         @if(count($campaigns)<=0)
-                            <div class="uk-grid">
-                                <h4 class="heading_a" >No tienes campañas <br> <a href="#">Crea una campaña nueva</a></h4>
+
+                            <div class="uk-grid md-card uk-text-center">
+                                <div class="uk-width-1-1">
+
+                                    <div class="uk-block">
+                                        <h4 class="heading_a" ><br>
+                                            <span></span>
+                                        </h4>
+
+
+                                        <img src="{!! URL::asset('images/icons/banner_new.svg') !!}" alt="">
+
+                                        <h4 class="heading_a" ><br>
+                                            <span></span>
+                                        </h4>
+
+                                        <a class="md-btn md-btn-primary" href="#" onclick="new_campaign.prompt()">
+                                            ¡Crea tu primer campaña!
+                                        </a>
+
+                                    </div>
+
+
+                                </div>
+
                             </div>
+
                         @endif
 
                         @foreach($campaigns as $campaign)

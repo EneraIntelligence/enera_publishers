@@ -2,6 +2,7 @@
 
 namespace Publishers\Http\Controllers;
 
+use Validator;
 use Illuminate\Support\Facades\Storage;
 use League\Flysystem\Sftp\SftpAdapter;
 use League\Flysystem\Filesystem;
@@ -55,7 +56,6 @@ class CampaignsController extends Controller
         $admin_id = Auth::user()->_id;
         $campaigns = Campaign::where('administrator_id', $admin_id)->latest()->get();
 
-
         //hardcoded testing data
         /*
         $campaigns[1]->status="pending";
@@ -98,22 +98,28 @@ class CampaignsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //get branches data
-        $branches = Branche::all();
-//      $branches = Branche::where('accept_ads', true)->get();
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+        ]);
 
-        /*
-        foreach($branches as $branch)
+        if ($validator->fails()) {
+            return redirect('campaigns');
+        }
+        else
         {
-            echo $branch->_id.": ";
-            echo $branch->name.": ";
-            echo $branch->lat.",";
-            echo $branch->lng."   -   ";
-        }*/
+            $campaignName = $request->get('name');
 
-        return view('campaigns.create',compact('branches'));
+            //get branches data
+            $branches = Branche::all();
+//          $branches = Branche::where('accept_ads', true)->get();
+
+            $noCreateBtn = true;
+
+            return view('campaigns.create',compact('branches','noCreateBtn', 'campaignName'));
+        }
+
     }
 
     /**
@@ -124,6 +130,29 @@ class CampaignsController extends Controller
      */
     public function store(Request $request)
     {
+        /*
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            $res = array("success"=>false);
+            echo json_encode($res);
+        }
+        else
+        {
+            $name = $request->get('name');
+
+            redirect('campaigns/new?name='.$name);
+            $res = array("success"=>true);
+            echo json_encode($res);
+
+        }*/
+
+
+
+
+        //Image to sftp code  ---->
 
         $filesystem = new FileCloud();
 
@@ -173,6 +202,8 @@ class CampaignsController extends Controller
             if(!$this->correct_size($file))
                 return 'error! File size must be 100x100';
         }
+
+
 
     }
 
