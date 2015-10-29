@@ -103,4 +103,10 @@ class UserController extends Controller
         $all = Campaign::where('client_id')->get();
         return view('profile.charts', ['user' => Auth::user(), 'campaign' => $campaigns, 'closed' => $closed, 'canceled' => $canceled, 'all' => $all]);
     }
+
+    public function editProfile($data)
+    {   $hola = \Input::get('user_edit_uname_control');
+        $respuesta = array("suscces" => $hola);
+        return json_encode($respuesta);
+    }
 }

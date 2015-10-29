@@ -171,21 +171,26 @@
 
             $("#edit-info").click(function (event) {
                 event.preventDefault();
-                console.log('click en el boton');
+//                console.log('click en el boton');
+                var _token = "{!! session('_token') !!}";
+                var first = getUrlVars()["user_edit_uname_control"];
+//                alert(first);
                 $.ajax({
-                            url: '/path/to/file',
-                            type: 'default GET (Other values: POST)',
-                            dataType: 'default: Intelligent Guess (Other values: xml, json, script, or html)',
-                            data: {param1: 'value1'},
+                            url: '{{Route('edit.profile')}}',
+                            type: 'get',
+                            dataType: 'json',
+                            data: {status: status, name: first ,email: "{!! Input::get('user_edit_email') !!}", _token : _token}
                         })
-                        .done(function() {
-                            console.log("success");
+                        .done(function(data) {
+                            console.log(data);
                         })
-                        .fail(function() {
-                            console.log("error");
+                        .fail(function (jqXHR, textStatus, errorThrown) {
+                            console.log(jqXHR);
+                            console.log(textStatus);
+                            console.log(errorThrown);
                         })
                         .always(function() {
-                            console.log("complete");
+                            console.log('success');
                         });
             });
 
@@ -207,7 +212,7 @@
         //end of canvas loader configuration
         function showLoader() {
             cl.show(); // show loader
-            TweenLite.to('#fb-img', .4,
+            TweenLite.to('#fb-img', 0.4,
                     {
                         scaleX: 0,
                         scaleY: 0,
@@ -216,9 +221,9 @@
                     });
 
             //animate in canvas loader
-            TweenLite.from('#canvasloader-container', .4,
+            TweenLite.from('#canvasloader-container', 0.4,
                     {
-                        delay: .4,
+                        delay: 0.4,
                         scaleX: 0,
                         scaleY: 0,
                         alpha: 0,
@@ -226,5 +231,12 @@
                     });
         }
 
+        function getUrlVars() {
+            var vars = {};
+            var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+                vars[key] = value;
+            });
+            return vars;
+        }
     </script>
 @stop

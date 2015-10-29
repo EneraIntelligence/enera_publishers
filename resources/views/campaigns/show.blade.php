@@ -18,7 +18,7 @@
                                 </div>
                             </div>
                             <div class="user_heading_avatar">
-                                <img src="assets/img/avatars/avatar_11.png" alt="user avatar"/>
+                                {{--<img src="imgages/" alt="user avatar"/>--}}
                             </div>
                             <div class="user_heading_content">
                                 <h2 class="heading_b uk-margin-bottom"><span
@@ -26,7 +26,7 @@
                                 </h2>
                                 <ul class="user_stats">
                                     <li>
-                                        <h4 class="heading_a">2391 <span class="sub-heading">saldo</span></h4>
+                                        <h4 class="heading_a">{{$campaign['balance']}} <span class="sub-heading">saldo</span></h4>
                                     </li>
                                     <li>
                                         <h4 class="heading_a">120 <span class="sub-heading">interacciones completadas</span></h4>
@@ -36,8 +36,9 @@
                                     </li>
                                 </ul>
                             </div>
-                            <a class="md-fab md-fab-small md-fab-accent" href="page_user_edit.html">
-                                <i class="material-icons">&#xE150;</i>
+                            <a class="md-fab md-fab-small md-fab-accent " >  {{-- href="page_user_edit.html" --}}
+                                {{--<i class="material-icons">&#xE150;</i>--}}
+                                <i class="material-icons"></i>
                             </a>
                         </div>
                         <div class="user_content">
