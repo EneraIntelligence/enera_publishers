@@ -50,8 +50,8 @@
                                                         <i class="md-list-addon-icon material-icons">&#xE158;</i>
                                                     </div>
                                                     <div class="md-list-content">
-                                                        <span class="md-list-heading">{{$name}}</span>
-                                                        <span class="uk-text-small uk-text-muted">nombre</span>
+                                                        <span class="md-list-heading"><a href="">nombre</a></span>
+                                                        <span class="uk-text-small uk-text-muted">{{$name}}</span>
                                                     </div>
                                                 </li>
                                                 <li>
@@ -59,8 +59,8 @@
                                                         <i class="md-list-addon-icon material-icons">&#xE0CD;</i>
                                                     </div>
                                                     <div class="md-list-content">
-                                                        <span class="md-list-heading">{{$status}}</span>
-                                                        <span class="uk-text-small uk-text-muted">estado</span>
+                                                        <span class="md-list-heading"><a href="">estado</a></span>
+                                                        <span class="uk-text-small uk-text-muted">{{$status}}</span>
                                                     </div>
                                                 </li>
                                                 <li>
@@ -68,8 +68,8 @@
                                                         <i class="md-list-addon-icon uk-icon-facebook-official"></i>
                                                     </div>
                                                     <div class="md-list-content">
-                                                        <span class="md-list-heading">{{$balance['current']}}</span>
-                                                        <span class="uk-text-small uk-text-muted">balance</span>
+                                                        <span class="md-list-heading"><a href="#">balance</a></span>
+                                                        <span class="uk-text-small uk-text-muted">{{$balance['current']}}</span>
                                                     </div>
                                                 </li>
                                                 <li>
@@ -77,8 +77,8 @@
                                                         <i class="md-list-addon-icon uk-icon-twitter"></i>
                                                     </div>
                                                     <div class="md-list-content">
-                                                        <span class="md-list-heading">{{$interaction['name']}}</span>
-                                                        <span class="uk-text-small uk-text-muted">Tipo de interacon</span>
+                                                        <span class="md-list-heading"><a href="">Tipo de interacon</a></span>
+                                                        <span class="uk-text-small uk-text-muted">{{$interaction['name']}}</span>
                                                     </div>
                                                 </li>
                                             </ul>
@@ -116,7 +116,7 @@
                                     </div>
                                 </li>
                                 <li>
-                                    <div></div>
+                                    <div style="display: block">reportes</div>
                                 </li>
                             </ul>
                         </div>
