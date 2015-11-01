@@ -18,57 +18,30 @@
                                 </div>
                             </div>
                             <div class="user_heading_avatar">
-                                {{--<img src="imgages/" alt="user avatar"/>--}}
+                                <div>
+                                    <img style="background-image:none!important;" src="{!! URL::asset('images/icons/'.$interaction['name'].'.svg') !!}" alt="producto"/>
+                                </div>
                             </div>
                             <div class="user_heading_content">
                                 <h2 class="heading_b uk-margin-bottom"><span
-                                            class="uk-text-truncate">Campaña {{$campaign['name']}}</span><span class="sub-heading">Land acquisition specialist</span>
+                                            class="uk-text-truncate">Campaña: {{ $name }} </span><span class="sub-heading">interaccion {{ $interaction['name'] }}</span>
                                 </h2>
-                                <ul class="user_stats">
-                                    <li>
-                                        <h4 class="heading_a">{{$campaign['balance']}} <span class="sub-heading">saldo</span></h4>
-                                    </li>
-                                    <li>
-                                        <h4 class="heading_a">120 <span class="sub-heading">interacciones completadas</span></h4>
-                                    </li>
-                                    <li>
-                                        <h4 class="heading_a">284 <span class="sub-heading">nose</span></h4>
-                                    </li>
-                                </ul>
+
+                                <div class="uk-width-medium-1-1">
+                                    <div class="uk-progress">
+                                        <div class="uk-progress-bar" style="width: 40%; background:{{$color}}";></div>
+                                    </div>
+                                </div>
+
                             </div>
-                            <a class="md-fab md-fab-small md-fab-accent " >  {{-- href="page_user_edit.html" --}}
-                                {{--<i class="material-icons">&#xE150;</i>--}}
-                                <i class="material-icons"></i>
+                            <a class="md-fab md-fab-small md-fab-accent {{ $color }}" style="background: {{ $color }}">  {{-- href="page_user_edit.html" --}}
+                                <i class="material-icons">{{ $icon }}</i>
                             </a>
                         </div>
                         <div class="user_content">
-                            <ul id="user_profile_tabs" class="uk-tab"
-                                data-uk-tab="{connect:'#user_profile_tabs_content', animation:'slide-horizontal'}"
-                                data-uk-sticky="{ top: 48, media: 960 }">
-                                <li class="uk-active"><a href="#">Cuenta</a></li>
-                                <li><a href="#">Graficas</a></li>
-                                <li><a href="#">Campañas</a></li>
-                            </ul>
-                            <ul id="user_profile_tabs_content" class="uk-switcher uk-margin">
+                            <ul id="user_profile_tabs" class="uk-switcher uk-margin" data-uk-tab="{connect:'#user_profile_tabs_content'}">
                                 <li>
-                                    {{--<p>--}}
-                                    {{--Laboriosam soluta natus magni perspiciatis molestias ratione sit fugiat ea nesciunt--}}
-                                    {{--consectetur debitis explicabo aut aut vitae repellat cum doloremque dolores nisi sed--}}
-                                    {{--sunt quis vero ipsam illo dignissimos error quis ut quisquam et dolorem natus--}}
-                                    {{--distinctio iure autem ad quidem minima nesciunt excepturi nostrum sed aut sunt et--}}
-                                    {{--velit et distinctio corrupti quidem commodi amet repellendus dolorem totam quasi--}}
-                                    {{--aliquam magnam alias sunt qui fugiat sunt a est necessitatibus quae totam veniam--}}
-                                    {{--laboriosam omnis distinctio excepturi dignissimos et aperiam quae eligendi explicabo--}}
-                                    {{--ducimus sed et et nihil pariatur quos ducimus et sunt aut doloribus nulla nihil--}}
-                                    {{--tenetur rerum quibusdam aut eos eos aut deleniti perspiciatis eaque aliquid ut fuga--}}
-                                    {{--tempore doloremque fugit vitae corporis totam saepe iure eos qui repellat ipsam sit--}}
-                                    {{--quasi et qui velit voluptate cum cupiditate exercitationem id non architecto sit--}}
-                                    {{--eius dolor vel aperiam quidem rerum quis ex quo et ut sed eligendi sit ea impedit--}}
-                                    {{--adipisci illum tempora impedit officia facere ratione modi necessitatibus et nam--}}
-                                    {{--placeat occaecati porro.--}}
-                                    {{--</p>--}}
-                                    <div class="uk-grid uk-margin-medium-top uk-margin-large-bottom"
-                                         data-uk-grid-margin>
+                                    <div class="uk-grid uk-margin-medium-top uk-margin-large-bottom" data-uk-grid-margin>
                                         <div class="uk-width-large-1-2">
                                             <h4 class="heading_c uk-margin-small-bottom">Información</h4>
                                             <ul class="md-list md-list-addon">
@@ -77,8 +50,8 @@
                                                         <i class="md-list-addon-icon material-icons">&#xE158;</i>
                                                     </div>
                                                     <div class="md-list-content">
-                                                        <span class="md-list-heading"></span>
-                                                        <span class="uk-text-small uk-text-muted">Correo</span>
+                                                        <span class="md-list-heading">{{$name}}</span>
+                                                        <span class="uk-text-small uk-text-muted">nombre</span>
                                                     </div>
                                                 </li>
                                                 <li>
@@ -86,8 +59,8 @@
                                                         <i class="md-list-addon-icon material-icons">&#xE0CD;</i>
                                                     </div>
                                                     <div class="md-list-content">
-                                                        <span class="md-list-heading">356-649-5349</span>
-                                                        <span class="uk-text-small uk-text-muted">Telefono</span>
+                                                        <span class="md-list-heading">{{$status}}</span>
+                                                        <span class="uk-text-small uk-text-muted">estado</span>
                                                     </div>
                                                 </li>
                                                 <li>
@@ -95,8 +68,8 @@
                                                         <i class="md-list-addon-icon uk-icon-facebook-official"></i>
                                                     </div>
                                                     <div class="md-list-content">
-                                                        <span class="md-list-heading">facebook.com/envato</span>
-                                                        <span class="uk-text-small uk-text-muted">Facebook</span>
+                                                        <span class="md-list-heading">{{$balance['current']}}</span>
+                                                        <span class="uk-text-small uk-text-muted">balance</span>
                                                     </div>
                                                 </li>
                                                 <li>
@@ -104,40 +77,38 @@
                                                         <i class="md-list-addon-icon uk-icon-twitter"></i>
                                                     </div>
                                                     <div class="md-list-content">
-                                                        <span class="md-list-heading">twitter.com/envato</span>
-                                                        <span class="uk-text-small uk-text-muted">Twitter</span>
+                                                        <span class="md-list-heading">{{$interaction['name']}}</span>
+                                                        <span class="uk-text-small uk-text-muted">Tipo de interacon</span>
                                                     </div>
                                                 </li>
                                             </ul>
                                         </div>
                                         <div class="uk-width-large-1-2">
-                                            <h4 class="heading_c uk-margin-small-bottom">My groups</h4>
+                                            <h4 class="heading_c uk-margin-small-bottom">Filtros</h4>
                                             <ul class="md-list">
                                                 <li>
                                                     <div class="md-list-content">
-                                                        <span class="md-list-heading"><a href="#">Cloud
-                                                                Computing</a></span>
-                                                        <span class="uk-text-small uk-text-muted">206 Members</span>
+                                                        <span class="md-list-heading"><a href="#">Rango de Edad</a></span>
+                                                        <span class="uk-text-small uk-text-muted">{{$filters['age'][0].' a '.$filters['age'][1]}} </span>
                                                     </div>
                                                 </li>
                                                 <li>
                                                     <div class="md-list-content">
-                                                        <span class="md-list-heading"><a href="#">Account Manager
-                                                                Group</a></span>
-                                                        <span class="uk-text-small uk-text-muted">67 Members</span>
+                                                        <span class="md-list-heading"><a href="#">Generos</a></span>
+                                                        <span class="uk-text-small uk-text-muted">{{$filters['gender'][0]}}, @if(isset($filters['gender'][1])){{$filters['gender'][1]}}  @endif</span>
+                                                        {{--{{$filters['gender'][0].',  '.$filters['gender'][1]}}--}}
                                                     </div>
                                                 </li>
                                                 <li>
                                                     <div class="md-list-content">
-                                                        <span class="md-list-heading"><a href="#">Digital Marketing</a></span>
-                                                        <span class="uk-text-small uk-text-muted">159 Members</span>
+                                                        <span class="md-list-heading"><a href="#">Horas</a></span>
+                                                        <span class="uk-text-small uk-text-muted">@foreach($filters['day_hours'] as $hora) {{$hora}}, @endforeach</span>
                                                     </div>
                                                 </li>
                                                 <li>
                                                     <div class="md-list-content">
-                                                        <span class="md-list-heading"><a href="#">HR Professionals
-                                                                Association - Human Resources</a></span>
-                                                        <span class="uk-text-small uk-text-muted">69 Members</span>
+                                                        <span class="md-list-heading"><a href="#"> usuario unico </a></span>
+                                                        <span class="uk-text-small uk-text-muted"> {{$filters['unique_user']}} </span>
                                                     </div>
                                                 </li>
                                             </ul>
@@ -145,431 +116,7 @@
                                     </div>
                                 </li>
                                 <li>
-                                    <p>Sección con fotos</p>
-                                </li>
-                                <li>
-                                    <ul class="md-list">
-                                        <li>
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading"><a href="#">Pariatur ad eius laborum
-                                                        architecto id voluptas.</a></span>
-
-                                                <div class="uk-margin-small-top">
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE192;</i> <span
-                                                            class="uk-text-muted uk-text-small">22 Aug 2015</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE0B9;</i> <span
-                                                            class="uk-text-muted uk-text-small">20</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE417;</i> <span
-                                                            class="uk-text-muted uk-text-small">488</span>
-                                                </span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading"><a href="#">Vel earum maiores suscipit id
-                                                        omnis laborum.</a></span>
-
-                                                <div class="uk-margin-small-top">
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE192;</i> <span
-                                                            class="uk-text-muted uk-text-small">07 Aug 2015</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE0B9;</i> <span
-                                                            class="uk-text-muted uk-text-small">20</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE417;</i> <span
-                                                            class="uk-text-muted uk-text-small">809</span>
-                                                </span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading"><a href="#">Impedit dolore magni aut et
-                                                        hic voluptatem.</a></span>
-
-                                                <div class="uk-margin-small-top">
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE192;</i> <span
-                                                            class="uk-text-muted uk-text-small">10 Aug 2015</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE0B9;</i> <span
-                                                            class="uk-text-muted uk-text-small">25</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE417;</i> <span
-                                                            class="uk-text-muted uk-text-small">569</span>
-                                                </span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading"><a href="#">Explicabo ut rerum dolorem vel
-                                                        tenetur.</a></span>
-
-                                                <div class="uk-margin-small-top">
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE192;</i> <span
-                                                            class="uk-text-muted uk-text-small">02 Aug 2015</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE0B9;</i> <span
-                                                            class="uk-text-muted uk-text-small">24</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE417;</i> <span
-                                                            class="uk-text-muted uk-text-small">628</span>
-                                                </span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading"><a href="#">Aut necessitatibus nihil
-                                                        consectetur ipsa.</a></span>
-
-                                                <div class="uk-margin-small-top">
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE192;</i> <span
-                                                            class="uk-text-muted uk-text-small">21 Aug 2015</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE0B9;</i> <span
-                                                            class="uk-text-muted uk-text-small">15</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE417;</i> <span
-                                                            class="uk-text-muted uk-text-small">337</span>
-                                                </span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading"><a href="#">Molestiae eum quia vero et
-                                                        omnis eum asperiores.</a></span>
-
-                                                <div class="uk-margin-small-top">
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE192;</i> <span
-                                                            class="uk-text-muted uk-text-small">06 Aug 2015</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE0B9;</i> <span
-                                                            class="uk-text-muted uk-text-small">6</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE417;</i> <span
-                                                            class="uk-text-muted uk-text-small">884</span>
-                                                </span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading"><a href="#">Tempore non debitis
-                                                        reprehenderit doloribus commodi laboriosam.</a></span>
-
-                                                <div class="uk-margin-small-top">
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE192;</i> <span
-                                                            class="uk-text-muted uk-text-small">10 Aug 2015</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE0B9;</i> <span
-                                                            class="uk-text-muted uk-text-small">26</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE417;</i> <span
-                                                            class="uk-text-muted uk-text-small">498</span>
-                                                </span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading"><a href="#">Ullam illum est fuga
-                                                        voluptatem quibusdam voluptatem sit voluptatem.</a></span>
-
-                                                <div class="uk-margin-small-top">
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE192;</i> <span
-                                                            class="uk-text-muted uk-text-small">06 Aug 2015</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE0B9;</i> <span
-                                                            class="uk-text-muted uk-text-small">5</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE417;</i> <span
-                                                            class="uk-text-muted uk-text-small">779</span>
-                                                </span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading"><a href="#">Sapiente libero dolorum velit
-                                                        consequatur aut.</a></span>
-
-                                                <div class="uk-margin-small-top">
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE192;</i> <span
-                                                            class="uk-text-muted uk-text-small">14 Aug 2015</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE0B9;</i> <span
-                                                            class="uk-text-muted uk-text-small">28</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE417;</i> <span
-                                                            class="uk-text-muted uk-text-small">607</span>
-                                                </span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading"><a href="#">Repellendus et tenetur est
-                                                        ratione sunt.</a></span>
-
-                                                <div class="uk-margin-small-top">
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE192;</i> <span
-                                                            class="uk-text-muted uk-text-small">29 Aug 2015</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE0B9;</i> <span
-                                                            class="uk-text-muted uk-text-small">20</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE417;</i> <span
-                                                            class="uk-text-muted uk-text-small">499</span>
-                                                </span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading"><a href="#">Et voluptatem sit velit saepe
-                                                        exercitationem.</a></span>
-
-                                                <div class="uk-margin-small-top">
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE192;</i> <span
-                                                            class="uk-text-muted uk-text-small">22 Aug 2015</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE0B9;</i> <span
-                                                            class="uk-text-muted uk-text-small">13</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE417;</i> <span
-                                                            class="uk-text-muted uk-text-small">186</span>
-                                                </span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading"><a href="#">Magni eos suscipit sunt harum
-                                                        autem quae unde odit.</a></span>
-
-                                                <div class="uk-margin-small-top">
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE192;</i> <span
-                                                            class="uk-text-muted uk-text-small">05 Aug 2015</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE0B9;</i> <span
-                                                            class="uk-text-muted uk-text-small">11</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE417;</i> <span
-                                                            class="uk-text-muted uk-text-small">542</span>
-                                                </span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading"><a href="#">Odit ea ea unde
-                                                        consequuntur.</a></span>
-
-                                                <div class="uk-margin-small-top">
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE192;</i> <span
-                                                            class="uk-text-muted uk-text-small">06 Aug 2015</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE0B9;</i> <span
-                                                            class="uk-text-muted uk-text-small">4</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE417;</i> <span
-                                                            class="uk-text-muted uk-text-small">762</span>
-                                                </span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading"><a href="#">Itaque pariatur qui recusandae
-                                                        unde tempore vero minus.</a></span>
-
-                                                <div class="uk-margin-small-top">
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE192;</i> <span
-                                                            class="uk-text-muted uk-text-small">29 Aug 2015</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE0B9;</i> <span
-                                                            class="uk-text-muted uk-text-small">24</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE417;</i> <span
-                                                            class="uk-text-muted uk-text-small">134</span>
-                                                </span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading"><a href="#">Et debitis ea qui
-                                                        quas.</a></span>
-
-                                                <div class="uk-margin-small-top">
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE192;</i> <span
-                                                            class="uk-text-muted uk-text-small">16 Aug 2015</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE0B9;</i> <span
-                                                            class="uk-text-muted uk-text-small">6</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE417;</i> <span
-                                                            class="uk-text-muted uk-text-small">675</span>
-                                                </span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading"><a href="#">Aut est similique ducimus
-                                                        earum neque.</a></span>
-
-                                                <div class="uk-margin-small-top">
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE192;</i> <span
-                                                            class="uk-text-muted uk-text-small">28 Aug 2015</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE0B9;</i> <span
-                                                            class="uk-text-muted uk-text-small">26</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE417;</i> <span
-                                                            class="uk-text-muted uk-text-small">169</span>
-                                                </span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading"><a href="#">Nihil occaecati necessitatibus
-                                                        eos libero eveniet inventore voluptas.</a></span>
-
-                                                <div class="uk-margin-small-top">
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE192;</i> <span
-                                                            class="uk-text-muted uk-text-small">15 Aug 2015</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE0B9;</i> <span
-                                                            class="uk-text-muted uk-text-small">14</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE417;</i> <span
-                                                            class="uk-text-muted uk-text-small">718</span>
-                                                </span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading"><a href="#">Ab quis praesentium cupiditate
-                                                        inventore.</a></span>
-
-                                                <div class="uk-margin-small-top">
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE192;</i> <span
-                                                            class="uk-text-muted uk-text-small">27 Aug 2015</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE0B9;</i> <span
-                                                            class="uk-text-muted uk-text-small">24</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE417;</i> <span
-                                                            class="uk-text-muted uk-text-small">718</span>
-                                                </span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading"><a href="#">Aut occaecati molestiae
-                                                        reprehenderit.</a></span>
-
-                                                <div class="uk-margin-small-top">
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE192;</i> <span
-                                                            class="uk-text-muted uk-text-small">02 Aug 2015</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE0B9;</i> <span
-                                                            class="uk-text-muted uk-text-small">15</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE417;</i> <span
-                                                            class="uk-text-muted uk-text-small">754</span>
-                                                </span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading"><a href="#">Quia sint vero quidem
-                                                        architecto.</a></span>
-
-                                                <div class="uk-margin-small-top">
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE192;</i> <span
-                                                            class="uk-text-muted uk-text-small">07 Aug 2015</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE0B9;</i> <span
-                                                            class="uk-text-muted uk-text-small">19</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE417;</i> <span
-                                                            class="uk-text-muted uk-text-small">364</span>
-                                                </span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
+                                    <div></div>
                                 </li>
                             </ul>
                         </div>

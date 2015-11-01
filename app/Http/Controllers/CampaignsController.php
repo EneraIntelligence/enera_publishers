@@ -13,6 +13,7 @@ use Publishers\Campaign;
 use Publishers\Branche;
 use Publishers\Item;
 use Publishers\Libraries\FileCloud;
+use Publishers\Libraries\StatusColor;
 
 
 class CampaignsController extends Controller
@@ -26,7 +27,7 @@ class CampaignsController extends Controller
     {
         //colors and style vars
         $status_values = array(
-            'active'=>'1',
+            'active' => '1',
             'pending' => '2',
             'ended' => '3',
             'close' => '3',
@@ -35,21 +36,21 @@ class CampaignsController extends Controller
         );
 
         $status_colors = array(
-            'active'=>'uk-text-success',
-            'pending'=>'uk-text-primary',
-            'rejected'=>'uk-text-danger',
-            'ended'=>'md-color-blue-900',
-            'close'=>'md-color-blue-900',
-            'canceled'=>'md-color-grey-500'
+            'active' => 'uk-text-success',
+            'pending' => 'uk-text-primary',
+            'rejected' => 'uk-text-danger',
+            'ended' => 'md-color-blue-900',
+            'close' => 'md-color-blue-900',
+            'canceled' => 'md-color-grey-500'
         );
 
         $campaign_icons = array(
-            ''=>'picture_in_picture',
-            'banner'=>'picture_in_picture',
-            'video'=>'ondemand_video',
-            'mailing_list'=>'mail',
-            'captcha'=>'spellcheck',
-            'survey'=>'assignment'
+            '' => 'picture_in_picture',
+            'banner' => 'picture_in_picture',
+            'video' => 'ondemand_video',
+            'mailing_list' => 'mail',
+            'captcha' => 'spellcheck',
+            'survey' => 'assignment'
         );
 
         //Obteniendo campañas del user loggeado
@@ -90,7 +91,7 @@ class CampaignsController extends Controller
         $campaigns[7]->action = "captcha";
         */
 
-        return view('campaigns.index',compact('campaigns','campaign_icons', 'status_colors', 'status_values'));
+        return view('campaigns.index', compact('campaigns', 'campaign_icons', 'status_colors', 'status_values'));
     }
 
     /**
@@ -106,9 +107,7 @@ class CampaignsController extends Controller
 
         if ($validator->fails()) {
             return redirect('campaigns');
-        }
-        else
-        {
+        } else {
             $campaignName = $request->get('name');
 
             //get branches data
@@ -117,7 +116,7 @@ class CampaignsController extends Controller
 
             $noCreateBtn = true;
 
-            return view('campaigns.create',compact('branches','noCreateBtn', 'campaignName'));
+            return view('campaigns.create', compact('branches', 'noCreateBtn', 'campaignName'));
         }
 
     }
@@ -125,7 +124,7 @@ class CampaignsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -150,37 +149,34 @@ class CampaignsController extends Controller
         }*/
 
 
-
-
         //Image to sftp code  ---->
 
         $filesystem = new FileCloud();
 
         $file = Input::file('image');
 
-        if($file && $file->isValid() && $this->correct_size($file))
-        {
+        if ($file && $file->isValid() && $this->correct_size($file)) {
             //set newly generated filename and upload to server storage
             $ext = $file->getClientOriginalExtension();
-            $filename = time().'.'.$ext;
-            $file->move(storage_path().'/app',$filename);
+            $filename = time() . '.' . $ext;
+            $file->move(storage_path() . '/app', $filename);
 
             //get uploaded file and copy it to cloud
             $uploadedFile = Storage::get($filename);
-            $fileSaved = $filesystem->put($filename, $uploadedFile );
+            $fileSaved = $filesystem->put($filename, $uploadedFile);
             //delete server file
             Storage::delete($filename);
 
             //creating campaign
             $campaign = new Campaign();
-            $campaign->administrator_id=Auth::user()->_id;
+            $campaign->administrator_id = Auth::user()->_id;
             $campaign->client_id = "???";//TODO tomar esto
-            $campaign->name = "test ".time();//TODO tomar de input
+            $campaign->name = "test " . time();//TODO tomar de input
             $campaign->branches = [];
-            $campaign->filters = (object) array();
-            $campaign->interaction = (object) array('name' => "banner");
-            $campaign->content = (object) array('image' => $filename);
-            $campaign->status="pending";
+            $campaign->filters = (object)array();
+            $campaign->interaction = (object)array('name' => "banner");
+            $campaign->content = (object)array('image' => $filename);
+            $campaign->status = "pending";
             $campaign->save();
 
             //created item related to campaign
@@ -191,18 +187,15 @@ class CampaignsController extends Controller
             $item->campaign_id = $campaign->_id;
             $item->save();
 
-            return "File ". $filename ." saved: ".$fileSaved;
-        }
-        else
-        {
-            if(!$file->isValid())
+            return "File " . $filename . " saved: " . $fileSaved;
+        } else {
+            if (!$file->isValid())
                 return 'error! no file uploaded';
-            if(!$file->isValid())
-               return 'error! File not valid';
-            if(!$this->correct_size($file))
+            if (!$file->isValid())
+                return 'error! File not valid';
+            if (!$this->correct_size($file))
                 return 'error! File size must be 100x100';
         }
-
 
 
     }
@@ -212,39 +205,86 @@ class CampaignsController extends Controller
         $maxHeight = 100;
         $maxWidth = 100;
         list($width, $height) = getimagesize($photo);
-        return ( ($width <= $maxWidth) && ($height <= $maxHeight) );
+        return (($width <= $maxWidth) && ($height <= $maxHeight));
     }
 
     /**
      * Display the specified resource.
-     *
-     * @param  int  $id
+     * Muestra la información de una campaña
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
+        $semana = array(0=>'',1=>'lunes',2=>'martes',3=>'miércoles',4=>'jueves',5=>'viernes',6=>'sabado',7=>'domingo');
         $campaign = Campaign::find($id);
         $campaign = $campaign['original'];
+        //        dd($campaign);
+        /******     saca el color y el icono que se va a usar regresa un array  ********/
+        $sColor = new StatusColor();
+        $color = $sColor->estados($campaign['status']);
+//        dd($color);
+        /******     manejo de los filtros   ********/
+        //si nomas tiene un genero agrego el otro vacio para que no truene la vista
+        if (count($campaign['filters']['gender']) == 1) {
+            if ($campaign['filters']['gender'][0] == 'male') { //para cambiarle los generos a español
+                $campaign['filters']['gender'][0] = 'Hombre';
+            } elseif ($campaign['filters']['gender'][0] = 'female') {
+                $campaign['filters']['gender'][0] = 'Mujer';
+            }
+        } else {
+            if ($campaign['filters']['gender'][0] == 'male') { //para cambiarle los generos a español
+                $campaign['filters']['gender'][0] = 'Hombre';
+                $campaign['filters']['gender'][1] = 'Mujer';
+            } elseif ($campaign['filters']['gender'][0] = 'female') {
+                $campaign['filters']['gender'][0] = 'Mujer';
+                $campaign['filters']['gender'][1] = 'Hombre';
+            }
+        }//fin del if genero
+        /**** unique user ****/
+            if($campaign['filters']['unique_user']==true){
+                $campaign['filters']['unique_user']='Si';
+            }else{
+                $campaign['filters']['unique_user']='No';
+            }
+        /****  conversion de fechas ****/
+        $campaign['filters']['date']['start']= date('Y-m-d', $campaign['filters']['date']['start']->sec);
+        $campaign['filters']['date']['end']= date('Y-m-d', $campaign['filters']['date']['end']->sec);
 //        dd($campaign);
-        return view('campaigns.show',compact('campaign'));
+        /****  conversion de fechas ****/
+        $dias=$campaign['filters']['week_days'];
+//        dd($dias);
+        foreach($campaign['filters']['week_days'] as  $clave => $dia){
+//            echo($clave.' + '. $dia.'/');
+            if(array_key_exists($dia , $semana )){
+                $campaign['filters']['week_days'][$clave]=$semana[$dia];
+            }
+        }
+
+//        dd($campaign);
+
+        /******     se juntan los array  para mandar solo uno  ********/
+        $campaign = array_merge($campaign, $color);
+//        dd($campaign);
+        return view('campaigns.show', $campaign);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
+        return view('campaigns.edit', compact('campaign'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -255,7 +295,7 @@ class CampaignsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
