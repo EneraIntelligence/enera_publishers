@@ -22,7 +22,7 @@
                             </div>
                             <div class="user_heading_content">
                                 <h2 class="heading_b uk-margin-bottom"><span
-                                            class="uk-text-truncate">{!! $user->name !!}</span><span
+                                            class="uk-text-truncate">{!! $user->name['first'] . " " . $user->name['last'] !!}</span><span
                                             class="sub-heading">{!! $user->roles !!}</span>
                                 </h2>
                                 <ul class="user_stats">
@@ -44,89 +44,79 @@
                             </a>
                         </div>
                         <div class="user_content">
-                            <ul id="user_profile_tabs" class="uk-tab"
-                                data-uk-tab="{connect:'#user_profile_tabs_content', animation:'slide-horizontal'}"
-                                data-uk-sticky="{ top: 48, media: 960 }">
-                                <li class="uk-active"><a href="#">Cuenta</a></li>
-                                {{--<li><a href="#">Graficas</a></li>--}}
-                                <li><a href="#">Campañas</a></li>
-                            </ul>
-                            <ul id="user_profile_tabs_content" class="uk-switcher uk-margin">
-                                <li>
-                                    <div class="uk-grid uk-margin-medium-top uk-margin-large-bottom"
-                                         data-uk-grid-margin>
-                                        <div class="uk-width-large-1-2">
-                                            <h4 class="heading_c uk-margin-small-bottom">Información</h4>
-                                            <ul class="md-list md-list-addon">
-                                                <li>
-                                                    <div class="md-list-addon-element">
-                                                        <i class="md-list-addon-icon material-icons">&#xE158;</i>
-                                                    </div>
-                                                    <div class="md-list-content">
-                                                        <span class="md-list-heading">{{$user->email}}</span>
-                                                        <span class="uk-text-small uk-text-muted">Correo</span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="md-list-addon-element">
-                                                        <i class="md-list-addon-icon uk-icon-facebook-official"></i>
-                                                    </div>
-                                                    <div class="md-list-content">
-                                                        <span class="md-list-heading">{{$user->facebook}}</span>
-                                                        <span class="uk-text-small uk-text-muted">Facebook</span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="md-list-addon-element">
-                                                        <i class="md-list-addon-icon material-icons">&#xE158;</i>
-                                                    </div>
-                                                    <div class="md-list-content">
-                                                        <span class="md-list-heading">{!! $user->linkedin !!}</span>
-                                                        <span class="uk-text-small uk-text-muted">LinkedIn</span>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="uk-width-large-1-2">
-                                            <h4 class="heading_c uk-margin-small-bottom">&nbsp;</h4>
-                                            <ul class="md-list md-list-addon">
-                                                <li>
-                                                    <div class="md-list-addon-element">
-                                                        <i class="md-list-addon-icon material-icons">&#xE0CD;</i>
-                                                    </div>
-                                                    <div class="md-list-content">
-                                                        <span class="md-list-heading">{{$user->phone}}</span>
-                                                        <span class="uk-text-small uk-text-muted">Telefono</span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="md-list-addon-element">
-                                                        <i class="md-list-addon-icon uk-icon-twitter"></i>
-                                                    </div>
-                                                    <div class="md-list-content">
-                                                        <span class="md-list-heading">{{$user->twitter}}</span>
-                                                        <span class="uk-text-small uk-text-muted">Twitter</span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="md-list-addon-element">
-                                                        <i class="md-list-addon-icon uk-icon-google-plus"></i>
-                                                    </div>
-                                                    <div class="md-list-content">
-                                                        <span class="md-list-heading">{!! $user->googleplus !!}</span>
-                                                        <span class="uk-text-small uk-text-muted">Google+</span>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </div>
-
-                                    </div>
-                                </li>
-                                <li>
+                            <div class="uk-grid uk-grid-collapse">
+                                <div class="uk-width-small-1-2">
+                                    <h3>
+                                        Informacíon
+                                    </h3>
+                                    <ul class="md-list md-list-addon">
+                                        <li>
+                                            <div class="md-list-addon-element">
+                                                <i class="uk-icon-at uk-icon-medium"></i>
+                                            </div>
+                                            <div class="md-list-content">
+                                                <span class="md-list-heading">{{$user->email}}</span>
+                                                <span class="uk-text-small uk-text-muted">Correo</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="md-list-addon-element">
+                                                <i class="md-list-addon-icon uk-icon-facebook-official"></i>
+                                            </div>
+                                            <div class="md-list-content">
+                                                <span class="md-list-heading">{{$user->socialnetwork['facebook']}}</span>
+                                                <span class="uk-text-small uk-text-muted">Facebook</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="md-list-addon-element">
+                                                <i class="md-list-addon-icon material-icons">&#xE158;</i>
+                                            </div>
+                                            <div class="md-list-content">
+                                                <span class="md-list-heading">{!! $user->socialnetwork['linkedin'] !!}</span>
+                                                <span class="uk-text-small uk-text-muted">LinkedIn</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="md-list-addon-element">
+                                                <i class="md-list-addon-icon material-icons">&#xE0CD;</i>
+                                            </div>
+                                            <div class="md-list-content">
+                                                <span class="md-list-heading">{{$user->phones['number']}}</span>
+                                                <span class="uk-text-small uk-text-muted">Telefono</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="md-list-addon-element">
+                                                <i class="md-list-addon-icon uk-icon-twitter"></i>
+                                            </div>
+                                            <div class="md-list-content">
+                                                <span class="md-list-heading">{{$user->socialnetwork['twitter']}}</span>
+                                                <span class="uk-text-small uk-text-muted">Twitter</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="md-list-addon-element">
+                                                <i class="md-list-addon-icon uk-icon-google-plus"></i>
+                                            </div>
+                                            <div class="md-list-content">
+                                                <span class="md-list-heading">{!! $user->socialnetwork['googleplus'] !!}</span>
+                                                <span class="uk-text-small uk-text-muted">Google+</span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="uk-width-small-1-2">
+                                    <div id="chart1" style="margin: 75px 0 15px 0;"></div>
+                                </div>
+                                <div class="uk-width-small-1-2">
+                                    <h3>
+                                        Campañas
+                                    </h3>
                                     @if($all->count() <= 0)
                                         <div class="uk-alert uk-alert-danger" data-uk-alert="">
-                                            {{--<a href="#" class="uk-alert-close uk-close"></a>--}}
-                                            De momento no tienes ninguna campaña para mostrar, oprime el boton de crear para comenzar
+                                            De momento no tienes ninguna campaña para mostrar, oprime el boton de crear
+                                            para comenzar
                                         </div>
 
                                     @else
@@ -134,49 +124,40 @@
                                             @foreach($all as $campaign)
                                                 <li>
                                                     <div class="md-list-content">
-                                                    <span class="md-list-heading"><a
-                                                                href="#">{!! $campaign->name !!}</a></span>
+                                    <span class="md-list-heading"><a
+                                                href="#">{!! $campaign->name !!}</a></span>
 
                                                         <div class="uk-margin-small-top">
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE192;</i> <span
-                                                            class="uk-text-muted uk-text-small">{!! Date('Y-m-d',strtotime($campaign->created_at)) !!}</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE0B9;</i> <span
-                                                            class="uk-text-muted uk-text-small">{{$campaign->status}}</span>
-                                                </span>
-                                                <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE417;</i> <span
-                                                            class="uk-text-muted uk-text-small">{{ $campaign->logs->count() }}</span>
-                                                </span>
-                                                        <span class="uk-margin-right">
-                                                   <i class="material-icons">&#xE8D3;</i> <span
-                                                                    class="uk-text-muted uk-text-small">{{ $campaign->administrator->name }}</span>
-                                                </span>
-                                                        <span class="uk-margin-right">
-                                                    <i class="material-icons">&#xE865;</i> <span
-                                                                    class="uk-text-muted uk-text-small">{{ $campaign->action }}</span>
-                                                </span>
+                                    <span class="uk-margin-right">
+                                    <i class="material-icons">&#xE192;</i> <span
+                                                class="uk-text-muted uk-text-small">{!! Date('Y-m-d',strtotime($campaign->created_at)) !!}</span>
+                                    </span>
+                                    <span class="uk-margin-right">
+                                    <i class="material-icons">&#xE0B9;</i> <span
+                                                class="uk-text-muted uk-text-small">{{$campaign->status}}</span>
+                                    </span>
+                                    <span class="uk-margin-right">
+                                    <i class="material-icons">&#xE417;</i> <span
+                                                class="uk-text-muted uk-text-small">{{ $campaign->logs->count() }}</span>
+                                    </span>
+                                    <span class="uk-margin-right">
+                                    <i class="material-icons">&#xE8D3;</i> <span
+                                                class="uk-text-muted uk-text-small">{{ $campaign->administrator->name }}</span>
+                                    </span>
+                                    <span class="uk-margin-right">
+                                    <i class="material-icons">&#xE865;</i> <span
+                                                class="uk-text-muted uk-text-small">{{ $campaign->action }}</span>
+                                    </span>
                                                         </div>
                                                     </div>
                                                 </li>
                                             @endforeach
-
-                                                <div class="uk-grid uk-grid-small">
-                                                    <div class="uk-width-medium-1-6">
-                                                        <a class="md-btn md-btn-flat md-btn-flat-primary" href="{!! url('campaigns/index') !!}">Ver graficas</a>
-                                                    </div>
-                                                    <div class="uk-width-medium-1-6">
-                                                        <a class="md-btn md-btn-flat md-btn-flat-primary" href="{!! url('profile/charts ') !!}">Ver graficas</a>
-                                                    </div>
-                                                </div>
-
-                                        </ul>
-
                                     @endif
-                                </li>
-                            </ul>
+                                </div>
+                                <div class="uk-width-small-1-2">
+                                    <div id="chart2"style="margin: 75px 0 15px 0;"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -185,7 +166,7 @@
     </div>
 @stop
 
-@section('script')
+@section('scripts')
     <script>
 
         var chart1 = c3.generate({
@@ -197,14 +178,46 @@
                     ['data3', 300],
                     ['data4', 50]
                 ],
-                type: 'donut'
+                type : 'donut'
             },
             color: {
-                pattern: ['red', '#aec7e8', '#ff7f0e', '#ffbb78', '#2ca02c', '#98df8a', '#d62728', '#ff9896', '#9467bd', '#c5b0d5', '#8c564b', '#c49c94', '#e377c2', '#f7b6d2', '#7f7f7f', '#c7c7c7', '#bcbd22', '#dbdb8d', '#17becf', '#9edae5']
+                pattern: ['red', '#aec7e8', '#ff7f0e', '#ffbb78']
             },
             donut: {
-                title: "Iris Petal Width"
+                title: "nombre"
             }
+        });
+
+        var chart2 = c3.generate({
+            bindto: '#chart2',
+            data: {
+                columns: [
+                    ['data1', 30, 200, 100, 400, 150, 250, 200, 100, 400, 150, 250,30, 200, 100, 400, 150],
+                    ['data2', 50, 20, 10, 40, 15, 25, 200, 30, 200, 100, 400, 150,100, 400, 150, 250],
+                    ['data3', 50, 20, 150, 40, 15, 250, 20, 30, 200, 100, 40, 150,100, 400, 150, 250]
+                ],
+                axes: {
+                    data1: 'y',
+                    data2: 'y2',
+                    data3: 'y'
+                }
+            },
+            color: {
+                pattern: ['red', '#aec7e8', '#ff7f0e', '#ffbb78']
+            },
+            axis: {
+                y: {
+                    padding: {top: 200, bottom: 0}
+                },
+                y2: {
+                    padding: {top: 100, bottom: 100},
+                    show: true
+                }
+            }
+        });
+
+        $("#phone_number").kendoMaskedTextBox({
+            mask: "(99) 0000-0000"
         });
     </script>
 @stop
