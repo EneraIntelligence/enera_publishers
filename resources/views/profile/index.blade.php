@@ -18,7 +18,10 @@
                                 </div>
                             </div>
                             <div class="user_heading_avatar">
-                                <img src="assets/img/avatars/avatar_11.png" alt="user avatar"/>
+                                <div>
+                                    <img style="background-image:none!important;"
+                                         src="{!!URL::asset('images/avatar/'. $user->image )  !!}" alt="User avatar"/>
+                                </div>
                             </div>
                             <div class="user_heading_content">
                                 <h2 class="heading_b uk-margin-bottom"><span
@@ -151,11 +154,12 @@
                                                         </div>
                                                     </div>
                                                 </li>
-                                            @endforeach
+                                        </ul>
+                                        @endforeach
                                     @endif
                                 </div>
                                 <div class="uk-width-small-1-2">
-                                    <div id="chart2"style="margin: 75px 0 15px 0;"></div>
+                                    <div id="chart2" style="margin: 75px 0 15px 0;"></div>
                                 </div>
                             </div>
                         </div>
@@ -178,7 +182,7 @@
                     ['data3', 300],
                     ['data4', 50]
                 ],
-                type : 'donut'
+                type: 'donut'
             },
             color: {
                 pattern: ['red', '#aec7e8', '#ff7f0e', '#ffbb78']
@@ -192,9 +196,9 @@
             bindto: '#chart2',
             data: {
                 columns: [
-                    ['data1', 30, 200, 100, 400, 150, 250, 200, 100, 400, 150, 250,30, 200, 100, 400, 150],
-                    ['data2', 50, 20, 10, 40, 15, 25, 200, 30, 200, 100, 400, 150,100, 400, 150, 250],
-                    ['data3', 50, 20, 150, 40, 15, 250, 20, 30, 200, 100, 40, 150,100, 400, 150, 250]
+                    ['data1', 30, 200, 100, 400, 150, 250, 200, 100, 400, 150, 250, 30, 200, 100, 400, 150],
+                    ['data2', 50, 20, 10, 40, 15, 25, 200, 30, 200, 100, 400, 150, 100, 400, 150, 250],
+                    ['data3', 50, 20, 150, 40, 15, 250, 20, 30, 200, 100, 40, 150, 100, 400, 150, 250]
                 ],
                 axes: {
                     data1: 'y',
