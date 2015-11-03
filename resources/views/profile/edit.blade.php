@@ -2,6 +2,11 @@
 @section('title', ' - Editar Perfil')
 @section('head_scripts')
     {!! HTML::style(asset('css/profile.css')) !!}
+    <style>
+        @media (max-width: 340px) {
+            .profile_mobile {
+                padding-left: 0 !important; } }
+    </style>
 @endsection
 
 @section('content')
@@ -9,14 +14,17 @@
         <div id="page_content_inner">
             <div class="uk-grid" data-uk-grid-margin>
                 <div class="uk-width-large-1">
-                    <form action="{!! route('edit.profile') !!}" method="post" id="form_validation" enctype="multipart/form-data"
+                    <form action="{!! route('edit.profile') !!}" method="post" id="form_validation"
+                          enctype="multipart/form-data"
                           class="uk-form-stacked">
-                        <div class="md-card">
+                        <div class="md-card profile_mobile">
                             <div class="user_heading" data-uk-sticky="{ top: 48, media: 960 }">
                                 <div class="user_heading_avatar fileinput fileinput-new" data-provides="fileinput">
                                     <div class="user_heading_avatar">
                                         <div>
-                                            <img style="background-image:none!important;" src="{!!URL::asset('images/avatar/'. $user->image )  !!}" alt="User avatar"/>
+                                            <img style="background-image:none!important;" id="img"
+                                                 src="{!!URL::asset('images/avatar/'. $user->image )  !!}"
+                                                 alt="User avatar"/>
                                         </div>
                                     </div>
                                     <div class="fileinput-preview fileinput-exists thumbnail"></div>
@@ -46,14 +54,14 @@
                             </div>
                             <div class="user_content">
                                 <div id="page_content">
-                                    <div id="page_content_inner">
+                                    <div id="page_content_inner ">
 
                                         <h3 class="heading_b uk-margin-bottom">Form Validation</h3>
                                         {{--<div class="md-card">--}}
-                                        <div class="md-card-content large-padding">
+                                        <div class="md-card-content small-padding">
 
                                             <div class="uk-grid" data-uk-grid-margin>
-                                                <div class="uk-width-medium-1-2">
+                                                <div class="uk-width-medium-1-2 profile_mobile">
                                                     <div class="uk-input-group">
                                                         <span class="uk-input-group-addon">
                                                             <i class="uk-icon-user uk-icon-medium"></i>
@@ -68,7 +76,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="uk-width-medium-1-2">
+                                                <div class="uk-width-medium-1-2 profile_mobile">
                                                     <div class="uk-input-group">
                                                         <span class="uk-input-group-addon">
                                                             <i class="uk-icon-user uk-icon-medium"></i>
@@ -83,7 +91,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="uk-width-medium-1-2">
+                                                <div class="uk-width-medium-1-2 profile_mobile">
                                                     <div class="uk-input-group">
                                                         <span class="uk-input-group-addon">
                                                             <i class="uk-icon-at uk-icon-medium"></i>
@@ -98,7 +106,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="uk-width-medium-1-2">
+                                                <div class="uk-width-medium-1-2 profile_mobile">
                                                     <div class="uk-input-group">
                                                         <span class="uk-input-group-addon">
                                                             <i class="uk-icon-facebook-official uk-icon-medium"></i>
@@ -113,7 +121,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="uk-width-medium-1-2">
+                                                <div class="uk-width-medium-1-2 profile_mobile">
                                                     <div class="uk-input-group">
                                                         <span class="uk-input-group-addon">
                                                             <i class="uk-icon-linkedin-square uk-icon-medium"></i>
@@ -128,7 +136,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="uk-width-medium-1-4">
+                                                <div class="uk-width-small-1-2 uk-width-medium-1-4 profile_mobile">
                                                     <div class="uk-input-group">
                                                         <span class="uk-input-group-addon">
                                                             <i class="uk-icon-phone-square uk-icon-medium"></i>
@@ -143,15 +151,15 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="uk-width-medium-1-4">
+                                                <div class="uk-width-small-1-2 uk-width-medium-1-4 profile_mobile">
                                                     <div class="uk-input-group">
                                                         <span class="uk-input-group-addon">
                                                             <i class="uk-icon-phone uk-icon-medium"></i>
                                                         </span>
 
                                                         <div class="parsley-row">
-                                                            <select id="val_select" name="type" required data-md-selectize>
-                                                                <option value="">Tipo..</option>
+                                                            <select id="val_select" name="type" required
+                                                                    data-md-selectize>
                                                                 <option value="Celular">Celular</option>
                                                                 <option value="Trabajo">Trabajo</option>
                                                                 <option value="Casa">Casa</option>
@@ -160,7 +168,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="uk-width-medium-1-2">
+                                                <div class="uk-width-medium-1-2 profile_mobile">
                                                     <div class="uk-input-group">
                                                         <span class="uk-input-group-addon">
                                                             <i class="uk-icon-twitter uk-icon-medium"></i>
@@ -175,7 +183,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="uk-width-medium-1-2">
+                                                <div class="uk-width-medium-1-2 profile_mobile">
                                                     <div class="uk-input-group">
                                                         <span class="uk-input-group-addon">
                                                             <i class="uk-icon-google uk-icon-medium"></i>
@@ -198,7 +206,7 @@
                                                     <div class="uk-width-1-2">
                                                         <button type="button" class="md-btn md-btn-danger"
                                                                 onclick="window.location='{{ route("profile::index") }}'">
-                                                                Cancel
+                                                            Cancel
                                                         </button>
                                                     </div>
                                                 </div>
@@ -232,5 +240,23 @@
                 mask: "(99) 0000-0000"
             });
         });
+
+        function readURL(input) {
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#img').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#user_edit_avatar_control").change(function(){
+            readURL(this);
+        });
+
     </script>
 @stop
