@@ -71,7 +71,7 @@
             <div id="menu_top" class="uk-float-left ">
                 <div class="uk-button-dropdown" data-uk-dropdown="{mode:'click'}">
                     <a href="#" class="top_menu_toggle">
-                        <i class="material-icons md-24">&#xE8F0;</i> Publishers
+                        <i class="material-icons md-24">&#xE8F0;</i> <span class="uk-hidden-small">Publishers</span>
                     </a>
 
                     <div class="uk-dropdown uk-dropdown-width-3">
