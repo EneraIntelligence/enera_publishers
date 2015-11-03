@@ -54,19 +54,7 @@ create_campaign_helper =
     {
         var input = event.target;
 
-        //load image on input field
-        var reader = new FileReader();
-        reader.onload = function(){
-            var dataURL = reader.result;
-            var output = $(previewId);
 
-            //change every instance where the image should go
-            output.each(function()
-            {
-                $(this).attr("src", dataURL);
-            });
-        };
-        reader.readAsDataURL(input.files[0]);
 
         //check for image size
         var _URL = window.URL || window.webkitURL;
@@ -80,10 +68,25 @@ create_campaign_helper =
                 //image size ok!
                 errorDiv.html('');
 
+                //load image on input field
+                var reader = new FileReader();
+                reader.onload = function(){
+                    var dataURL = reader.result;
+                    var output = $(previewId);
+
+                    //change every instance where the image should go
+                    output.each(function()
+                    {
+                        $(this).attr("src", dataURL);
+                    });
+                };
+                reader.readAsDataURL(input.files[0]);
+
             }
             else
             {
                 //image size is different than expected
+                input.value="";
                 errorDiv.html('<span class="parsley-required uk-text-center md-input-danger">El tamaño de la imagen debe ser de <br>'+width+' pixeles de ancho por '+height+' pixeles de alto.</span>');
                 //parsley-errors-list
                 /*
@@ -179,8 +182,8 @@ finalScreen=
     parseFilters: function(form_serialized)
     {
         var res="<div class='uk-grid'>";
-        res = finalScreen.grid_1_4( finalScreen.format( "Fecha de Inicio", form_serialized.start_date.replace(/\./g, "/") ) );
-        res = res+ finalScreen.grid_1_4( finalScreen.format( "Fecha de final", form_serialized.end_date.replace(/\./g, "/") ) );
+        res = finalScreen.grid_1_4( finalScreen.format( "Fecha Inicial", form_serialized.start_date.replace(/\./g, "/") ) );
+        res = res+ finalScreen.grid_1_4( finalScreen.format( "Fecha Final", form_serialized.end_date.replace(/\./g, "/") ) );
 
         res = res+ finalScreen.grid_1_4( finalScreen.format( "Género", form_serialized.gender ) );
         res = res+ finalScreen.grid_1_4( finalScreen.format( "Restricciones", form_serialized.unique ) );
@@ -229,11 +232,15 @@ survey=
         addQuestionBtn.click(function()
         {
             survey.showQuestion();
+            $window.resize();
+
         });
 
         removeQuestionBtn.click(function()
         {
             survey.hideQuestion();
+            $window.resize();
+
         });
 
         survey.questionTemplate = $(".question").first().clone();
@@ -380,6 +387,20 @@ branchMap =
     base_url:"",
     branches:null,
     markers:{},
+    openMap:function()
+    {
+        //$(".branchMap").css("opacity",'1');
+        //$(".branchMap").css("filter",'alpha(opacity=100)');
+        TweenLite.to(".branchMap",.5, {alpha:1});
+        $(".branchMap").css("pointer-events", "auto");
+    },
+    closeMap:function()
+    {
+        //$(".branchMap").css("opacity",'0.4');
+        //$(".branchMap").css("filter",'alpha(opacity=40)');
+        TweenLite.to(".branchMap",.5, {alpha:.4});
+        $(".branchMap").css("pointer-events", "none");
+    },
     markersToList:function()
     {
         var list = "";
@@ -418,7 +439,7 @@ branchMap =
             var branch = branchMap.branches[i];
 
             var marker=new google.maps.Marker({
-                position: new google.maps.LatLng(branch.lat, branch.lng),
+                position: new google.maps.LatLng(branch.location['x'], branch.location['y']),
                 animation: google.maps.Animation.DROP,
                 icon: iconBase + 'enera_map_marker_off.png',
                 //title: branch.name,
@@ -455,6 +476,16 @@ branchMap =
                 markerObj.marker.setIcon( iconBase + 'enera_map_marker_off.png' );
             }
         });
+
+        $('#wizard_location_select').on('ifChecked', function(event){
+            branchMap.openMap();
+        });
+
+        $('#wizard_location_all').on('ifChecked', function(event){
+            branchMap.closeMap();
+        });
+
+        branchMap.closeMap();
 
     },
     attachMarkerClick:function(marker, _id, name)

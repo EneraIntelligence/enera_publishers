@@ -1,11 +1,6 @@
 <!-- first section -->
 <h3>Producto</h3>
 <section>
-    <h2 class="heading_a">
-        Elige una interacción
-        <span class="sub-heading"></span>
-    </h2>
-    <hr class="md-hr"/>
 
     <div class="uk-grid uk-grid-medium" data-uk-grid-margin data-uk-grid-match="{target:'.md-card'}">
 

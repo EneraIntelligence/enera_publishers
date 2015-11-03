@@ -212,15 +212,14 @@
 
         <div class="uk-width-medium-1-2 uk-small-width-1-1">
             <img style="max-height:200px" class="uk-align-center banner-1" src="http://placehold.it/600x602?text=600x602" alt="">
+            <div class="parsley-errors-list filled banner-1-errors"></div>
 
             <div id="file_upload-drop" class="uk-file-upload parsley-row">
                 <p class="uk-text">Banner dispositivos pequeños</p>
                 <a class="uk-form-file md-btn">elige un archivo
                     <input id="image_small" type="file" required accept='image/*'>
                 </a>
-                <div class="parsley-errors-list filled banner-1-errors">
 
-                </div>
             </div>
         </div>
 
@@ -229,15 +228,13 @@
         <div class="uk-width-medium-1-2 uk-small-width-1-1">
 
             <img style="max-height:200px" class="uk-align-center banner-2" src="http://placehold.it/684x864?text=684x864" alt="">
+            <div class="parsley-errors-list filled banner-2-errors"></div>
 
             <div id="file_upload-drop2" class="uk-file-upload parsley-row">
                 <p class="uk-text">Banner dispositivos altos</p>
                 <a class="uk-form-file md-btn">elige un archivo
                     <input class="" id="image_large" type="file" required accept='image/*'>
                 </a>
-                <div class="parsley-errors-list filled banner-2-errors">
-
-                </div>
             </div>
 
 

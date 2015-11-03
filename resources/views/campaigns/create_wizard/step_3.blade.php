@@ -19,7 +19,7 @@
             <div class="uk-input-group">
                 <span class="uk-input-group-addon"><i class="uk-input-group-icon uk-icon-calendar"></i></span>
                 <label for="start_date">Fecha de inicio</label>
-                <input class="md-input" type="text" name="start_date" id="start_date" data-uk-datepicker="{format:'DD.MM.YYYY', i18n:{!! $lang !!},  minDate: '{!! $minDate !!}' }">
+                <input class="md-input" type="text" name="start_date" id="start_date" required data-uk-datepicker="{format:'DD.MM.YYYY', i18n:{!! $lang !!},  minDate: '{!! $minDate !!}' }">
             </div>
         </div>
 
@@ -27,7 +27,7 @@
             <div class="uk-input-group">
                 <span class="uk-input-group-addon"><i class="uk-input-group-icon uk-icon-calendar"></i></span>
                 <label for="end_date">Fecha final</label>
-                <input class="md-input" type="text" name="end_date"   id="end_date"   data-uk-datepicker="{format:'DD.MM.YYYY', i18n:{!! $lang !!}, minDate: '{!! $minDate !!}' }">
+                <input class="md-input" type="text" name="end_date"   id="end_date" required data-uk-datepicker="{format:'DD.MM.YYYY', i18n:{!! $lang !!}, minDate: '{!! $minDate !!}' }">
             </div>
         </div>
     </div>
@@ -200,13 +200,29 @@
         Ubicaciones
     </h2>
 
+
+
     <div class="uk-grid">
-        <div class="uk-width-1-1 uk-text-center">
-            <label>Selecciona donde aparecerá tu campaña haciendo click en los marcadores</label>
+        <div class="uk-width-1-2 uk-text-center">
+            {{--<label class="uk-form-label">Ubicación</label>--}}
+
+            <span class="icheck">
+                <input onchange="branchMap.closeMap()" checked type="radio" name="ubication" id="wizard_location_all" class="wizard-icheck" value="all" />
+                <label for="wizard_location_all" class="inline-label">Global</label>
+            </span>
+
+        </div>
+        <div class="uk-width-1-2 uk-text-center">
+
+            <span class="icheck">
+                <input type="radio" name="ubication" id="wizard_location_select" class="wizard-icheck" value="select" />
+                <label for="wizard_location_select" class="inline-label">Seleccionar ubicaciones</label>
+            </span>
+
         </div>
     </div>
 
-    <div class="uk-grid">
+    <div class="uk-grid branchMap">
         <div class="uk-width-medium-1-3 uk-width-small-1-1">
             <div class="uk-grid uk-grid-collapse">
 

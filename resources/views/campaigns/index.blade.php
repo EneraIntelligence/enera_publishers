@@ -13,7 +13,12 @@
 
                 <div class="uk-grid uk-align-right">
 
-                    <div class="uk-button-dropdown" style="margin-bottom:10px" data-uk-dropdown>
+                    @if(count($campaigns)<=0)
+                        <div class="uk-button-dropdown" style="margin-bottom:10px; pointer-events:none; opacity:.5;" data-uk-dropdown>
+                    @else
+                        <div class="uk-button-dropdown" style="margin-bottom:10px" data-uk-dropdown>
+                    @endif
+
                         <button class="md-btn">
                             Filtrar campañas
                             <i class="material-icons"></i>
@@ -80,11 +85,18 @@
 
                     </div>
 
-                    <div class="uk-button-dropdown" data-uk-dropdown>
+                    @if(count($campaigns)<=0)
+                        <div class="uk-button-dropdown" style="pointer-events:none; opacity:.5;" data-uk-dropdown>
+                    @else
+                        <div class="uk-button-dropdown" style="" data-uk-dropdown>
+                    @endif
+
                         <button class="md-btn">
                             Ordenar por:
                             <i class="material-icons"></i>
                         </button>
+
+
                         <div class="uk-dropdown uk-dropdown-small">
                             <ul class="uk-nav uk-nav-dropdown" id="campaign-sort">
                                 <li class="uk-active" data-uk-sort="date">
@@ -115,40 +127,46 @@
 
         <div id="page_content_inner">
 
+            @if(count($campaigns)<=0)
+
+                <div class="uk-grid uk-text-center">
+
+                    <div class="uk-width-1-10">
+                    </div>
+
+                    <div class="uk-width-8-10">
+
+                        <div class="uk-block md-card ">
+                            <h4 class="heading_a" ><br>
+                                <span></span>
+                            </h4>
+
+
+                            <img src="{!! URL::asset('images/icons/banner_new.svg') !!}" alt="">
+
+                            <h4 class="heading_a" ><br>
+                                <span></span>
+                            </h4>
+
+                            <a class="md-btn md-btn-primary" href="#" onclick="new_campaign.prompt()">
+                                ¡Crea tu primer campaña!
+                            </a>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            @endif
+
             <div class="uk-width-large-8-10 uk-container-center">
                 <div id="snippets">
                     <div class="uk-grid uk-grid-width-1-1 hierarchical_show"
                          data-uk-grid="{ gutter: 16, controls: '#campaign-filter, #action-filter, #campaign-sort' }">
 
-                        @if(count($campaigns)<=0)
 
-                            <div class="uk-grid md-card uk-text-center">
-                                <div class="uk-width-1-1">
-
-                                    <div class="uk-block">
-                                        <h4 class="heading_a" ><br>
-                                            <span></span>
-                                        </h4>
-
-
-                                        <img src="{!! URL::asset('images/icons/banner_new.svg') !!}" alt="">
-
-                                        <h4 class="heading_a" ><br>
-                                            <span></span>
-                                        </h4>
-
-                                        <a class="md-btn md-btn-primary" href="#" onclick="new_campaign.prompt()">
-                                            ¡Crea tu primer campaña!
-                                        </a>
-
-                                    </div>
-
-
-                                </div>
-
-                            </div>
-
-                        @endif
 
                         @foreach($campaigns as $campaign)
 
