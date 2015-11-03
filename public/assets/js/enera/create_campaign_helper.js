@@ -151,6 +151,9 @@ finalScreen=
         $(".button_finish").addClass("md-btn-success");
         $(".button_finish").find('a').css("color","white");
 
+
+        $window.resize();
+
     },
     parseQuestions: function(form_serialized)
     {
@@ -387,12 +390,15 @@ branchMap =
     base_url:"",
     branches:null,
     markers:{},
+    branchSelectedCount:0,
     openMap:function()
     {
         //$(".branchMap").css("opacity",'1');
         //$(".branchMap").css("filter",'alpha(opacity=100)');
         TweenLite.to(".branchMap",.5, {alpha:1});
         $(".branchMap").css("pointer-events", "auto");
+
+        branchMap.checkSelectedBranches();
     },
     closeMap:function()
     {
@@ -400,9 +406,19 @@ branchMap =
         //$(".branchMap").css("filter",'alpha(opacity=40)');
         TweenLite.to(".branchMap",.5, {alpha:.4});
         $(".branchMap").css("pointer-events", "none");
+
+        branchMap.checkSelectedBranches();
+
     },
     markersToList:function()
     {
+        var global = $("#wizard_location_all");
+
+        if(global.prop("checked"))
+        {
+            return "Global";
+        }
+
         var list = "";
         for(var key in branchMap.markers)
         {
@@ -440,7 +456,7 @@ branchMap =
             var branch = branchMap.branches[i];
 
             var marker=new google.maps.Marker({
-                position: new google.maps.LatLng(branch.location['x'], branch.location['y']),
+                position: new google.maps.LatLng(branch.location[0], branch.location[1]),
                 animation: google.maps.Animation.DROP,
                 icon: iconBase + 'enera_map_marker_off.png',
                 //title: branch.name,
@@ -460,12 +476,20 @@ branchMap =
 
         selectMarkersBtn.click(function()
         {
+            branchMap.branchSelectedCount=0;
+
             for(var key in branchMap.markers)
             {
                 var markerObj = branchMap.markers[key];
                 markerObj.active = true;
+
                 markerObj.marker.setIcon( iconBase + 'enera_map_marker_on.png' );
+
+                branchMap.branchSelectedCount++;
             }
+
+            branchMap.checkSelectedBranches();
+
         });
 
         deselectMarkersBtn.click(function()
@@ -476,6 +500,11 @@ branchMap =
                 markerObj.active = false;
                 markerObj.marker.setIcon( iconBase + 'enera_map_marker_off.png' );
             }
+
+            branchMap.branchSelectedCount=0;
+
+            branchMap.checkSelectedBranches();
+
         });
 
         $('#wizard_location_select').on('ifChecked', function(event){
@@ -499,11 +528,19 @@ branchMap =
             {
                 marker.setIcon( iconBase + 'enera_map_marker_off.png' );
                 branchMap.markers[_id].active = false;
+
+                branchMap.branchSelectedCount--;
+
+                branchMap.checkSelectedBranches();
             }
             else
             {
                 marker.setIcon( iconBase + 'enera_map_marker_on.png' );
                 branchMap.markers[_id].active = true;
+
+                branchMap.branchSelectedCount++;
+
+                branchMap.checkSelectedBranches();
             }
         });
 /*
@@ -554,9 +591,26 @@ branchMap =
         });
 
     },
+    checkSelectedBranches:function()
+    {
+        var errorDiv = $(".map-errors");
+        var global = $("#wizard_location_all");
+
+        if(global.prop("checked") || branchMap.branchSelectedCount>0)
+        {
+            //map ok
+            errorDiv.html('');
+        }
+        else
+        {
+            //map not ok
+            errorDiv.html('<span class="parsley-required uk-text-center md-input-danger">Selecciona al menos una ubicación en el mapa.</span>');
+        }
+    },
     refresh:function()
     {
         branchMap.map.panTo(branchMap.center);
-
+        branchMap.map.setZoom(5);
+        branchMap.checkSelectedBranches();
     }
 }

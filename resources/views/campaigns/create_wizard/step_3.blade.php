@@ -120,7 +120,7 @@
 
         <div class="uk-width-1-1">
 
-            <div class="uk-grid uk-grid-collapse">
+            <div class="uk-grid uk-grid-collapse parsley-row">
 
                 <div class="uk-width-1-1">
 
@@ -128,7 +128,7 @@
 
                         <div class="uk-width-medium-1-5 uk-width-small-1-2">
                             <span class="icheck-inline">
-                                <input class="wizard-icheck" type="checkbox" name="days" value="monday" checked id="checkbox_demo_inline_1"/>
+                                <input data-parsley-mincheck="1" required="" class="wizard-icheck" type="checkbox" name="days" value="monday" checked id="checkbox_demo_inline_1"/>
                                 <label for="checkbox_demo_inline_1" class="inline-label">Lunes</label>
                             </span>
                         </div>
@@ -255,6 +255,9 @@
                 </div>
 
                 <hr class="uk-grid-divider">
+
+                <div class="parsley-errors-list filled map-errors"></div>
+
 
             </div>
         </div>
