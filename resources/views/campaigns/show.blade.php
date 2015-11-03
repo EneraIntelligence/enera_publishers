@@ -18,7 +18,7 @@
                                 </div>
                             </div>
                             <div class="user_heading_avatar">
-                                <div class="second circle">
+                                <div id="circle">
                                     <img style="background-image:none!important;position:absolute;margin-top:-96px;margin-left:8px;" src="{!! URL::asset('images/icons/'.$interaction['name'].'.svg') !!}" alt="producto"/>
                                 </div>
                             </div>
@@ -243,8 +243,8 @@
     <script>
 //        $("#age_slider").ionRangeSlider();
 //        $("#ionslider_3").ionRangeSlider();
-        $('.second.circle').circleProgress({
-            value: 0.8, //lo que se va a llenar con el color
+        $('#circle').circleProgress({
+            value: 0.{{$porcentaje}}, //lo que se va a llenar con el color
             size: 98,   //tamaño del circulo
             startAngle: -300, //de donde va a empezar la animacion
             reverse: true, //empieza la animacion al contrario

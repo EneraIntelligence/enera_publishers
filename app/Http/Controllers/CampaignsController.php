@@ -251,6 +251,7 @@ class CampaignsController extends Controller
         /****  SACAR PORCENTAJE DEL TIEMPO QUE LLEVA ****/
         if($campaign['status']=='pending'||$campaign['status']=='rejected'||$campaign['status']=='ended'){//si tiene uno de estos estados no deberia tener avance
 //            echo '<br> porcentage sera = 0  estado: '.$campaign['status'];
+            $porcentaje=['porcentaje'=> (0)];
         }elseif($campaign['status']=='active'||$campaign['status']=='canceled'){//si es activa o canceled se muestra el avanze
             $total = abs((strtotime($campaign['filters']['date']['start']) - strtotime($campaign['filters']['date']['end']))/86400); //obtengo el total de dias
 //            echo '<br> total'.$total.'<br>';   //total es = a la diferencia entre el inicio y la fecha final
