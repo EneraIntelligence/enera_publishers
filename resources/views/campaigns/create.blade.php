@@ -32,8 +32,8 @@
                         <div class="md-card-content">
 
                             <h2 class="heading_b uk-margin-bottom uk-text-truncate">
-                                {!! $campaignName !!}
-                                <span class="sub-heading">Nueva campaña</span>
+                                Nueva campaña
+                                <span class="sub-heading">{!! $campaignName !!}</span>
                             </h2>
 
                             <!-- preview -->
@@ -139,7 +139,9 @@
 
     </script>
 
+
     {!! HTML::script('bower_components/parsleyjs/dist/parsley.min.js') !!}
+    {!! HTML::script('bower_components/parsleyjs/src/i18n/es.js') !!}
             <!-- jquery steps -->
     {!! HTML::script('assets/js/custom/wizard_steps.js') !!}
     <!--  forms wizard functions -->

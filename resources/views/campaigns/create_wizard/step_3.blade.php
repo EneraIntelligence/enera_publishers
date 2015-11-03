@@ -19,7 +19,7 @@
             <div class="uk-input-group">
                 <span class="uk-input-group-addon"><i class="uk-input-group-icon uk-icon-calendar"></i></span>
                 <label for="start_date">Fecha de inicio</label>
-                <input class="md-input" type="text" name="start_date" id="start_date" required data-uk-datepicker="{format:'DD.MM.YYYY', i18n:{!! $lang !!},  minDate: '{!! $minDate !!}' }">
+                <input class="md-input" type="text" name="start_date" id="start_date" required data-uk-datepicker="{format:'DD.MM.YYYY', i18n:{!! $lang !!}, weekstart:0,  minDate: '{!! $minDate !!}' }">
             </div>
         </div>
 
@@ -27,7 +27,7 @@
             <div class="uk-input-group">
                 <span class="uk-input-group-addon"><i class="uk-input-group-icon uk-icon-calendar"></i></span>
                 <label for="end_date">Fecha final</label>
-                <input class="md-input" type="text" name="end_date"   id="end_date" required data-uk-datepicker="{format:'DD.MM.YYYY', i18n:{!! $lang !!}, minDate: '{!! $minDate !!}' }">
+                <input class="md-input" type="text" name="end_date" id="end_date" required data-uk-datepicker="{format:'DD.MM.YYYY', i18n:{!! $lang !!}, weekstart:0, minDate: '{!! $minDate !!}' }">
             </div>
         </div>
     </div>

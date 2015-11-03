@@ -7,9 +7,9 @@
 
         <div class="uk-grid" style="margin-top: 20px;">
 
-            <div class="uk-width-8-10 uk-container-center">
+            <div class="uk-width-8-10 uk-container-center" style="padding:0 20px 0 60px;">
 
-                <h4 class="heading_a uk-align-left" style="inline-block">Campañas</h4>
+                <h4 class="heading_a uk-align-left" style="display:inline-block;">Campañas</h4>
 
                 <div class="uk-grid uk-align-right">
 

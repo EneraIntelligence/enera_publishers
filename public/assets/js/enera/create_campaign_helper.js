@@ -434,6 +434,7 @@ branchMap =
 
         var iconBase = branchMap.base_url+"/images/";
 
+
         for(var i=0; i<branchMap.branches.length; i++)
         {
             var branch = branchMap.branches[i];
