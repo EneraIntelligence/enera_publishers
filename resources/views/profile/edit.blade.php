@@ -4,20 +4,22 @@
         <div id="page_content_inner">
             <div class="uk-grid" data-uk-grid-margin>
                 <div class="uk-width-large-1">
-                    <form action="{!! route('edit.profile') !!}" method="post" id="form_validation"
+                    <form action="{!! route('edit.profile') !!}" method="post" id="form_validation" enctype="multipart/form-data"
                           class="uk-form-stacked">
                         <div class="md-card">
                             <div class="user_heading" data-uk-sticky="{ top: 48, media: 960 }">
                                 <div class="user_heading_avatar fileinput fileinput-new" data-provides="fileinput">
-                                    <div class="fileinput-new thumbnail">
-                                        <img src="assets/img/blank.png" alt="user avatar"/>
+                                    <div class="user_heading_avatar">
+                                        <div>
+                                            <img style="background-image:none!important;" src="{!!URL::asset('images/avatar/'. $user->image )  !!}" alt="User avatar"/>
+                                        </div>
                                     </div>
                                     <div class="fileinput-preview fileinput-exists thumbnail"></div>
                                     <div class="user_avatar_controls">
                                         <span class="btn-file">
                                             <span class="fileinput-new"><i class="material-icons">&#xE2C6;</i></span>
                                             <span class="fileinput-exists"><i class="material-icons">&#xE86A;</i></span>
-                                            <input type="file" name="user_edit_avatar_control"
+                                            <input type="file" name="user_edit_avatar_control" accept='image/*'
                                                    id="user_edit_avatar_control">
                                         </span>
                                         <a href="#" class="btn-file fileinput-exists" data-dismiss="fileinput"><i
