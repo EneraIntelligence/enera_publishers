@@ -1,4 +1,9 @@
 @extends('layouts.main')
+@section('title', ' - Editar Perfil')
+@section('head_scripts')
+    {!! HTML::style(asset('css/profile.css')) !!}
+@endsection
+
 @section('content')
     <div id="page_content">
         <div id="page_content_inner">
@@ -119,7 +124,7 @@
                                                                         class="req">*</span></label>
                                                             <input type="text" name="linkedin" required
                                                                    class="md-input"
-                                                                   value=" {!! $user->socialnetwork['linkedin'] !!}"/>
+                                                                   value="{!! $user->socialnetwork['linkedin'] !!}"/>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -145,11 +150,13 @@
                                                         </span>
 
                                                         <div class="parsley-row">
-                                                            <label for="phone">Telefono<span
-                                                                        class="req">*</span></label>
-                                                            <input type="text" name="type" required
-                                                                   class="md-input"
-                                                                   value="{!! $user->phones['type'] !!}"/>
+                                                            <select id="val_select" name="type" required data-md-selectize>
+                                                                <option value="">Tipo..</option>
+                                                                <option value="Celular">Celular</option>
+                                                                <option value="Trabajo">Trabajo</option>
+                                                                <option value="Casa">Casa</option>
+                                                                <option value="Otro">Otro</option>
+                                                            </select>
                                                         </div>
                                                     </div>
                                                 </div>

@@ -1,5 +1,5 @@
 @extends('layouts.main')
-
+@section('title', ' - Perfil')
 @section('content')
     <div id="page_content">
         <div id="page_content_inner">

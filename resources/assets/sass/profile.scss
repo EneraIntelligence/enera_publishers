@@ -1,0 +1,12 @@
+.label_gray
+{
+  top: -6px;
+  font-size: 12px;
+  color: #727272;
+  position: absolute;
+  left: 4px;
+  right: 0;
+  pointer-events: none;
+  -webkit-transition: all 150ms ease-out;
+  transition: all 150ms ease-out;
+}

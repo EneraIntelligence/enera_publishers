@@ -13,7 +13,8 @@
     {{--<link rel="icon" type="image/png" href="assets/img/favicon-16x16.png" sizes="16x16">
     <link rel="icon" type="image/png" href="assets/img/favicon-32x32.png" sizes="32x32">--}}
     <link rel="icon" type="image/png" href="{!! URL::asset('images/favicon.png') !!}" sizes="32x32">
-    <title>Enera Publishers</title>
+    <title>Enera Publishers @yield('title')</title>
+    @yield('head_scripts')
 
 
 
@@ -58,14 +59,14 @@
     <div class="header_main_content">
         <nav class="uk-navbar">
             <!-- main sidebar switch -->
-            {{-- OLD ID sidebar_main_toggle --}}
-            {{--<a href="#" id="" class="sSwitch sSwitch_left">--}}
+             {{--OLD ID sidebar_main_toggle--}}
+            <a href="{{ route("home") }}" id="" class="sSwitch sSwitch_left ">
+                <img src="{!! URL::asset('images/icons/Logo Enera Blanco-01.png') !!}" alt="Enera" style="top: -10px; left: 15px; position: relative;">
+            </a>
+            <!-- secondary sidebar switch -->
+            {{--<a href="#" id="sidebar_secondary_toggle" class="sSwitch sSwitch_right sidebar_secondary_check">--}}
                 {{--<span class="sSwitchIcon"></span>--}}
             {{--</a>--}}
-            <!-- secondary sidebar switch -->
-            <a href="#" id="sidebar_secondary_toggle" class="sSwitch sSwitch_right sidebar_secondary_check">
-                <span class="sSwitchIcon"></span>
-            </a>
 
             <div id="menu_top" class="uk-float-left ">
                 <div class="uk-button-dropdown" data-uk-dropdown="{mode:'click'}">
