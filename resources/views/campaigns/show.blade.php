@@ -48,7 +48,7 @@
                                                         <ul class="md-list md-list-addon">
                                                             <li>
                                                                 <div class="md-list-addon-element">
-                                                                    <i class="md-list-addon-icon material-icons">&#xE158;</i>
+                                                                    <i class="md-list-addon-icon uk-icon-archive"></i>
                                                                 </div>
                                                                 <div class="md-list-content">
                                                                     <span class="md-list-heading"><a href="">Nombre Campaña</a></span>
@@ -57,7 +57,7 @@
                                                             </li>
                                                             <li>
                                                                 <div class="md-list-addon-element">
-                                                                    <i class="md-list-addon-icon material-icons">&#xE0CD;</i>
+                                                                    <i class="md-list-addon-icon uk-icon-dashboard"></i>
                                                                 </div>
                                                                 <div class="md-list-content">
                                                                     <span class="md-list-heading"><a href="">Estado</a></span>
@@ -66,7 +66,7 @@
                                                             </li>
                                                             <li>
                                                                 <div class="md-list-addon-element">
-                                                                    <i class="md-list-addon-icon uk-icon-facebook-official"></i>
+                                                                    <i class="md-list-addon-icon uk-icon-money"></i>
                                                                 </div>
                                                                 <div class="md-list-content">
                                                                     <span class="md-list-heading"><a href="#">Balance</a></span>
@@ -75,7 +75,7 @@
                                                             </li>
                                                             <li>
                                                                 <div class="md-list-addon-element">
-                                                                    <i class="md-list-addon-icon uk-icon-twitter"></i>
+                                                                    <i class="md-list-addon-icon uk-icon-check-square-o"></i>
                                                                 </div>
                                                                 <div class="md-list-content">
                                                                     <span class="md-list-heading"><a href="">Tipo de interacon</a></span>
@@ -83,6 +83,9 @@
                                                                 </div>
                                                             </li>
                                                             <li>
+                                                                <div class="md-list-addon-element">
+                                                                    <i class="md-list-addon-icon uk-icon-road"></i>
+                                                                </div>
                                                                 <div class="md-list-content">
                                                                     <span class="md-list-heading"><a href="">Lugares</a></span>
                                                                     <span class="uk-text-small uk-text-muted">{{$branches[0]}}</span>
@@ -193,11 +196,11 @@
                                                 <div class="uk-grid ">
                                                     <div class="md-list-content uk-width-large-1-3">
                                                         <span class="md-list-heading"><a href="">imagen</a></span>
-                                                        <span class="uk-text-small uk-text-muted"><img class="uk-width-small-2-6" src="{!! URL::asset('images/'.$content['imageng']) !!}" alt=""></span>
+                                                        {{--<span class="uk-text-small uk-text-muted"><img class="uk-width-small-2-6" src="{!! URL::asset('images/'.$content['imageng']) !!}" alt=""></span>--}}
                                                     </div>
                                                     <div class="md-list-content uk-width-large-1-3">
                                                         <span class="md-list-heading"><a hr<a="">imagen</a></span>
-                                                        <span class="uk-text-small uk-text-muted"><img class="uk-width-large-2-6" src="{!! URL::asset('images/'.$content['imageng']) !!}" alt=""></span>
+                                                        {{--<span class="uk-text-small uk-text-muted"><img class="uk-width-large-2-6" src="{!! URL::asset('images/'.$content['imageng']) !!}" alt=""></span>--}}
                                                     </div>
                                                 </div>
                                             </li>
@@ -241,7 +244,7 @@
 //        $("#age_slider").ionRangeSlider();
 //        $("#ionslider_3").ionRangeSlider();
         $('.second.circle').circleProgress({
-            value: 0.{{$porcentaje}}, //lo que se va a llenar con el color
+            value: 0.8, //lo que se va a llenar con el color
             size: 98,   //tamaño del circulo
             startAngle: -300, //de donde va a empezar la animacion
             reverse: true, //empieza la animacion al contrario
