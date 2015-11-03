@@ -37,43 +37,70 @@
                 </div>
             </div>
             {!! Form::open(['route'=>'auth.login', 'class'=>'uk-form-stacked', 'id'=>'form_validation']) !!}
-                <div class="uk-grid" data-uk-grid-margin>
-                    <div class="uk-width-medium-1-1">
-                        <div class="parsley-row">
-                            <div class="md-input-wrapper">
-                                <label for="email">Email <span class="req"></span></label>
-                                <input data-parsley-type="email" id="email" name="email" required data-parsley-trigger="change" class="md-input" data-parsley-id="6"
-                                       data-parsley-type-message="ingresa un correo valido" data-parsley-required-message="Ingresa tu correo" />
-                                <span class="md-input-bar"> </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            @if( Session::has('error') )
+                <div style="text-align: center; color: red;">{{ session('error') }}</div>
+            @endif
 
-                <div class="uk-grid" data-uk-grid-margin>
-                    <div class="uk-width-medium-1-1">
-                        <div class="parsley-row uk-margin-top">
-                            <div class="md-input-wrapper">
-                                <label for="login_password">Contraseña</label>
-                                <input type="password" id="login_password" name="password" required data-parsley-trigger="change" class="md-input" data-parsley-trigger="change"
-                                       data-parsley-minlength="8" data-parsley-minlength-message="minimo 8 caracteres" data-parsley-validation-threshold="10"
-                                       data-parsley-minlength="20" data-parsley-id="6" data-parsley-required-message="No olvides tu contraseña"
-                                />
-                                <span class="md-input-bar"> </span>
-                            </div>
+            @foreach($errors->get('email') as $m)
+                <div style="text-align: center; color: red;">{{ $m }}</div>
+            @endforeach
+
+            @foreach($errors->get('password') as $m)
+                <div style="text-align: center; color: red;">{{ $m }}</div>
+            @endforeach
+
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-medium-1-1">
+                    <div class="parsley-row">
+                        <div class="md-input-wrapper">
+                            <label for="email">Email <span class="req"></span></label>
+                            <input data-parsley-type="email" id="email" name="email" required
+                                   data-parsley-trigger="change" class="md-input" data-parsley-id="4"
+                                   data-parsley-type-message="ingresa un correo valido"
+                                   data-parsley-required-message="Ingresa tu correo"/>
+                            <span class="md-input-bar"> </span>
                         </div>
+                        {{--<div class="parsley-errors-list filled" id="parsley-id-4">
+                            @foreach($errors->get('email') as $m)
+                                <span class="parsley-type">{{ $m }}</span>
+                            @endforeach
+                        </div>--}}
                     </div>
                 </div>
-                <div class="uk-margin-medium-top">
-                    <button type="submit" class="md-btn md-btn-primary md-btn-block md-btn-large">Entrar</button>
+            </div>
+
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-medium-1-1">
+                    <div class="parsley-row uk-margin-top">
+                        <div class="md-input-wrapper">
+                            <label for="login_password">Contraseña</label>
+                            <input type="password" id="login_password" name="password" required
+                                   data-parsley-trigger="change" class="md-input" data-parsley-trigger="change"
+                                   data-parsley-minlength="8" data-parsley-minlength-message="minimo 8 caracteres"
+                                   data-parsley-maxlength="16" data-parsley-maxlength-message="maximo 16 caracteres"
+                                   data-parsley-validation-threshold="10" data-parsley-id="6"
+                                   data-parsley-required-message="No olvides tu contraseña"
+                            />
+                            <span class="md-input-bar"> </span>
+                        </div>
+                        {{--@foreach($errors->get('password') as $m)
+                            <div class="parsley-errors-list filled" id="parsley-id-6">
+                                <span class="parsley-minlength">{{ $m }}</span>
+                            </div>
+                        @endforeach--}}
+                    </div>
                 </div>
-                <div class="uk-margin-top">
-                    <a href="#" id="login_help_show" class="uk-float-right">Necesitas ayuda?</a>
+            </div>
+            <div class="uk-margin-medium-top">
+                <button type="submit" class="md-btn md-btn-primary md-btn-block md-btn-large">Entrar</button>
+            </div>
+            <div class="uk-margin-top">
+                <a href="#" id="login_help_show" class="uk-float-right">Necesitas ayuda?</a>
                 <span class="icheck-inline">
                     <input type="checkbox" name="login_page_stay_signed" id="login_page_stay_signed" data-md-icheck/>
                     <label for="login_page_stay_signed" class="inline-label">Mantener sesión</label>
                 </span>
-                </div>
+            </div>
 
             {!! Form::close() !!}
         </div>
@@ -139,9 +166,9 @@
 
     <!-- common functions -->
     {!! HTML::script('assets/js/common.min.js') !!}
-    <!-- altair core functions -->
+            <!-- altair core functions -->
     {!! HTML::script('assets/js/altair_admin_common.min.js') !!}
-    <!-- altair login page functions -->
+            <!-- altair login page functions -->
 
     <script>
         // load parsley config (altair_admin_common.js)
@@ -150,16 +177,15 @@
     {!! HTML::script('bower_components/parsleyjs/dist/parsley.min.js') !!}
     {!! HTML::script('assets/js/pages/forms_validation.js') !!}
     <script>
-        $(function() {
+        $(function () {
             // enable hires images
             altair_helpers.retina_images();
             // fastClick (touch devices)
-            if(Modernizr.touch) {
+            if (Modernizr.touch) {
                 FastClick.attach(document.body);
             }
         });
     </script>
-
 
 
 </body>

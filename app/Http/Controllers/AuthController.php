@@ -28,13 +28,13 @@ class AuthController extends Controller
     {
         $validator = Validator::make(Input::all(), [
             'email' => 'required|email|min:6|max:250',
-            'password' => 'required|alphanum|min:8|max:16',
+            'password' => 'required|alpha_num|min:8|max:16',
         ]);
         if ($validator->passes()) {
             if (auth()->attempt(['email' => Input::get('email'), 'password' => Input::get('password')], Input::get('login_page_stay_signed'))) {
                 return redirect()->route('home');
             } else {
-                return redirect()->route('auth.index')->with('error', 'El correo y/o la contraseña es incorrecta.');
+                return redirect()->route('auth.index')->with('error', 'El correo y/o la contraseña son incorrectos.');
             }
         } else {
             return redirect()->route('auth.index')->withErrors($validator);

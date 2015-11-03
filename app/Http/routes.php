@@ -11,6 +11,8 @@
 |
 */
 
+App::setLocale('es');
+
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', ['as' => 'home', 'uses' => 'DashboardController@index']);
 
@@ -31,7 +33,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Rutas de ajax
     Route::group([], function () {
-        Route::match(['get', 'post'] ,'profile_edit' ,['as' => 'edit.profile', 'uses' => 'UserController@editProfile']);
+        Route::match(['get', 'post'], 'profile_edit', ['as' => 'edit.profile', 'uses' => 'UserController@editProfile']);
     });
 });
 
