@@ -18,8 +18,8 @@
                                 </div>
                             </div>
                             <div class="user_heading_avatar">
-                                <div>
-                                    <img style="background-image:none!important;" src="{!! URL::asset('images/icons/'.$interaction['name'].'.svg') !!}" alt="producto"/>
+                                <div class="second circle">
+                                    <img style="background-image:none!important;position:absolute;margin-top:-96px;margin-left:8px;" src="{!! URL::asset('images/icons/'.$interaction['name'].'.svg') !!}" alt="producto"/>
                                 </div>
                             </div>
                             <div class="user_heading_content">
@@ -28,8 +28,8 @@
                                 </h2>
 
                                 <div class="uk-width-medium-1-1">
-                                    <div class="uk-progress">
-                                        <div class="uk-progress-bar" style="width: 40%; background:{{$color}}";></div>
+                                    <div class="uk-progress" style="height: 10px!important;">
+                                        <div class="uk-progress-bar" style="width: 100%; background:{{$color}}";></div>
                                     </div>
                                 </div>
 
@@ -38,87 +38,192 @@
                                 <i class="material-icons">{{ $icon }}</i>
                             </a>
                         </div>
-                        <div class="user_content">
-                            <ul id="user_profile_tabs" class="uk-switcher uk-margin" data-uk-tab="{connect:'#user_profile_tabs_content'}">
-                                <li>
-                                    <div class="uk-grid uk-margin-medium-top uk-margin-large-bottom" data-uk-grid-margin>
-                                        <div class="uk-width-large-1-2">
-                                            <h4 class="heading_c uk-margin-small-bottom">Información</h4>
-                                            <ul class="md-list md-list-addon">
-                                                <li>
-                                                    <div class="md-list-addon-element">
-                                                        <i class="md-list-addon-icon material-icons">&#xE158;</i>
+                        <div class="md-card-content">
+                            <div class="user_content">
+                                <ul id="user_profile_tabs" class="uk-switcher uk-margin" data-uk-tab="{connect:'#user_profile_tabs_content'}">
+                                    <li>
+                                        <div class="uk-grid uk-margin-medium-top uk-width-large-1-1 " data-uk-grid-margin>
+                                            <div class="uk-width-large-1-2">
+                                                <div class="uk-grid">
+                                                    <div class="uk-width-large-1-2">
+                                                        <h4 class="heading_c uk-margin-small-bottom">Información</h4>
+                                                        <ul class="md-list md-list-addon">
+                                                            <li>
+                                                                <div class="md-list-addon-element">
+                                                                    <i class="md-list-addon-icon material-icons">&#xE158;</i>
+                                                                </div>
+                                                                <div class="md-list-content">
+                                                                    <span class="md-list-heading"><a href="">Nombre Campaña</a></span>
+                                                                    <span class="uk-text-small uk-text-muted">{{$name}}</span>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="md-list-addon-element">
+                                                                    <i class="md-list-addon-icon material-icons">&#xE0CD;</i>
+                                                                </div>
+                                                                <div class="md-list-content">
+                                                                    <span class="md-list-heading"><a href="">Estado</a></span>
+                                                                    <span class="uk-text-small uk-text-muted">{{$status}}</span>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="md-list-addon-element">
+                                                                    <i class="md-list-addon-icon uk-icon-facebook-official"></i>
+                                                                </div>
+                                                                <div class="md-list-content">
+                                                                    <span class="md-list-heading"><a href="#">Balance</a></span>
+                                                                    <span class="uk-text-small uk-text-muted">{{$balance['current']}}</span>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="md-list-addon-element">
+                                                                    <i class="md-list-addon-icon uk-icon-twitter"></i>
+                                                                </div>
+                                                                <div class="md-list-content">
+                                                                    <span class="md-list-heading"><a href="">Tipo de interacon</a></span>
+                                                                    <span class="uk-text-small uk-text-muted">{{$interaction['name']}}</span>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="md-list-content">
+                                                                    <span class="md-list-heading"><a href="">Lugares</a></span>
+                                                                    <span class="uk-text-small uk-text-muted">{{$branches[0]}}</span>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
                                                     </div>
-                                                    <div class="md-list-content">
-                                                        <span class="md-list-heading"><a href="">nombre</a></span>
-                                                        <span class="uk-text-small uk-text-muted">{{$name}}</span>
+                                                    <div class="uk-width-large-1-2">
+                                                        <h4 class="heading_c uk-margin-small-bottom">Filtros</h4>
+                                                        <ul class="md-list">
+                                                            <li>
+                                                                <div class="md-list-content">
+                                                                    <span class="md-list-heading"><a href="#">Fecha de la interaccion</a></span>
+                                                                    <span class="uk-text-small uk-text-muted">inicia : &nbsp;&nbsp;&nbsp;&nbsp;{{$filters['date']['start']}} </span>
+                                                                    <span class="uk-text-small uk-text-muted">finaliza : &nbsp;{{$filters['date']['end']}} </span>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="md-list-content">
+                                                                    <span class="md-list-heading"><a href="#">Rango de Edad</a></span>
+                                                                    <span class="uk-text-small uk-text-muted">{{$filters['age'][0].' a '.$filters['age'][1]}} </span>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="md-list-content">
+                                                                    <span class="md-list-heading"><a href="#">Generos</a></span>
+                                                                    <span class="uk-text-small uk-text-muted">{{$filters['gender'][0]}}, @if(isset($filters['gender'][1])){{$filters['gender'][1]}}  @endif</span>
+                                                                    {{--{{$filters['gender'][0].',  '.$filters['gender'][1]}}--}}
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="md-list-content">
+                                                                    <span class="md-list-heading"><a href="#">Dias</a></span>
+                                                                    <span class="uk-text-small uk-text-muted">@foreach($filters['week_days'] as $dia) {{$dia}}, @endforeach</span>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="md-list-content">
+                                                                    <span class="md-list-heading"><a href="#">Horario</a></span>
+                                                                    <span class="uk-text-small uk-text-muted">de {{ $filters['day_hours'] }} horas</span>
+                                                                </div>
+                                                            </li>
+                                                            @if($filters['unique_user']==false)
+                                                                <li>
+                                                                    <div class="md-list-content">
+                                                                        <span class="md-list-heading"><a href="#"> usuario unico </a></span>
+                                                                        <span class="uk-text-small uk-text-muted"> NO </span>
+                                                                    </div>
+                                                                </li>
+                                                            @else
+                                                                <li>
+                                                                    <div class="md-list-content">
+                                                                        <span class="md-list-heading"><a href="#"> usuario unico </a></span>
+                                                                        <span class="uk-text-small uk-text-muted"> SI </span>
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <div class="md-list-content">
+                                                                        <span class="md-list-heading"><a href="#"> usuarios unicos por dia </a></span>
+                                                                        <span class="uk-text-small uk-text-muted"> {{$filters['unique_user_per_day']}} </span>
+                                                                    </div>
+                                                                </li>
+                                                            @endif
+
+                                                            @if($filters['max_interactions']==false)
+                                                                <li>
+                                                                    <div class="md-list-content">
+                                                                        <span class="md-list-heading"><a href="#"> usuario unico </a></span>
+                                                                        <span class="uk-text-small uk-text-muted"> NO </span>
+                                                                    </div>
+                                                                </li>
+                                                            @else
+                                                                <li>
+                                                                    <div class="md-list-content">
+                                                                        <span class="md-list-heading"><a href="#"> Interacciones Maximas </a></span>
+                                                                        <span class="uk-text-small uk-text-muted"> SI </span>
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <div class="md-list-content">
+                                                                        <span class="md-list-heading"><a href="#"> maximo de interacciones por dia  </a></span>
+                                                                        <span class="uk-text-small uk-text-muted"> {{$filters['max_interactions_per_day']}} </span>
+                                                                    </div>
+                                                                </li>
+                                                            @endif
+                                                        </ul>
                                                     </div>
-                                                </li>
-                                                <li>
-                                                    <div class="md-list-addon-element">
-                                                        <i class="md-list-addon-icon material-icons">&#xE0CD;</i>
+                                                </div>
+                                            </div>
+                                            <div class="uk-width-large-1-2">
+                                                <div class="md-card">
+                                                    <div class="md-card-content">
+                                                        <h3 class="heading_a uk-margin-bottom">Statistics</h3>
+                                                        <div id="ct-chart" class="chartist"></div>
                                                     </div>
-                                                    <div class="md-list-content">
-                                                        <span class="md-list-heading"><a href="">estado</a></span>
-                                                        <span class="uk-text-small uk-text-muted">{{$status}}</span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="md-list-addon-element">
-                                                        <i class="md-list-addon-icon uk-icon-facebook-official"></i>
-                                                    </div>
-                                                    <div class="md-list-content">
-                                                        <span class="md-list-heading"><a href="#">balance</a></span>
-                                                        <span class="uk-text-small uk-text-muted">{{$balance['current']}}</span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="md-list-addon-element">
-                                                        <i class="md-list-addon-icon uk-icon-twitter"></i>
-                                                    </div>
-                                                    <div class="md-list-content">
-                                                        <span class="md-list-heading"><a href="">Tipo de interacon</a></span>
-                                                        <span class="uk-text-small uk-text-muted">{{$interaction['name']}}</span>
-                                                    </div>
-                                                </li>
-                                            </ul>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="uk-width-large-1-2">
-                                            <h4 class="heading_c uk-margin-small-bottom">Filtros</h4>
-                                            <ul class="md-list">
-                                                <li>
-                                                    <div class="md-list-content">
-                                                        <span class="md-list-heading"><a href="#">Rango de Edad</a></span>
-                                                        <span class="uk-text-small uk-text-muted">{{$filters['age'][0].' a '.$filters['age'][1]}} </span>
+
+                                    </li>
+                                </ul>
+                                <ul class="md-list md-list-addon">
+                                    <hr class="md-hr">
+                                    <div class="uk-width-large-1-1">
+                                        <h4 class="heading_c uk-margin-small-bottom">Elementos de la campaña</h4>
+                                        <ul class="md-list">
+                                            <li>
+                                                <div class="uk-grid ">
+                                                    <div class="md-list-content uk-width-large-1-3">
+                                                        <span class="md-list-heading"><a href="">imagen</a></span>
+                                                        <span class="uk-text-small uk-text-muted"><img class="uk-width-small-2-6" src="{!! URL::asset('images/'.$content['imageng']) !!}" alt=""></span>
                                                     </div>
-                                                </li>
-                                                <li>
-                                                    <div class="md-list-content">
-                                                        <span class="md-list-heading"><a href="#">Generos</a></span>
-                                                        <span class="uk-text-small uk-text-muted">{{$filters['gender'][0]}}, @if(isset($filters['gender'][1])){{$filters['gender'][1]}}  @endif</span>
-                                                        {{--{{$filters['gender'][0].',  '.$filters['gender'][1]}}--}}
+                                                    <div class="md-list-content uk-width-large-1-3">
+                                                        <span class="md-list-heading"><a hr<a="">imagen</a></span>
+                                                        <span class="uk-text-small uk-text-muted"><img class="uk-width-large-2-6" src="{!! URL::asset('images/'.$content['imageng']) !!}" alt=""></span>
                                                     </div>
-                                                </li>
-                                                <li>
-                                                    <div class="md-list-content">
-                                                        <span class="md-list-heading"><a href="#">Horas</a></span>
-                                                        <span class="uk-text-small uk-text-muted">@foreach($filters['day_hours'] as $hora) {{$hora}}, @endforeach</span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="md-list-content">
-                                                        <span class="md-list-heading"><a href="#"> usuario unico </a></span>
-                                                        <span class="uk-text-small uk-text-muted"> {{$filters['unique_user']}} </span>
-                                                    </div>
-                                                </li>
-                                            </ul>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="md-list-content uk-width-large-1-2">
+                                                    <span class="md-list-heading"><a href="">Link a redireccionar</a></span>
+                                                    <span class="uk-text-small uk-text-muted"> {{ $content['link'] }}</span>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </ul>
+                                <ul class="md-list md-list-addon">
+                                    <hr class="md-hr">
+                                    <div class="uk-grid uk-margin-medium-top" data="uk-grid-margin">
+                                        <div class="uk-width-1-1">
+                                            <h4 class="heading_c uk-margin-small-bottom">Reportes</h4>
+                                            <div class="uk-width-medium-1-6">
+                                                <a class="md-btn md-btn-primary" href="#">Reportes</a>
+                                            </div>
                                         </div>
                                     </div>
-                                </li>
-                                <li>
-                                    <div style="display: block">reportes</div>
-                                </li>
-                            </ul>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -130,9 +235,25 @@
 
 @section('scripts')
 
+            <!-- slider script -->
+    {!! HTML::script('bower_components/ionrangeslider/js/ion.rangeSlider.min.js') !!}
+    {!! HTML::script('js/circle-progress.js') !!}
 
     <script>
-
-
+//        $("#age_slider").ionRangeSlider();
+//        $("#ionslider_3").ionRangeSlider();
+        $('.second.circle').circleProgress({
+            value: .5,
+            size: 98,
+            startAngle: -300,
+            reverse: true,
+            thickness: 7,
+            fill:{ color: "{{$color}}" }
+        }).on('circle-animation-progress', function(event, progress) {
+            $(this).find('strong').html(parseInt(100 * progress) + '<i>%</i>');
+        });
     </script>
+            <!-- enera custom scripts -->
+    {{--{!! HTML::script('assets/js/enera/create_campaign_helper.js') !!}--}}
+
 @stop
