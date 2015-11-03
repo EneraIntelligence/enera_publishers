@@ -271,7 +271,7 @@ class CampaignsController extends Controller
             $astahoy = abs((strtotime($campaign['filters']['date']['start']) - strtotime($hoy))/86400);//se obtiene los dias asta el dia de hoy
 //        echo 'asta hoy'.$astahoy.'<br>';
             $porcentaje=['porcentaje'=> ($astahoy*100)/$total]; //obtengo el porcentaje de avance
-//        echo 'porcentaje :'.$porcentaje.'<br>';
+//        echo 'porcentaje : '.$porcentaje['porcentaje'].'<br>';
         }
         //se queda pendiente ended asta que se desida si se va a usar o no
         /*elseif($campaign['status']== 'ended'){ //si esta terminada

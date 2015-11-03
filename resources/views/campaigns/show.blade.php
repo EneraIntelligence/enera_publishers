@@ -26,13 +26,11 @@
                                 <h2 class="heading_b uk-margin-bottom"><span
                                             class="uk-text-truncate">Campaña: {{ $name }} </span><span class="sub-heading">interaccion {{ $interaction['name'] }}</span>
                                 </h2>
-
-                                <div class="uk-width-medium-1-1">
+                                {{--<div class="uk-width-medium-1-1">
                                     <div class="uk-progress" style="height: 10px!important;">
                                         <div class="uk-progress-bar" style="width: 100%; background:{{$color}}";></div>
                                     </div>
-                                </div>
-
+                                </div>--}}
                             </div>
                             <a class="md-fab md-fab-small md-fab-accent {{ $color }}" style="background: {{ $color }}">  {{-- href="page_user_edit.html" --}}
                                 <i class="material-icons">{{ $icon }}</i>
@@ -243,12 +241,12 @@
 //        $("#age_slider").ionRangeSlider();
 //        $("#ionslider_3").ionRangeSlider();
         $('.second.circle').circleProgress({
-            value: .5,
-            size: 98,
-            startAngle: -300,
-            reverse: true,
-            thickness: 7,
-            fill:{ color: "{{$color}}" }
+            value: 0.{{$porcentaje}}, //lo que se va a llenar con el color
+            size: 98,   //tamaño del circulo
+            startAngle: -300, //de donde va a empezar la animacion
+            reverse: true, //empieza la animacion al contrario
+            thickness: 8,  //el grosor la linea
+            fill:{ color: "{{$color}}" } //el color de la linea
         }).on('circle-animation-progress', function(event, progress) {
             $(this).find('strong').html(parseInt(100 * progress) + '<i>%</i>');
         });
