@@ -114,6 +114,7 @@ class UserController extends Controller
     public function editProfile()
     {
 
+//        dd(Input::all());
         $user = Administrator::where('_id', Auth::user()->_id)->first();
         if (Input::hasFile('user_edit_avatar_control')) {
 //        para la foto del usuario
