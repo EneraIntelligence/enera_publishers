@@ -164,9 +164,6 @@
                                 <div class="uk-width-small-1-2">
                                     <div id="chart2" style="margin: 75px 0 15px 0;"></div>
                                 </div>
-                                <p>
-                                    <button class="uk-button" data-message="<i class='uk-icon-check'></i> Message with an icon...">With icon</button>
-                                </p>
                             </div>
                         </div>
                     </div>
