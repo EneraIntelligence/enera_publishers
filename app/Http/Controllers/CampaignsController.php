@@ -28,8 +28,7 @@ class CampaignsController extends Controller
 
         //Obteniendo campañas del user loggeado
         $admin_id = Auth::user()->_id;
-        //$campaigns = Campaign::where('administrator_id', $admin_id)->latest()->get();
-        $campaigns = Campaign::where('status', 'active')->latest()->get();
+        $campaigns = Campaign::where('administrator_id', $admin_id)->latest()->get();
 
         foreach($campaigns as $c)
         {
