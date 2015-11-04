@@ -55,7 +55,6 @@
                             <div class="user_content">
                                 <div id="page_content">
                                     <div id="page_content_inner ">
-
                                         <h3 class="heading_b uk-margin-bottom">Form Validation</h3>
                                         {{--<div class="md-card">--}}
                                         <div class="md-card-content small-padding">
@@ -257,6 +256,8 @@
         $("#user_edit_avatar_control").change(function(){
             readURL(this);
         });
+
+
 
     </script>
 @stop

@@ -367,6 +367,14 @@
     });*/
 </script>
 
+<script>
+    $(function(){
+        $("body").on("click", ".uk-button[data-message]", function(){
+            UIkit.notify($(this).data());
+        });
+    });
+</script>
+
 @yield('scripts')
 
 </body>

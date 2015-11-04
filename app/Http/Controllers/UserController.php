@@ -152,7 +152,7 @@ class UserController extends Controller
             $user->socialnetwork = (object)array('facebook' => Input::get('facebook'), 'twitter' => Input::get('twitter'), 'googleplus' => Input::get('google'), 'linkedin' => Input::get('linkedin'));
             $user->save();
         }
-        return redirect()->action('UserController@index');
+        return redirect()->action('UserController@index')->with('data', 'active');
 //        return Input::get('user_edit_avatar_control');
     }
 
