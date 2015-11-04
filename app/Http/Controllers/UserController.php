@@ -27,7 +27,7 @@ class UserController extends Controller
     public function index()
     {
 
-        $all = Campaign::where('client_id', Auth::user()->_id)->limit(10)->get();
+        $all = Campaign::where('administrator_id', Auth::user()->_id)->limit(10)->get();
         $active = Campaign::where('administrator_id', Auth::user()->_id)->where('status', 'active')->count();
         $closed = Campaign::where('administrator_id', Auth::user()->_id)->where('status', 'closed')->count();
         $canceled = Campaign::where('administrator_id', Auth::user()->_id)->where('status', 'canceled')->count();
@@ -103,11 +103,10 @@ class UserController extends Controller
 
     public function charts()
     {
-
-        $campaigns = Campaign::where('client_id', Auth::user()->id)->where('status', 'active')->count();
-        $closed = Campaign::where('client_id', Auth::user()->id)->where('status', 'closed')->count();
-        $canceled = Campaign::where('client_id', Auth::user()->id)->where('status', 'canceled')->count();
-        $all = Campaign::where('client_id')->get();
+        $campaigns = Campaign::where('administrator_id', Auth::user()->id)->where('status', 'active')->count();
+        $closed = Campaign::where('administrator_id', Auth::user()->id)->where('status', 'closed')->count();
+        $canceled = Campaign::where('administrator_id', Auth::user()->id)->where('status', 'canceled')->count();
+        $all = Campaign::where('administrator_id', Auth::user()->id)->get();
         return view('profile.charts', ['user' => Auth::user(), 'campaign' => $campaigns, 'closed' => $closed, 'canceled' => $canceled, 'all' => $all]);
     }
 
