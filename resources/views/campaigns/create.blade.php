@@ -159,8 +159,8 @@
     {!! HTML::script('assets/js/maps/infobox_packed.js') !!}
 
     <!-- enera custom scripts -->
-    {!! HTML::script('assets/js/enera/create_campaign_helper.js') !!}
-    {!! HTML::script('assets/js/enera/icon_animations.js') !!}
+    {!! HTML::script('js/create_campaign_helper.js') !!}
+    {!! HTML::script('js/icon_animations.js') !!}
 
 
     <script>
