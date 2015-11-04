@@ -199,13 +199,13 @@
                                                 </div>
                                                 <div class="uk-grid uk-grid-small">
                                                     <div class="uk-width-1-2">
-                                                        <button type="submit" class="md-btn md-btn-primary">Submit
+                                                        <button type="submit" class="md-btn md-btn-primary">Actualizar
                                                         </button>
                                                     </div>
                                                     <div class="uk-width-1-2">
                                                         <button type="button" class="md-btn md-btn-danger"
-                                                                onclick="window.location='{{ route("profile::index") }}'">
-                                                            Cancel
+                                                                onclick="window.location='{{ route("profile::index")}}'">
+                                                            Cancelar
                                                         </button>
                                                     </div>
                                                 </div>
