@@ -27,19 +27,19 @@ class CampaignsController extends Controller
     {
 
         //Obteniendo campañas del user loggeado
-        $admin_id = Auth::user()->_id;
-        $campaigns = Campaign::where('administrator_id', $admin_id)->latest()->get();
+//        $admin_id = Auth::user()->_id;
+//        $campaigns = Campaign::where('administrator_id', $admin_id)->latest()->get();
 
-        foreach($campaigns as $c)
-        {
+        $campaigns = Auth::user()->campaigns()->latest()->get();
+
+        foreach ($campaigns as $c) {
             $sColor = new StatusColor();
             $c->icon = $sColor->getCampaignIcon($c->interaction['name']);
             $c->color = $sColor->getStatusColorClass($c['status']);
             $c->status_value = $sColor->getStatusValue($c['status']);
         }
 
-
-        return view('campaigns.index', compact('campaigns'));
+        return view('campaigns.index', $campaigns);
     }
 
     /**
@@ -165,7 +165,7 @@ class CampaignsController extends Controller
     public function show($id)
     {
         //este arreglo se usa para poder convertir los numeros de los dias a letras
-        $semana = array(0=>'',1=>'lunes',2=>'martes',3=>'miércoles',4=>'jueves',5=>'viernes',6=>'sabado',7=>'domingo');
+        $semana = array(0 => '', 1 => 'lunes', 2 => 'martes', 3 => 'miércoles', 4 => 'jueves', 5 => 'viernes', 6 => 'sabado', 7 => 'domingo');
         $campaign = Campaign::find($id); //busca la campaña
         $campaign = $campaign['original']; //se obtiene solo los datos que nos importan
         //        dd($campaign);
@@ -192,34 +192,34 @@ class CampaignsController extends Controller
             }
         }//fin del if genero
 
-            /****  conversion de fechas de segundos a formato Y-m-d  ****/
-        $campaign['filters']['date']['start']= date('Y-m-d', $campaign['filters']['date']['start']->sec);
-        $campaign['filters']['date']['end']= date('Y-m-d', $campaign['filters']['date']['end']->sec);
+        /****  conversion de fechas de segundos a formato Y-m-d  ****/
+        $campaign['filters']['date']['start'] = date('Y-m-d', $campaign['filters']['date']['start']->sec);
+        $campaign['filters']['date']['end'] = date('Y-m-d', $campaign['filters']['date']['end']->sec);
 
         /****  SACAR PORCENTAJE DEL TIEMPO QUE LLEVA ****/
-        if($campaign['status']=='pending'||$campaign['status']=='rejected'||$campaign['status']=='ended'){//si tiene uno de estos estados no deberia tener avance
+        if ($campaign['status'] == 'pending' || $campaign['status'] == 'rejected' || $campaign['status'] == 'ended') {//si tiene uno de estos estados no deberia tener avance
 //            echo '<br> porcentage sera = 0  estado: '.$campaign['status'];
-            $porcentaje=['porcentaje'=> (0)];
-        }elseif($campaign['status']=='active'||$campaign['status']=='canceled'){//si es activa o canceled se muestra el avanze
-            $total = abs((strtotime($campaign['filters']['date']['start']) - strtotime($campaign['filters']['date']['end']))/86400); //obtengo el total de dias
+            $porcentaje = ['porcentaje' => (0)];
+        } elseif ($campaign['status'] == 'active' || $campaign['status'] == 'canceled') {//si es activa o canceled se muestra el avanze
+            $total = abs((strtotime($campaign['filters']['date']['start']) - strtotime($campaign['filters']['date']['end'])) / 86400); //obtengo el total de dias
 //            echo '<br> total'.$total.'<br>';   //total es = a la diferencia entre el inicio y la fecha final
-            if($campaign['status']=='canceled'){ //si esta cancelada saco la fecha
-                $logs= $campaign['logs'];//saco el cntenido de logs para poder manejar los datos
-                foreach($logs as $log => $conten){ //recorro el arreglo
+            if ($campaign['status'] == 'canceled') { //si esta cancelada saco la fecha
+                $logs = $campaign['logs'];//saco el cntenido de logs para poder manejar los datos
+                foreach ($logs as $log => $conten) { //recorro el arreglo
 //                    echo '<br> clave: '.$log;
 //                    var_dump ($conten);
-                    if($conten['status'] == 'canceled'){//busco el log de cancelado para sacar la fecha
+                    if ($conten['status'] == 'canceled') {//busco el log de cancelado para sacar la fecha
                         $hoy = date('Y-m-d', $conten['date']->sec);//obtengo la fecha en que fue cancelada la campaña
 //                        echo $hoy.'<br>';
                     }
                 }
-            }else{
-                $hoy = date ('Y-m-d');//obtengo la fecha de hoy
+            } else {
+                $hoy = date('Y-m-d');//obtengo la fecha de hoy
             }
 //        echo 'hoy'.$hoy.'<br>';
-            $astahoy = abs((strtotime($campaign['filters']['date']['start']) - strtotime($hoy))/86400);//se obtiene los dias asta el dia de hoy
+            $astahoy = abs((strtotime($campaign['filters']['date']['start']) - strtotime($hoy)) / 86400);//se obtiene los dias asta el dia de hoy
 //        echo 'asta hoy'.$astahoy.'<br>';
-            $porcentaje=['porcentaje'=> ($astahoy*100)/$total]; //obtengo el porcentaje de avance
+            $porcentaje = ['porcentaje' => ($astahoy * 100) / $total]; //obtengo el porcentaje de avance
 //        echo 'porcentaje : '.$porcentaje['porcentaje'].'<br>';
         }
         //se queda pendiente ended asta que se desida si se va a usar o no
@@ -228,19 +228,19 @@ class CampaignsController extends Controller
         }*/
 
         /****  conversion de dias, convierte los numeros a letras ****/
-        foreach($campaign['filters']['week_days'] as  $clave => $dia){
-            if(array_key_exists($dia , $semana )){
-                $campaign['filters']['week_days'][$clave]=$semana[$dia];
+        foreach ($campaign['filters']['week_days'] as $clave => $dia) {
+            if (array_key_exists($dia, $semana)) {
+                $campaign['filters']['week_days'][$clave] = $semana[$dia];
             }
         }
 
         /****  conversion de horas ****/
-        $rangoH=count($campaign['filters']['day_hours']);
-        $horas=$campaign['filters']['day_hours'][0].' a '.$campaign['filters']['day_hours'][$rangoH-1];
-        $campaign['filters']['day_hours']=$horas;
+        $rangoH = count($campaign['filters']['day_hours']);
+        $horas = $campaign['filters']['day_hours'][0] . ' a ' . $campaign['filters']['day_hours'][$rangoH - 1];
+        $campaign['filters']['day_hours'] = $horas;
 
         /******     se juntan los array  para mandar solo uno  ********/
-        $campaign = array_merge($campaign, $color,$porcentaje);
+        $campaign = array_merge($campaign, $color, $porcentaje);
 //        dd($campaign);
         return view('campaigns.show', $campaign);
     }
