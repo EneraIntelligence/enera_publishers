@@ -54,8 +54,6 @@ create_campaign_helper =
     {
         var input = event.target;
 
-
-
         //check for image size
         var _URL = window.URL || window.webkitURL;
         image = new Image();
@@ -104,6 +102,21 @@ create_campaign_helper =
 
 finalScreen=
 {
+    translate:{
+        'both':'Ambos',
+        'women':'Mujeres',
+        'men':'Hombres',
+        'monday':'Lunes',
+        'tuesday':'Martes',
+        'wednesday':'Miércoles',
+        'thursday':'Jueves',
+        'friday':'Viernes',
+        'saturday':'Sábado',
+        'sunday':'Domingo',
+        'repeat':'Mostrar sin restricciones',
+        'unique_day':'Mostrar una vez al día',
+        'unique':'Mostrar sólo una vez por persona'
+    },
     grid_1_1:function(content)
     {
         return '<div class="uk-width-1-1 uk-grid uk-grid-divider">'+content+'</div>';
@@ -188,8 +201,8 @@ finalScreen=
         res = finalScreen.grid_1_4( finalScreen.format( "Fecha Inicial", form_serialized.start_date.replace(/\./g, "/") ) );
         res = res+ finalScreen.grid_1_4( finalScreen.format( "Fecha Final", form_serialized.end_date.replace(/\./g, "/") ) );
 
-        res = res+ finalScreen.grid_1_4( finalScreen.format( "Género", form_serialized.gender ) );
-        res = res+ finalScreen.grid_1_4( finalScreen.format( "Restricciones", form_serialized.unique ) );
+        res = res+ finalScreen.grid_1_4( finalScreen.format( "Género", finalScreen.translate[form_serialized.gender] ) );
+        res = res+ finalScreen.grid_1_4( finalScreen.format( "Restricciones", finalScreen.translate[form_serialized.unique] ) );
 
 
         var age = form_serialized.age.split(";");

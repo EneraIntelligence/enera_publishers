@@ -7,7 +7,7 @@
 	<path fill="none" stroke="#737373" stroke-width="4" stroke-miterlimit="10" d="M134.193,85.552v70.019
 		c0,4.375-3.547,7.923-7.922,7.923H72.864c-4.374,0-7.921-3.548-7.921-7.923V44.428c0-4.375,3.547-7.92,7.921-7.92h53.408
 		c4.375,0,7.922,3.545,7.922,7.92v9.032"/>
-	<polyline fill="none" stroke="#737373" stroke-width="2.2" stroke-miterlimit="10" points="125.855,85.552 125.855,144.273 
+	<polyline fill="none" stroke="#737373" stroke-width="2.2" stroke-miterlimit="10" points="125.855,85.552 125.855,144.273
 		73.28,144.273 73.28,45.309 125.855,45.309 125.855,53.465 	"/>
 	<circle fill="none" stroke="#737373" stroke-width="2.2" stroke-miterlimit="10" cx="99.303" cy="154.123" r="4.887"/>
 	<g>

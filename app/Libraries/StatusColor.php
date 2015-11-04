@@ -13,7 +13,9 @@ class StatusColor
 {
     private $status_color;
     private $status_icon;
-
+    private $status_values;
+    private $status_colors_class;
+    private $campaign_icons;
     /**
      * StatusColor constructor.
      */
@@ -34,6 +36,44 @@ class StatusColor
             'close'=>'&#xE615;',
             'canceled'=>'&#xE002;',
         );
+
+        $this->status_values = array(
+            'active' => '1',
+            'pending' => '2',
+            'ended' => '3',
+            'close' => '3',
+            'rejected' => '4',
+            'canceled' => '5'
+        );
+
+        $this->status_colors_class = array(
+            'active' => 'uk-text-success',
+            'pending' => 'uk-text-primary',
+            'rejected' => 'uk-text-danger',
+            'ended' => 'md-color-blue-900',
+            'close' => 'md-color-blue-900',
+            'canceled' => 'md-color-grey-500'
+        );
+
+        $this->campaign_icons = array(
+            /*
+            //old icons
+            'banner' => 'picture_in_picture',
+            'video' => 'ondemand_video',
+            'mailing_list' => 'mail',
+            'captcha' => 'spellcheck',
+            'survey' => 'assignment'
+            */
+
+            'banner' => 'banner.svg',
+            'banner_link' => 'banner_link.svg',
+            'video' => 'video.svg',
+            'mailing_list' => 'mailing.svg',
+            'captcha' => 'captcha.svg',
+            'survey' => 'encuesta.svg'
+        );
+
+
 //        xE033 alarma fuera:ended =&#xE857 /pending xE85F  /ended xE88B
     }
 
@@ -68,6 +108,39 @@ class StatusColor
             $estado=array('icon'=>$this->status_icon[$estado],'color'=>$this->status_color[$estado]);
         }
         return $estado;
+    }
+
+    /**
+     * @param $status
+     * @return string
+     */
+    public function getStatusColorClass($status){
+        if(array_key_exists($status , $this->status_colors_class )){
+            return $this->status_colors_class[$status];
+        }
+        return '';//not found
+    }
+
+    /**
+     * @param $status
+     * @return string
+     */
+    public function getStatusValue($status){
+        if(array_key_exists($status , $this->status_values )){
+            return $this->status_values[$status];
+        }
+        return '';//not found
+    }
+
+    /**
+     * @param $interaction_name
+     * @return string
+     */
+    public function getCampaignIcon($interaction_name){
+        if(array_key_exists($interaction_name , $this->campaign_icons )){
+            return $this->campaign_icons[$interaction_name];
+        }
+        return '';//not found
     }
 
 }

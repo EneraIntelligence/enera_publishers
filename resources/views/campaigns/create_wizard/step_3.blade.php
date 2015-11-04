@@ -256,7 +256,6 @@
 
                 <hr class="uk-grid-divider">
 
-                <div class="parsley-errors-list filled map-errors"></div>
 
 
             </div>
@@ -266,6 +265,7 @@
         <div class="uk-width-medium-2-3 uk-width-small-1-1">
 
             <div id="googleMap" style="width:100%;height:380px;"></div>
+            <div class="parsley-errors-list filled map-errors"></div>
 
         </div>
     </div>

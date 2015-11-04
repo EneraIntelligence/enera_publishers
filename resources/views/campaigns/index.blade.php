@@ -170,21 +170,15 @@
 
                         @foreach($campaigns as $campaign)
 
-                            @if(array_key_exists($campaign->interaction['name'], $campaign_icons))
-                                <?php $campaign_icon = $campaign_icons[ $campaign->interaction['name'] ]; ?>
-                            @else
-                                <?php $campaign_icon = $campaign_icons['']; ?>
-                            @endif
-
                             <div data-uk-filter="campaign-{{$campaign->status}}, action-{{$campaign->interaction['name']}}"
                                  data-name="{{$campaign->name}}"
                                  data-action="{{$campaign->interaction['name']}}"
                                  data-company="{{$campaign->publishers_summary['client']}}"
-                                 data-status="{{$status_values[$campaign->status]}}"
+                                 data-status="{{$campaign->status_value }}"
                                  data-date="{{$campaign->created_at}}"
                                  style="cursor: pointer;">
 
-                                <div class="scrum_task {!! $status_colors[$campaign->status] !!}"
+                                <div class="scrum_task {!! $campaign->color !!}"
                                      data-snippet-title="{{$campaign->name}}">
                                     <div class="md-card-content uk-grid">
 
@@ -193,11 +187,8 @@
                                                  data-uk-tooltip="{cls:'long-text'}"
                                                  title="{{$campaign->interaction['name']}} - {{$campaign->status}}"
                                                  style="margin-bottom: 10px">
-                                                <i class="uk-vertical-align-middle
-                                                material-icons md-36
-                                                {!! $status_colors[$campaign->status]!!}">
-                                                    {{ $campaign_icon }}
-                                                </i>
+
+                                                <img src="{!! URL::asset('images/icons/'.$campaign->icon) !!}" alt="">
 
                                             </div>
 
