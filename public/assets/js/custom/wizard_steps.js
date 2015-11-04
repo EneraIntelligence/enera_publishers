@@ -2020,7 +2020,7 @@
              * @default "Finish"
              * @for defaults
              **/
-            finish: "Guardar campaña",
+            finish: "Finish",
 
             /**
              * Label for the next button.
@@ -2030,7 +2030,7 @@
              * @default "Next"
              * @for defaults
              **/
-            next: "Siguiente <i class='material-icons'>&#xE315;</i>",
+            next: "Next <i class='material-icons'>&#xE315;</i>",
 
             /**
              * Label for the previous button.
@@ -2040,7 +2040,7 @@
              * @default "Previous"
              * @for defaults
              **/
-            previous: "<i class='material-icons'>&#xE314;</i> Regresar",
+            previous: "<i class='material-icons'>&#xE314;</i> Previous",
 
             /**
              * Label for the loading animation.
@@ -2050,7 +2050,7 @@
              * @default "Loading ..."
              * @for defaults
              **/
-            loading: "Cargando ..."
+            loading: "Loading ..."
         }
     };
 })(jQuery);

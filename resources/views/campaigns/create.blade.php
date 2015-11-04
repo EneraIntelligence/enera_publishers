@@ -151,9 +151,9 @@
 
 
     <!-- animation library -->
-    {!! HTML::script('assets/js/gsap/TweenLite.min.js') !!}
-    {!! HTML::script('assets/js/gsap/plugins/CSSPlugin.min.js') !!}
-    {!! HTML::script('assets/js/gsap/easing/EasePack.min.js') !!}
+    {!! HTML::script('js/greensock/TweenLite.min.js') !!}
+    {!! HTML::script('js/greensock/plugins/CSSPlugin.min.js') !!}
+    {!! HTML::script('js/greensock/easing/EasePack.min.js') !!}
 
     {!! HTML::script('http://maps.google.com/maps/api/js?sensor=false') !!}
     {!! HTML::script('js/maps/infobox_packed.js') !!}

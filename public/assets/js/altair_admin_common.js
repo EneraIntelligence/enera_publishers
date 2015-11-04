@@ -331,7 +331,7 @@
 
             window.ParsleyConfig.validators.americandate = {
                 fn: function (value) {
-                    if (!/^([01]?[0-9])[.\/-]([0-3]?[0-9])[.\/-]([0-9]{4}|[0-9]{2})$/.test(value)) {
+                    if (!/^([01]?[1-9])[.\/-]([0-3]?[0-9])[.\/-]([0-9]{4}|[0-9]{2})$/.test(value)) {
                         return false;
                     }
                     var parts = value.split(/[.\/-]+/);
