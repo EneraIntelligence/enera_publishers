@@ -116,7 +116,8 @@
                                     <h3>
                                         Campañas
                                     </h3>
-                                    @if($all->count() <= 0)
+                                    @if($all->count() < 1)
+
                                         <div class="uk-alert uk-alert-danger" data-uk-alert="">
                                             De momento no tienes ninguna campaña para mostrar, oprime el boton de crear
                                             para comenzar
@@ -125,6 +126,7 @@
                                     @else
                                         <ul class="md-list">
                                             @foreach($all as $campaign)
+                                                <hr>
                                                 <li>
                                                     <div class="md-list-content">
                                     <span class="md-list-heading"><a
@@ -145,17 +147,18 @@
                                     </span>
                                     <span class="uk-margin-right">
                                     <i class="material-icons">&#xE8D3;</i> <span
-                                                class="uk-text-muted uk-text-small">{{ $campaign->administrator->name }}</span>
+                                                class="uk-text-muted uk-text-small">{{ $campaign->administrator->name['first'] . ' ' . $campaign->administrator->name['last']}}</span>
                                     </span>
                                     <span class="uk-margin-right">
                                     <i class="material-icons">&#xE865;</i> <span
-                                                class="uk-text-muted uk-text-small">{{ $campaign->action }}</span>
+                                                class="uk-text-muted uk-text-small">{{ $campaign->interaction['name'] }}</span>
                                     </span>
                                                         </div>
                                                     </div>
                                                 </li>
                                         </ul>
                                         @endforeach
+                                        <hr>
                                     @endif
                                 </div>
                                 <div class="uk-width-small-1-2">
