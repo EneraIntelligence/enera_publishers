@@ -143,9 +143,9 @@
     {!! HTML::script('bower_components/parsleyjs/dist/parsley.min.js') !!}
     {!! HTML::script('bower_components/parsleyjs/src/i18n/es.js') !!}
             <!-- jquery steps -->
-    {!! HTML::script('assets/js/custom/wizard_steps.js') !!}
+    {!! HTML::script('js/wizard_steps_custom.js') !!}
     <!--  forms wizard functions -->
-    {!! HTML::script('assets/js/pages/forms_wizard.js') !!}
+    {!! HTML::script('js/form_wizard_custom.js') !!}
             <!-- slider script -->
     {!! HTML::script('bower_components/ionrangeslider/js/ion.rangeSlider.min.js') !!}
 
@@ -156,7 +156,7 @@
     {!! HTML::script('assets/js/gsap/easing/EasePack.min.js') !!}
 
     {!! HTML::script('http://maps.google.com/maps/api/js?sensor=false') !!}
-    {!! HTML::script('assets/js/maps/infobox_packed.js') !!}
+    {!! HTML::script('js/maps/infobox_packed.js') !!}
 
     <!-- enera custom scripts -->
     {!! HTML::script('js/create_campaign_helper.js') !!}
