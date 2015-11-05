@@ -170,26 +170,27 @@
 
                                 @foreach($campaigns as $campaign)
 
-                                    <div data-uk-filter="campaign-{!! $campaign->status !!}, action-{{$campaign->interaction['name']}}"
-                                         data-name="{{$campaign->name}}"
-                                         data-action="{{$campaign->interaction['name']}}"
-                                         data-company="{{$campaign->publishers_summary['client']}}"
-                                         data-status="{{$campaign->status_value }}"
-                                         data-date="{{$campaign->created_at}}"
+                                    <div data-uk-filter="campaign-{!! $campaign->status !!}, action-{!! $campaign->interaction['name'] !!}"
+                                         data-name="{!! $campaign->name !!}"
+                                         data-action="{!! $campaign->interaction['name'] !!}"
+                                         data-company="{!! $campaign->publishers_summary['client'] !!}"
+                                         data-status="{!! CampaignStyle::getStatusValue( $campaign->status )  !!}"
+                                         data-date="{!! $campaign->created_at !!}"
                                          style="cursor: pointer;">
 
-                                        <div class="scrum_task {!! $campaign->color !!}"
-                                             data-snippet-title="{{$campaign->name}}">
+                                        <div class="scrum_task {!! CampaignStyle::getStatusColorClass( $campaign->status ) !!}"
+                                             data-snippet-title="{!! $campaign->name !!}">
                                             <div class="md-card-content uk-grid">
 
                                                 <div class="interaction-icon uk-width-large-1-10 uk-hidden-small">
                                                     <div class="uk-vertical-align" style="height:80px"
                                                          data-uk-tooltip="{cls:'long-text'}"
-                                                         title="{{$campaign->interaction['name']}} - {{$campaign->status}}"
+                                                         title="{{$campaign->interaction['name']}} - {!! $campaign->status !!}"
                                                          style="margin-bottom: 10px">
 
-                                                        <img src="{!! URL::asset('images/icons/'.$campaign->icon) !!}"
-                                                             alt="">
+                                                        <img src="{!! URL::asset('images/icons/'.
+                                                                CampaignStyle::getCampaignIcon( $campaign->interaction['name']
+                                                             ) ) !!}" alt="">
 
                                                     </div>
 
@@ -231,7 +232,7 @@
                                                 </div>
 
                                                 <div class=" uk-hidden-small uk-grid-width-3-10"
-                                                     id="chart_{{$campaign->_id}}"
+                                                     id="chart_{!! $campaign->_id !!}"
                                                      style="margin-top: 15px">
 
                                                 </div>
@@ -283,7 +284,7 @@
                             @foreach($campaigns as $campaign)
 
                     var chart = c3.generate({
-                                bindto: '#chart_{{$campaign->_id}}',
+                                bindto: '#chart_{!! $campaign->_id !!}',
                                 data: {
                                     columns: [
                                         ['data1', 30, 200, 100, 400, 150, 250],

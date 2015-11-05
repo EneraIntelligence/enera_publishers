@@ -2,6 +2,7 @@
 
 namespace Publishers\Http\Controllers;
 
+use Publishers\Libraries\CampaignStyleHelper;
 use Validator;
 use Illuminate\Support\Facades\Storage;
 use League\Flysystem\Sftp\SftpAdapter;
@@ -13,7 +14,6 @@ use Publishers\Campaign;
 use Publishers\Branche;
 use Publishers\Item;
 use Publishers\Libraries\FileCloud;
-use Publishers\Libraries\StatusColor;
 
 
 class CampaignsController extends Controller
@@ -27,19 +27,13 @@ class CampaignsController extends Controller
     {
 
         //Obteniendo campañas del user loggeado
-//        $admin_id = Auth::user()->_id;
-//        $campaigns = Campaign::where('administrator_id', $admin_id)->latest()->get();
+        //$admin_id = Auth::user()->_id;
+        //$campaigns = Campaign::where('status', 'active')->latest()->get();
 
         $campaigns = Auth::user()->campaigns()->latest()->get();
 
-        foreach ($campaigns as $c) {
-            $sColor = new StatusColor();
-            $c->icon = $sColor->getCampaignIcon($c->interaction['name']);
-            $c->color = $sColor->getStatusColorClass($c['status']);
-            $c->status_value = $sColor->getStatusValue($c['status']);
-        }
 
-        return view('campaigns.index', $campaigns);
+        return view('campaigns.index', ['campaigns'=>$campaigns] );
     }
 
     /**
@@ -170,8 +164,12 @@ class CampaignsController extends Controller
         $campaign = $campaign['original']; //se obtiene solo los datos que nos importan
         //        dd($campaign);
         /******     saca el color y el icono que se va a usar regresa un array  ********/
-        $sColor = new StatusColor();
-        $color = $sColor->getIconColor($campaign['status']);
+
+        //$sColor = new StatusColor();
+        $color = [];
+        $color['icon'] = CampaignStyleHelper::getStatusIcon($campaign['status']);
+        $color['color'] = CampaignStyleHelper::getStatusColor($campaign['status']);
+
 //        dd($color);
         /******     manejo de los filtros   ********/
         /******     convierte de inglés a español el genero   ********/
