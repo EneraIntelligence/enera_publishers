@@ -86,7 +86,7 @@
                                             </div>
                                             <div class="md-list-content">
                                                 <span class="md-list-heading">{{$user->phones['number']}}</span>
-                                                <span class="uk-text-small uk-text-muted">Telefono</span>
+                                                <span class="uk-text-small uk-text-muted">Telefono {{$user->phones['type']}}</span>
                                             </div>
                                         </li>
                                         <li>
