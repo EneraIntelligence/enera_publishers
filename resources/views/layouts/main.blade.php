@@ -100,7 +100,7 @@
                                 <ul class="uk-nav uk-nav-dropdown uk-panel">
                                     <li class="uk-nav-header">Recientes</li>
                                     <li><a href="#">Accordions</a></li>
-                                    <li><a href="#  ">Buttons</a></li>
+                                    <li><a href="#">Buttons</a></li>
                                     <li><a href="#">Notifications</a></li>
                                     <li><a href="#">Sortable</a></li>
                                     <li><a href="#">Tabs</a></li>

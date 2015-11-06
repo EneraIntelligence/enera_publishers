@@ -159,7 +159,9 @@
     {!! HTML::script('js/maps/infobox_packed.js') !!}
 
     <!-- enera custom scripts -->
-    {!! HTML::script('js/create_campaign_helper.js') !!}
+    {!! HTML::script('js/signals.min.js') !!}
+    {!! HTML::script('js/marker_map.js') !!}
+    {!! HTML::script('js/create_campaign_utils.js') !!}
     {!! HTML::script('js/icon_animations.js') !!}
 
 

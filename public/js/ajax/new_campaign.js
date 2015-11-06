@@ -13,8 +13,12 @@ new_campaign =
     modal:null,
     prompt:function()
     {
-        new_campaign.modal = UIkit.modal.prompt('Nombre de la campaña:', '', new_campaign.create);
+        var myLabels = {
+            'Ok': 'Aceptar',
+            'Cancel': 'Cancelar'
+        };
 
+        new_campaign.modal = UIkit.modal.prompt('Nombre de la campaña:', '', new_campaign.create, {'labels':myLabels});
     },
     create:function(name)
     {
@@ -27,20 +31,6 @@ new_campaign =
         else
         {
             window.location=new_campaign.url+"?name="+name;
-            /*
-            $.ajax({
-                url: '/campaigns',
-                type: 'POST',
-                dataType: 'JSON',
-                data: {name:name, _token:new_campaign.token},
-            }).done(function (data) {
-                console.log("success");
-                console.log(data);
-            }).fail(function (jqXHR, textStatus, errorThrown) {
-                console.log(jqXHR);
-                console.log(textStatus);
-                console.log(errorThrown);
-            });*/
         }
     }
 }
