@@ -84,7 +84,7 @@
                                         <i class="material-icons md-36 md-color-light-blue-A700">event</i>
                                         <span class="uk-text-muted uk-display-block">Campañas</span>
                                     </a>
-                                    <a href="#">
+                                    <a href="{!! route('reports::index') !!}">
                                         {{--<i class="material-icons md-36 md-color-red-600">&#xE0B9;</i>--}}
                                         <i class="material-icons md-36 md-color-light-blue-A700">assessment</i>
                                         <span class="uk-text-muted uk-display-block">Reportes</span>

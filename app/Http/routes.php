@@ -21,6 +21,12 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/view/{id}', ['as' => 'show', 'uses' => 'CampaignsController@show']);
         Route::get('/new', ['as' => 'create', 'uses' => 'CampaignsController@create']);
         Route::post('/store', ['as' => 'store', 'uses' => 'CampaignsController@store']);
+        Route::post('/store', ['as' => 'store', 'uses' => 'CampaignsController@store']);
+    });
+
+    Route::group(['prefix' => 'reports', 'as' => 'reports::'], function () {
+        Route::get('/', ['as' => 'index', 'uses' => 'ReportsController@index']);
+        Route::get('/single', ['as' => 'single', 'uses' => 'ReportsController@single']);
     });
 
     Route::group(['prefix' => 'profile', 'as' => 'profile::'], function () {
