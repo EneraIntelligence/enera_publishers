@@ -37,7 +37,6 @@ altair_wizard = {
 
                     if(currentIndex==2)
                     {
-                        google.maps.event.trigger(branchMap.map, 'resize');
                         branchMap.refresh();
                     }else if(currentIndex==3)
                     {
@@ -51,7 +50,7 @@ altair_wizard = {
                 },
                 onStepChanging: function (event, currentIndex, newIndex) {
 
-                    //quick test, remove!!!!
+                    //skips the parsley for testing purposes
                     //return true;
 
                     var step = $wizard_advanced.find('.body.current').attr('data-step'),
