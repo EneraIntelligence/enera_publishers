@@ -272,6 +272,7 @@ branchMap =
     setBranches:function(branchesJSON)
     {
         branchMap.branches = JSON.parse(branchesJSON);
+        console.log(branchMap.branches);
     },
 
 
@@ -505,7 +506,14 @@ finalScreen=
 
 
         var age = form_serialized.age.split(";");
-        res = res+ finalScreen.grid_1_4( finalScreen.format( "Edad", " de "+age[0]+" a "+age[1]+" años" ) );
+        if(age[0]!=age[1])
+        {
+            res = res + finalScreen.grid_1_4(finalScreen.format("Edad", " de " + age[0] + " a " + age[1] + " años"));
+        }
+        else
+        {
+            res = res + finalScreen.grid_1_4(finalScreen.format("Edad", age[0] + " años"));
+        }
 
         var hours1 = form_serialized.time_1.split(";");
         var hours2 = form_serialized.time_2.split(";");
