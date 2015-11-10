@@ -170,7 +170,7 @@
 
                                 @foreach($campaigns as $campaign)
 
-                                    <div data-uk-filter="campaign-{!! $campaign->status !!}, action-{!! $campaign->interaction['name'] !!}"
+                                    <div onclick="redirect('{!! $campaign->_id !!}')" data-uk-filter="campaign-{!! $campaign->status !!}, action-{!! $campaign->interaction['name'] !!}"
                                          data-name="{!! $campaign->name !!}"
                                          data-action="{!! $campaign->interaction['name'] !!}"
                                          data-company="{!! $campaign->publishers_summary['client'] !!}"
@@ -234,7 +234,6 @@
                                                 <div class=" uk-hidden-small uk-grid-width-3-10"
                                                      id="chart_{!! $campaign->_id !!}"
                                                      style="margin-top: 15px">
-
                                                 </div>
 
 
@@ -281,8 +280,14 @@
 
 
                 <script>
-                            @foreach($campaigns as $campaign)
 
+                    function redirect(id){
+                        var Id=id;
+                        console.log(Id);
+                        var url= 'http://localhost:8000/campaigns/view/'+Id;
+                        window.location.href = url;
+                    }
+                            @foreach($campaigns as $campaign)
                     var chart = c3.generate({
                                 bindto: '#chart_{!! $campaign->_id !!}',
                                 data: {

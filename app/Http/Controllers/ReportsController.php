@@ -23,12 +23,12 @@ class ReportsController extends Controller
     
     public function index()
     {
-     return 'menu reportes';
+        return view('reports.index');
     }
 
     public function single()
     {
-        return 'hola prueba';
+        return view('reports.single');
     }
     
 }
