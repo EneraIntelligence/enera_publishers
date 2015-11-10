@@ -162,13 +162,14 @@
 
                     @endif
 
-                    <div class="uk-width-large-8-10 uk-container-center">
+                    <div class="uk-width-large-9-10 uk-container-center">
                         <div id="snippets">
                             <div class="uk-grid uk-grid-width-1-1 hierarchical_show"
                                  data-uk-grid="{ gutter: 16, controls: '#campaign-filter, #action-filter, #campaign-sort' }">
 
 
                                 @foreach($campaigns as $campaign)
+
                                     <div data-uk-filter="campaign-{!! $campaign->status !!}, action-{!! $campaign->interaction['name'] !!}"
                                          data-name="{!! $campaign->name !!}"
                                          data-action="{!! $campaign->interaction['name'] !!}"
@@ -181,7 +182,7 @@
                                              data-snippet-title="{!! $campaign->name !!}">
                                             <div class="md-card-content uk-grid">
 
-                                                <div class="interaction-icon uk-width-large-1-10 uk-hidden-small">
+                                                <div class="interaction-icon uk-width-large-1-10 uk-hidden-small uk-width-medium-1-4 uk-hidden-medium">
                                                     <div class="uk-vertical-align" style="height:80px"
                                                          data-uk-tooltip="{cls:'long-text'}"
                                                          title="{{$campaign->interaction['name']}} - {!! $campaign->status !!}"
@@ -196,12 +197,12 @@
                                                 </div>
 
                                                 <div id="campaign-title"
-                                                     class="uk-width-large-3-10 uk-grid-width-small-2-3">
+                                                     class="uk-width-large-2-10 uk-grid-width-small-2-3  uk-width-medium-1-4 uk-width-large-1">
                                                     <h2>{{$campaign->name}}</h2>
                                                     <h4>{{$campaign->publishers_summary['client']}}</h4>
                                                 </div>
 
-                                                <div class="uk-grid-width-2-10">
+                                                <div class="uk-grid-width-8-10">
 
                                                     <div class="uk-grid">
                                                         <div class="uk-width-1-6" style="margin: 10px 0">
@@ -230,9 +231,10 @@
 
                                                 </div>
 
-                                                <div class=" uk-hidden-small uk-grid-width-3-10"
+                                                <div class="uk-hidden-small uk-grid-width-5-10 uk-width-medium-2-5 uk-width-small-1-4 uk-width-large-1-3"
                                                      id="chart_{!! $campaign->_id !!}"
-                                                     style="margin-top: 15px">
+                                                     style="margin-top: 15px; height: 100px;">
+
                                                 </div>
 
 
@@ -261,7 +263,9 @@
 
                                         </div>
                                     </div>
+
                                 @endforeach
+
 
                             </div>
                         </div>
@@ -274,14 +278,17 @@
             @stop
 
             @section('scripts')
+
+
                 <script>
                             @foreach($campaigns as $campaign)
+
                     var chart = c3.generate({
                                 bindto: '#chart_{!! $campaign->_id !!}',
                                 data: {
                                     columns: [
-                                        ['data1', 30, 200, 100, 400, 150, 250],
-                                        ['data2', 130, 100, 140, 200, 150, 50]
+                                        ['data1', 30, 200, 100, 400],
+                                        ['data2', 130, 100, 140, 200]
                                     ],
                                     type: 'bar'
                                 },
