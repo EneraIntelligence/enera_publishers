@@ -15,7 +15,6 @@ use Publishers\Branche;
 use Publishers\Item;
 use Publishers\Libraries\FileCloud;
 
-
 class CampaignsController extends Controller
 {
     /**
@@ -29,6 +28,8 @@ class CampaignsController extends Controller
         //Obteniendo campañas del user loggeado
         //$admin_id = Auth::user()->_id;
         //$campaigns = Campaign::where('status', 'active')->latest()->get();
+
+        //CityBranchesScript::saveCityBranches();
 
         $campaigns = Auth::user()->campaigns()->latest()->get();
 

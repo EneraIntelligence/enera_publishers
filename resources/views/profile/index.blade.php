@@ -130,7 +130,7 @@
                                                 <li>
                                                     <div class="md-list-content">
                                     <span class="md-list-heading"><a
-                                                href="#">{!! $campaign->name !!}</a></span>
+                                                href="{!! url('campaigns/view/'. $campaign->_id) !!}">{!! $campaign->name !!}</a></span>
 
                                                         <div class="uk-margin-small-top">
                                     <span class="uk-margin-right">

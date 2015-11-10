@@ -16,7 +16,6 @@ enera_icons_animation = {
     selTextColor:"#fff",
 
     init: function() {
-        console.log("enera_icons_animation.init()");
         $(".interaction-btn").each(function()
         {
             $(this).click(enera_icons_animation.click);

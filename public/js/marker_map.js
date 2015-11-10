@@ -20,6 +20,33 @@
         };
 
         this.map = new google.maps.Map(DOMElement, properties);
+
+
+        this.findCityExpress();
+    }
+
+    MarkerMap.prototype.findCityExpress = function()
+    {
+        var geocoder = new google.maps.Geocoder();
+
+        var address = "City express";
+
+        console.log("searching city express");
+
+        var restr= {country: 'MX'};
+
+        geocoder.geocode( { 'keyword': address,'partialmatch': true, 'componentRestrictions':restr, 'region':'mx'}, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                console.log("results: ");
+
+                console.log(results);
+                //var latitude = results[0].geometry.location.lat();
+                //var  longitude = results[0].geometry.location.lng();
+            }
+
+
+        });
+
     }
 
     MarkerMap.prototype.addMarker = function(marker)
