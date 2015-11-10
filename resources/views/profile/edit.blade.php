@@ -97,7 +97,7 @@
                                                         </span>
 
                                                         <div class="parsley-row">
-                                                            <label for="email">Correo<span class="req">*</span></label>
+                                                            <label for="email">Correo</label>
                                                             <input type="email" name="email" disabled
                                                                    data-parsley-trigger="change"
                                                                    required class="md-input"
@@ -223,8 +223,6 @@
 
         </div>
     </div>
-
-
 @stop
 
 @section('scripts')
