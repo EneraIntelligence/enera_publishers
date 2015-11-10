@@ -28,11 +28,6 @@
                                 <h2 class="heading_b uk-margin-bottom"><span
                                             class="uk-text-truncate">Campaña: {{ $name }} </span><span class="sub-heading">interaccion {{ $interaction['name'] }}</span>
                                 </h2>
-                                {{--<div class="uk-width-medium-1-1">
-                                    <div class="uk-progress" style="height: 10px!important;">
-                                        <div class="uk-progress-bar" style="width: 100%; background:{{$color}}";></div>
-                                    </div>
-                                </div>--}}
                             </div>
                             <a class="md-fab md-fab-small md-fab-accent {{ $color }}" style="background: {{ $color }}">  {{-- href="page_user_edit.html" --}}
                                 <i class="material-icons">{{ $icon }}</i>

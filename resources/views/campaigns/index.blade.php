@@ -169,8 +169,7 @@
 
 
                                 @foreach($campaigns as $campaign)
-
-                                    <div onclick="redirect('{!! $campaign->_id !!}')" data-uk-filter="campaign-{!! $campaign->status !!}, action-{!! $campaign->interaction['name'] !!}"
+                                    <div data-uk-filter="campaign-{!! $campaign->status !!}, action-{!! $campaign->interaction['name'] !!}"
                                          data-name="{!! $campaign->name !!}"
                                          data-action="{!! $campaign->interaction['name'] !!}"
                                          data-company="{!! $campaign->publishers_summary['client'] !!}"
@@ -178,7 +177,7 @@
                                          data-date="{!! $campaign->created_at !!}"
                                          style="cursor: pointer;">
 
-                                        <div class="scrum_task {!! CampaignStyle::getStatusColorClass( $campaign->status ) !!}"
+                                        <div onclick="window.location.href='{!! route('campaigns::show',['id'=>$campaign->_id]) !!}'" class="scrum_task {!! CampaignStyle::getStatusColorClass( $campaign->status ) !!}"
                                              data-snippet-title="{!! $campaign->name !!}">
                                             <div class="md-card-content uk-grid">
 
@@ -262,9 +261,7 @@
 
                                         </div>
                                     </div>
-
                                 @endforeach
-
 
                             </div>
                         </div>
@@ -277,16 +274,7 @@
             @stop
 
             @section('scripts')
-
-
                 <script>
-
-                    function redirect(id){
-                        var Id=id;
-                        console.log(Id);
-                        var url= 'http://localhost:8000/campaigns/view/'+Id;
-                        window.location.href = url;
-                    }
                             @foreach($campaigns as $campaign)
                     var chart = c3.generate({
                                 bindto: '#chart_{!! $campaign->_id !!}',
