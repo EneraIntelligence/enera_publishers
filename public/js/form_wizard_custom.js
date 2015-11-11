@@ -51,7 +51,7 @@ altair_wizard = {
                 onStepChanging: function (event, currentIndex, newIndex) {
 
                     //skips the parsley for testing purposes
-                    return true;
+                    //return true;
 
                     var step = $wizard_advanced.find('.body.current').attr('data-step'),
                         $current_step = $('.body[data-step=\"' + step + '\"]');
@@ -85,10 +85,58 @@ altair_wizard = {
                     return $current_step.find('.md-input-danger:visible').length ? false : true;
                 },
                 onFinished: function () {
-                    var form_serialized = JSON.stringify($wizard_advanced_form.serializeObject(), null, 2);
+
+                    var formObj = $wizard_advanced_form.serializeObject();
+
+
+                    formObj.survey = [];
+
+                    for(var i=1;i<=5;i++)
+                    {
+                        var question = formObj["survey_q"+i];
+                        delete formObj["survey_q"+i];
+
+                        var answers = [];
+
+                        for(var j=1;j<=4;j++)
+                        {
+                            var answer = formObj["survey_q"+i+"_a"+j];
+                            delete formObj["survey_q"+i+"_a"+j];
+                            if(answer!="") {
+                                answers.push(answer);
+                            }
+                        }
+
+                        if(question!="")
+                        {
+                            formObj.survey.push({"question":question,"answers":answers});
+                        }
+
+                    }
+
+
+                    //removing fields that don't belong to interaction
+                    formObj.interactionId = create_campaign_helper.interaction;
+
+                    if(create_campaign_helper.interaction!="survey")
+                    {
+                        delete formObj.survey;
+                    }
+                    if(create_campaign_helper.interaction!="captcha")
+                    {
+                        delete formObj.captcha;
+                    }
+                    if(create_campaign_helper.interaction!="banner-link")
+                    {
+                        delete formObj.banner_link;
+                    }
+
+
+                    var form_serialized = JSON.stringify(formObj, null, 2);
                     UIkit.modal.alert('<p>Wizard data:</p><pre>' + form_serialized + '</pre>');
-                }
-            })/*.steps("setStep", 2)*/;
+
+                },
+        })/*.steps("setStep", 2)*/;
 
             $window.on('debouncedresize', function () {
                 var current_step = $wizard_advanced.find('.body.current').attr('data-step');

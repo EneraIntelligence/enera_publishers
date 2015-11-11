@@ -9,6 +9,7 @@
     function MarkerMap(lat,lng, zoom, DOMElement)
     {
         this.markers = [];
+        this.originalMarkers = [];
         this.activeMarkers = 0;
         this.center = new google.maps.LatLng(lat,lng);
         this.zoom = zoom;
@@ -21,36 +22,11 @@
 
         this.map = new google.maps.Map(DOMElement, properties);
 
-
-        this.findCityExpress();
-    }
-
-    MarkerMap.prototype.findCityExpress = function()
-    {
-        var geocoder = new google.maps.Geocoder();
-
-        var address = "City express";
-
-        console.log("searching city express");
-
-        var restr= {country: 'MX'};
-
-        geocoder.geocode( { 'keyword': address,'partialmatch': true, 'componentRestrictions':restr, 'region':'mx'}, function(results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
-                console.log("results: ");
-
-                console.log(results);
-                //var latitude = results[0].geometry.location.lat();
-                //var  longitude = results[0].geometry.location.lng();
-            }
-
-
-        });
-
     }
 
     MarkerMap.prototype.addMarker = function(marker)
     {
+        this.originalMarkers.push(marker.marker);
         this.markers.push(marker);
         var bMap = this;
 
@@ -90,12 +66,84 @@
         return activeMarkers;
     };
 
+    MarkerMap.prototype.clusterMarkers = function()
+    {
+        this.markerCluster = new MarkerClusterer(this.map, this.originalMarkers);
+    }
+
     MarkerMap.prototype.refresh = function()
     {
         google.maps.event.trigger(this.map, 'resize');
 
         this.map.panTo(this.center);
         this.map.setZoom(this.zoom);
+
+        this.map.disableKeyDragZoom();
+
+
+
+        var thisMap = this;
+
+        setTimeout(function(){
+            thisMap.map.enableKeyDragZoom({boxStyle: {
+                borderColor: "blue",
+                backgroundColor: "blue",
+                opacity: 0.3
+            },
+            paneStyle: {
+                backgroundColor: "black",
+                opacity: 0.1
+            }
+            });
+
+            var dz = thisMap.map.getDragZoomObject();
+            google.maps.event.addListener(dz, 'dragend', function(event) {
+                console.log("drag end");
+                console.log(event.O.O);
+                console.log(event.j.O);
+                console.log(event.O.j);
+                console.log(event.j.j);
+
+                thisMap.selectMarkersInArea(event.O.O, event.j.O, event.O.j, event.j.j);
+
+            });
+
+        }, 1000);
+
+        $(window).scrollTop(0);
+
+        this.onMarkersUpdate.dispatch(this.activeMarkers);
+    };
+
+    MarkerMap.prototype.selectMarkersInArea = function(x1,y1,x2,y2)
+    {
+        var activatedMarkers = 0;
+        for(var i=0; i<this.markers.length;i++)
+        {
+            var marker= this.markers[i];
+            if(marker.isInside(x1,y1,x2,y2))
+            {
+                marker.setActive(true);
+                activatedMarkers++;
+            }
+        }
+
+        var activeMarkers = this.getActiveMarkers();
+        this.activeMarkers=activeMarkers.length;
+        this.onMarkersUpdate.dispatch(this.activeMarkers);
+
+        if(activatedMarkers==1)
+        {
+            UIkit.notify("<i class='uk-icon-check'></i>  Seleccionaste "+activatedMarkers+" ubicación", {status:'success', timeout: 3000});
+        }
+        else if(activatedMarkers>1)
+        {
+            UIkit.notify("<i class='uk-icon-check'></i>  Seleccionaste "+activatedMarkers+" ubicaciones", {status:'success', timeout: 3000});
+        }
+
+        $(".uk-notify").css("z-index",999999);
+
+        //console.log("activatedMarkers: "+activatedMarkers);
 
     };
 
@@ -181,7 +229,39 @@
             this.marker.setIcon( this.imgOff );
             this.active = false;
         }
-    }
+    };
+
+    BooleanMarker.prototype.isInside = function(x1,y1,x2,y2)
+    {
+        var pos = this.marker.position;
+        var lat = pos.lat();
+        var lng = pos.lng();
+
+        var aux;
+        if(x1>x2)
+        {
+            aux=x1;
+            x1=x2;
+            x2=aux;
+        }
+
+        if(y1>y2)
+        {
+            aux=y1;
+            y1=y2;
+            y2=aux;
+        }
+
+        if(lat>x1 && lat<x2)
+        {
+            if(lng>y1 && lng<y2)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    };
 
     BooleanMarker.prototype.setMap = function(map)
     {

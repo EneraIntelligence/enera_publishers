@@ -156,6 +156,8 @@
     {!! HTML::script('js/greensock/easing/EasePack.min.js') !!}
 
     {!! HTML::script('http://maps.google.com/maps/api/js?sensor=false') !!}
+    {!! HTML::script('js/maps/markerclusterer_compiled.js') !!}
+    {!! HTML::script('js/maps/keydragzoom.js') !!}
     {!! HTML::script('js/maps/infobox_packed.js') !!}
 
     <!-- enera custom scripts -->

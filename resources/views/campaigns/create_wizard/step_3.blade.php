@@ -33,73 +33,20 @@
     </div>
     <hr class="md-hr"/>
 
-    <h2 class="heading_a">
-        Segmentación
-    </h2>
 
-    <div class="uk-grid">
-
-        <div class="uk-width-medium-3-10  uk-width-small-1-1">
-
-            <label class="uk-form-label">Género</label>
-            <span class="icheck">
-                <input type="radio" name="gender" id="wizard_gender_men" class="wizard-icheck" value="men" />
-                <label for="wizard_gender_men" class="inline-label">Hombres </label>
-            </span>
-            <div class="clearfix"></div>
-            <span class="icheck">
-                <input type="radio" name="gender" id="wizard_gender_women" class="wizard-icheck" value="women" />
-                <label for="wizard_gender_women" class="inline-label">Mujeres</label>
-            </span>
-            <div class="clearfix"></div>
-            <span class="icheck">
-                <input type="radio" name="gender" id="wizard_gender_both" checked class="wizard-icheck" value="both" />
-                <label for="wizard_gender_both" class="inline-label">Ambos</label>
-            </span>
-
-        </div>
-
-        <div class="uk-width-medium-3-10 uk-width-small-1-1">
-            <label class="uk-form-label">Restricciones por persona</label>
-            <span class="icheck">
-                <input type="radio" name="unique" id="wizard_status_repeat" checked class="wizard-icheck" value="repeat" />
-                <label for="wizard_status_repeat" class="inline-label">Mostrar sin restricciones</label>
-            </span>
-            <div class="clearfix"></div>
-            <span class="icheck">
-                <input type="radio" name="unique" id="wizard_status_unique_day" class="wizard-icheck" value="unique_day" />
-                <label for="wizard_status_unique_day" class="inline-label">Mostrar una vez al día</label>
-            </span>
-            <div class="clearfix"></div>
-            <span class="icheck">
-                <input type="radio" name="unique" id="wizard_status_unique" class="wizard-icheck" value="unique" />
-                <label for="wizard_status_unique" class="inline-label">Mostrar sólo una vez por persona</label>
-            </span>
-        </div>
-
-        <div class="uk-width-medium-3-10 uk-width-small-1-1">
-            <input type="text" id="age_slider" name="age"
-                   data-ion-slider
-                   data-min="0" data-max="100"
-                   data-from="13" data-to="60"
-                   data-from-min="13"
-                   data-type="int" data-grid="true" data-postfix=" años"/>
-        </div>
-
-    </div>
 
     <h2 class="heading_a">
-        Horarios
+        Horarios    <i class="material-icons">&#xE192;</i>
     </h2>
-
     <div class="uk-grid">
         <div class="uk-width-1-1">
             <div class="uk-grid">
 
                 <div class="uk-width-medium-1-1">
-                    <input type="text" id="time_1_slider" name="time_1"/>
+                    <input type="text" id="time_1_slider" name="time"/>
                 </div>
 
+                <!-- second time slider
                 <div class="uk-width-medium-1-1">
                     <input type="text" id="time_2_slider" name="time_2"
                            data-ion-slider
@@ -110,6 +57,7 @@
                            data-postfix=":00"
                            data-step='1' data-force_edges="true"/>
                 </div>
+                -->
             </div>
 
 
@@ -197,6 +145,74 @@
     </div>
 
     <h2 class="heading_a">
+        Segmentación
+    </h2>
+
+    <div class="uk-grid">
+
+        <div class="uk-width-medium-3-10  uk-width-small-1-1">
+
+            <label class="uk-form-label">Género <i class="material-icons">&#xE63D;</i></label>
+            <span class="icheck">
+                <input type="radio" name="gender" id="wizard_gender_men" class="wizard-icheck" value="men" />
+                <label for="wizard_gender_men" class="inline-label">Hombres </label>
+            </span>
+            <div class="clearfix"></div>
+            <span class="icheck">
+                <input type="radio" name="gender" id="wizard_gender_women" class="wizard-icheck" value="women" />
+                <label for="wizard_gender_women" class="inline-label">Mujeres</label>
+            </span>
+            <div class="clearfix"></div>
+            <span class="icheck">
+                <input type="radio" name="gender" id="wizard_gender_both" checked class="wizard-icheck" value="both" />
+                <label for="wizard_gender_both" class="inline-label">Ambos</label>
+            </span>
+
+        </div>
+
+        <div class="uk-width-medium-3-10 uk-width-small-1-1">
+            <label class="uk-form-label" for="max-interactions">Máximo de interacciones por persona al día</label>
+            <input class="num_step" type="text" value="0" name="max-interactions">
+            <div class="uk-clear-fix"></div>
+            <p>0: ilimitado</p>
+
+            <br>
+
+            <label class="uk-form-label" for="interactions-goal">Máximo de interacciones de la campaña</label>
+            <input class="num_step" type="text" value="0" name="interactions-goal">
+            <div class="uk-clear-fix"></div>
+            <p>0: ilimitado</p>
+
+            <!--
+            <span class="icheck">
+                <input type="radio" name="unique" id="wizard_status_repeat" checked class="wizard-icheck" value="repeat" />
+                <label for="wizard_status_repeat" class="inline-label">Mostrar sin restricciones</label>
+            </span>
+            <div class="clearfix"></div>
+            <span class="icheck">
+                <input type="radio" name="unique" id="wizard_status_unique_day" class="wizard-icheck" value="unique_day" />
+                <label for="wizard_status_unique_day" class="inline-label">Mostrar una vez al día</label>
+            </span>
+            <div class="clearfix"></div>
+            <span class="icheck">
+                <input type="radio" name="unique" id="wizard_status_unique" class="wizard-icheck" value="unique" />
+                <label for="wizard_status_unique" class="inline-label">Mostrar sólo una vez por persona</label>
+            </span>
+            -->
+        </div>
+
+        <div class="uk-width-medium-3-10 uk-width-small-1-1">
+            <input type="text" id="age_slider" name="age"
+                   data-ion-slider
+                   data-min="0" data-max="100"
+                   data-from="13" data-to="60"
+                   data-from-min="13"
+                   data-type="int" data-grid="true" data-postfix=" años"/>
+        </div>
+
+    </div>
+
+    <h2 class="heading_a">
         Ubicaciones
     </h2>
 
@@ -207,8 +223,8 @@
             {{--<label class="uk-form-label">Ubicación</label>--}}
 
             <span class="icheck">
-                <input onchange="branchMap.closeMap()" checked type="radio" name="ubication" id="wizard_location_all" class="wizard-icheck" value="all" />
-                <label for="wizard_location_all" class="inline-label">Global</label>
+                <input checked type="radio" name="ubication" id="wizard_location_all" class="wizard-icheck" value="all" />
+                <label for="wizard_location_all" class="inline-label"><i class="material-icons">&#xE80B;</i> Global</label>
             </span>
 
         </div>
@@ -216,58 +232,81 @@
 
             <span class="icheck">
                 <input type="radio" name="ubication" id="wizard_location_select" class="wizard-icheck" value="select" />
-                <label for="wizard_location_select" class="inline-label">Seleccionar ubicaciones</label>
+                <label for="wizard_location_select" class="inline-label"><i class="material-icons">&#xE55F;</i>Seleccionar ubicaciones</label>
             </span>
 
+
+                <div class="parsley-errors-list filled map-errors"></div>
+
         </div>
     </div>
 
-    <div class="uk-grid branchMap">
-        <div class="uk-width-medium-1-3 uk-width-small-1-1">
-            <div class="uk-grid uk-grid-collapse">
+    <div class="uk-modal" style="pointer-events:none;" id="modal_map" data-uk-modal="{target:'#modal_map',bgclose:false}">
+        <div class="uk-modal-dialog uk-modal-dialog-large" style="pointer-events:all;">
 
-                <div class="uk-width-1-1 uk-text-truncate">
 
-                    <img style="width:10%;" src="{!! URL::asset('images/enera_map_marker_on.png') !!}" alt="">
-                    <label>Mostrar en esta ubicación</label>
 
+            <div class="uk-grid branchMap">
+                <div class="uk-width-medium-1-4 uk-width-small-1-1">
+
+
+
+                    <div class="uk-grid uk-grid-collapse">
+
+                        <div class="uk-width-1-1 uk-text-truncate">
+
+                            <img style="width:10%;" src="{!! URL::asset('images/enera_map_marker_on.png') !!}" alt="">
+                            <label>Mostrar en esta ubicación</label>
+
+                        </div>
+                        <hr class="uk-grid-divider">
+
+                        <div class="uk-width-1-1 uk-text-truncate">
+                            <img style="width:10%;" src="{!! URL::asset('images/enera_map_marker_off.png') !!}" alt="">
+                            <label>No mostrar en esta ubicación</label>
+                        </div>
+
+
+
+                        <hr class="uk-grid-divider">
+
+                        <hr class="uk-grid-divider">
+
+                        <div class="uk-width-1-1">
+                            <div style="width:100%;" class="md-btn md-btn-success" id="select_markers">Seleccionar todo</div>
+                        </div>
+
+                        <hr class="uk-grid-divider">
+
+                        <div class="uk-width-1-1">
+                            <div style="width:100%;" class="md-btn md-btn-primary" id="deselect_markers">Quitar todo</div>
+                        </div>
+
+                        <hr class="uk-grid-divider">
+
+
+
+                    </div>
+                </div>
+
+
+                <div class="uk-width-medium-3-4 uk-width-small-1-1">
+
+                    <div class="uk-width-1-1 uk-text-truncate">
+                        <i class="material-icons">&#xE3B4;</i> Presiona shift y arrastra el cursor para seleccionar varias ubicaciónes a la vez
+                    </div>
+
+                    <div id="googleMap" style="width:100%;height:500px;"></div>
+                    <div class="parsley-errors-list filled map-errors"></div>
 
                 </div>
-                <hr class="uk-grid-divider">
-
-                <div class="uk-width-1-1 uk-text-truncate">
-                    <img style="width:10%;" src="{!! URL::asset('images/enera_map_marker_off.png') !!}" alt="">
-                    <label>No mostrar en esta ubicación</label>
-                </div>
-
-                <hr class="uk-grid-divider">
-
-                <hr class="uk-grid-divider">
-
-                <div class="uk-width-1-1">
-                    <div style="width:100%;" class="md-btn md-btn-success" id="select_markers">Seleccionar todo</div>
-                </div>
-
-                <hr class="uk-grid-divider">
-
-                <div class="uk-width-1-1">
-                    <div style="width:100%;" class="md-btn md-btn-primary" id="deselect_markers">Quitar todo</div>
-                </div>
-
-                <hr class="uk-grid-divider">
-
-
-
+            </div>
+            <div class="uk-modal-footer uk-text-right">
+                <button onclick="branchMap.selectMarkers()" id="modal-select-btn" type="button" class="md-btn md-btn-flat md-btn-flat-primary">Seleccionar</button>
             </div>
         </div>
-
-
-        <div class="uk-width-medium-2-3 uk-width-small-1-1">
-
-            <div id="googleMap" style="width:100%;height:380px;"></div>
-            <div class="parsley-errors-list filled map-errors"></div>
-
-        </div>
     </div>
+
+
 
 </section>

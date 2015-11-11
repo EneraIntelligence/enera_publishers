@@ -34,6 +34,11 @@ create_campaign_helper =
 
         //startup sliders
         $('[data-ion-slider]').ionRangeSlider();
+
+        $(".num_step").kendoNumericTextBox({
+            format: "#",
+            min: 0,
+        });
     },
     setInteraction: function(interactionId)
     {
@@ -224,7 +229,7 @@ time_sliders=
             type: "double",
             min:0,
             max:24,
-            min_interval:1,
+            min_interval:3,
             postfix:":00",
             from_min:5,
             from:5,
@@ -233,12 +238,14 @@ time_sliders=
             force_edges: true,
             onChange: function(data)
             {
+                //second time slider
+                /*
                 var slider2 = $("#time_2_slider").data("ionRangeSlider");
                 slider2.update({
                     from_min: data.to,
                     to_min: data.to,
                 });
-
+                */
             }
         });
     }
@@ -272,7 +279,6 @@ branchMap =
     setBranches:function(branchesJSON)
     {
         branchMap.branches = JSON.parse(branchesJSON);
-        console.log(branchMap.branches);
     },
 
 
@@ -289,6 +295,8 @@ branchMap =
             branchMap.validateMakerSelection(activeMarkersCount);
         });
 
+        branchMap.map.clusterMarkers();
+
 
         //select all markers or none buttons
         var selectMarkersBtn = $("#select_markers");
@@ -304,18 +312,31 @@ branchMap =
 
         //radio button actions
         var selectRadioBtn = $('#wizard_location_select');
-        selectRadioBtn.on('ifChecked', function(event)
+        selectRadioBtn.on('ifClicked', function(event)
         {
-            branchMap.enableMap();
+            var modal = UIkit.modal("#modal_map");
+            modal.show();
+            setTimeout(branchMap.refresh,100);
+            //branchMap.enableMap();
+            branchMap.validateMakerSelection(branchMap.map.activeMarkers);
+
         });
 
         var globalRadioBtn = $('#wizard_location_all');
         globalRadioBtn.on('ifChecked', function(event)
         {
-            branchMap.disableMap();
+            //branchMap.disableMap();
         });
 
-        branchMap.disableMap();
+        //branchMap.disableMap();
+    },
+
+    selectMarkers:function ()
+    {
+        branchMap.validateMakerSelection(branchMap.map.activeMarkers);
+        var modal = UIkit.modal("#modal_map");
+        if(branchMap.map.activeMarkers>0)
+            modal.hide();
     },
 
     createMarkers:function ()
@@ -336,7 +357,6 @@ branchMap =
         }
     },
 
-
     enableMap:function()
     {
         TweenLite.to(".branchMap",.5, {alpha:1});
@@ -344,6 +364,7 @@ branchMap =
 
         branchMap.validateMakerSelection(branchMap.map.activeMarkers);
     },
+
     disableMap:function()
     {
         TweenLite.to(".branchMap",.5, {alpha:.4});
@@ -351,6 +372,7 @@ branchMap =
 
         branchMap.validateMakerSelection(branchMap.map.activeMarkers);
     },
+
     validateMakerSelection:function(activeBranchesCount)
     {
         var errorDiv = $(".map-errors");
@@ -360,10 +382,12 @@ branchMap =
         {
             //map ok
             errorDiv.html('');
+            $("#modal-select-btn").removeClass("disabled");
         }
         else
         {
             //map not ok
+            $("#modal-select-btn").addClass("disabled");
             errorDiv.html('<span class="parsley-required uk-text-center md-input-danger">Selecciona al menos una ubicación en el mapa.</span>');
         }
     },
@@ -515,8 +539,8 @@ finalScreen=
             res = res + finalScreen.grid_1_4(finalScreen.format("Edad", age[0] + " años"));
         }
 
-        var hours1 = form_serialized.time_1.split(";");
-        var hours2 = form_serialized.time_2.split(";");
+        var hours1 = form_serialized.time.split(";");
+        //var hours2 = form_serialized.time_2.split(";");
 
         var lapse1="";
         if(hours1[0]!=hours1[1])
@@ -525,13 +549,14 @@ finalScreen=
         }
 
         var lapse2="";
+        /*
         if(hours2[0]!=hours2[1])
         {
             if(lapse1!="") {
                 lapse2 = " y ";
             }
             lapse2=lapse2+"de "+hours2[0]+":00 a "+hours2[1]+':00';
-        }
+        }*/
 
         res = res+ finalScreen.grid_1_4( finalScreen.format( "Horario",lapse1+lapse2+" horas" ) );
 
