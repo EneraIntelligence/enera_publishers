@@ -57,8 +57,8 @@
 
 
     <div class="uk-width-medium-1-3">
-        <p class="uk-text-large">Overflow container in modal</p>
-        <button class="md-btn" data-uk-modal="{target:'#modal_overflow'}">Open</button>
+        {{--<p class="uk-text-large">Overflow container in modal</p>--}}
+        {{--<button class="md-btn" data-uk-modal="{target:'#modal_overflow'}">Open</button>--}}
         <div id="modal_overflow" class="uk-modal">
             <div class="uk-modal-dialog uk-modal-dialog-large">
                 <button type="button" class="uk-modal-close uk-close"></button>
@@ -81,8 +81,8 @@
 
 
     <div class="uk-width-medium-1-3">
-        <p class="uk-text-large">Overflow container in modal</p>
-        <button class="md-btn" data-uk-modal="{target:'#modal_overflow-2'}">Open</button>
+        {{--<p class="uk-text-large">Overflow container in modal</p>--}}
+        {{--<button class="md-btn" data-uk-modal="{target:'#modal_overflow-2'}">Open</button>--}}
         <div id="modal_overflow-2" class="uk-modal">
             <div class="uk-modal-dialog uk-modal-dialog-large">
                 <button type="button" class="uk-modal-close uk-close"></button>
@@ -105,8 +105,8 @@
 
 
     <div class="uk-width-medium-1-3">
-        <p class="uk-text-large">Overflow container in modal</p>
-        <button class="md-btn" data-uk-modal="{target:'#modal_overflow-3'}">Open</button>
+        {{--<p class="uk-text-large">Overflow container in modal</p>--}}
+        {{--<button class="md-btn" data-uk-modal="{target:'#modal_overflow-3'}">Open</button>--}}
         <div id="modal_overflow-3" class="uk-modal">
             <div class="uk-modal-dialog uk-modal-dialog-large">
                 <button type="button" class="uk-modal-close uk-close"></button>
@@ -128,8 +128,8 @@
 
 
     <div class="uk-width-medium-1-3">
-        <p class="uk-text-large">Overflow container in modal</p>
-        <button class="md-btn" data-uk-modal="{target:'#modal_overflow-4'}">Open</button>
+        {{--<p class="uk-text-large">Overflow container in modal</p>--}}
+        {{--<button class="md-btn" data-uk-modal="{target:'#modal_overflow-4'}">Open</button>--}}
         <div id="modal_overflow-4" class="uk-modal">
             <div class="uk-modal-dialog uk-modal-dialog-large">
                 <button type="button" class="uk-modal-close uk-close"></button>
