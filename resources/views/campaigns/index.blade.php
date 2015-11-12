@@ -282,7 +282,7 @@
                     var error = '{{session('data')}}';
                     if(error=='errorCamp')
                     {
-                        UIkit.notify("<i class='material-icons uk-icon-large'> &#xE002; </i> &nbsp;&nbsp;La campaña no existe o es inaccesible. <span style='float:right'>cerrar</span>", {timeout: 0,status:'danger'});
+                        UIkit.notify("<i class='material-icons uk-icon-large'> &#xE002; </i> &nbsp;&nbsp;La campaña no existe o es inaccesible. <span style='float:right'><i class='material-icons uk-icon-large'> clear </i></span>", {timeout: 0,status:'danger'});
                     }
 
                             @foreach($campaigns as $campaign)
