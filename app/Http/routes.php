@@ -28,6 +28,11 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/single', ['as' => 'single', 'uses' => 'ReportsController@single']);
     });
 
+    Route::group(['prefix' => 'analytics', 'as' => 'analytics::'], function () {
+        Route::get('/', ['as' => 'index', 'uses' => 'AnalyticsController@index']);
+        Route::get('/single', ['as' => 'single', 'uses' => 'AnalyticsController@single']);
+    });
+
     Route::group(['prefix' => 'profile', 'as' => 'profile::'], function () {
         Route::get('/', ['as' => 'index', 'uses' => 'UserController@index']);
         Route::get('/edit', ['as' => 'edit', 'uses' => 'UserController@edit']);

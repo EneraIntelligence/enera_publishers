@@ -125,6 +125,7 @@
                                                                     <span class="uk-text-small uk-text-muted">de {{ $filters['day_hours'] }} horas</span>
                                                                 </div>
                                                             </li>
+                                                            {{-- esta parte usao if para saber que es lo que se va a mostrar --}}
                                                             @if($filters['unique_user']==false)
                                                                 <li>
                                                                     <div class="md-list-content azul">
@@ -146,7 +147,8 @@
                                                                     </div>
                                                                 </li>
                                                             @endif
-                                                            @if($filters['max_interactions']==false)
+                                                            {{-- esta parte usao if para saber que es lo que se va a mostrar --}}
+                                                            @if($filters['max_interactions_per_day']==false)
                                                                 <li>
                                                                     <div class="md-list-content azul">
                                                                         <span class="md-list-heading"> usuario unico </span>
@@ -167,6 +169,12 @@
                                                                     </div>
                                                                 </li>
                                                             @endif
+                                                            <li>
+                                                                <div class="md-list-content azul">
+                                                                    <span class="md-list-heading"> meta de interacciones </span>
+                                                                    <span class="uk-text-small uk-text-muted">{{ $filters['max_interactions'] }}</span>
+                                                                </div>
+                                                            </li>
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -188,6 +196,10 @@
                                     <div class="uk-width-large-1-1">
                                         <h4 class="heading_c uk-margin-small-bottom">Elementos de la campaña</h4>
                                         <ul class="md-list">
+                                            @if($interaction['name']=='banner')
+
+
+                                            @endif
                                             <li>
                                                 <div class="uk-grid ">
                                                     <div class="md-list-content uk-width-large-1-3">
@@ -215,7 +227,7 @@
                                         <div class="uk-width-1-1">
                                             <h4 class="heading_c uk-margin-small-bottom">Reportes</h4>
                                             <div class="uk-width-medium-1-6">
-                                                <a class="md-btn md-btn-primary" href="http://localhost:8000/reports/single">
+                                                <a class="md-btn md-btn-primary" href="http://localhost:8000/analytics/single">
                                                     <span class="uk-display-block">Reportes</span>
                                                 </a>
                                             </div>
@@ -240,6 +252,11 @@
     {!! HTML::script('js/circle-progress.js') !!}
     {!! HTML::style('css/show.css') !!}
     <script>
+        var active = '{{session('data')}}';
+        if(active=='active')
+        {
+            UIkit.notify("<i class='uk-icon-check'></i>  Tu perfil ha sido modificado con exito", {status:'success'},{timeout: 5});
+        }
 //        $("#age_slider").ionRangeSlider();
 //        $("#ionslider_3").ionRangeSlider();
         $('#circle').circleProgress({

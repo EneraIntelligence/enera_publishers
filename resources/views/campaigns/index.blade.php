@@ -278,11 +278,14 @@
             @stop
 
             @section('scripts')
-
-
                 <script>
-                            @foreach($campaigns as $campaign)
+                    var error = '{{session('data')}}';
+                    if(error=='errorCamp')
+                    {
+                        UIkit.notify("<i class='material-icons uk-icon-large'> &#xE002; </i> &nbsp;&nbsp;La campaña no existe o es inaccesible. <span style='float:right'>cerrar</span>", {timeout: 0,status:'danger'});
+                    }
 
+                            @foreach($campaigns as $campaign)
                     var chart = c3.generate({
                                 bindto: '#chart_{!! $campaign->_id !!}',
                                 data: {
@@ -312,6 +315,5 @@
                             });
 
                     @endforeach
-
                 </script>
 @stop
