@@ -17,7 +17,6 @@
     @yield('head_scripts')
 
 
-
             <!-- uikit -->
     {!! HTML::style('bower_components/kendo-ui-core/styles/kendo.common-material.min.css') !!}
     {!! HTML::style('bower_components/kendo-ui-core/styles/kendo.material.min.css') !!}
@@ -45,34 +44,35 @@
 <!-- Create campaign button -->
 @if(!isset($noCreateBtn))
 
-<div class="md-fab-wrapper .user_heading .md-fab">
-    <a class="md-fab md-fab-danger" href="#" id="note_add" onclick="new_campaign.prompt()">
-        <i class="material-icons"></i>
-    </a>
-</div>
+    <div class="md-fab-wrapper .user_heading .md-fab">
+        <a class="md-fab md-fab-danger" href="#" id="note_add" onclick="new_campaign.prompt()">
+            <i class="material-icons"></i>
+        </a>
+    </div>
 
-@endif
+    @endif
 
 
-<!-- main header -->
-<header id="header_main">
-    <div class="header_main_content">
-        <nav class="uk-navbar">
-            <!-- main sidebar switch -->
-             {{--OLD ID sidebar_main_toggle--}}
-            <a href="{{ route("home") }}" id="" class="sSwitch sSwitch_left ">
-                <img src="{!! URL::asset('images/icons/Logo Enera Blanco-01.png') !!}" alt="Enera" style="top: -10px; left: 15px; position: relative;">
-            </a>
-            <!-- secondary sidebar switch -->
-            {{--<a href="#" id="sidebar_secondary_toggle" class="sSwitch sSwitch_right sidebar_secondary_check">--}}
+            <!-- main header -->
+    <header id="header_main">
+        <div class="header_main_content">
+            <nav class="uk-navbar">
+                <!-- main sidebar switch -->
+                {{--OLD ID sidebar_main_toggle--}}
+                <a href="{{ route("home") }}" id="" class="sSwitch sSwitch_left ">
+                    <img src="{!! URL::asset('images/icons/Logo Enera Blanco-01.png') !!}" alt="Enera"
+                         style="top: -10px; left: 15px; position: relative;">
+                </a>
+                <!-- secondary sidebar switch -->
+                {{--<a href="#" id="sidebar_secondary_toggle" class="sSwitch sSwitch_right sidebar_secondary_check">--}}
                 {{--<span class="sSwitchIcon"></span>--}}
-            {{--</a>--}}
+                {{--</a>--}}
 
-            <div id="menu_top" class="uk-float-left ">
-                <div class="uk-button-dropdown" data-uk-dropdown="{mode:'click'}">
-                    <a href="#" class="top_menu_toggle">
-                        <i class="material-icons md-24">&#xE8F0;</i> <span class="uk-hidden-small">Publishers</span>
-                    </a>
+                <div id="menu_top" class="uk-float-left ">
+                    <div class="uk-button-dropdown" data-uk-dropdown="{mode:'click'}">
+                        <a href="#" class="top_menu_toggle">
+                            <i class="material-icons md-24">&#xE8F0;</i> <span class="uk-hidden-small">Publishers</span>
+                        </a>
 
                     <div class="uk-dropdown uk-dropdown-width-3">
                         <div class="uk-grid uk-dropdown-grid" data-uk-grid-margin>
@@ -119,264 +119,266 @@
                         <a href="#" class="user_action_icon"><i class="material-icons md-20 md-light">&#xE7F4;</i><span
                                     class="uk-badge">99</span></a>
 
-                        <div class="uk-dropdown uk-dropdown-xlarge uk-dropdown-flip">
-                            <div class="md-card-content">
-                                <ul class="uk-tab uk-tab-grid"
-                                    data-uk-tab="{connect:'#header_alerts',animation:'slide-horizontal'}">
-                                    <li class="uk-width-1-2 uk-active"><a href="#" class="js-uk-prevent uk-text-small">Mensajes
-                                            (12)</a></li>
-                                    <li class="uk-width-1-2"><a href="#" class="js-uk-prevent uk-text-small">Alertas
-                                            (4)</a></li>
-                                </ul>
-                                <ul id="header_alerts" class="uk-switcher uk-margin">
-                                    <li>
-                                        <ul class="md-list md-list-addon">
-                                            <li>
-                                                <div class="md-list-addon-element">
-                                                    <span class="md-user-letters md-bg-cyan">se</span>
-                                                </div>
-                                                <div class="md-list-content">
+                            <div class="uk-dropdown uk-dropdown-xlarge uk-dropdown-flip">
+                                <div class="md-card-content">
+                                    <ul class="uk-tab uk-tab-grid"
+                                        data-uk-tab="{connect:'#header_alerts',animation:'slide-horizontal'}">
+                                        <li class="uk-width-1-2 uk-active"><a href="#"
+                                                                              class="js-uk-prevent uk-text-small">Mensajes
+                                                (12)</a></li>
+                                        <li class="uk-width-1-2"><a href="#" class="js-uk-prevent uk-text-small">Alertas
+                                                (4)</a></li>
+                                    </ul>
+                                    <ul id="header_alerts" class="uk-switcher uk-margin">
+                                        <li>
+                                            <ul class="md-list md-list-addon">
+                                                <li>
+                                                    <div class="md-list-addon-element">
+                                                        <span class="md-user-letters md-bg-cyan">se</span>
+                                                    </div>
+                                                    <div class="md-list-content">
                                                     <span class="md-list-heading"><a href="pages_mailbox.html">Nobis
                                                             ipsum.</a></span>
-                                                    <span class="uk-text-small uk-text-muted">Ratione dolore nisi ut quis expedita fugiat dolor porro.</span>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="md-list-addon-element">
-                                                    <img class="md-user-image md-list-addon-avatar"
-                                                         src="assets/img/avatars/avatar_07_tn.png" alt=""/>
-                                                </div>
-                                                <div class="md-list-content">
+                                                        <span class="uk-text-small uk-text-muted">Ratione dolore nisi ut quis expedita fugiat dolor porro.</span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="md-list-addon-element">
+                                                        <img class="md-user-image md-list-addon-avatar"
+                                                             src="assets/img/avatars/avatar_07_tn.png" alt=""/>
+                                                    </div>
+                                                    <div class="md-list-content">
                                                     <span class="md-list-heading"><a href="pages_mailbox.html">Quia
                                                             praesentium.</a></span>
-                                                    <span class="uk-text-small uk-text-muted">Aliquid harum mollitia in repudiandae officiis assumenda rem.</span>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="md-list-addon-element">
-                                                    <span class="md-user-letters md-bg-light-green">tg</span>
-                                                </div>
-                                                <div class="md-list-content">
+                                                        <span class="uk-text-small uk-text-muted">Aliquid harum mollitia in repudiandae officiis assumenda rem.</span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="md-list-addon-element">
+                                                        <span class="md-user-letters md-bg-light-green">tg</span>
+                                                    </div>
+                                                    <div class="md-list-content">
                                                     <span class="md-list-heading"><a href="pages_mailbox.html">Et
                                                             accusamus.</a></span>
-                                                    <span class="uk-text-small uk-text-muted">Enim ex ipsam odio id.</span>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="md-list-addon-element">
-                                                    <img class="md-user-image md-list-addon-avatar"
-                                                         src="assets/img/avatars/avatar_02_tn.png" alt=""/>
-                                                </div>
-                                                <div class="md-list-content">
+                                                        <span class="uk-text-small uk-text-muted">Enim ex ipsam odio id.</span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="md-list-addon-element">
+                                                        <img class="md-user-image md-list-addon-avatar"
+                                                             src="assets/img/avatars/avatar_02_tn.png" alt=""/>
+                                                    </div>
+                                                    <div class="md-list-content">
                                                     <span class="md-list-heading"><a href="pages_mailbox.html">Voluptas
                                                             dignissimos.</a></span>
-                                                    <span class="uk-text-small uk-text-muted">Ut rerum fugit doloribus blanditiis culpa impedit facilis voluptatem sed est eius.</span>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="md-list-addon-element">
-                                                    <img class="md-user-image md-list-addon-avatar"
-                                                         src="assets/img/avatars/avatar_09_tn.png" alt=""/>
-                                                </div>
-                                                <div class="md-list-content">
+                                                        <span class="uk-text-small uk-text-muted">Ut rerum fugit doloribus blanditiis culpa impedit facilis voluptatem sed est eius.</span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="md-list-addon-element">
+                                                        <img class="md-user-image md-list-addon-avatar"
+                                                             src="assets/img/avatars/avatar_09_tn.png" alt=""/>
+                                                    </div>
+                                                    <div class="md-list-content">
                                                     <span class="md-list-heading"><a href="pages_mailbox.html">Inventore
                                                             fuga molestias.</a></span>
-                                                    <span class="uk-text-small uk-text-muted">Sit libero officia nulla saepe sed incidunt alias est earum aperiam.</span>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                        <div class="uk-text-center uk-margin-top uk-margin-small-bottom">
-                                            <a href="page_mailbox.html"
-                                               class="md-btn md-btn-flat md-btn-flat-primary js-uk-prevent">Show All</a>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <ul class="md-list md-list-addon">
-                                            <li>
-                                                <div class="md-list-addon-element">
-                                                    <i class="md-list-addon-icon material-icons uk-text-warning">
-                                                        &#xE8B2;</i>
-                                                </div>
-                                                <div class="md-list-content">
-                                                    <span class="md-list-heading">Quas itaque quas.</span>
-                                                    <span class="uk-text-small uk-text-muted uk-text-truncate">Asperiores odio impedit eius voluptatem est.</span>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="md-list-addon-element">
-                                                    <i class="md-list-addon-icon material-icons uk-text-success">
-                                                        &#xE88F;</i>
-                                                </div>
-                                                <div class="md-list-content">
-                                                    <span class="md-list-heading">Tenetur non blanditiis.</span>
-                                                    <span class="uk-text-small uk-text-muted uk-text-truncate">Tempora explicabo consequatur dignissimos pariatur.</span>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="md-list-addon-element">
-                                                    <i class="md-list-addon-icon material-icons uk-text-danger">
-                                                        &#xE001;</i>
-                                                </div>
-                                                <div class="md-list-content">
-                                                    <span class="md-list-heading">Omnis sapiente.</span>
-                                                    <span class="uk-text-small uk-text-muted uk-text-truncate">Ut voluptatem dolorem corporis adipisci similique minima.</span>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="md-list-addon-element">
-                                                    <i class="md-list-addon-icon material-icons uk-text-primary">
-                                                        &#xE8FD;</i>
-                                                </div>
-                                                <div class="md-list-content">
-                                                    <span class="md-list-heading">Modi et asperiores.</span>
-                                                    <span class="uk-text-small uk-text-muted uk-text-truncate">Corporis qui aut maiores eveniet ipsum officia blanditiis.</span>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </li>
+                                                        <span class="uk-text-small uk-text-muted">Sit libero officia nulla saepe sed incidunt alias est earum aperiam.</span>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <div class="uk-text-center uk-margin-top uk-margin-small-bottom">
+                                                <a href="page_mailbox.html"
+                                                   class="md-btn md-btn-flat md-btn-flat-primary js-uk-prevent">Show
+                                                    All</a>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <ul class="md-list md-list-addon">
+                                                <li>
+                                                    <div class="md-list-addon-element">
+                                                        <i class="md-list-addon-icon material-icons uk-text-warning">
+                                                            &#xE8B2;</i>
+                                                    </div>
+                                                    <div class="md-list-content">
+                                                        <span class="md-list-heading">Quas itaque quas.</span>
+                                                        <span class="uk-text-small uk-text-muted uk-text-truncate">Asperiores odio impedit eius voluptatem est.</span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="md-list-addon-element">
+                                                        <i class="md-list-addon-icon material-icons uk-text-success">
+                                                            &#xE88F;</i>
+                                                    </div>
+                                                    <div class="md-list-content">
+                                                        <span class="md-list-heading">Tenetur non blanditiis.</span>
+                                                        <span class="uk-text-small uk-text-muted uk-text-truncate">Tempora explicabo consequatur dignissimos pariatur.</span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="md-list-addon-element">
+                                                        <i class="md-list-addon-icon material-icons uk-text-danger">
+                                                            &#xE001;</i>
+                                                    </div>
+                                                    <div class="md-list-content">
+                                                        <span class="md-list-heading">Omnis sapiente.</span>
+                                                        <span class="uk-text-small uk-text-muted uk-text-truncate">Ut voluptatem dolorem corporis adipisci similique minima.</span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="md-list-addon-element">
+                                                        <i class="md-list-addon-icon material-icons uk-text-primary">
+                                                            &#xE8FD;</i>
+                                                    </div>
+                                                    <div class="md-list-content">
+                                                        <span class="md-list-heading">Modi et asperiores.</span>
+                                                        <span class="uk-text-small uk-text-muted uk-text-truncate">Corporis qui aut maiores eveniet ipsum officia blanditiis.</span>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li data-uk-dropdown="{mode:'click'}">
+                            <a href="#" class="user_action_image">
+                                {{--<img class="md-user-image" src="assets/img/avatars/avatar_11_tn.png" alt=""/>--}}
+                                <i class="material-icons md-36" style="color: white;">account_circle</i>
+                            </a>
+
+                            <div class="uk-dropdown uk-dropdown-small uk-dropdown-flip">
+                                <ul class="uk-nav js-uk-prevent">
+                                    <li><a href="{!! url('profile') !!}">Mi cuenta</a></li>
+                                    <li><a href="#">Ajustes</a></li>
+                                    <li><a href="{!! URL::route('auth.logout') !!}">Salir</a></li>
                                 </ul>
                             </div>
-                        </div>
-                    </li>
-                    <li data-uk-dropdown="{mode:'click'}">
-                        <a href="#" class="user_action_image">
-                            {{--<img class="md-user-image" src="assets/img/avatars/avatar_11_tn.png" alt=""/>--}}
-                            <i class="material-icons md-36" style="color: white;">account_circle</i>
-                        </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <div class="header_main_search_form">
+            <i class="md-icon header_main_search_close material-icons">&#xE5CD;</i>
 
-                        <div class="uk-dropdown uk-dropdown-small uk-dropdown-flip">
-                            <ul class="uk-nav js-uk-prevent">
-                                <li><a href="{!! url('profile') !!}">Mi cuenta</a></li>
-                                <li><a href="#">Ajustes</a></li>
-                                <li><a href="{!! URL::route('auth.logout') !!}">Salir</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </div>
-    <div class="header_main_search_form">
-        <i class="md-icon header_main_search_close material-icons">&#xE5CD;</i>
+            <form class="uk-form">
+                <input type="text" class="header_main_search_input"/>
+                <button class="header_main_search_btn uk-button-link"><i class="md-icon material-icons">&#xE8B6;</i>
+                </button>
+            </form>
+        </div>
+    </header><!-- main header end -->
 
-        <form class="uk-form">
-            <input type="text" class="header_main_search_input"/>
-            <button class="header_main_search_btn uk-button-link"><i class="md-icon material-icons">&#xE8B6;</i>
-            </button>
-        </form>
-    </div>
-</header><!-- main header end -->
-
-@yield('content')
+    @yield('content')
 
 
-<!-- google web fonts -->
-<script>
-    WebFontConfig = {
-        google: {
-            families: [
-                'Source+Code+Pro:400,700:latin',
-                'Roboto:400,300,500,700,400italic:latin'
-            ]
-        }
-    };
-    (function () {
-        var wf = document.createElement('script');
-        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
-                '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
-        wf.type = 'text/javascript';
-        wf.async = 'true';
-        var s = document.getElementsByTagName('script')[0];
-        s.parentNode.insertBefore(wf, s);
-    })();
-</script>
-
-<!-- common functions -->
-{!! HTML::script('assets/js/common.min.js') !!}
-        <!-- uikit functions -->
-{!! HTML::script('assets/js/uikit_custom.js') !!}
-        <!-- kendo functions -->
-{!! HTML::script('assets/js/kendoui_custom.min.js') !!}
-        <!-- altair common functions/helpers -->
-{!! HTML::script('assets/js/altair_admin_common.min.js') !!}
-
-
-{!! HTML::script('bower_components/d3/d3.min.js') !!}
-{!! HTML::script('bower_components/c3js-chart/c3.min.js') !!}
-
-
-{!! HTML::script('js/ajax/new_campaign.js') !!}
-{!! HTML::script('bower_components/jquery.inputmask/dist/jquery.inputmask.bundle.min.js') !!}
-{!! HTML::script('assets/js/pages/kendoui.min.js') !!}
-
-
-<script>
-    $(function () {
-        // enable hires images
-        altair_helpers.retina_images();
-        // fastClick (touch devices)
-        if (Modernizr.touch) {
-            FastClick.attach(document.body);
-        }
-    });
-
-    new_campaign.token =  "{!! csrf_token() !!}";
-    new_campaign.url = "{{URL::to('campaigns/new')}}";
-</script>
-
-<script>
-    /*$(function () {
-        $switcher_toggle.click(function (e) {
-            e.preventDefault();
-            $switcher.toggleClass('switcher_active');
-        });
-
-        $theme_switcher.children('li').click(function (e) {
-            e.preventDefault();
-            var $this = $(this),
-                    this_theme = $this.attr('data-app-theme');
-
-            $theme_switcher.children('li').removeClass('active_theme');
-            $(this).addClass('active_theme');
-            $('body')
-                    .removeClass('app_theme_a app_theme_b app_theme_c app_theme_d app_theme_e app_theme_f app_theme_g')
-                    .addClass(this_theme);
-
-            if (this_theme == '') {
-                localStorage.removeItem('altair_theme');
-            } else {
-                localStorage.setItem("altair_theme", this_theme);
+            <!-- google web fonts -->
+    <script>
+        WebFontConfig = {
+            google: {
+                families: [
+                    'Source+Code+Pro:400,700:latin',
+                    'Roboto:400,300,500,700,400italic:latin'
+                ]
             }
+        };
+        (function () {
+            var wf = document.createElement('script');
+            wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+                    '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+            wf.type = 'text/javascript';
+            wf.async = 'true';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(wf, s);
+        })();
+    </script>
 
-        });
+    <!-- common functions -->
+    {!! HTML::script('assets/js/common.min.js') !!}
+            <!-- uikit functions -->
+    {!! HTML::script('assets/js/uikit_custom.js') !!}
+            <!-- kendo functions -->
+    {!! HTML::script('assets/js/kendoui_custom.min.js') !!}
+            <!-- altair common functions/helpers -->
+    {!! HTML::script('assets/js/altair_admin_common.min.js') !!}
 
-        // hide style switcher
-        $document.on('click keyup', function (e) {
-            if ($switcher.hasClass('switcher_active')) {
-                if (
-                        ( !$(e.target).closest($switcher).length )
-                        || ( e.keyCode == 27 )
-                ) {
-                    $switcher.removeClass('switcher_active');
-                }
+
+    {!! HTML::script('bower_components/d3/d3.min.js') !!}
+    {!! HTML::script('bower_components/c3js-chart/c3.min.js') !!}
+
+
+    {!! HTML::script('js/ajax/new_campaign.js') !!}
+    {!! HTML::script('bower_components/jquery.inputmask/dist/jquery.inputmask.bundle.min.js') !!}
+    {!! HTML::script('assets/js/pages/kendoui.min.js') !!}
+
+
+    <script>
+        $(function () {
+            // enable hires images
+            altair_helpers.retina_images();
+            // fastClick (touch devices)
+            if (Modernizr.touch) {
+                FastClick.attach(document.body);
             }
         });
 
-        if (localStorage.getItem("altair_theme") !== null) {
-            $theme_switcher.children('li[data-app-theme=' + localStorage.getItem("altair_theme") + ']').click();
-        }
-    });*/
-</script>
+        new_campaign.token = "{!! csrf_token() !!}";
+        new_campaign.url = "{{URL::to('campaigns/new')}}";
+    </script>
 
-<script>
-    $(function(){
-        $("body").on("click", ".uk-button[data-message]", function(){
-            UIkit.notify($(this).data());
+    <script>
+        /*$(function () {
+         $switcher_toggle.click(function (e) {
+         e.preventDefault();
+         $switcher.toggleClass('switcher_active');
+         });
+
+         $theme_switcher.children('li').click(function (e) {
+         e.preventDefault();
+         var $this = $(this),
+         this_theme = $this.attr('data-app-theme');
+
+         $theme_switcher.children('li').removeClass('active_theme');
+         $(this).addClass('active_theme');
+         $('body')
+         .removeClass('app_theme_a app_theme_b app_theme_c app_theme_d app_theme_e app_theme_f app_theme_g')
+         .addClass(this_theme);
+
+         if (this_theme == '') {
+         localStorage.removeItem('altair_theme');
+         } else {
+         localStorage.setItem("altair_theme", this_theme);
+         }
+
+         });
+
+         // hide style switcher
+         $document.on('click keyup', function (e) {
+         if ($switcher.hasClass('switcher_active')) {
+         if (
+         ( !$(e.target).closest($switcher).length )
+         || ( e.keyCode == 27 )
+         ) {
+         $switcher.removeClass('switcher_active');
+         }
+         }
+         });
+
+         if (localStorage.getItem("altair_theme") !== null) {
+         $theme_switcher.children('li[data-app-theme=' + localStorage.getItem("altair_theme") + ']').click();
+         }
+         });*/
+    </script>
+
+    <script>
+        $(function () {
+            $("body").on("click", ".uk-button[data-message]", function () {
+                UIkit.notify($(this).data());
+            });
         });
-    });
-</script>
+    </script>
 
-@yield('scripts')
+    @yield('scripts')
 
 </body>
 </html>

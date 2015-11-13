@@ -17,6 +17,12 @@ use Publishers\Libraries\FileCloud;
 
 class CampaignsController extends Controller
 {
+
+    public function  __construct()
+    {
+        $this->filecloud = new FileCloud();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -32,7 +38,6 @@ class CampaignsController extends Controller
         //CityBranchesScript::saveCityBranches();
 
         $campaigns = Auth::user()->campaigns()->latest()->get();
-
 
         return view('campaigns.index', ['campaigns' => $campaigns]);
     }
@@ -165,43 +170,19 @@ class CampaignsController extends Controller
 
             //este arreglo se usa para poder convertir los numeros de los dias a letras
             $semana = array(0 => '', 1 => 'lunes', 2 => 'martes', 3 => 'miércoles', 4 => 'jueves', 5 => 'viernes', 6 => 'sabado', 7 => 'domingo');
-            $campaign = $campaign['original']; //se obtiene solo los datos que nos importan
-            //        dd($campaign);
-            $filesystem = new FileCloud();
-            if ($filesystem->checkExist('image.png')) {
-                $imagen = ['img' => $filesystem->getImagen('image.png')];
-            } else
-                $imagen = ['img' => ''];
+
+            $imagen = $this->filecloud->getImagen('image.png');
 
             /******     saca el color y el icono que se va a usar regresa un array  ********/
             //$sColor = new StatusColor();
             $color = [];
-            $color['icon'] = CampaignStyleHelper::getStatusIcon($campaign['status']);
-            $color['color'] = CampaignStyleHelper::getStatusColor($campaign['status']);
+            $color['icon'] = CampaignStyleHelper::getStatusIcon($campaign->status);
+            $color['color'] = CampaignStyleHelper::getStatusColor($campaign->status);
 
-//        dd($color);
-            /******     manejo de los filtros   ********/
-            /******     convierte de inglés a español el genero   ********/
-            //si nomas tiene un genero agrego el otro vacio para que no truene la vista
-            if (count($campaign['filters']['gender']) == 1) {
-                if ($campaign['filters']['gender'][0] == 'male') { //para cambiarle los generos a español
-                    $campaign['filters']['gender'][0] = 'Hombre';
-                } elseif ($campaign['filters']['gender'][0] = 'female') {
-                    $campaign['filters']['gender'][0] = 'Mujer';
-                }
-            } else {
-                if ($campaign['filters']['gender'][0] == 'male') { //para cambiarle los generos a español
-                    $campaign['filters']['gender'][0] = 'Hombre';
-                    $campaign['filters']['gender'][1] = 'Mujer';
-                } elseif ($campaign['filters']['gender'][0] = 'female') {
-                    $campaign['filters']['gender'][0] = 'Mujer';
-                    $campaign['filters']['gender'][1] = 'Hombre';
-                }
-            }//fin del if genero
 
             /****  conversion de fechas de segundos a formato Y-m-d  ****/
-            $campaign['filters']['date']['start'] = date('Y-m-d', $campaign['filters']['date']['start']->sec);
-            $campaign['filters']['date']['end'] = date('Y-m-d', $campaign['filters']['date']['end']->sec);
+//            $campaign['filters']['date']['start'] = date('Y-m-d', $campaign['filters']['date']['start']->sec);
+//            $campaign['filters']['date']['end'] = date('Y-m-d', $campaign['filters']['date']['end']->sec);
 
             /****  SACAR PORCENTAJE DEL TIEMPO QUE LLEVA ****/
             //si tiene uno de estos estados el avance sera 0% aunque creo que ended deberia de ser 100%
@@ -212,6 +193,9 @@ class CampaignsController extends Controller
                 $total = abs((strtotime($campaign['filters']['date']['start']) - strtotime($campaign['filters']['date']['end'])) / 86400); //obtengo el total de dias
                 //      total es = a el total de dias entre el inicio y la fecha final
                 if ($campaign['status'] == 'canceled') { //si esta cancelada saco la fecha de cuando fue cancelada
+
+                    //$log = $campaign->logs()->where('status','canceled')->first();
+
                     $logs = $campaign['log'];//saco el array de logs para buscar en el, el log de cancelado
                     foreach ($logs as $log => $content) { //recorro el arreglo
                         //                    var_dump ($content);
@@ -257,7 +241,7 @@ class CampaignsController extends Controller
             $campaign['filters']['day_hours'] = $horas;
 
             /******     se juntan los array  para mandar solo uno  ********/
-            $campaign = array_merge($campaign, $color, $porcentaje, $imagen);
+            //$campaign = array_merge($campaign, $color, $porcentaje, $imagen);
 //        dd($campaign);
             return view('campaigns.show', $campaign);
         } else {

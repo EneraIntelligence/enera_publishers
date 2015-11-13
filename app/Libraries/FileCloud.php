@@ -24,7 +24,7 @@ class FileCloud
             'port' => 22,
             'username' => 'forge',
             'password' => '9X0I9k3EFgYIejMRT0T8',
-            'privateKey' => '/Users/Arodriguez/.ssh/id_rsa',
+            'privateKey' => '/Users/Pedroluna/.ssh/id_rsa',
             'root' => '/home/forge/prueba',
             'timeout' => 10,
             'directoryPerm' => 0755
@@ -40,7 +40,7 @@ class FileCloud
 
     public function write($filename, $uploadedfile)
     {
-        $this->filesystem->write($filename, $uploadedfile,['visibility' => 'public']);
+        $this->filesystem->write($filename, $uploadedfile, ['visibility' => 'public']);
     }
 
     public function getFile($fileName)
@@ -50,9 +50,13 @@ class FileCloud
 
     public function getImagen($fileName)
     {
-        $imagen = $this->filesystem->read($fileName);
-        $img = "data:image/png;base64,".base64_encode($imagen);
-        return $img;
+        if ($this->checkExist($fileName)) {
+            $imagen = $this->filesystem->read($fileName);
+            $img = "data:image/png;base64," . base64_encode($imagen);
+            return $img;
+        } else {
+            return '';
+        }
     }
 
     public function getStreamFile($fileName)
@@ -60,7 +64,7 @@ class FileCloud
         $stream = $this->filesystem->readStream($fileName);
         /*$contents = stream_get_contents($stream);
         fclose($stream);*/
-        return $this->filesystem->stream(function() use($stream) {
+        return $this->filesystem->stream(function () use ($stream) {
             fpassthru($stream);
         }, 200, [
             "Content-Type" => $this->filesysteam->getMimetype($fileName),
@@ -70,7 +74,8 @@ class FileCloud
 //        return$contents;
     }
 
-    public function checkExist($fileName){
+    public function checkExist($fileName)
+    {
         $exists = $this->filesystem->has($fileName);
         return $exists;
     }

@@ -39,6 +39,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/charts', ['as' => 'charts', 'uses' => 'UserController@charts']);
     });
 
+    Route::group(['prefix' => 'wallet', 'as' => 'wallet::'], function () {
+        Route::get('/', ['as' => 'index', 'uses' => 'WalletsController@index']);
+    });
+
     Route::match(['get', 'post'], 'logout', ['as' => 'auth.logout', 'uses' => 'AuthController@logout']);
 
     //Rutas de ajax
