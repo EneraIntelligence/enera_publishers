@@ -148,6 +148,73 @@ class CampaignsController extends Controller
 
     }
 
+    public function saveItem(Request $request)
+    {
+        //echo "{success: 'true'}";
+
+
+
+        if(Input::get("imgToSave")==".banner-1")
+        {
+            //saving small image
+            $file = Input::file('image_small');
+            $imageType="small";
+        }
+        else
+        {
+            //saving large image
+            $file = Input::file('image_large');
+            $imageType="large";
+
+        }
+
+
+        $fc = new FileCloud();
+        $filesystem = $fc->filesystem;
+
+        //$file = Input::file('image');
+
+        //if ($file && $file->isValid() && $this->correct_size($file)) {
+        if ($file && $file->isValid()) {
+            //set newly generated filename and upload to server storage
+            $ext = $file->getClientOriginalExtension();
+            $filename = time() . '.' . $ext;
+            $file->move(storage_path() . '/app', $filename);
+
+            //get uploaded file and copy it to cloud
+            $uploadedFile = Storage::get($filename);
+            $fileSaved = $filesystem->put($filename, $uploadedFile);
+            //delete server file
+            Storage::delete($filename);
+
+            //created item related to campaign
+            $item = new Item();
+            $item->filename = $filename;
+            $item->administrator_id = Auth::user()->_id;
+            $item->type = 'image';
+            //$item->campaign_id = $campaign->_id;
+            $item->save();
+
+            $res = array('success'=>true, 'filename'=>$filename, 'item_id'=>$item->_id, 'imageType'=>$imageType);
+
+            echo json_encode($res);
+
+        } else {
+            $res = array('success'=>false, 'msg'=>'error');
+            /*
+            if (!$file->isValid())
+                echo 'error! no file uploaded';
+            if (!$file->isValid())
+                echo 'error! File not valid';
+            if (!$this->correct_size($file))
+                echo 'error! File size must be 100x100';*/
+
+            echo json_encode($res);
+        }
+
+
+    }
+
     private function correct_size($photo)
     {
         $maxHeight = 100;

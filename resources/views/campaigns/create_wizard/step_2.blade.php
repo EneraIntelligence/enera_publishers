@@ -214,10 +214,12 @@
             <img style="max-height:200px" class="uk-align-center banner-1" src="http://placehold.it/600x602?text=600x602" alt="">
             <div class="parsley-errors-list filled banner-1-errors"></div>
 
+            <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+
             <div id="file_upload-drop" class="uk-file-upload parsley-row">
                 <p class="uk-text">Banner dispositivos pequeños</p>
                 <a class="uk-form-file md-btn">elige un archivo
-                    <input id="image_small" type="file" required accept='image/*'>
+                    <input id="image_small" name="image_small" type="file" required accept='image/*'>
                 </a>
 
             </div>
@@ -233,7 +235,7 @@
             <div id="file_upload-drop2" class="uk-file-upload parsley-row">
                 <p class="uk-text">Banner dispositivos altos</p>
                 <a class="uk-form-file md-btn">elige un archivo
-                    <input class="" id="image_large" type="file" required accept='image/*'>
+                    <input class="" id="image_large" name="image_large" type="file" required accept='image/*'>
                 </a>
             </div>
 

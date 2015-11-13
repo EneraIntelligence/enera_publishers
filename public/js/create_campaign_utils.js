@@ -16,6 +16,7 @@ Utilities that work at the start of the create campaign wizard
 create_campaign_helper =
 {
     interaction: null,
+    images:{},
     init: function()
     {
         //disable button until campaign is selected
@@ -58,6 +59,9 @@ create_campaign_helper =
     {
         var input = event.target;
 
+        var modal = UIkit.modal.blockUI('<div class=\'uk-text-center\'>Cargando imagen...<br/>' +
+            '<img class=\'uk-margin-top\' src=\''+branchMap.base_url+'/assets/img/spinners/spinner.gif\' alt=\'\'>');
+
         //check for image size
         var _URL = window.URL || window.webkitURL;
         image = new Image();
@@ -84,6 +88,41 @@ create_campaign_helper =
                 };
                 reader.readAsDataURL(input.files[0]);
 
+
+
+                var form_data = new FormData($('#wizard_advanced_form')[0]);
+                form_data.append("imgToSave", previewId);
+
+                //upload item via ajax
+                $.ajax({
+                    url: '/campaigns/save_item',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: form_data,
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                }).done(function (data) {
+                    console.log("success");
+                    console.log(data);
+
+                    create_campaign_helper.images[data.imageType] = data.item_id;
+                    console.log(create_campaign_helper);
+
+                    modal.hide()
+
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+                    console.log(jqXHR);
+                    console.log(textStatus);
+                    console.log(errorThrown);
+
+                    input.value="";
+                    errorDiv.html('<span class="parsley-required uk-text-center md-input-danger">' +
+                        'Hubo un problema al subir tu imagen.' +
+                        '</span>');
+                    modal.hide()
+                });
+
             }
             else
             {
@@ -93,12 +132,14 @@ create_campaign_helper =
                     'El tamaño de la imagen debe ser de <br>'+width+' pixeles de ancho por '+height+' pixeles de alto.' +
                     '</span>');
 
+                modal.hide()
+
             }
         };
         image.src = _URL.createObjectURL(input.files[0]);
 
     }
-}
+};
 
 
 /*

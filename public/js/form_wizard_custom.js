@@ -114,6 +114,8 @@ altair_wizard = {
 
                     }
 
+                    formObj.images=create_campaign_helper.images;
+
 
                     //removing fields that don't belong to interaction
                     formObj.interactionId = create_campaign_helper.interaction;

@@ -21,6 +21,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/view/{id}', ['as' => 'show', 'uses' => 'CampaignsController@show']);
         Route::get('/new', ['as' => 'create', 'uses' => 'CampaignsController@create']);
         Route::post('/store', ['as' => 'store', 'uses' => 'CampaignsController@store']);
+        Route::post('/save_item', ['as' => 'save_item', 'uses' => 'CampaignsController@saveItem']);
     });
 
     Route::group(['prefix' => 'reports', 'as' => 'reports::'], function () {
