@@ -10,7 +10,7 @@
     <div class="uk-grid step2-field banner-link">
         <div class="uk-width-medium-1-1 parsley-row">
             <label for="banner_link">Link<span class="req">*</span></label>
-            <input type="text" name="banner_link" id="banner_link" required class="md-input" />
+            <input type="text" name="banner_link" id="banner_link" data-parsley-url="true" required class="md-input" />
         </div>
     </div>
 
