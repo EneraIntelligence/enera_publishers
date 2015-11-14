@@ -131,11 +131,17 @@
 
 @section('scripts')
 
+        <!-- enera custom scripts -->
+    {!! HTML::script('js/create_campaign_utils.js') !!}
+
     <script>
         // load parsley config (altair_admin_common.js)
         altair_forms.parsley_validation_config();
         // load extra validators
         altair_forms.parsley_extra_validators();
+
+        create_campaign_helper.url_validator();
+
 
     </script>
 
@@ -160,11 +166,10 @@
     {!! HTML::script('js/maps/keydragzoom.js') !!}
     {!! HTML::script('js/maps/infobox_packed.js') !!}
 
-    <!-- enera custom scripts -->
     {!! HTML::script('js/signals.min.js') !!}
     {!! HTML::script('js/marker_map.js') !!}
-    {!! HTML::script('js/create_campaign_utils.js') !!}
     {!! HTML::script('js/icon_animations.js') !!}
+
 
 
     <script>
