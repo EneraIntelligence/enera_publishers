@@ -8,7 +8,7 @@
 
 namespace Publishers\Http\Controllers;
 
-
+use Publishers\CampaignLog;
 
 class AnalyticsController extends Controller
 {
@@ -18,8 +18,12 @@ class AnalyticsController extends Controller
         return view('analytics.index');
     }
 
+    /**
+     *
+     */
     public function single()
     {
-        return view('analytics.single');
+        $log = CampaignLog::all();
+        return view('analytics.single', ['logs' => $log]);
     }
 }
