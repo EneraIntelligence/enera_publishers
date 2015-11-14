@@ -2,6 +2,7 @@
 
 namespace Publishers\Http\Controllers;
 
+use Faker\Provider\zh_TW\DateTime;
 use Publishers\Libraries\CampaignStyleHelper;
 use Validator;
 use Illuminate\Support\Facades\Storage;
@@ -184,14 +185,40 @@ class CampaignsController extends Controller
 //            $campaign['filters']['date']['start'] = date('Y-m-d', $campaign['filters']['date']['start']->sec);
 //            $campaign['filters']['date']['end'] = date('Y-m-d', $campaign['filters']['date']['end']->sec);
 
-            /****  SACAR PORCENTAJE DEL TIEMPO QUE LLEVA ****/
+            /****  SACAR PORCENTAJE DEL TIEMPO TRANSCURRIDO ****/
+            switch ($campaign->status) {
+                case 'pending':
+                    $porcentaje = 0;
+                    break;
+                case 'rejected':
+                    $porcentaje = 0;
+                    break;
+                case 'ended':
+                    $porcentaje = 100;
+                    break;
+                case 'active':
+                    $porcentaje = 0;
+                    break;
+                case 'canceled':
+                    $canceled = new DateTime($campaign->logs()->where('status', 'canceled')->first()->date);
+                    $created = new DateTime(date('Y-m-d H:i:s', strtotime($campaign->filters['date']['start']->sec)));
+                    $today = new DateTime();
+                    $dif1 = $created->diff($canceled);
+                    $dif2 = $created->diff($today);
+
+                    dd($dif1->format('%R%a dias'));
+
+                    $porcentaje = 0;
+                    break;
+            }
+
             //si tiene uno de estos estados el avance sera 0% aunque creo que ended deberia de ser 100%
             if ($campaign['status'] == 'pending' || $campaign['status'] == 'rejected' || $campaign['status'] == 'ended') {//si tiene uno de estos estados no deberia tener avance
                 $porcentaje = ['porcentaje' => (0)];
                 //si es activa o cancelada se calculara el tiempo que lleva
             } elseif ($campaign['status'] == 'active' || $campaign['status'] == 'canceled') {//si es activa o canceled se muestra el avanze
                 $total = abs((strtotime($campaign['filters']['date']['start']) - strtotime($campaign['filters']['date']['end'])) / 86400); //obtengo el total de dias
-                //      total es = a el total de dias entre el inicio y la fecha final
+                //      total es = al total de dias entre el inicio y la fecha final
                 if ($campaign['status'] == 'canceled') { //si esta cancelada saco la fecha de cuando fue cancelada
 
                     //$log = $campaign->logs()->where('status','canceled')->first();

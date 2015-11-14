@@ -18,6 +18,11 @@ class CampaignLog extends Model
     {
         return $this->embedsOne('Publishers\CampaignLogInteraction');
     }
+
+    public function user()
+    {
+        return $this->belongsTo('Publishers\User','','');
+    }
     // end relations
 
 
