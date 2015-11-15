@@ -69,12 +69,10 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <?php $id = 0 ?>
-                            @foreach ($logs as $log)
+                            @foreach ($logs as $key => $log)
                                 <tr>
-
-                                    <td>{{ $id += 1 }}</td>
-                                    <td>{{ $log->user }}</td>
+                                    <td>{{ $key }}</td>
+                                    <td>{{ $log }}</td>
                                     <td>Table Data</td>
                                 </tr>
                             @endforeach
