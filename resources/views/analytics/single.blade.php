@@ -80,6 +80,47 @@
                         </table>
                     </div>
 
+                    {{--<table class="uk-table uk-text-nowrap">--}}
+                        {{--<thead>--}}
+                        {{--<tr>--}}
+                            {{--<th>Table Heading</th>--}}
+                            {{--<th>Table Heading</th>--}}
+                            {{--<th>Table Heading</th>--}}
+                            {{--<th>Table Heading</th>--}}
+                            {{--<th>Table Heading</th>--}}
+                            {{--<th>Table Heading</th>--}}
+                            {{--<th>Table Heading</th>--}}
+                            {{--<th>Table Heading</th>--}}
+                        {{--</tr>--}}
+                        {{--</thead>--}}
+                        {{--<tfoot>--}}
+                        {{--<tr>--}}
+                            {{--<td>Table Footer</td>--}}
+                            {{--<td>Table Footer</td>--}}
+                            {{--<td>Table Footer</td>--}}
+                            {{--<td>Table Footer</td>--}}
+                            {{--<td>Table Footer</td>--}}
+                            {{--<td>Table Footer</td>--}}
+                            {{--<td>Table Footer</td>--}}
+                            {{--<td>Table Footer</td>--}}
+                        {{--</tr>--}}
+                        {{--</tfoot>--}}
+                        {{--<tbody>--}}
+                        {{--@foreach ($logs as $key => $log)--}}
+                        {{--<tr>--}}
+                            {{--<td>Table Data</td>--}}
+                            {{--<td>Table Data</td>--}}
+                            {{--<td>Table Data</td>--}}
+                            {{--<td>Table Data</td>--}}
+                            {{--<td>Table Data</td>--}}
+                            {{--<td>Table Data</td>--}}
+                            {{--<td>Table Data</td>--}}
+                            {{--<td>Table Data</td>--}}
+                        {{--</tr>--}}
+                        {{--@endforeach--}}
+                        {{--</tbody>--}}
+                    {{--</table>--}}
+
 
                 </div>
             </div>
