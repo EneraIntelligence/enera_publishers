@@ -21,7 +21,7 @@ class CampaignLog extends Model
 
     public function user()
     {
-        return $this->belongsTo('Publishers\User','','');
+        return $this->belongsTo('Publishers\User','user.id');
     }
     // end relations
 
