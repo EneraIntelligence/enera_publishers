@@ -149,6 +149,23 @@ class CampaignsController extends Controller
 
     }
 
+    public function mailing($id)
+    {
+        $campaign = Campaign::find($id); //busca la campaña
+
+        if ($campaign && $campaign->administrator_id == auth()->user()->_id)
+        {
+            //the user can manage the campaign:
+
+            return view('campaigns.mailing');//, compact('branches', 'noCreateBtn', 'campaignName'));
+
+        }
+        else {
+            //not the user's campaign
+            return redirect()->route('campaigns::index')->with('data', 'errorCamp');
+        }
+    }
+
     public function saveItem(Request $request)
     {
         //echo "{success: 'true'}";
