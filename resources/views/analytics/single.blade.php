@@ -1,595 +1,264 @@
-@extends('layouts.main')
-@section('head_scripts')
-    {!! HTML::style(asset('css/profile.css')) !!}
-    <style>
-        .md-chart {
-            margin: 0 25px;
-            padding: 10px 0;
-        }
 
-        .md-chart-card {
-            padding: 20px 0;
-        }
-    </style>
-@endsection
+@extends('layouts.main')
 
 @section('content')
-
     <div id="page_content">
-        <div id="page_content_inner" style="padding-bottom: 25px;">
-            <div class="uk-grid uk-grid-small">
-                <div class="uk-width-small-1 uk-width-medium-1-2 md-chart" data-uk-modal="{target:'#modal_overflow'}">
-                    <h2>Historila de Interacciones</h2>
-                    <div class="md-card md-card-hover md-chart-card" style="padding-right: 15px;">
-                        <div id="chart1"></div>
-                    </div>
-                </div>
-                <div class="uk-width-small-1 uk-width-medium-1-2 md-chart" data-uk-modal="{target:'#modal_overflow-2'}">
-                    <h2>Interacciones Por Genero</h2>
-                    <div class="md-card md-card-hover md-chart-card">
-                        <div id="chart2"></div>
-                    </div>
-                </div>
-                <div class="uk-width-small-1 uk-width-medium-1-2 md-chart" data-uk-modal="{target:'#modal_overflow-3'}">
-                    <h2>Interacciones por modelos</h2>
-                    <div class="md-card md-card-hover md-chart-card">
-                        <div id="chart3"></div>
-                    </div>
-                </div>
-                <div class="uk-width-small-1 uk-width-medium-1-2 md-chart" data-uk-modal="{target:'#modal_overflow-4'}">
-                    <h2>Visitantes por edades</h2>
-                    <div class="md-card md-card-hover md-chart-card">
-                        <div id="chart4"></div>
+        <div id="page_content_inner">
+            <div class="uk-grid" data-uk-grid-margin data-uk-grid-match id="user_profile">
+                <div class="uk-width-large-1">
+                    <div class="md-card ">
+                        <div class="user_heading">
+                            <div class="user_heading_menu" data-uk-dropdown>
+                                <i class="md-icon material-icons md-icon-light">&#xE5D4;</i>
+
+                                <div class="uk-dropdown uk-dropdown-flip uk-dropdown-small">
+                                    <ul class="uk-nav">
+                                        <li><a href="#">Action 1</a></li>
+                                        <li><a href="#">Action 2</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="user_heading_avatar">
+                                <div>
+                                    <div id="circle" style="max-width:98px;max-height:98px;margin:auto;">
+                                        <img style="background-image:none!important;margin:-96px 9px;"
+                                             src="{!! URL::asset('images/icons/'.$interaction['name'].'.svg') !!}"
+                                             alt="producto"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="user_heading_content">
+                                <h2 class="heading_b uk-margin-bottom">
+                                    <span class="uk-text-truncate">{{ $name }} </span>
+                                    <span class="sub-heading">{{ $interaction['name'] }}</span>
+                                </h2>
+                            </div>
+                            <a class="md-fab md-fab-small md-fab-accent {!! Publishers\Libraries\CampaignStyleHelper::getStatusColor('active') !!}"  {{-- $status--}}
+                               style="background: {!! Publishers\Libraries\CampaignStyleHelper::getStatusColor('active') !!}">  {{-- href="page_user_edit.html" --}}
+                                <i class="material-icons">{!! Publishers\Libraries\CampaignStyleHelper::getStatusIcon('active') !!}</i>
+                            </a>
+                        </div>
+
+                            <div class="uk-width-large-1-1 uk-margin-medium-top" style="display: inline-flex;" >
+                                <div class="uk-width-large-1-2 uk-margin-left ">
+                                    <select id="select-grafico" data-md-selectize>
+                                        <option value="default">Seleciona un tipo de gráfica</option>
+                                        <optgroup label="tipo">
+                                            <option value="intPerDay">Interacciones por dia</option>
+                                            <option value="genderAge">Generos y edades</option>
+                                            <option value="so">sistemas operativos</option>
+                                            <option value="a">Item A</option>
+                                            <option value="b">Item B</option>
+                                            <option value="c">Item C</option>
+                                            <option value="d">Item D</option>
+                                        </optgroup>
+                                    </select>
+                                </div>
+                                <div class="uk-width-large-1-2 uk-margin-right">
+                                    <i class="md-icon material-icons md-36 uk-float-right uk-margin-right">print</i>
+                                </div>
+                            </div>
+
+                        {{-- graficas --}}
+                        <div class="uk-width-large-1-1 uk-margin-top ">
+                            <div id="chart1" class="uk-width-large-1-1 uk-margin-right">
+
+                            </div>
+                            <div class="uk-width-large-1-2 uk-margin-left">
+
+                            </div>
+                            <div class="uk-width-1-1 uk-padding">
+                                <span class="uk-margin-large-left "> {{ $name.'  2015/nov/18' }} </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    @stop
 
-    <div class="uk-width-medium-1-3">
-        {{--<p class="uk-text-large">Overflow container in modal</p>--}}
-        {{--<button class="md-btn" data-uk-modal="{target:'#modal_overflow'}">Open</button>--}}
-        <div id="modal_overflow" class="uk-modal">
-            <div class="uk-modal-dialog uk-modal-dialog-large">
-                <button type="button" class="uk-modal-close uk-close"></button>
-                <h2 class="heading_a">Interacciones Por Genero</h2>
-                <p>Quia porro id amet eos optio veniam repudiandae repudiandae quae ipsam dolores dolores eveniet qui et
-                    consequatur molestiae minima eos qui et esse optio et iusto vel quis delectus numquam saepe saepe
-                    reiciendis cupiditate libero voluptates magnam est facilis.</p>
-                <div class="uk-overflow-container">
-                    <h2 class="heading_b">Datos</h2>
-                    <div class="uk-overflow-container">
-                        <table class="uk-table uk-table-striped">
-                            <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Table Heading</th>
-                                <th>Table Heading</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach ($logs as $key => $log)
-                                <tr>
-                                    <td>{{ $key }}</td>
-                                    <td>{{ $log }}</td>
-                                    <td>Table Data</td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+    @section('scripts')
 
-                    {{--<table class="uk-table uk-text-nowrap">--}}
-                        {{--<thead>--}}
-                        {{--<tr>--}}
-                            {{--<th>Table Heading</th>--}}
-                            {{--<th>Table Heading</th>--}}
-                            {{--<th>Table Heading</th>--}}
-                            {{--<th>Table Heading</th>--}}
-                            {{--<th>Table Heading</th>--}}
-                            {{--<th>Table Heading</th>--}}
-                            {{--<th>Table Heading</th>--}}
-                            {{--<th>Table Heading</th>--}}
-                        {{--</tr>--}}
-                        {{--</thead>--}}
-                        {{--<tfoot>--}}
-                        {{--<tr>--}}
-                            {{--<td>Table Footer</td>--}}
-                            {{--<td>Table Footer</td>--}}
-                            {{--<td>Table Footer</td>--}}
-                            {{--<td>Table Footer</td>--}}
-                            {{--<td>Table Footer</td>--}}
-                            {{--<td>Table Footer</td>--}}
-                            {{--<td>Table Footer</td>--}}
-                            {{--<td>Table Footer</td>--}}
-                        {{--</tr>--}}
-                        {{--</tfoot>--}}
-                        {{--<tbody>--}}
-                        {{--@foreach ($logs as $key => $log)--}}
-                        {{--<tr>--}}
-                            {{--<td>Table Data</td>--}}
-                            {{--<td>Table Data</td>--}}
-                            {{--<td>Table Data</td>--}}
-                            {{--<td>Table Data</td>--}}
-                            {{--<td>Table Data</td>--}}
-                            {{--<td>Table Data</td>--}}
-                            {{--<td>Table Data</td>--}}
-                            {{--<td>Table Data</td>--}}
-                        {{--</tr>--}}
-                        {{--@endforeach--}}
-                        {{--</tbody>--}}
-                    {{--</table>--}}
+            <!-- slider script -->
+    {!! HTML::script('bower_components/ionrangeslider/js/ion.rangeSlider.min.js') !!}
+    {!! HTML::script('bower_components/jquery.easy-pie-chart/dist/jquery.easypiechart.min.js') !!}
+    {!! HTML::script('js/circle-progress.js') !!}
+    {!! HTML::style('css/show.css') !!}
+    <script>
+        $( document ).ready(function() {
+            console.log( "ready!" );
+            /***  codigo para la animación del circulo    ***/
+            $('#circle').circleProgress({ //se pasa como parametro el id o elemento que se va animar
+                value: 0.5{{--{{$porcentaje}}--}}, //lo que se va a llenar con el color
+                size: 98,   //tamaño del circulo
+                startAngle: -300, //de donde va a empezar la animacion
+                reverse: true, //empieza la animacion al contrario
+                thickness: 8,  //el grosor la linea
+                fill: {color: "{!! Publishers\Libraries\CampaignStyleHelper::getStatusColor('active') !!}"} //el color de la linea
+            }).on('circle-animation-progress', function (event, progress) {
+                $(this).find('strong').html(parseInt(100 * progress) + '<i>%</i>');
+            }); //fin del codigo de animacion de circulo
+
+            var select= $( "#select-grafico" );
+            $(select).change(function() {
+                var tipo = select.val();
+//                console.log( "Handler for .change() called. "+tipo );
+                window.location.href = 'http://localhost:8000/analytics/5638f436a8268b300d479642/'+tipo;
+            });
+
+        });
+        var active = '{{session('data')}}';
+        if (active == 'active') {
+            UIkit.notify("<i class='uk-icon-check'></i>  Tu perfil ha sido modificado con exito", {status: 'success'}, {timeout: 5});
+        }
 
 
-                </div>
-            </div>
-        </div>
+
+        var active = '{{session('data')}}';
+        if (active == 'active') {
+            UIkit.notify("<i class='uk-icon-check'></i>  Tu perfil ha sido modificado con exito", {status: 'success'}, {timeout: 5});
+        }
+
+        var chart1 = c3.generate({
+            bindto: '#chart1',
+            data: {
+                columns: [
+                    ['Welcome', 300, 249, 400, 190, 200, 500, 450],
+                    ['Joined', 250, 100, 389, 120, 100, 500, 450],
+                    ['Requested', 200, 100, 300, 100, 450, 450, 420],
+                    ['Loaded', 120, 100, 250, 80, 400, 450, 410],
+                    ['Completed', 25, 90, 200, 60, 312, 400, 402]
+                ],
+                types: {
+                    Welcome: 'area-spline',
+                    Joined: 'area-spline',
+                    Requested: 'area-spline',
+                    Loaded: 'area-spline',
+                    Completed: 'area-spline'
+                    // 'line', 'spline', 'step', 'area', 'area-step' are also available to stack
+                },
+            },
+            color: {
+                pattern: ['red', '#aec7e8', '#ff7f0e', '#ffbb78', '#fff000']
+            },
+            donut: {
+                title: "nombre"
+            }
+        });
 
 
-        <div class="uk-width-medium-1-3">
-            {{--<p class="uk-text-large">Overflow container in modal</p>--}}
-            {{--<button class="md-btn" data-uk-modal="{target:'#modal_overflow-2'}">Open</button>--}}
-            <div id="modal_overflow-2" class="uk-modal">
-                <div class="uk-modal-dialog uk-modal-dialog-large">
-                    <button type="button" class="uk-modal-close uk-close"></button>
-                    <h2 class="heading_a">Historila de Interacciones</h2>
-                    <p>Quia porro id amet eos optio veniam repudiandae repudiandae quae ipsam dolores dolores eveniet
-                        qui et consequatur molestiae minima eos qui et esse optio et iusto vel quis delectus numquam
-                        saepe saepe reiciendis cupiditate libero voluptates magnam est facilis.</p>
-                    <div class="uk-overflow-container">
-                        <h2 class="heading_b">Overflow container</h2>
-                        <img src="assets/img/gallery/Image06.jpg" alt=""/>
-                        <p>Porro vel tenetur explicabo aut doloribus consectetur esse quibusdam facere aliquam ducimus
-                            repellendus voluptatem eum veritatis corporis quidem assumenda ut et aut reiciendis maiores
-                            mollitia commodi sapiente officia est qui unde placeat iste dolores id non ducimus et rerum
-                            quo est magni harum veritatis eaque illo sed consectetur atque ea expedita blanditiis vel
-                            fuga explicabo aut quia perferendis quis doloremque consectetur eos ea aut porro debitis
-                            reiciendis natus dolorum non fugit expedita ipsam rerum deserunt tenetur impedit veritatis
-                            accusamus praesentium voluptatem deserunt dolorem aut aperiam et quidem at earum blanditiis
-                            voluptatem eum vero recusandae provident reiciendis quos et eos et facere repellendus
-                            deserunt quibusdam dolore facilis nesciunt hic recusandae magnam atque sit sunt nemo odio
-                            pariatur non natus minima laborum est qui similique quisquam dolore nostrum sequi assumenda
-                            soluta dignissimos quia tenetur aliquam dolore distinctio sint modi non quibusdam est et
-                            voluptatem odio esse non similique occaecati qui voluptas qui tempore perferendis quo
-                            voluptatum praesentium numquam et earum itaque facilis tempore asperiores molestiae
-                            perspiciatis ut officiis omnis non sit et sequi rerum eum accusantium delectus autem rem
-                            velit laborum vitae sit iste a nobis eos aliquam enim impedit esse aut voluptatibus
-                            distinctio quae et dolorem voluptatem earum praesentium repellendus occaecati qui quasi quia
-                            beatae molestiae non cumque tempore maxime dolore est ut sit reprehenderit asperiores ea
-                            architecto ipsa beatae aut suscipit dignissimos voluptas quo qui quisquam amet sapiente modi
-                            aut sunt neque hic cum quia non sunt sed quas sit eos molestiae incidunt rem illum ut saepe
-                            tempora voluptates consequuntur accusantium saepe molestias sed voluptatibus atque aut
-                            commodi quod at consequuntur rerum aut autem et perspiciatis magnam facilis dolorum ut sit
-                            voluptatem dolor fugiat sit libero suscipit est vero unde ut accusamus et reprehenderit
-                            earum ut tempore eum et tenetur corporis quia unde deleniti quia culpa reiciendis dolorem
-                            rem aliquam eius minima debitis dolore facilis reiciendis repellendus debitis nobis at sed
-                            ducimus omnis.</p>
-                        <p>Aut facilis fugit voluptates culpa quia nihil tempora blanditiis iure modi tempora minima
-                            sunt explicabo rem voluptatem voluptas optio dolore quibusdam omnis sapiente assumenda illum
-                            modi dicta dolor eaque aut sit odit esse nulla qui odit qui deserunt dolor sunt ut quod
-                            ullam iste sint delectus voluptas facere optio accusamus rerum dolorem vitae eos ullam
-                            ratione qui quas mollitia sint illum omnis atque nisi earum est sint dolores nostrum minima
-                            nam est neque quasi exercitationem molestiae saepe est qui autem id impedit ea corporis
-                            ipsum aut modi ut ipsam ex iusto odit minus incidunt facere repudiandae odit facere nobis
-                            quaerat sed quo ducimus recusandae debitis harum et quas qui quia sunt minima architecto
-                            eveniet non repellat ab modi sit deleniti quam itaque eum qui voluptatum ut rerum iusto
-                            quidem sequi perspiciatis est aliquid unde ut minus est recusandae explicabo incidunt aut
-                            iusto aut est rerum autem odit nemo aliquam et ea natus asperiores necessitatibus ipsum nam
-                            ut est laudantium aspernatur ut non dicta optio nam fuga minus quaerat earum iste asperiores
-                            rerum quo doloribus quia vero quod labore quod aliquam similique ipsa quos beatae ut
-                            asperiores sit voluptatem aperiam quis quis sit nesciunt et quasi quas voluptatum vero
-                            occaecati iste ut doloribus aut ea veniam fuga autem doloribus sapiente possimus animi odio
-                            illo enim qui minima laborum est sed voluptas praesentium et consequatur facere a
-                            repellendus sequi vero et minus sit consequatur excepturi adipisci veritatis itaque
-                            laboriosam quo eos cum omnis aut ad quod qui assumenda fuga voluptas ut blanditiis voluptate
-                            est vel libero fugit et voluptatem aliquam odio expedita fuga et sunt aut sunt eum voluptas
-                            omnis molestiae odio natus saepe suscipit et et assumenda qui distinctio dolores maiores
-                            illum tempora animi consectetur fugiat voluptatum eos necessitatibus rerum sapiente dolor
-                            impedit nihil ratione vel commodi non.</p>
-                        <p>Id tempora corrupti dicta tempora et dolorem excepturi doloribus placeat culpa repudiandae
-                            vel ab tempore temporibus accusamus commodi qui exercitationem rerum quibusdam quasi optio
-                            autem cum labore voluptatem atque officia dicta voluptas odio esse id deserunt veritatis
-                            vitae omnis at explicabo quis dicta dicta atque possimus deleniti vitae ducimus corrupti
-                            blanditiis doloremque fugiat eos eveniet repellat in sed amet sed ut veniam iste et quaerat
-                            velit qui quo molestias quae ut sequi eum deserunt hic expedita voluptates consequuntur
-                            dolor laboriosam iure quis vero deleniti possimus nihil qui voluptate molestiae aperiam
-                            excepturi ex tempora doloribus hic nihil atque quo quibusdam laudantium odit quia occaecati
-                            eum inventore animi ea ea unde est occaecati natus expedita debitis iste maiores est
-                            laboriosam qui dicta voluptatum et est ut ducimus ut aut magni similique iste recusandae
-                            iusto vel perferendis facilis voluptatem sapiente delectus in doloremque exercitationem et
-                            reprehenderit quos ad omnis delectus incidunt sed blanditiis expedita rerum iusto at tenetur
-                            cupiditate ut ut natus distinctio dolore temporibus occaecati repellendus cum dolorum
-                            repellat facere quidem quaerat aliquam aspernatur nemo laudantium nisi earum et aut
-                            provident ab et voluptatibus consequatur illo illum id nihil magni ut officiis deserunt et
-                            nostrum placeat esse fugit provident architecto aliquam consequuntur ad soluta fugit ut
-                            iusto quisquam rerum sit voluptates similique voluptatibus et eius dolor sapiente iure
-                            doloribus quia vero et consequuntur commodi reiciendis itaque velit error distinctio
-                            similique quo similique sed tenetur dolore unde temporibus ab quia eaque natus et quasi
-                            pariatur ut enim qui neque et corrupti sed est nemo quibusdam rerum voluptatem repudiandae
-                            at velit deserunt qui qui recusandae voluptatem qui earum quae architecto illum
-                            necessitatibus adipisci et et voluptas consequatur aut autem quo aut tempore voluptatibus
-                            esse reiciendis.</p>
-                        <p>Repellat consequuntur est nesciunt explicabo veniam id autem voluptatem corporis veniam ad
-                            fugiat provident ipsum explicabo qui dolores perspiciatis enim est omnis dolorem ut minus a
-                            blanditiis delectus quia a sed et et accusamus quia qui sunt assumenda ratione et dolorem
-                            quis eos id autem impedit dolores provident modi inventore dolor aut mollitia excepturi quis
-                            illum mollitia repellat cumque nesciunt consequatur maxime quidem dolores consequatur
-                            perspiciatis pariatur debitis nobis officiis sed ea aut voluptatem quidem velit sapiente
-                            eligendi dolor porro et aperiam aut iste et vero qui eveniet odio impedit labore vel
-                            repellendus quis debitis quia ipsum id officia quia aliquid totam consequatur debitis et
-                            facere quibusdam laboriosam exercitationem asperiores minima velit aut qui porro
-                            necessitatibus id sint incidunt sit voluptatem id id pariatur qui provident sed vitae
-                            nesciunt vero nobis in ipsam ut eum eos accusantium enim iste assumenda nesciunt veritatis
-                            unde alias voluptates qui doloremque sed modi et vero omnis qui ipsa porro ut deleniti
-                            molestiae dolorem sint quam et nemo nemo optio sapiente quo similique voluptas repudiandae
-                            aut quidem est cum ut ut adipisci unde ut id et nostrum labore atque ab autem esse est
-                            commodi commodi itaque ipsum totam est excepturi sint aut ipsa repudiandae consequatur qui
-                            error assumenda molestias cum cupiditate perspiciatis quisquam eum ratione doloribus aperiam
-                            iusto laboriosam quia vitae explicabo non natus quia nihil et quaerat qui placeat nihil
-                            sequi omnis architecto et rerum animi ut in rerum debitis reiciendis soluta dicta enim rerum
-                            saepe enim dolore aut numquam ut doloribus beatae atque nihil provident voluptatem
-                            consequuntur sequi sed quaerat sed aliquid corporis dolores natus dolor sint ea.</p>
-                    </div>
-                    <h2 class="heading_a">Some text below the overflow container</h2>
-                    <p>Ipsum beatae optio magnam consectetur iste aut aut nihil id dolor totam sed repellat animi
-                        suscipit ex numquam quisquam debitis autem ea non occaecati esse laborum temporibus vel ut
-                        laborum explicabo magnam ratione et repellat vel labore quasi non rem consequuntur qui dolore
-                        eligendi eos explicabo cumque.</p>
-                </div>
-            </div>
-        </div>
+        //        Interacciones Por Genero
+        /*var chart = c3.generate({
+         data: {
+         xs: {
+         'hombres': 'h',
+         'mujeres': 'm',
+         },
+         columns: [
+         ['hombres','5','10','15'],
+         ['mujeres','3','10','15'],
+         ['h', 10, 30, 15, 50, 70, 100],
+         ['m', 30, 50, 15, 100, 120],
+         ]
+         },
+         axis: {
+         x: {
+         label: 'Sepal.Width',
+         tick: {
+         fit: false
+         }
+         },
+         y: {
+         label: 'Petal.Width'
+         }
+         }
+         });*/
 
-
-        <div class="uk-width-medium-1-3">
-            {{--<p class="uk-text-large">Overflow container in modal</p>--}}
-            {{--<button class="md-btn" data-uk-modal="{target:'#modal_overflow-3'}">Open</button>--}}
-            <div id="modal_overflow-3" class="uk-modal">
-                <div class="uk-modal-dialog uk-modal-dialog-large">
-                    <button type="button" class="uk-modal-close uk-close"></button>
-                    <h2 class="heading_a">Visitantes por edades</h2>
-                    <p>Quia porro id amet eos optio veniam repudiandae repudiandae quae ipsam dolores dolores eveniet
-                        qui et consequatur molestiae minima eos qui et esse optio et iusto vel quis delectus numquam
-                        saepe saepe reiciendis cupiditate libero voluptates magnam est facilis.</p>
-                    <div class="uk-overflow-container">
-                        <h2 class="heading_b">Overflow container</h2>
-                        <img src="assets/img/gallery/Image06.jpg" alt=""/>
-                        <p>Porro vel tenetur explicabo aut doloribus consectetur esse quibusdam facere aliquam ducimus
-                            repellendus voluptatem eum veritatis corporis quidem assumenda ut et aut reiciendis maiores
-                            mollitia commodi sapiente officia est qui unde placeat iste dolores id non ducimus et rerum
-                            quo est magni harum veritatis eaque illo sed consectetur atque ea expedita blanditiis vel
-                            fuga explicabo aut quia perferendis quis doloremque consectetur eos ea aut porro debitis
-                            reiciendis natus dolorum non fugit expedita ipsam rerum deserunt tenetur impedit veritatis
-                            accusamus praesentium voluptatem deserunt dolorem aut aperiam et quidem at earum blanditiis
-                            voluptatem eum vero recusandae provident reiciendis quos et eos et facere repellendus
-                            deserunt quibusdam dolore facilis nesciunt hic recusandae magnam atque sit sunt nemo odio
-                            pariatur non natus minima laborum est qui similique quisquam dolore nostrum sequi assumenda
-                            soluta dignissimos quia tenetur aliquam dolore distinctio sint modi non quibusdam est et
-                            voluptatem odio esse non similique occaecati qui voluptas qui tempore perferendis quo
-                            voluptatum praesentium numquam et earum itaque facilis tempore asperiores molestiae
-                            perspiciatis ut officiis omnis non sit et sequi rerum eum accusantium delectus autem rem
-                            velit laborum vitae sit iste a nobis eos aliquam enim impedit esse aut voluptatibus
-                            distinctio quae et dolorem voluptatem earum praesentium repellendus occaecati qui quasi quia
-                            beatae molestiae non cumque tempore maxime dolore est ut sit reprehenderit asperiores ea
-                            architecto ipsa beatae aut suscipit dignissimos voluptas quo qui quisquam amet sapiente modi
-                            aut sunt neque hic cum quia non sunt sed quas sit eos molestiae incidunt rem illum ut saepe
-                            tempora voluptates consequuntur accusantium saepe molestias sed voluptatibus atque aut
-                            commodi quod at consequuntur rerum aut autem et perspiciatis magnam facilis dolorum ut sit
-                            voluptatem dolor fugiat sit libero suscipit est vero unde ut accusamus et reprehenderit
-                            earum ut tempore eum et tenetur corporis quia unde deleniti quia culpa reiciendis dolorem
-                            rem aliquam eius minima debitis dolore facilis reiciendis repellendus debitis nobis at sed
-                            ducimus omnis.</p>
-                        <p>Aut facilis fugit voluptates culpa quia nihil tempora blanditiis iure modi tempora minima
-                            sunt explicabo rem voluptatem voluptas optio dolore quibusdam omnis sapiente assumenda illum
-                            modi dicta dolor eaque aut sit odit esse nulla qui odit qui deserunt dolor sunt ut quod
-                            ullam iste sint delectus voluptas facere optio accusamus rerum dolorem vitae eos ullam
-                            ratione qui quas mollitia sint illum omnis atque nisi earum est sint dolores nostrum minima
-                            nam est neque quasi exercitationem molestiae saepe est qui autem id impedit ea corporis
-                            ipsum aut modi ut ipsam ex iusto odit minus incidunt facere repudiandae odit facere nobis
-                            quaerat sed quo ducimus recusandae debitis harum et quas qui quia sunt minima architecto
-                            eveniet non repellat ab modi sit deleniti quam itaque eum qui voluptatum ut rerum iusto
-                            quidem sequi perspiciatis est aliquid unde ut minus est recusandae explicabo incidunt aut
-                            iusto aut est rerum autem odit nemo aliquam et ea natus asperiores necessitatibus ipsum nam
-                            ut est laudantium aspernatur ut non dicta optio nam fuga minus quaerat earum iste asperiores
-                            rerum quo doloribus quia vero quod labore quod aliquam similique ipsa quos beatae ut
-                            asperiores sit voluptatem aperiam quis quis sit nesciunt et quasi quas voluptatum vero
-                            occaecati iste ut doloribus aut ea veniam fuga autem doloribus sapiente possimus animi odio
-                            illo enim qui minima laborum est sed voluptas praesentium et consequatur facere a
-                            repellendus sequi vero et minus sit consequatur excepturi adipisci veritatis itaque
-                            laboriosam quo eos cum omnis aut ad quod qui assumenda fuga voluptas ut blanditiis voluptate
-                            est vel libero fugit et voluptatem aliquam odio expedita fuga et sunt aut sunt eum voluptas
-                            omnis molestiae odio natus saepe suscipit et et assumenda qui distinctio dolores maiores
-                            illum tempora animi consectetur fugiat voluptatum eos necessitatibus rerum sapiente dolor
-                            impedit nihil ratione vel commodi non.</p>
-                        <p>Id tempora corrupti dicta tempora et dolorem excepturi doloribus placeat culpa repudiandae
-                            vel ab tempore temporibus accusamus commodi qui exercitationem rerum quibusdam quasi optio
-                            autem cum labore voluptatem atque officia dicta voluptas odio esse id deserunt veritatis
-                            vitae omnis at explicabo quis dicta dicta atque possimus deleniti vitae ducimus corrupti
-                            blanditiis doloremque fugiat eos eveniet repellat in sed amet sed ut veniam iste et quaerat
-                            velit qui quo molestias quae ut sequi eum deserunt hic expedita voluptates consequuntur
-                            dolor laboriosam iure quis vero deleniti possimus nihil qui voluptate molestiae aperiam
-                            excepturi ex tempora doloribus hic nihil atque quo quibusdam laudantium odit quia occaecati
-                            eum inventore animi ea ea unde est occaecati natus expedita debitis iste maiores est
-                            laboriosam qui dicta voluptatum et est ut ducimus ut aut magni similique iste recusandae
-                            iusto vel perferendis facilis voluptatem sapiente delectus in doloremque exercitationem et
-                            reprehenderit quos ad omnis delectus incidunt sed blanditiis expedita rerum iusto at tenetur
-                            cupiditate ut ut natus distinctio dolore temporibus occaecati repellendus cum dolorum
-                            repellat facere quidem quaerat aliquam aspernatur nemo laudantium nisi earum et aut
-                            provident ab et voluptatibus consequatur illo illum id nihil magni ut officiis deserunt et
-                            nostrum placeat esse fugit provident architecto aliquam consequuntur ad soluta fugit ut
-                            iusto quisquam rerum sit voluptates similique voluptatibus et eius dolor sapiente iure
-                            doloribus quia vero et consequuntur commodi reiciendis itaque velit error distinctio
-                            similique quo similique sed tenetur dolore unde temporibus ab quia eaque natus et quasi
-                            pariatur ut enim qui neque et corrupti sed est nemo quibusdam rerum voluptatem repudiandae
-                            at velit deserunt qui qui recusandae voluptatem qui earum quae architecto illum
-                            necessitatibus adipisci et et voluptas consequatur aut autem quo aut tempore voluptatibus
-                            esse reiciendis.</p>
-                        <p>Repellat consequuntur est nesciunt explicabo veniam id autem voluptatem corporis veniam ad
-                            fugiat provident ipsum explicabo qui dolores perspiciatis enim est omnis dolorem ut minus a
-                            blanditiis delectus quia a sed et et accusamus quia qui sunt assumenda ratione et dolorem
-                            quis eos id autem impedit dolores provident modi inventore dolor aut mollitia excepturi quis
-                            illum mollitia repellat cumque nesciunt consequatur maxime quidem dolores consequatur
-                            perspiciatis pariatur debitis nobis officiis sed ea aut voluptatem quidem velit sapiente
-                            eligendi dolor porro et aperiam aut iste et vero qui eveniet odio impedit labore vel
-                            repellendus quis debitis quia ipsum id officia quia aliquid totam consequatur debitis et
-                            facere quibusdam laboriosam exercitationem asperiores minima velit aut qui porro
-                            necessitatibus id sint incidunt sit voluptatem id id pariatur qui provident sed vitae
-                            nesciunt vero nobis in ipsam ut eum eos accusantium enim iste assumenda nesciunt veritatis
-                            unde alias voluptates qui doloremque sed modi et vero omnis qui ipsa porro ut deleniti
-                            molestiae dolorem sint quam et nemo nemo optio sapiente quo similique voluptas repudiandae
-                            aut quidem est cum ut ut adipisci unde ut id et nostrum labore atque ab autem esse est
-                            commodi commodi itaque ipsum totam est excepturi sint aut ipsa repudiandae consequatur qui
-                            error assumenda molestias cum cupiditate perspiciatis quisquam eum ratione doloribus aperiam
-                            iusto laboriosam quia vitae explicabo non natus quia nihil et quaerat qui placeat nihil
-                            sequi omnis architecto et rerum animi ut in rerum debitis reiciendis soluta dicta enim rerum
-                            saepe enim dolore aut numquam ut doloribus beatae atque nihil provident voluptatem
-                            consequuntur sequi sed quaerat sed aliquid corporis dolores natus dolor sint ea.</p>
-                    </div>
-                    <h2 class="heading_a">Some text below the overflow container</h2>
-                    <p>Ipsum beatae optio magnam consectetur iste aut aut nihil id dolor totam sed repellat animi
-                        suscipit ex numquam quisquam debitis autem ea non occaecati esse laborum temporibus vel ut
-                        laborum explicabo magnam ratione et repellat vel labore quasi non rem consequuntur qui dolore
-                        eligendi eos explicabo cumque.</p>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="uk-width-medium-1-3">
-            {{--<p class="uk-text-large">Overflow container in modal</p>--}}
-            {{--<button class="md-btn" data-uk-modal="{target:'#modal_overflow-4'}">Open</button>--}}
-            <div id="modal_overflow-4" class="uk-modal">
-                <div class="uk-modal-dialog uk-modal-dialog-large">
-                    <button type="button" class="uk-modal-close uk-close"></button>
-                    <h2 class="heading_a">Interacciones por modelos</h2>
-                    <p>Quia porro id amet eos optio veniam repudiandae repudiandae quae ipsam dolores dolores eveniet
-                        qui et consequatur molestiae minima eos qui et esse optio et iusto vel quis delectus numquam
-                        saepe saepe reiciendis cupiditate libero voluptates magnam est facilis.</p>
-                    <div class="uk-overflow-container">
-                        <h2 class="heading_b">Overflow container</h2>
-                        <img src="assets/img/gallery/Image06.jpg" alt=""/>
-                        <p>Porro vel tenetur explicabo aut doloribus consectetur esse quibusdam facere aliquam ducimus
-                            repellendus voluptatem eum veritatis corporis quidem assumenda ut et aut reiciendis maiores
-                            mollitia commodi sapiente officia est qui unde placeat iste dolores id non ducimus et rerum
-                            quo est magni harum veritatis eaque illo sed consectetur atque ea expedita blanditiis vel
-                            fuga explicabo aut quia perferendis quis doloremque consectetur eos ea aut porro debitis
-                            reiciendis natus dolorum non fugit expedita ipsam rerum deserunt tenetur impedit veritatis
-                            accusamus praesentium voluptatem deserunt dolorem aut aperiam et quidem at earum blanditiis
-                            voluptatem eum vero recusandae provident reiciendis quos et eos et facere repellendus
-                            deserunt quibusdam dolore facilis nesciunt hic recusandae magnam atque sit sunt nemo odio
-                            pariatur non natus minima laborum est qui similique quisquam dolore nostrum sequi assumenda
-                            soluta dignissimos quia tenetur aliquam dolore distinctio sint modi non quibusdam est et
-                            voluptatem odio esse non similique occaecati qui voluptas qui tempore perferendis quo
-                            voluptatum praesentium numquam et earum itaque facilis tempore asperiores molestiae
-                            perspiciatis ut officiis omnis non sit et sequi rerum eum accusantium delectus autem rem
-                            velit laborum vitae sit iste a nobis eos aliquam enim impedit esse aut voluptatibus
-                            distinctio quae et dolorem voluptatem earum praesentium repellendus occaecati qui quasi quia
-                            beatae molestiae non cumque tempore maxime dolore est ut sit reprehenderit asperiores ea
-                            architecto ipsa beatae aut suscipit dignissimos voluptas quo qui quisquam amet sapiente modi
-                            aut sunt neque hic cum quia non sunt sed quas sit eos molestiae incidunt rem illum ut saepe
-                            tempora voluptates consequuntur accusantium saepe molestias sed voluptatibus atque aut
-                            commodi quod at consequuntur rerum aut autem et perspiciatis magnam facilis dolorum ut sit
-                            voluptatem dolor fugiat sit libero suscipit est vero unde ut accusamus et reprehenderit
-                            earum ut tempore eum et tenetur corporis quia unde deleniti quia culpa reiciendis dolorem
-                            rem aliquam eius minima debitis dolore facilis reiciendis repellendus debitis nobis at sed
-                            ducimus omnis.</p>
-                        <p>Aut facilis fugit voluptates culpa quia nihil tempora blanditiis iure modi tempora minima
-                            sunt explicabo rem voluptatem voluptas optio dolore quibusdam omnis sapiente assumenda illum
-                            modi dicta dolor eaque aut sit odit esse nulla qui odit qui deserunt dolor sunt ut quod
-                            ullam iste sint delectus voluptas facere optio accusamus rerum dolorem vitae eos ullam
-                            ratione qui quas mollitia sint illum omnis atque nisi earum est sint dolores nostrum minima
-                            nam est neque quasi exercitationem molestiae saepe est qui autem id impedit ea corporis
-                            ipsum aut modi ut ipsam ex iusto odit minus incidunt facere repudiandae odit facere nobis
-                            quaerat sed quo ducimus recusandae debitis harum et quas qui quia sunt minima architecto
-                            eveniet non repellat ab modi sit deleniti quam itaque eum qui voluptatum ut rerum iusto
-                            quidem sequi perspiciatis est aliquid unde ut minus est recusandae explicabo incidunt aut
-                            iusto aut est rerum autem odit nemo aliquam et ea natus asperiores necessitatibus ipsum nam
-                            ut est laudantium aspernatur ut non dicta optio nam fuga minus quaerat earum iste asperiores
-                            rerum quo doloribus quia vero quod labore quod aliquam similique ipsa quos beatae ut
-                            asperiores sit voluptatem aperiam quis quis sit nesciunt et quasi quas voluptatum vero
-                            occaecati iste ut doloribus aut ea veniam fuga autem doloribus sapiente possimus animi odio
-                            illo enim qui minima laborum est sed voluptas praesentium et consequatur facere a
-                            repellendus sequi vero et minus sit consequatur excepturi adipisci veritatis itaque
-                            laboriosam quo eos cum omnis aut ad quod qui assumenda fuga voluptas ut blanditiis voluptate
-                            est vel libero fugit et voluptatem aliquam odio expedita fuga et sunt aut sunt eum voluptas
-                            omnis molestiae odio natus saepe suscipit et et assumenda qui distinctio dolores maiores
-                            illum tempora animi consectetur fugiat voluptatum eos necessitatibus rerum sapiente dolor
-                            impedit nihil ratione vel commodi non.</p>
-                        <p>Id tempora corrupti dicta tempora et dolorem excepturi doloribus placeat culpa repudiandae
-                            vel ab tempore temporibus accusamus commodi qui exercitationem rerum quibusdam quasi optio
-                            autem cum labore voluptatem atque officia dicta voluptas odio esse id deserunt veritatis
-                            vitae omnis at explicabo quis dicta dicta atque possimus deleniti vitae ducimus corrupti
-                            blanditiis doloremque fugiat eos eveniet repellat in sed amet sed ut veniam iste et quaerat
-                            velit qui quo molestias quae ut sequi eum deserunt hic expedita voluptates consequuntur
-                            dolor laboriosam iure quis vero deleniti possimus nihil qui voluptate molestiae aperiam
-                            excepturi ex tempora doloribus hic nihil atque quo quibusdam laudantium odit quia occaecati
-                            eum inventore animi ea ea unde est occaecati natus expedita debitis iste maiores est
-                            laboriosam qui dicta voluptatum et est ut ducimus ut aut magni similique iste recusandae
-                            iusto vel perferendis facilis voluptatem sapiente delectus in doloremque exercitationem et
-                            reprehenderit quos ad omnis delectus incidunt sed blanditiis expedita rerum iusto at tenetur
-                            cupiditate ut ut natus distinctio dolore temporibus occaecati repellendus cum dolorum
-                            repellat facere quidem quaerat aliquam aspernatur nemo laudantium nisi earum et aut
-                            provident ab et voluptatibus consequatur illo illum id nihil magni ut officiis deserunt et
-                            nostrum placeat esse fugit provident architecto aliquam consequuntur ad soluta fugit ut
-                            iusto quisquam rerum sit voluptates similique voluptatibus et eius dolor sapiente iure
-                            doloribus quia vero et consequuntur commodi reiciendis itaque velit error distinctio
-                            similique quo similique sed tenetur dolore unde temporibus ab quia eaque natus et quasi
-                            pariatur ut enim qui neque et corrupti sed est nemo quibusdam rerum voluptatem repudiandae
-                            at velit deserunt qui qui recusandae voluptatem qui earum quae architecto illum
-                            necessitatibus adipisci et et voluptas consequatur aut autem quo aut tempore voluptatibus
-                            esse reiciendis.</p>
-                        <p>Repellat consequuntur est nesciunt explicabo veniam id autem voluptatem corporis veniam ad
-                            fugiat provident ipsum explicabo qui dolores perspiciatis enim est omnis dolorem ut minus a
-                            blanditiis delectus quia a sed et et accusamus quia qui sunt assumenda ratione et dolorem
-                            quis eos id autem impedit dolores provident modi inventore dolor aut mollitia excepturi quis
-                            illum mollitia repellat cumque nesciunt consequatur maxime quidem dolores consequatur
-                            perspiciatis pariatur debitis nobis officiis sed ea aut voluptatem quidem velit sapiente
-                            eligendi dolor porro et aperiam aut iste et vero qui eveniet odio impedit labore vel
-                            repellendus quis debitis quia ipsum id officia quia aliquid totam consequatur debitis et
-                            facere quibusdam laboriosam exercitationem asperiores minima velit aut qui porro
-                            necessitatibus id sint incidunt sit voluptatem id id pariatur qui provident sed vitae
-                            nesciunt vero nobis in ipsam ut eum eos accusantium enim iste assumenda nesciunt veritatis
-                            unde alias voluptates qui doloremque sed modi et vero omnis qui ipsa porro ut deleniti
-                            molestiae dolorem sint quam et nemo nemo optio sapiente quo similique voluptas repudiandae
-                            aut quidem est cum ut ut adipisci unde ut id et nostrum labore atque ab autem esse est
-                            commodi commodi itaque ipsum totam est excepturi sint aut ipsa repudiandae consequatur qui
-                            error assumenda molestias cum cupiditate perspiciatis quisquam eum ratione doloribus aperiam
-                            iusto laboriosam quia vitae explicabo non natus quia nihil et quaerat qui placeat nihil
-                            sequi omnis architecto et rerum animi ut in rerum debitis reiciendis soluta dicta enim rerum
-                            saepe enim dolore aut numquam ut doloribus beatae atque nihil provident voluptatem
-                            consequuntur sequi sed quaerat sed aliquid corporis dolores natus dolor sint ea.</p>
-                    </div>
-                    <h2 class="heading_a">Some text below the overflow container</h2>
-                    <p>Ipsum beatae optio magnam consectetur iste aut aut nihil id dolor totam sed repellat animi
-                        suscipit ex numquam quisquam debitis autem ea non occaecati esse laborum temporibus vel ut
-                        laborum explicabo magnam ratione et repellat vel labore quasi non rem consequuntur qui dolore
-                        eligendi eos explicabo cumque.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-        @stop
-
-
-        @section('scripts')
-            <script>
-
-                var active = '{{session('data')}}';
-                if (active == 'active') {
-                    UIkit.notify("<i class='uk-icon-check'></i>  Tu perfil ha sido modificado con exito", {status: 'success'}, {timeout: 5});
+        var chart2 = c3.generate({
+            bindto: '#chart2',
+            data: {
+                columns: [
+                    ['Mujeres', 30, 200, 100, 400, 150, 250],
+                    ['Hombres', -130, -100, -140, -200, -150, 50]
+                ],
+                groups: [
+                    ['Mujeres', 'Hombres']
+                ],
+                type: 'bar'
+            },
+            bar: {
+                width: {
+                    ratio: 0.5 // this makes bar width 50% of length between ticks
                 }
-
-                var chart1 = c3.generate({
-                    bindto: '#chart1',
-                    data: {
-                        columns: [
-                            ['Welcome', 300, 249, 400, 190, 200, 500, 450],
-                            ['Joined', 250, 100, 389, 120, 100, 500, 450],
-                            ['Requested', 200, 100, 300, 100, 450, 450, 420],
-                            ['Loaded', 120, 100, 250, 80, 400, 450, 410],
-                            ['Completed', 25, 90, 200, 60, 312, 400, 402]
-                        ],
-                        types: {
-                            Welcome: 'area-spline',
-                            Joined: 'area-spline',
-                            Requested: 'area-spline',
-                            Loaded: 'area-spline',
-                            Completed: 'area-spline'
-                            // 'line', 'spline', 'step', 'area', 'area-step' are also available to stack
-                        },
-                    },
-                    color: {
-                        pattern: ['red', '#aec7e8', '#ff7f0e', '#ffbb78', '#fff000']
-                    },
-                    donut: {
-                        title: "nombre"
-                    }
-                });
+                // or
+                //width: 100 // this makes bar width 100px
+            },
+            color: {
+                pattern: ['red', '#aec7e8', '#ff7f0e', '#ffbb78']
+            },
+            axis: {
+                y: {
+                    padding: {top: 10, bottom: 10}
+                },
+                rotated: true
+            }
+        });
 
 
-                //        Interacciones Por Genero
-                var chart2 = c3.generate({
-                    bindto: '#chart2',
-                    data: {
-                        columns: [
-                            ['Mujeres', 30, 200, 100, 400, 150, 250],
-                            ['Hombres', -130, -100, -140, -200, -150, -50]
-                        ],
-                        groups: [
-                            ['Mujeres', 'Hombres']
-                        ],
-                        type: 'bar'
-                    },
-                    bar: {
-                        width: {
-                            ratio: 0.5 // this makes bar width 50% of length between ticks
-                        }
-                        // or
-                        //width: 100 // this makes bar width 100px
-                    },
-                    color: {
-                        pattern: ['red', '#aec7e8', '#ff7f0e', '#ffbb78']
-                    },
-                    axis: {
-                        y: {
-                            padding: {top: 10, bottom: 10}
-                        },
-                        rotated: true
-                    }
-                });
+        //        Interacciones por modelos
+        var chart3 = c3.generate({
+            bindto: '#chart3',
+            data: {
+                columns: [
+                    ['Android', 30, 200, 200, 400, 150, 250],
+                    ['Blackberry', 130, 100, 100, 200, 150, 50],
+                    ['IOS', 230, 200, 200, 300, 250, 250],
+                    ['Windows Phone', 230, 200, 200, 300, 250, 250],
+                    ['other', 230, 200, 200, 300, 250, 250]
+                ],
+                type: 'bar',
+                groups: [
+                    ['Android', 'Blackberry', 'IOS', 'Windows Phone', 'other']
+                ]
+            },
+            color: {
+                pattern: ['red', '#aec7e8', '#ff7f0e', '#ffbb78', '#2ca02c', '#98df8a', '#d62728', '#ff9896', '#9467bd', '#c5b0d5', '#8c564b', '#c49c94', '#e377c2', '#f7b6d2', '#7f7f7f', '#c7c7c7', '#bcbd22', '#dbdb8d', '#17becf', '#9edae5']
+            },
+            axis: {
+                y: {
+                    padding: {top: 200, bottom: 0}
+                }
+            }
+        });
 
+        //        Visitantes por edades
+        var chart4 = c3.generate({
+            bindto: '#chart4',
+            data: {
+                columns: [
+                    ['<13-19', 130],
+                    ['20-41', 12],
+                    ['41-60', 1],
+                    ['60+', 10]
+                ],
+                type: 'pie'
+            },
+            color: {
+                pattern: ['red', '#aec7e8', '#ff7f0e', '#ffbb78', '#2ca02c', '#98df8a', '#d62728', '#ff9896', '#9467bd', '#c5b0d5', '#8c564b', '#c49c94', '#e377c2', '#f7b6d2', '#7f7f7f', '#c7c7c7', '#bcbd22', '#dbdb8d', '#17becf', '#9edae5']
+            },
+            axis: {
+                y: {
+                    padding: {top: 200, bottom: 0}
+                },
+                y2: {
+                    padding: {top: 100, bottom: 100},
+                    show: true
+                }
+            }
+        });
+    </script>
+@stop
 
-                //        Interacciones por modelos
-                var chart3 = c3.generate({
-                    bindto: '#chart3',
-                    data: {
-                        columns: [
-                            ['Android', 30, 200, 200, 400, 150, 250],
-                            ['Blackberry', 130, 100, 100, 200, 150, 50],
-                            ['IOS', 230, 200, 200, 300, 250, 250],
-                            ['Windows Phone', 230, 200, 200, 300, 250, 250],
-                            ['other', 230, 200, 200, 300, 250, 250]
-                        ],
-                        type: 'bar',
-                        groups: [
-                            ['Android', 'Blackberry', 'IOS', 'Windows Phone', 'other']
-                        ]
-                    },
-                    color: {
-                        pattern: ['red', '#aec7e8', '#ff7f0e', '#ffbb78', '#2ca02c', '#98df8a', '#d62728', '#ff9896', '#9467bd', '#c5b0d5', '#8c564b', '#c49c94', '#e377c2', '#f7b6d2', '#7f7f7f', '#c7c7c7', '#bcbd22', '#dbdb8d', '#17becf', '#9edae5']
-                    },
-                    axis: {
-                        y: {
-                            padding: {top: 200, bottom: 0}
-                        }
-                    }
-                });
-
-                //        Visitantes por edades
-                var chart4 = c3.generate({
-                    bindto: '#chart4',
-                    data: {
-                        columns: [
-                            ['<13-19', 130],
-                            ['20-41', 12],
-                            ['41-60', 1],
-                            ['60+', 10]
-                        ],
-                        type: 'pie'
-                    },
-                    color: {
-                        pattern: ['red', '#aec7e8', '#ff7f0e', '#ffbb78', '#2ca02c', '#98df8a', '#d62728', '#ff9896', '#9467bd', '#c5b0d5', '#8c564b', '#c49c94', '#e377c2', '#f7b6d2', '#7f7f7f', '#c7c7c7', '#bcbd22', '#dbdb8d', '#17becf', '#9edae5']
-                    },
-                    axis: {
-                        y: {
-                            padding: {top: 200, bottom: 0}
-                        },
-                        y2: {
-                            padding: {top: 100, bottom: 100},
-                            show: true
-                        }
-                    }
-                });
-            </script>
 @stop

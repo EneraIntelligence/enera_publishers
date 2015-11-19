@@ -32,7 +32,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['prefix' => 'analytics', 'as' => 'analytics::'], function () {
         Route::get('/', ['as' => 'index', 'uses' => 'AnalyticsController@index']);
-        Route::get('/single', ['as' => 'single', 'uses' => 'AnalyticsController@single']);
+        Route::get('/{id}/{type?}',['as' => 'single', 'uses' => 'AnalyticsController@single']);
     });
 
     Route::group(['prefix' => 'profile', 'as' => 'profile::'], function () {
