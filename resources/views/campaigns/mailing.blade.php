@@ -8,11 +8,17 @@
         <div id="page_content_inner">
 
 
+            {!!  Form::open( array('url' => "campaigns/send_mailing" ) ) !!}
 
 
-            <textarea id="wysiwyg_editor" cols="30" rows="20" autofocus>
+            <textarea name="mail" id="wysiwyg_editor" cols="30" rows="20" autofocus>
 
             </textarea>
+
+            <input class="md-btn md-btn-primary" type="submit" value="enviar">
+
+
+            {!! Form::close() !!}
 
         </div>
     </div>

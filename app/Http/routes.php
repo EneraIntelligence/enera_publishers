@@ -23,6 +23,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/new', ['as' => 'create', 'uses' => 'CampaignsController@create']);
         Route::post('/store', ['as' => 'store', 'uses' => 'CampaignsController@store']);
         Route::post('/save_item', ['as' => 'save_item', 'uses' => 'CampaignsController@saveItem']);
+        Route::post('/send_mailing', ['as' => 'send_mailing', 'uses' => 'CampaignsController@sendMailing']);
     });
 
     Route::group(['prefix' => 'reports', 'as' => 'reports::'], function () {

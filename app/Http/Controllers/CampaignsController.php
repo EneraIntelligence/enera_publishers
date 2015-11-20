@@ -166,10 +166,14 @@ class CampaignsController extends Controller
         }
     }
 
+    public function sendMailing(Request $request)
+    {
+        //Input::get("mail");
+    }
+
     public function saveItem(Request $request)
     {
         //echo "{success: 'true'}";
-
 
 
         if(Input::get("imgToSave")==".banner-1")
