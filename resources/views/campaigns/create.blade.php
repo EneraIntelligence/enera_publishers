@@ -131,7 +131,14 @@
 
 @section('scripts')
 
-        <!-- enera custom scripts -->
+        <!-- jquery steps -->
+    {!! HTML::script('js/wizard_steps_custom.js') !!}
+            <!--  forms wizard functions -->
+    {!! HTML::script('js/form_wizard_custom.js') !!}
+            <!-- slider script -->
+    {!! HTML::script('bower_components/ionrangeslider/js/ion.rangeSlider.min.js') !!}
+
+            <!-- enera custom scripts -->
     {!! HTML::script('js/create_campaign_utils.js') !!}
 
     <script>
@@ -148,12 +155,7 @@
 
     {!! HTML::script('bower_components/parsleyjs/dist/parsley.min.js') !!}
     {!! HTML::script('bower_components/parsleyjs/src/i18n/es.js') !!}
-            <!-- jquery steps -->
-    {!! HTML::script('js/wizard_steps_custom.js') !!}
-    <!--  forms wizard functions -->
-    {!! HTML::script('js/form_wizard_custom.js') !!}
-            <!-- slider script -->
-    {!! HTML::script('bower_components/ionrangeslider/js/ion.rangeSlider.min.js') !!}
+
 
 
     <!-- animation library -->
@@ -161,7 +163,7 @@
     {!! HTML::script('js/greensock/plugins/CSSPlugin.min.js') !!}
     {!! HTML::script('js/greensock/easing/EasePack.min.js') !!}
 
-    {!! HTML::script('http://maps.google.com/maps/api/js?sensor=false') !!}
+    {!! HTML::script('http://maps.google.com/maps/api/js') !!}
     {!! HTML::script('js/maps/markerclusterer_compiled.js') !!}
     {!! HTML::script('js/maps/keydragzoom.js') !!}
     {!! HTML::script('js/maps/infobox_packed.js') !!}
