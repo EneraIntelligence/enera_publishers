@@ -2,7 +2,7 @@
 
 namespace Publishers\Http\Controllers;
 
-use Faker\Provider\zh_TW\DateTime;
+use DateTime;
 use Publishers\Libraries\CampaignStyleHelper;
 use Validator;
 use Illuminate\Support\Facades\Storage;
@@ -176,17 +176,15 @@ class CampaignsController extends Controller
         //echo "{success: 'true'}";
 
 
-        if(Input::get("imgToSave")==".banner-1")
+        if (Input::get("imgToSave") == ".banner-1") {
         {
             //saving small image
             $file = Input::file('image_small');
-            $imageType="small";
-        }
-        else
-        {
+            $imageType = "small";
+        } else {
             //saving large image
             $file = Input::file('image_large');
-            $imageType="large";
+            $imageType = "large";
 
         }
 
@@ -217,12 +215,12 @@ class CampaignsController extends Controller
             //$item->campaign_id = $campaign->_id;
             $item->save();
 
-            $res = array('success'=>true, 'filename'=>$filename, 'item_id'=>$item->_id, 'imageType'=>$imageType);
+            $res = array('success' => true, 'filename' => $filename, 'item_id' => $item->_id, 'imageType' => $imageType);
 
             echo json_encode($res);
 
         } else {
-            $res = array('success'=>false, 'msg'=>'error');
+            $res = array('success' => false, 'msg' => 'error');
             /*
             if (!$file->isValid())
                 echo 'error! no file uploaded';
@@ -288,17 +286,27 @@ class CampaignsController extends Controller
                     $porcentaje = 0;
                     break;
                 case 'canceled':
-                    $canceled = new DateTime($campaign->logs()->where('status', 'canceled')->first()->date);
-                    $created = new DateTime(date('Y-m-d H:i:s', strtotime($campaign->filters['date']['start']->sec)));
+                    $canceled = new DateTime($campaign->history->where('status', 'canceled')->first()->date);
+                    $created = new DateTime(date('Y-m-d H:i:s', $campaign->filters['date']['start']->sec));
                     $today = new DateTime();
+
+                    // %R coloca signo ( + )
+                    // %a obtienes los dias
+                    // $dif2->format('%a')
                     $dif1 = $created->diff($canceled);
                     $dif2 = $created->diff($today);
-
-                    dd($dif1->format('%R%a dias'));
 
                     $porcentaje = 0;
                     break;
             }
+
+            $canceled = new DateTime($campaign->history->where('status', 'canceled')->first()->date);
+            $created = new DateTime(date('Y-m-d H:i:s', $campaign->filters['date']['start']->sec));
+            $today = new DateTime();
+            $dif1 = $created->diff($canceled);
+            $dif2 = $created->diff($today);
+
+
 
             //si tiene uno de estos estados el avance sera 0% aunque creo que ended deberia de ser 100%
             if ($campaign['status'] == 'pending' || $campaign['status'] == 'rejected' || $campaign['status'] == 'ended') {//si tiene uno de estos estados no deberia tener avance

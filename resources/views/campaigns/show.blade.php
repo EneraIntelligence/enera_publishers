@@ -246,7 +246,7 @@
         //        $("#age_slider").ionRangeSlider();
         //        $("#ionslider_3").ionRangeSlider();
         $('#circle').circleProgress({
-            value: 0{{--{{$porcentaje}}--}}, //lo que se va a llenar con el color
+            value: 10{{--{{$porcentaje}}--}}, //lo que se va a llenar con el color
             size: 98,   //tamaño del circulo
             startAngle: -300, //de donde va a empezar la animacion
             reverse: true, //empieza la animacion al contrario
