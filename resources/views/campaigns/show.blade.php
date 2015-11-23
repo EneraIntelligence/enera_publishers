@@ -54,7 +54,7 @@
                                                                     <i class="md-list-addon-icon uk-icon-archive"></i>
                                                                 </div>
                                                                 <div class="md-list-content">
-                                                                    <span class="md-list-heading azul">Nombre Campaña</span>
+                                                                    <span class="md-list-heading azul">Nombre</span>
                                                                     <span class="uk-text-small uk-text-muted">{{ $name }}</span>
                                                                 </div>
                                                             </li>
@@ -73,7 +73,7 @@
                                                                 </div>
                                                                 <div class="md-list-content azul">
                                                                     <span class="md-list-heading">Balance</span>
-                                                                    <span class="uk-text-small uk-text-muted">{{--{{$balance['current']}}--}}</span>
+                                                                    <span class="uk-text-small uk-text-muted">$ {{$balance['current']}}</span>
                                                                 </div>
                                                             </li>
                                                             <li>
@@ -81,7 +81,7 @@
                                                                     <i class="md-list-addon-icon uk-icon-check-square-o"></i>
                                                                 </div>
                                                                 <div class="md-list-content">
-                                                                    <span class="md-list-heading azul">Tipo de interacon</span>
+                                                                    <span class="md-list-heading azul">Interacción</span>
                                                                     <span class="uk-text-small uk-text-muted">{{$interaction['name']}}</span>
                                                                 </div>
                                                             </li>
@@ -115,8 +115,10 @@
                                                             <li>
                                                                 <div class="md-list-content">
                                                                     <span class="md-list-heading azul">Generos</span>
-                                                                    <span class="uk-text-small uk-text-muted">{{ trans_choice('gender.'.$filters['gender'][0],1) }}
-                                                                        , @if(isset($filters['gender'][1])){{ trans_choice('gender.'.$filters['gender'][1],1) }}  @endif</span>
+                                                                    <span class="uk-text-small uk-text-muted">
+                                                                        {{ trans_choice('gender.'.$filters['gender'][0],1) }}
+                                                                        , {{ isset($filters['gender'][1]) ? trans_choice('gender.'.$filters['gender'][1],1):'' }}
+                                                                    </span>
                                                                     {{--{{$filters['gender'][0].',  '.$filters['gender'][1]}}--}}
                                                                 </div>
                                                             </li>
@@ -133,26 +135,28 @@
                                                             <li>
                                                                 <div class="md-list-content">
                                                                     <span class="md-list-heading azul">Horario</span>
-                                                                    <span class="uk-text-small uk-text-muted">de {{--{{ $filters['day_hours'] }}--}}
-                                                                        horas</span>
+                                                                    <span class="uk-text-small uk-text-muted">
+                                                                        {{ $filters['day_hours'][0].':00' }}
+                                                                        a {{ $filters['day_hours'][count($filters['day_hours'])-1].':00' }}
+                                                                    </span>
                                                                 </div>
                                                             </li>
                                                             {{-- esta parte usao if para saber que es lo que se va a mostrar --}}
                                                             <li>
                                                                 <div class="md-list-content azul">
-                                                                    <span class="md-list-heading"> usuario unico </span>
+                                                                    <span class="md-list-heading">Usuario unico </span>
                                                                     <span class="uk-text-small uk-text-muted">{{ $filters['unique_user']?'SI':'NO' }}</span>
                                                                 </div>
                                                             </li>
                                                             <li>
                                                                 <div class="md-list-content azul">
-                                                                    <span class="md-list-heading"> usuarios unicos por dia </span>
+                                                                    <span class="md-list-heading">Usuarios unicos por dia </span>
                                                                     <span class="uk-text-small uk-text-muted">{{ isset($filters['unique_user_per_day'])? $filters['unique_user_per_day'] :0 }}</span>
                                                                 </div>
                                                             </li>
                                                             <li>
                                                                 <div class="md-list-content azul">
-                                                                    <span class="md-list-heading"> meta de interacciones </span>
+                                                                    <span class="md-list-heading">Meta de interacciones </span>
                                                                     <span class="uk-text-small uk-text-muted">{{ $filters['max_interactions'] }}</span>
                                                                 </div>
                                                             </li>
