@@ -15,6 +15,7 @@ use Publishers\Campaign;
 use Publishers\Branche;
 use Publishers\Item;
 use Publishers\Libraries\FileCloud;
+use Mail;
 
 class CampaignsController extends Controller
 {
@@ -168,7 +169,17 @@ class CampaignsController extends Controller
 
     public function sendMailing(Request $request)
     {
-        //Input::get("mail");
+        $content = Input::get("mail"); //mail content
+
+        //$user = Auth::user();
+
+        Mail::send('emails.test', ['content' => $content], function ($m) use ($content) {
+            $m->from('contacto@enera.mx', 'Contacto Enera');
+
+            $m->to("me@ederdiaz.com", "Eder")->subject('asunto');
+        });
+
+        return "mail enviado!"; //view('campaigns.create', compact('branches', 'noCreateBtn', 'campaignName'));
     }
 
     public function saveItem(Request $request)

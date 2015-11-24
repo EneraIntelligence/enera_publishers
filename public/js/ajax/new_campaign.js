@@ -30,6 +30,8 @@ new_campaign =
         }
         else
         {
+            UIkit.modal.blockUI('<div class=\'uk-text-center\'>' +
+                '<img class=\'uk-margin-top\' src=\'assets/img/spinners/spinner.gif\' alt=\'\'>');
             window.location=new_campaign.url+"?name="+name;
         }
     }
