@@ -21,20 +21,20 @@
                                 <div>
                                     <div id="circle" style="max-width:98px;max-height:98px;margin:auto;">
                                         <img style="background-image:none!important;margin:-96px 9px;"
-                                             src="{!! URL::asset('images/icons/'.$interaction['name'].'.svg') !!}"
+                                             src="{!! URL::asset('images/icons/'.$cam->interaction['name'].'.svg') !!}"
                                              alt="producto"/>
                                     </div>
                                 </div>
                             </div>
                             <div class="user_heading_content">
                                 <h2 class="heading_b uk-margin-bottom"><span
-                                            class="uk-text-truncate">{{ $name }} </span><span
-                                            class="sub-heading">{{ $interaction['name'] }}</span>
+                                            class="uk-text-truncate">{{ $cam->name }} </span><span
+                                            class="sub-heading">{{ $cam->interaction['name'] }}</span>
                                 </h2>
                             </div>
-                            <a class="md-fab md-fab-small md-fab-accent {!! Publishers\Libraries\CampaignStyleHelper::getStatusColor($status) !!}"
-                               style="background: {!! Publishers\Libraries\CampaignStyleHelper::getStatusColor($status) !!}">  {{-- href="page_user_edit.html" --}}
-                                <i class="material-icons">{!! Publishers\Libraries\CampaignStyleHelper::getStatusIcon($status) !!}</i>
+                            <a class="md-fab md-fab-small md-fab-accent {!! Publishers\Libraries\CampaignStyleHelper::getStatusColor($cam->status) !!}"
+                               style="background: {!! Publishers\Libraries\CampaignStyleHelper::getStatusColor($cam->status) !!}">  {{-- href="page_user_edit.html" --}}
+                                <i class="material-icons">{!! Publishers\Libraries\CampaignStyleHelper::getStatusIcon($cam->status) !!}</i>
                             </a>
                         </div>
                         <div class="md-card-content">
@@ -55,7 +55,7 @@
                                                                 </div>
                                                                 <div class="md-list-content">
                                                                     <span class="md-list-heading azul">Nombre</span>
-                                                                    <span class="uk-text-small uk-text-muted">{{ $name }}</span>
+                                                                    <span class="uk-text-small uk-text-muted">{{ $cam->name }}</span>
                                                                 </div>
                                                             </li>
                                                             <li>
@@ -64,7 +64,7 @@
                                                                 </div>
                                                                 <div class="md-list-content">
                                                                     <span class="md-list-heading azul">Estado</span>
-                                                                    <span class="uk-text-small uk-text-muted">{{ $status }}</span>
+                                                                    <span class="uk-text-small uk-text-muted">{{ $cam->status }}</span>
                                                                 </div>
                                                             </li>
                                                             <li>
@@ -73,7 +73,7 @@
                                                                 </div>
                                                                 <div class="md-list-content azul">
                                                                     <span class="md-list-heading">Balance</span>
-                                                                    <span class="uk-text-small uk-text-muted">$ {{$balance['current']}}</span>
+                                                                    <span class="uk-text-small uk-text-muted">$ {{$cam->balance['current']}}</span>
                                                                 </div>
                                                             </li>
                                                             <li>
@@ -82,7 +82,7 @@
                                                                 </div>
                                                                 <div class="md-list-content">
                                                                     <span class="md-list-heading azul">Interacción</span>
-                                                                    <span class="uk-text-small uk-text-muted">{{$interaction['name']}}</span>
+                                                                    <span class="uk-text-small uk-text-muted">{{$cam->interaction['name']}}</span>
                                                                 </div>
                                                             </li>
                                                             <li>
@@ -102,22 +102,22 @@
                                                             <li>
                                                                 <div class="md-list-content">
                                                                     <span class="md-list-heading azul">Fecha de la interaccion</span>
-                                                                    <span class="uk-text-small uk-text-muted">inicia : &nbsp;&nbsp;&nbsp;&nbsp;{{ date('Y-m-d', $filters['date']['start']->sec) }} </span>
-                                                                    <span class="uk-text-small uk-text-muted">finaliza : &nbsp;{{ date('Y-m-d', $filters['date']['end']->sec) }} </span>
+                                                                    <span class="uk-text-small uk-text-muted">inicia : &nbsp;&nbsp;&nbsp;&nbsp;{{ date('Y-m-d', $cam->filters['date']['start']->sec) }} </span>
+                                                                    <span class="uk-text-small uk-text-muted">finaliza : &nbsp;{{ date('Y-m-d', $cam->filters['date']['end']->sec) }} </span>
                                                                 </div>
                                                             </li>
                                                             <li>
                                                                 <div class="md-list-content">
                                                                     <span class="md-list-heading azul">Rango de Edad</span>
-                                                                    <span class="uk-text-small uk-text-muted">{{$filters['age'][0].' a '.$filters['age'][1]}} </span>
+                                                                    <span class="uk-text-small uk-text-muted">{{$cam->filters['age'][0].' a '.$cam->filters['age'][1]}} </span>
                                                                 </div>
                                                             </li>
                                                             <li>
                                                                 <div class="md-list-content">
                                                                     <span class="md-list-heading azul">Generos</span>
                                                                     <span class="uk-text-small uk-text-muted">
-                                                                        {{ trans_choice('gender.'.$filters['gender'][0],1) }}
-                                                                        , {{ isset($filters['gender'][1]) ? trans_choice('gender.'.$filters['gender'][1],1):'' }}
+                                                                        {{ trans_choice('gender.'.$cam->filters['gender'][0],1) }}
+                                                                        , {{ isset($filters['gender'][1]) ? trans_choice('gender.'.$cam->filters['gender'][1],1):'' }}
                                                                     </span>
                                                                     {{--{{$filters['gender'][0].',  '.$filters['gender'][1]}}--}}
                                                                 </div>
@@ -126,7 +126,7 @@
                                                                 <div class="md-list-content">
                                                                     <span class="md-list-heading azul">Dias</span>
                                                                     <span class="uk-text-small uk-text-muted">
-                                                                        @foreach($filters['week_days'] as $dia)
+                                                                        @foreach($cam->filters['week_days'] as $dia)
                                                                             {{ trans('days.'.$dia) }},
                                                                         @endforeach
                                                                     </span>
@@ -136,8 +136,8 @@
                                                                 <div class="md-list-content">
                                                                     <span class="md-list-heading azul">Horario</span>
                                                                     <span class="uk-text-small uk-text-muted">
-                                                                        {{ $filters['day_hours'][0].':00' }}
-                                                                        a {{ $filters['day_hours'][count($filters['day_hours'])-1].':00' }}
+                                                                        {{ $cam->filters['day_hours'][0].':00' }}
+                                                                        a {{ $cam->filters['day_hours'][count($cam->filters['day_hours'])-1].':00' }}
                                                                     </span>
                                                                 </div>
                                                             </li>
@@ -145,19 +145,19 @@
                                                             <li>
                                                                 <div class="md-list-content azul">
                                                                     <span class="md-list-heading">Usuario unico </span>
-                                                                    <span class="uk-text-small uk-text-muted">{{ $filters['unique_user']?'SI':'NO' }}</span>
+                                                                    <span class="uk-text-small uk-text-muted">{{ $cam->filters['unique_user']?'SI':'NO' }}</span>
                                                                 </div>
                                                             </li>
                                                             <li>
                                                                 <div class="md-list-content azul">
                                                                     <span class="md-list-heading">Usuarios unicos por dia </span>
-                                                                    <span class="uk-text-small uk-text-muted">{{ isset($filters['unique_user_per_day'])? $filters['unique_user_per_day'] :0 }}</span>
+                                                                    <span class="uk-text-small uk-text-muted">{{ isset($cam->filters['unique_user_per_day'])? $cam->filters['unique_user_per_day'] :0 }}</span>
                                                                 </div>
                                                             </li>
                                                             <li>
                                                                 <div class="md-list-content azul">
                                                                     <span class="md-list-heading">Meta de interacciones </span>
-                                                                    <span class="uk-text-small uk-text-muted">{{ $filters['max_interactions'] }}</span>
+                                                                    <span class="uk-text-small uk-text-muted">{{ $cam->filters['max_interactions'] }}</span>
                                                                 </div>
                                                             </li>
                                                         </ul>
@@ -167,9 +167,29 @@
                                             <div class="uk-width-large-1-2">
                                                 <div class="md-card">
                                                     <div class="md-card-content">
-                                                        <h3 class="heading_a uk-margin-bottom">Statistics</h3>
+                                                        <div class="uk-float-right uk-margin-top uk-margin-small-right"><span class="peity_visitors peity_data" style="display: none;">5,3,9,6,5,9,7</span><svg class="peity" height="28" width="48"><rect fill="#d84315" x="1.3714285714285717" y="12.444444444444443" width="4.114285714285715" height="15.555555555555557"></rect><rect fill="#d84315" x="8.228571428571428" y="18.666666666666668" width="4.114285714285716" height="9.333333333333332"></rect><rect fill="#d84315" x="15.085714285714287" y="0" width="4.1142857142857086" height="28"></rect><rect fill="#d84315" x="21.942857142857147" y="9.333333333333336" width="4.114285714285707" height="18.666666666666664"></rect><rect fill="#d84315" x="28.800000000000004" y="12.444444444444443" width="4.114285714285707" height="15.555555555555557"></rect><rect fill="#d84315" x="35.65714285714286" y="0" width="4.114285714285707" height="28"></rect><rect fill="#d84315" x="42.51428571428572" y="6.222222222222221" width="4.114285714285707" height="21.77777777777778"></rect></svg></div>
+                                                        <div class="uk-float-right uk-margin-top uk-margin-small-right"><span class="peity_visitors peity_data">5,3,9,6,5,9,7</span></div>
+                                                        <span class="uk-text-muted uk-text-small">Visitors (last 7d)</span>
+                                                        <h1 class="jumbo" id="myTargetElement">0</h1>
 
+                                                    </div>
+                                                </div>
+                                                <div class="md-card">
+                                                    <div class="md-card-content">
+                                                        <h3 class="heading_a uk-margin-bottom">Statistics</h3>
                                                         <div id="ct-chart" class="chartist"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="uk-grid uk-margin-medium-top" data="uk-grid-margin">
+                                                    <div class="uk-width-1-1">
+                                                        <h4 class="heading_c uk-margin-small-bottom">Reportes</h4>
+
+                                                        <div class="uk-width-medium-1-6">
+                                                            <a class="md-btn md-btn-primary"
+                                                               href="http://localhost:8000/analytics/single">
+                                                                <span class="uk-display-block">Reportes</span>
+                                                            </a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -182,7 +202,7 @@
                                     <div class="uk-width-large-1-1">
                                         <h4 class="heading_c uk-margin-small-bottom">Elementos de la campaña</h4>
                                         <ul class="md-list">
-                                            @if($interaction['name'] == 'banner')
+                                            @if($cam->interaction['name'] == 'banner')
 
 
                                             @endif
@@ -240,6 +260,7 @@
             <!-- slider script -->
     {!! HTML::script('bower_components/ionrangeslider/js/ion.rangeSlider.min.js') !!}
     {!! HTML::script('bower_components/jquery.easy-pie-chart/dist/jquery.easypiechart.min.js') !!}
+    {!! HTML::script('bower_components/countUp.js/countUp.js') !!}
     {!! HTML::script('js/circle-progress.js') !!}
     {!! HTML::style('css/show.css') !!}
     <script>
@@ -255,10 +276,22 @@
             startAngle: -300, //de donde va a empezar la animacion
             reverse: true, //empieza la animacion al contrario
             thickness: 8,  //el grosor la linea
-            fill: {color: "{!! Publishers\Libraries\CampaignStyleHelper::getStatusColor($status) !!}"} //el color de la linea
+            fill: {color: "{!! Publishers\Libraries\CampaignStyleHelper::getStatusColor($cam->status) !!}"} //el color de la linea
         }).on('circle-animation-progress', function (event, progress) {
             $(this).find('strong').html(parseInt(100 * progress) + '<i>%</i>');
         });
+
+
+        var options = {
+            useEasing : true,
+            useGrouping : true,
+            separator : ',',
+            decimal : '.',
+            prefix : '',
+            suffix : ''
+        };
+        var demo = new CountUp("myTargetElement", 0, {{$cam->logs->count()}}, 0, 2.5, options);
+        demo.start();
     </script>
     <!-- enera custom scripts -->
     {{--{!! HTML::script('assets/js/enera/create_campaign_helper.js') !!}--}}

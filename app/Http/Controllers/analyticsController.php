@@ -32,16 +32,17 @@ class AnalyticsController extends Controller
 //        $campaign=$campaign->toArray();
 //        dd($campaign);
         //valida que la campaña le pertenezca al usuario
+
         if ($campaign && $campaign->administrator_id == auth()->user()->_id){
             if (method_exists($this, $type) && $type==!null) { //se verifica que el tipo sea valido y no nulo
                 $graph= $this->$type($campaign['_id']); //se llama el metodo correspondiente
             }else{
                 $graph= $this->intPerDay();//default y si es un tipo diferente
             }
-            $data=array_merge($campaign->toArray(),$graph->toArray());
+//            $data=array_merge($campaign->toArray(),$graph->toArray());
 //            $campaign->append(array('users'=> $graph));
 //            dd($campaign);
-            return view('analytics.single', $data);
+            return view('analytics.single', $campaign);
         }else {
             return redirect()->route('campaigns::index')->with('data', 'errorCamp');
 //            return redirect()->action('CampaignsController@index')->with('data', 'error');
@@ -50,7 +51,7 @@ class AnalyticsController extends Controller
 
     private function intPerDay($id)
     {
-        echo $id;
+//        echo $id;
     }
 
     private function genderAge($id)

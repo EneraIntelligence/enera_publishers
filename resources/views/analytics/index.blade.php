@@ -1,4 +1,9 @@
 @extends('layouts.main')
+@section('title', ' - Analytics')
+@section('head_scripts')
+    {!! HTML::style(asset('assets/css/analytics.css')) !!}
+@stop
+
 
 @section('content')
     <div id="page_content">
@@ -19,17 +24,17 @@
                             </div>
                             <div class="user_heading_avatar">
                                 <div>
-                                    <div id="circle" style="max-width:98px;max-height:98px;margin:auto;">
-                                        <img style="background-image:none!important;margin:-96px 9px;"
-                                             src="{!! URL::asset('images/icons/'.$interaction['name'].'.svg') !!}"
-                                             alt="producto"/>
+                                    <div id="circle">
+                                        {{--<img style="background-image:none!important;margin:-96px 9px;"--}}
+                                             {{--src="{!! URL::asset('images/icons/'.$interaction['name'].'.svg') !!}"--}}
+                                             {{--alt="producto"/>--}}
                                     </div>
                                 </div>
                             </div>
                             <div class="user_heading_content">
                                 <h2 class="heading_b uk-margin-bottom"><span
                                             class="uk-text-truncate">{{ $name }} </span><span
-                                            class="sub-heading">{{ $interaction['name'] }}</span>
+                                            class="sub-heading">{{ $interaction['name']}}</span>
                                 </h2>
                             </div>
                             <a class="md-fab md-fab-small md-fab-accent {!! Publishers\Libraries\CampaignStyleHelper::getStatusColor($status) !!}"
@@ -193,6 +198,13 @@
                 y: {
                     padding: {top: 200, bottom: 0}
                 }
+            },
+            padding: {
+                right: 50,
+                left: 50
+            },
+            onresized: function () {
+                console.log('Hola mundo');
             }
         });
 

@@ -1,3 +1,8 @@
+@media (max-width: 340px) {
+  .profile_mobile {
+    padding-left: 0 !important; } }
+
+
 .label_gray
 {
   top: -6px;
@@ -9,4 +14,14 @@
   pointer-events: none;
   -webkit-transition: all 150ms ease-out;
   transition: all 150ms ease-out;
+}
+
+.img{
+  background-image:none!important;
+}
+
+.canvasloader-container{
+  width: 70px;
+  height: 70px;
+  margin: -55px auto 0 auto;
 }

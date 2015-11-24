@@ -242,7 +242,7 @@
                         </li>
                         <li data-uk-dropdown="{mode:'click'}">
                             <a href="#" class="user_action_image">
-                                {{--<img class="md-user-image" src="assets/img/avatars/avatar_11_tn.png" alt=""/>--}}
+                                {{--<img class="md-user-image" src="{!!URL::asset('images/avatar/'. $user->image )  !!}" alt="{{$user->name['first']}}"style="border-radius: 50%; height: 35px; width: 35px;"/>--}}
                                 <i class="material-icons md-36" style="color: white;">account_circle</i>
                             </a>
 

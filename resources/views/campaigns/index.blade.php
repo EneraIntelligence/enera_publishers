@@ -1,23 +1,23 @@
 @extends('layouts.main')
-
+@section('title', ' -  Campaña')
+@section('head_scripts')
+    {!! HTML::style(asset('assets/css/campaign.css')) !!}
+@endsection
 @section('content')
 
 
     <div id="page_content">
 
-        <div class="uk-grid" style="margin-top: 20px;">
-
-            <div class="uk-width-8-10 uk-container-center" style="padding:0 20px 0 60px;">
-
+        <div class="uk-grid"  id="grid">
+            <div class="uk-width-8-10 uk-container-center"  id="container-center">
                 <h4 class="heading_a uk-align-left" style="display:inline-block;">Campañas</h4>
 
                 <div class="uk-grid uk-align-right">
 
                     @if(count($campaigns)<=0)
-                        <div class="uk-button-dropdown" style="margin-bottom:10px; pointer-events:none; opacity:.5;"
-                             data-uk-dropdown>
+                        <div class="uk-button-dropdown"  id="dropdown" data-uk-dropdown>
                             @else
-                                <div class="uk-button-dropdown" style="margin-bottom:10px" data-uk-dropdown>
+                                <div class="uk-button-dropdown abajo" data-uk-dropdown>
                                     @endif
 
                                     <button class="md-btn">
@@ -86,8 +86,7 @@
                                 </div>
 
                                 @if(count($campaigns)<=0)
-                                    <div class="uk-button-dropdown" style="pointer-events:none; opacity:.5;"
-                                         data-uk-dropdown>
+                                    <div class="uk-button-dropdown" id="event" data-uk-dropdown>
                                         @else
                                             <div class="uk-button-dropdown" style="" data-uk-dropdown>
                                                 @endif
@@ -178,15 +177,16 @@
                                          data-date="{!! $campaign->created_at !!}"
                                          style="cursor: pointer;">
 
-                                        <div onclick="window.location.href='{!! route('campaigns::show',['id'=>$campaign->_id]) !!}'" class="scrum_task {!! CampaignStyle::getStatusColorClass( $campaign->status ) !!}"
+                                        <div onclick="window.location.href='{!! route('campaigns::show',['id'=>$campaign->_id]) !!}'"
+                                             class="scrum_task {!! CampaignStyle::getStatusColorClass( $campaign->status ) !!}"
                                              data-snippet-title="{!! $campaign->name !!}">
                                             <div class="md-card-content uk-grid">
 
                                                 <div class="interaction-icon uk-width-large-1-10 uk-hidden-small uk-width-medium-1-4 uk-hidden-medium">
-                                                    <div class="uk-vertical-align" style="height:80px"
+                                                    <div class="uk-vertical-align"  id="name"
                                                          data-uk-tooltip="{cls:'long-text'}"
                                                          title="{{$campaign->interaction['name']}} - {!! $campaign->status !!}"
-                                                         style="margin-bottom: 10px">
+                                                         >
 
                                                         <img src="{!! URL::asset('images/icons/'.
                                                                 CampaignStyle::getCampaignIcon( $campaign->interaction['name']
@@ -205,11 +205,11 @@
                                                 <div class="uk-grid-width-8-10">
 
                                                     <div class="uk-grid">
-                                                        <div class="uk-width-1-6" style="margin: 10px 0">
+                                                        <div class="uk-width-1-6 margin-10" style="">
                                                             <i class="uk-icon-calendar"></i>
                                                         </div>
 
-                                                        <div class="uk-width-5-6" style="margin: 10px 0">
+                                                        <div class="uk-width-5-6 margin-10" >
                                                             <div class="uk-progress uk-progress-danger">
                                                                 <div class="uk-progress-bar" style="width: 90%;">2 días
                                                                     restantes
@@ -217,11 +217,11 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="uk-width-1-6" style="margin: 10px 0">
+                                                        <div class="uk-width-1-6 margin-10" >
                                                             <i class="uk-icon-money"></i>
                                                         </div>
 
-                                                        <div class="uk-width-5-6" style="margin: 10px 0">
+                                                        <div class="uk-width-5-6 margin-10" >
                                                             <div class="uk-progress uk-progress-warning">
                                                                 <div class="uk-progress-bar" style="width: 40%;">$100
                                                                 </div>
@@ -231,13 +231,9 @@
 
                                                 </div>
 
-                                                <div class="uk-hidden-small uk-grid-width-5-10 uk-width-medium-2-5 uk-width-small-1-4 uk-width-large-1-3"
-                                                     id="chart_{!! $campaign->_id !!}"
-                                                     style="margin-top: 15px; height: 100px;">
+                                                <div class="uk-hidden-small uk-grid-width-5-10 uk-width-medium-2-5 uk-width-small-1-4 uk-width-large-1-3 chart_id" id="chart_{!! $campaign->_id !!}">
 
                                                 </div>
-
-
                                             </div>
 
                                             <!--
@@ -273,47 +269,50 @@
 
                 </div>
             </div>
+        </div>
+    </div>
+    <!-- end campaigns content -->
+@stop
 
-            <!-- end campaigns content -->
-            @stop
+@section('scripts')
+    <script>
+        var error = '{{session('data')}}';
+        if (error == 'errorCamp') {
+            UIkit.notify("<i class='material-icons uk-icon-large'> &#xE002; </i> &nbsp;&nbsp;La campaña no existe o es inaccesible. <span style='float:right'><i class='material-icons uk-icon-large'> clear </i></span>", {
+                timeout: 0,
+                status: 'danger'
+            });
+        }
 
-            @section('scripts')
-                <script>
-                    var error = '{{session('data')}}';
-                    if(error=='errorCamp')
-                    {
-                        UIkit.notify("<i class='material-icons uk-icon-large'> &#xE002; </i> &nbsp;&nbsp;La campaña no existe o es inaccesible. <span style='float:right'><i class='material-icons uk-icon-large'> clear </i></span>", {timeout: 0,status:'danger'});
+                @foreach($campaigns as $campaign)
+        var chart = c3.generate({
+                    bindto: '#chart_{!! $campaign->_id !!}',
+                    data: {
+                        columns: [
+                            ['data1', 30, 200, 100, 400],
+                            ['data2', 130, 100, 140, 200]
+                        ],
+                        type: 'bar'
+                    },
+                    bar: {
+                        width: {
+                            ratio: 0.5 // this makes bar width 50% of length between ticks
+                        }
+                        // or
+                        //width: 100 // this makes bar width 100px
+                    },
+                    axis: {
+                        y: {
+                            tick: {
+                                count: 2
+                            }
+                        }
+                    },
+                    legend: {
+                        show: false
                     }
+                });
 
-                            @foreach($campaigns as $campaign)
-                    var chart = c3.generate({
-                                bindto: '#chart_{!! $campaign->_id !!}',
-                                data: {
-                                    columns: [
-                                        ['data1', 30, 200, 100, 400],
-                                        ['data2', 130, 100, 140, 200]
-                                    ],
-                                    type: 'bar'
-                                },
-                                bar: {
-                                    width: {
-                                        ratio: 0.5 // this makes bar width 50% of length between ticks
-                                    }
-                                    // or
-                                    //width: 100 // this makes bar width 100px
-                                },
-                                axis: {
-                                    y: {
-                                        tick: {
-                                            count: 2
-                                        }
-                                    }
-                                },
-                                legend: {
-                                    show: false
-                                }
-                            });
-
-                    @endforeach
-                </script>
+        @endforeach
+    </script>
 @stop
