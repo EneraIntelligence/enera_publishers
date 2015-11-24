@@ -24,5 +24,10 @@ class Campaign extends Model
     {
         return $this->hasMany('Publishers\CampaignLog');
     }
+
+    public function history()
+    {
+        return $this->embedsMany('Publishers\CampaignHistory', 'history');
+    }
     // end relations
 }

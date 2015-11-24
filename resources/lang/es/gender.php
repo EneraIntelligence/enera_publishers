@@ -7,5 +7,5 @@
  */
 return [
     'male' => 'hombre|hombres',
-    'famele' => 'mujer|mujeres'
+    'female' => 'mujer|mujeres'
 ];
