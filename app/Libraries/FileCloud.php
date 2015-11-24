@@ -14,7 +14,7 @@ use League\Flysystem\Filesystem;
 class FileCloud
 {
     protected $adapter;
-    protected $filesysteam;
+    public $filesystem;
     protected $file;
 
     public function __construct()
@@ -25,7 +25,7 @@ class FileCloud
             'username' => 'forge',
             'password' => '9X0I9k3EFgYIejMRT0T8',
 //            'privateKey' => 'C:\Users\Eder\key',
-            'privateKey' => '/Users/Arodriguez/.ssh/id_rsa',
+            'privateKey' => '/Users/usuario/.ssh/id_rsa',
             'root' => '/home/forge/prueba',
             'timeout' => 10,
             'directoryPerm' => 0755
@@ -68,8 +68,8 @@ class FileCloud
         return $this->filesystem->stream(function () use ($stream) {
             fpassthru($stream);
         }, 200, [
-            "Content-Type" => $this->filesysteam->getMimetype($fileName),
-            "Content-Length" => $this->filesysteam->getSize($fileName),
+            "Content-Type" => $this->filesystem->getMimetype($fileName),
+            "Content-Length" => $this->filesystem->getSize($fileName),
             "Content-disposition" => "attachment; filename=\"" . basename($fileName) . "\"",
         ]);
 //        return$contents;

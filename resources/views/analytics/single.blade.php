@@ -2,11 +2,12 @@
 @extends('layouts.main')
 
 @section('content')
+    {{--{{ dd($users) }}--}}
     <div id="page_content">
         <div id="page_content_inner">
             <div class="uk-grid" data-uk-grid-margin data-uk-grid-match id="user_profile">
                 <div class="uk-width-large-1">
-                    <div class="md-card ">
+                    <div id="reporte" class="md-card ">
                         <div class="user_heading">
                             <div class="user_heading_menu" data-uk-dropdown>
                                 <i class="md-icon material-icons md-icon-light">&#xE5D4;</i>
@@ -54,14 +55,14 @@
                                         </optgroup>
                                     </select>
                                 </div>
-                                <div class="uk-width-large-1-2 uk-margin-right">
-                                    <i class="md-icon material-icons md-36 uk-float-right uk-margin-right">print</i>
+                                <div id="print" class="uk-width-large-1-2 uk-margin-right">
+                                    <i class="md-icon material-icons md-36 uk-float-right uk-margin-right" href="">print</i>
                                 </div>
                             </div>
 
                         {{-- graficas --}}
-                        <div class="uk-width-large-1-1 uk-margin-top ">
-                            <div id="chart1" class="uk-width-large-1-1 uk-margin-right">
+                        <div id="grafica" class="uk-width-large-1-1 uk-margin-top ">
+                            <div id="{{ $type }}" class="uk-width-large-1-1 uk-margin-right">
 
                             </div>
                             <div class="uk-width-large-1-2 uk-margin-left">
@@ -85,10 +86,48 @@
     {!! HTML::script('bower_components/ionrangeslider/js/ion.rangeSlider.min.js') !!}
     {!! HTML::script('bower_components/jquery.easy-pie-chart/dist/jquery.easypiechart.min.js') !!}
     {!! HTML::script('js/circle-progress.js') !!}
-    {!! HTML::style('css/show.css') !!}
+    {!! HTML::script('js/printThis.js') !!}
     <script>
         $( document ).ready(function() {
             console.log( "ready!" );
+
+            $('#print').click(function() {
+                Popup($('#reporte').html());
+//                print($('#reporte'));
+            });
+
+/*            function print(data){
+                $(data).printThis({
+                    debug: false,              //!* show the iframe for debugging
+                    importCSS: true,           //!* import page CSS
+                    printContainer: true,      //!* grab outer container as well as the contents of the selector
+                    loadCSS: "public/bower_components/kendo-ui-core/styles/kendo.common-material.min.css", //!* path to additional css file
+                    loadCSS: "public/bower_components/kendo-ui-core/styles/kendo.material.min.css", //!* path to additional css file
+                    pageTitle: "Grafica",             //!* add title to print page
+                    removeInline: false        //!* remove all inline styles from print elements
+                });
+            }*/
+
+//                       funcion nativa
+                    function Popup(data)
+                    {
+                        var mywindow = window.open('', 'my div', 'height=600,width=800');
+                        mywindow.document.write('<html><head><title>my div</title>');
+                        /*optional stylesheet*/
+                        mywindow.document.write('<link rel="stylesheet" href="public/bower_components/kendo-ui-core/styles/kendo.common-material.min.css" type="text/css" />');
+                        mywindow.document.write('</head><body >');
+                        mywindow.document.write(data);
+                        mywindow.document.write('</body></html>');
+
+                        mywindow.document.close(); // necessary for IE >= 10
+                        mywindow.focus(); // necessary for IE >= 10
+
+                        mywindow.print();
+                        mywindow.close();
+
+                        return true;
+                    }
+
             /***  codigo para la animación del circulo    ***/
             $('#circle').circleProgress({ //se pasa como parametro el id o elemento que se va animar
                 value: 0.5{{--{{$porcentaje}}--}}, //lo que se va a llenar con el color
@@ -177,7 +216,7 @@
          });*/
 
         var chart2 = c3.generate({
-            bindto: '#chart2',
+            bindto: '#genderAge',
             data: {
                 columns: [
                     ['Mujeres', 30, 200, 100, 400, 150, 250],

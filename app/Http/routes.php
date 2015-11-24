@@ -29,11 +29,17 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'reports', 'as' => 'reports::'], function () {
         Route::get('/', ['as' => 'index', 'uses' => 'ReportsController@index']);
         Route::get('/single', ['as' => 'single', 'uses' => 'ReportsController@single']);
+        Route::get('/invoice',['as'=>'invoice','uses' => 'PdfController@invoice']);
     });
 
     Route::group(['prefix' => 'analytics', 'as' => 'analytics::'], function () {
         Route::get('/', ['as' => 'index', 'uses' => 'AnalyticsController@index']);
         Route::get('/{id}/{type?}',['as' => 'single', 'uses' => 'AnalyticsController@single']);
+    });
+
+    Route::group(['prefix' => 'pdf', 'as' => 'pdf::'], function () {
+        Route::get('/print',['as'=>'invoice'], 'PdfController@invoice');
+//        Route::get('/print', 'PdfController@invoice');
     });
 
     Route::group(['prefix' => 'profile', 'as' => 'profile::'], function () {

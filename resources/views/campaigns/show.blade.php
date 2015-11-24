@@ -39,11 +39,7 @@
                         </div>
                         <div class="md-card-content">
                             <div class="user_content">
-                                <ul id="user_profile_tabs" class="uk-switcher uk-margin"
-                                    data-uk-tab="{connect:'#user_profile_tabs_content'}">
-                                    <li>
-                                        <div class="uk-grid uk-margin-medium-top uk-width-large-1-1 "
-                                             data-uk-grid-margin>
+                                        <div class="uk-grid uk-margin-medium-top uk-width-large-1-1 " data-uk-grid-margin>
                                             <div class="uk-width-large-1-2">
                                                 <div class="uk-grid">
                                                     <div class="uk-width-large-1-2">
@@ -163,79 +159,70 @@
                                                         </ul>
                                                     </div>
                                                 </div>
+
+                                                <div class="md-list-content uk-width-large-1-1">
+                                                    <h4 class="heading_c uk-margin-small-bottom">Elementos de la campaña</h4>
+                                                    @if($cam->interaction['name'] == 'banner'| $cam->interaction['name'] ==  'banner_link')
+                                                        <ul>
+                                                            <li>
+
+                                                            </li>
+                                                            <li>
+
+                                                            </li>
+                                                        </ul>
+                                                        <div class="md-list-heading uk-width-large-1-2" style="color: #1e88e5;">
+                                                            Imagen chica :
+                                                            <span class="" data-uk-modal="{target:'#modal_lightbox'}">{!! $cam->content['image'] !!}</span>
+                                                            <div class="uk-modal" id="modal_lightbox">
+                                                                <div class="uk-modal-dialog uk-modal-dialog-lightbox">
+                                                                    <button type="button" class="uk-modal-close uk-close uk-close-alt"></button>
+                                                                    <img src="{!! URL::asset('images/600x602.jpg') !!}" alt=""/>
+                                                                    <div class="uk-modal-caption">Lorem </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="md-list-content uk-width-large-1-2" style=" color: #1e88e5;">
+                                                            Imagen grande :
+                                                            <span class="" data-uk-modal="{target:'#modal_lightbox'}">{!! $cam->content['image'] !!}</span>
+                                                            <div class="uk-modal" id="modal_lightbox">
+                                                                <div class="uk-modal-dialog uk-modal-dialog-lightbox">
+                                                                    <button type="button" class="uk-modal-close uk-close uk-close-alt"></button>
+                                                                    <img src="{!! URL::asset('images/600x602.jpg') !!}" alt=""/>
+                                                                    <div class="uk-modal-caption">Lorem </div>
+                                                                </div>
+                                                            </div>
+                                                            {{--<span class="uk-text-small uk-text-muted"><img class="uk-width-large-2-6" src="{!! URL::asset('images/'.$content['imageng']) !!}" alt=""></span>--}}
+                                                        </div>
+                                                        <div class="md-list-content uk-width-large-1-2">
+                                                                    <span class="md-list-heading">
+                                                                        <a>Link a redireccionar </a>
+                                                                    </span>
+                                                            <div class="uk-text-small uk-text-muted">
+                                                                <a class="md-btn md-btn-primary"
+                                                                   href="http://{{ $cam->content['link'] }}" >
+                                                                    <span class="uk-display-block">{!! $cam->content['link'] !!}</span>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    @endif
+                                                </div>
                                             </div>
+
                                             <div class="uk-width-large-1-2">
                                                 <div class="md-card">
                                                     <div class="md-card-content">
-                                                        <div class="uk-float-right uk-margin-top uk-margin-small-right"><span class="peity_visitors peity_data" style="display: none;">5,3,9,6,5,9,7</span><svg class="peity" height="28" width="48"><rect fill="#d84315" x="1.3714285714285717" y="12.444444444444443" width="4.114285714285715" height="15.555555555555557"></rect><rect fill="#d84315" x="8.228571428571428" y="18.666666666666668" width="4.114285714285716" height="9.333333333333332"></rect><rect fill="#d84315" x="15.085714285714287" y="0" width="4.1142857142857086" height="28"></rect><rect fill="#d84315" x="21.942857142857147" y="9.333333333333336" width="4.114285714285707" height="18.666666666666664"></rect><rect fill="#d84315" x="28.800000000000004" y="12.444444444444443" width="4.114285714285707" height="15.555555555555557"></rect><rect fill="#d84315" x="35.65714285714286" y="0" width="4.114285714285707" height="28"></rect><rect fill="#d84315" x="42.51428571428572" y="6.222222222222221" width="4.114285714285707" height="21.77777777777778"></rect></svg></div>
-                                                        <div class="uk-float-right uk-margin-top uk-margin-small-right"><span class="peity_visitors peity_data">5,3,9,6,5,9,7</span></div>
-                                                        <span class="uk-text-muted uk-text-small">Visitors (last 7d)</span>
-                                                        <h1 class="jumbo" id="myTargetElement">0</h1>
-
-                                                    </div>
-                                                </div>
-                                                <div class="md-card">
-                                                    <div class="md-card-content">
                                                         <h3 class="heading_a uk-margin-bottom">Statistics</h3>
-                                                        <div id="ct-chart" class="chartist"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="uk-grid uk-margin-medium-top" data="uk-grid-margin">
-                                                    <div class="uk-width-1-1">
-                                                        <h4 class="heading_c uk-margin-small-bottom">Reportes</h4>
 
-                                                        <div class="uk-width-medium-1-6">
-                                                            <a class="md-btn md-btn-primary"
-                                                               href="http://localhost:8000/analytics/single">
-                                                                <span class="uk-display-block">Reportes</span>
-                                                            </a>
-                                                        </div>
+                                                        <div id="ct-chart" class="chartist"></div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
 
-                                    </li>
-                                </ul>
                                 <ul class="md-list md-list-addon">
-                                    <hr class="md-hr">
-                                    <div class="uk-width-large-1-1">
-                                        <h4 class="heading_c uk-margin-small-bottom">Elementos de la campaña</h4>
-                                        <ul class="md-list">
-                                            @if($cam->interaction['name'] == 'banner')
-
-
-                                            @endif
-                                            <li>
-                                                <div class="uk-grid ">
-                                                    <div class="md-list-content uk-width-large-1-3">
-                                                        <span class="md-list-heading"><a href="">imagen</a></span>
-                                                        <span class="uk-text-small uk-text-muted"><img
-                                                                    class="uk-width-small-2-6" src="{{--{{ $img }}--}}"
-                                                                    alt=""></span>
-                                                    </div>
-                                                    <div class="md-list-content uk-width-large-1-3">
-                                                        <span class="md-list-heading"><a href="">imagen</a></span>
-                                                        {{--<span class="uk-text-small uk-text-muted"><img class="uk-width-large-2-6" src="{!! URL::asset('images/'.$content['imageng']) !!}" alt=""></span>--}}
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="md-list-content uk-width-large-1-2">
-                                                    <span class="md-list-heading"><a href="">Link a
-                                                            redireccionar</a></span>
-                                                    <span class="uk-text-small uk-text-muted"> {{--{{ $content['link'] }}--}}</span>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </ul>
-                                <ul class="md-list md-list-addon">
-                                    <hr class="md-hr">
                                     <div class="uk-grid uk-margin-medium-top" data="uk-grid-margin">
                                         <div class="uk-width-1-1">
-                                            <h4 class="heading_c uk-margin-small-bottom">Reportes</h4>
-
                                             <div class="uk-width-medium-1-6">
                                                 <a class="md-btn md-btn-primary"
                                                    href="http://localhost:8000/analytics/single">
@@ -271,7 +258,7 @@
         //        $("#age_slider").ionRangeSlider();
         //        $("#ionslider_3").ionRangeSlider();
         $('#circle').circleProgress({
-            value: 10{{--{{$porcentaje}}--}}, //lo que se va a llenar con el color
+            value: {{$cam->porcentaje}}, //lo que se va a llenar con el color
             size: 98,   //tamaño del circulo
             startAngle: -300, //de donde va a empezar la animacion
             reverse: true, //empieza la animacion al contrario

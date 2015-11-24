@@ -353,6 +353,7 @@ class CampaignsController extends Controller
                     break;
             }
 
+            $campaign->porcentaje = $porcentaje;
             return view('campaigns.show', [$campaign, 'cam' => $campaign]);
         } else {
             return redirect()->route('campaigns::index')->with('data', 'errorCamp');
