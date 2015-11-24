@@ -1,5 +1,8 @@
 @extends('layouts.main')
 @section('title', ' - Perfil')
+@section('head_scripts')
+    {!! HTML::style(asset('assets/css/profile.css')) !!}
+@stop
 @section('content')
     <div id="page_content">
         <div id="page_content_inner">
@@ -19,7 +22,7 @@
                             </div>
                             <div class="user_heading_avatar">
                                 <div>
-                                    <img style="background-image:none!important;"
+                                    <img  id="img"
                                          src="{!!URL::asset('images/avatar/'. $user->image )  !!}" alt="User avatar"/>
                                 </div>
                             </div>

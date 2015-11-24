@@ -353,7 +353,7 @@ class CampaignsController extends Controller
                     break;
             }
 
-            return view('campaigns.show', $campaign);
+            return view('campaigns.show', [$campaign, 'cam' => $campaign]);
         } else {
             return redirect()->route('campaigns::index')->with('data', 'errorCamp');
         }

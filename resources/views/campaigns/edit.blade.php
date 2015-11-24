@@ -1,5 +1,8 @@
 @extends('layouts.main')
-
+@section('title', ' - Editar Campaña')
+@section('head_scripts')
+    {!! HTML::style(asset('assets/css/campaign.css')) !!}
+@endsection
 @section('content')
     <div class="uk-width-large-1-1">
         <div class="md-card">
@@ -11,11 +14,11 @@
             <div class="md-card-content">
                 <div class="uk-grid" data-uk-grid-margin>
                     <div class="uk-width-1-1">
-                        <div id="gmap_markers" class="gmap" style="width:100%;height:500px;"></div>
+                        <div id="gmap_markers" class="gmap" ></div>
                     </div>
                 </div>
             </div>
-            <div id="map" style="width: 500px; height: 400px;">
+            <div id="map" >
 
             </div>
         </div>

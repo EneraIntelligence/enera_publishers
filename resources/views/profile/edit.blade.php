@@ -1,12 +1,7 @@
 @extends('layouts.main')
 @section('title', ' - Editar Perfil')
 @section('head_scripts')
-    {!! HTML::style(asset('css/profile.css')) !!}
-    <style>
-        @media (max-width: 340px) {
-            .profile_mobile {
-                padding-left: 0 !important; } }
-    </style>
+    {!! HTML::style(asset('assets/css/profile.css')) !!}
 @endsection
 
 @section('content')
@@ -22,7 +17,7 @@
                                 <div class="user_heading_avatar fileinput fileinput-new" data-provides="fileinput">
                                     <div class="user_heading_avatar">
                                         <div>
-                                            <img style="background-image:none!important;" id="img"
+                                            <img id="img"
                                                  src="{!!URL::asset('images/avatar/'. $user->image )  !!}"
                                                  alt="User avatar"/>
                                         </div>
@@ -49,7 +44,7 @@
                                 {{--id="user_edit_submit">--}}
                                 {{--<i class="material-icons">&#xE161;</i>--}}
                                 {{--</button>--}}
-                                <div style=" width: 70px; height: 70px; margin: -55px auto 0 auto;"
+                                <div
                                      id="canvasloader-container" class="wrapper"></div>
                             </div>
                             <div class="user_content">
