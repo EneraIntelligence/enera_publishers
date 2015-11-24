@@ -14,6 +14,7 @@ use Auth;
 use Publishers\Campaign;
 use Publishers\Branche;
 use Publishers\Item;
+use Publishers\Subcampaign;
 use Publishers\Libraries\FileCloud;
 use Mail;
 
@@ -157,7 +158,7 @@ class CampaignsController extends Controller
         if ($campaign && $campaign->administrator_id == auth()->user()->_id) {
             //the user can manage the campaign:
 
-            return view('campaigns.mailing');//, compact('branches', 'noCreateBtn', 'campaignName'));
+            return view('campaigns.mailing', array("campaign_id"=>$id) );//, compact('branches', 'noCreateBtn', 'campaignName'));
 
         } else {
             //not the user's campaign
@@ -167,17 +168,54 @@ class CampaignsController extends Controller
 
     public function sendMailing(Request $request)
     {
-        $content = Input::get("mail"); //mail content
+        //TODO falta validar campaña con usuario
 
-        //$user = Auth::user();
+        $campaign_id = Input::get("campaign_id");
 
-        Mail::send('emails.test', ['content' => $content], function ($m) use ($content) {
-            $m->from('contacto@enera.mx', 'Contacto Enera');
+        $campaign = Campaign::find($campaign_id); //get the campaign
 
-            $m->to("me@ederdiaz.com", "Eder")->subject('asunto');
-        });
+        if ($campaign && $campaign->administrator_id == auth()->user()->_id)
+        {
 
-        return "mail enviado!"; //view('campaigns.create', compact('branches', 'noCreateBtn', 'campaignName'));
+            //the user can manage the campaign
+
+            //getting input fields
+            $from = Input::get("from");
+            $from_mail = Input::get("from_mail");
+            $subject = Input::get("subject");
+            $content = Input::get("content");
+
+            //save subcampaign on DB
+            $subCampaign = new Subcampaign();
+            $subCampaign->campaign_id=$campaign_id;
+            $subCampaign->from=$from;
+            $subCampaign->from_mail=$from_mail;
+            $subCampaign->subject=$subject;
+            $subCampaign->content=$content;
+            $subCampaign->save();
+
+            //setup mail data
+            $mail = array(
+                "from"=>$from,
+                "from_mail"=>$from_mail,
+                "subject"=>$subject,
+                "content"=>$content
+            );
+
+            Mail::send('emails.test', ['content' => $mail["content"]], function ($m) use ($mail) {
+                $m->from($mail["from_mail"], $mail["from"]);
+
+                //TODO tomar mails de campaña y mandar a todos
+                $m->to("me@ederdiaz.com", "Eder")->subject($mail["subject"]);
+            });
+
+            //TODO mostrar vista de subcampaña
+            return "mail enviado!"; //view('campaigns.create', compact('branches', 'noCreateBtn', 'campaignName'));
+
+        } else {
+            //not the user's campaign
+            return redirect()->route('campaigns::index')->with('data', 'errorCamp');
+        }
     }
 
     /**

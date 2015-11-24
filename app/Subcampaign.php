@@ -6,5 +6,5 @@ use Jenssegers\Mongodb\Model;
 
 class Subcampaign extends Model
 {
-    protected $fillable = ['campaign_id', 'subject', 'content'];
+    protected $fillable = ['from', 'from_mail', 'campaign_id', 'subject', 'content'];
 }
