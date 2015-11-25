@@ -14,7 +14,7 @@ use League\Flysystem\Filesystem;
 class FileCloud
 {
     protected $adapter;
-    public $filesystem;
+    protected $filesystem;
     protected $file;
 
     public function __construct()
@@ -34,7 +34,7 @@ class FileCloud
         $this->filesystem = new Filesystem($this->adapter);
     }
 
-    public function subir($filename, $uploadedfile)
+    public function put($filename, $uploadedfile)
     {
         $this->filesystem->put($filename, $uploadedfile);
     }
@@ -47,6 +47,7 @@ class FileCloud
     public function getFile($fileName)
     {
         $contents = $this->filesystem->read($fileName);
+        return $contents;
     }
 
     public function getImagen($fileName)

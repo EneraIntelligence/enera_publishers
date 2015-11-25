@@ -239,7 +239,6 @@ class CampaignsController extends Controller
 
 
         $fc = new FileCloud();
-        $filesystem = $fc->filesystem;
 
         //$file = Input::file('image');
 
@@ -252,7 +251,7 @@ class CampaignsController extends Controller
 
             //get uploaded file and copy it to cloud
             $uploadedFile = Storage::get($filename);
-            $fileSaved = $filesystem->put($filename, $uploadedFile);
+            $fileSaved = $fc->put($filename, $uploadedFile);
             //delete server file
             Storage::delete($filename);
 
