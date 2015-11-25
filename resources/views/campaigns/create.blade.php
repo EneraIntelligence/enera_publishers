@@ -74,7 +74,7 @@
                                 <!-- mailing_list preview -->
                                 <div class="preview mailing-list none">
                                     <img class="banner-1 banner-2 view" src="http://placehold.it/200x250?text=Tu+banner" alt="Tu banner">
-                                    <div  class="md-btn md-btn-primary boton">Suscribirme</div>
+                                    <div style="top: 455px;" class="md-btn md-btn-primary boton">Suscribirme</div>
                                     <a id="Suscribirme"  href="">Deseo navegar en internet sin suscribirme</a>
 
                                     <div class="uk-text-center center-text" >
@@ -97,8 +97,13 @@
 
                                 <!-- survey preview -->
                                 <div class="preview survey none">
-                                    <img class="banner-1 banner-2 view"  src="http://placehold.it/200x250?text=Tu+banner" alt="Tu banner">
-                                    <div  class="md-btn md-btn-primary boton">Navegar en internet</div>
+                                    <img class="banner-1 banner-2 view"  src="http://placehold.it/200x150?text=Tu+banner" alt="Tu banner">
+                                    <h3 class="uk-text-center center-text" style="top:325px; width:70%; position:absolute;">¿Pregunta 1?</h3>
+                                    <div style="top:387px" class="md-btn md-btn-primary boton">A</div>
+                                    <div class="uk-clearfix"></div>
+                                    <div style="top:427px" class="md-btn md-btn-primary boton">B</div>
+                                    <div class="uk-clearfix"></div>
+                                    <div class="md-btn md-btn-primary boton">C</div>
 
                                     <div class="uk-text-center center-text">
                                         Crea una encuesta que contestarán los usuarios de redes Enera.
