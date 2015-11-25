@@ -141,7 +141,12 @@ create_campaign_helper =
                     errorDiv.html('<span class="parsley-required uk-text-center md-input-danger">' +
                         'Hubo un problema al subir tu imagen.' +
                         '</span>');
-                    modal.hide()
+
+                    setTimeout(function(){
+                        modal.hide();
+                    },200);
+
+
                 });
 
             }
@@ -153,7 +158,10 @@ create_campaign_helper =
                     'El tamaño de la imagen debe ser de <br>'+width+' pixeles de ancho por '+height+' pixeles de alto.' +
                     '</span>');
 
-                modal.hide()
+                setTimeout(function(){
+                    modal.hide();
+                },200);
+
 
             }
         };

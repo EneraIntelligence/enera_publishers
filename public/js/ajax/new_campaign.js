@@ -30,8 +30,8 @@ new_campaign =
         }
         else
         {
-            UIkit.modal.blockUI('<div class=\'uk-text-center\'>' +
-                '<img class=\'uk-margin-top\' src=\'assets/img/spinners/spinner.gif\' alt=\'\'>');
+            UIkit.modal.blockUI('<div class=\'uk-text-center\'> Creando campaña... <br>' +
+                '<img class=\'uk-margin-top\' src=\'assets/img/spinners/spinner.gif\' alt=\'\'></div>');
             window.location=new_campaign.url+"?name="+name;
         }
     }
