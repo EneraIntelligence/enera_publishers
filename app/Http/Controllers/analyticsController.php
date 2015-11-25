@@ -34,7 +34,8 @@ class AnalyticsController extends Controller
 //        $campaign = Campaign::where('_id',$id)->Lists('name','administrator_id','interaction'); //busca la campaña
 //        $campaign = Campaign::where('_id',$id)->get(array('name','administrator_id','interaction')); //busca la campaña
 //        $campaign=$campaign->toArray();
-        $data['name'] = $campaign->name;
+//        dd($campaign);
+        $data['name']=$campaign->name;
         $data['interaction']=$campaign->interaction;
 //        dd($data);
         //valida que la campaña le pertenezca al usuario
@@ -59,7 +60,7 @@ class AnalyticsController extends Controller
     private function intPerDay($id) //interacciones por dia
     {//sacar un conteo de cuantas interaccion se hacen por dia 5 dias atras
         $fecha = new DateTime('-1 days');
-//        var_dump($fecha);
+        var_dump($fecha);
         $fecha = $fecha->format('Y-m-d');
         $fecha = new MongoDate(strtotime($fecha.'00:00:00'));
 //        dd($fecha);
@@ -70,7 +71,7 @@ class AnalyticsController extends Controller
         $dias['dia3']=CampaignLog::where('campaign_id',$id)->where('updated_at', new DateTime('-3 days'))->get();
         $dias['dia4']=CampaignLog::where('campaign_id',$id)->where('updated_at', new DateTime('-4 days'))->get();
         $dias['dia5']=CampaignLog::where('campaign_id',$id)->where('updated_at', new DateTime('-5 days'))->get();*/
-//        dd($dia);
+        dd($dia);
         /*$Logs = CampaignLog::groupBy('user')->where('campaign_id',$id)
             ->where('updated_at', '>', new DateTime('-5 days'))->get(array('user'));
         $Logs=$Logs->toArray();*/
