@@ -260,7 +260,7 @@
                                         <div class="uk-width-1-1">
                                             <div class="uk-width-medium-1-6">
                                                 <a class="md-btn md-btn-primary"
-                                                   href="http://localhost:8000/analytics/single">
+                                                   href="{{route('analytics::single', ['id' => $cam->_id])}}">
                                                     <span class="uk-display-block">Reportes</span>
                                                 </a>
                                             </div>
