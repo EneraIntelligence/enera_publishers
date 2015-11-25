@@ -2,7 +2,6 @@
 @extends('layouts.main')
 
 @section('content')
-    {{--{{ dd($users) }}--}}
     <div id="page_content">
         <div id="page_content_inner">
             <div class="uk-grid" data-uk-grid-margin data-uk-grid-match id="user_profile">
@@ -130,7 +129,7 @@
 
             /***  codigo para la animación del circulo    ***/
             $('#circle').circleProgress({ //se pasa como parametro el id o elemento que se va animar
-                value: 0.5{{--{{$porcentaje}}--}}, //lo que se va a llenar con el color
+                value: {{$cam->porcentaje}}, //lo que se va a llenar con el color
                 size: 98,   //tamaño del circulo
                 startAngle: -300, //de donde va a empezar la animacion
                 reverse: true, //empieza la animacion al contrario

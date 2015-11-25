@@ -152,6 +152,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
 
+
     ],
 
     /*
@@ -204,6 +205,7 @@ return [
         'HTML'      => Collective\Html\HtmlFacade::class,
         'CampaignStyle'  => Publishers\Libraries\CampaignStyleHelper::class,
         'PDF' => 'Barryvdh\DomPDF\Facade',
+
     ],
 
 ];

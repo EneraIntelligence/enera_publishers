@@ -34,7 +34,7 @@ class AnalyticsController extends Controller
 //        $campaign = Campaign::where('_id',$id)->Lists('name','administrator_id','interaction'); //busca la campaña
 //        $campaign = Campaign::where('_id',$id)->get(array('name','administrator_id','interaction')); //busca la campaña
 //        $campaign=$campaign->toArray();
-        dd($campaign);
+//        dd($campaign);
         $data['name']=$campaign->name;
         $data['interaction']=$campaign->interaction;
 //        dd($data);
