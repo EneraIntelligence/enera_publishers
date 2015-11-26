@@ -1,4 +1,22 @@
 @extends('layouts.main')
+@section('head_scripts')
+    <style>
+        ul {
+            font:bold 18px times;
+        }
+
+        li p {
+            font: 400 14px/18px Roboto,sans-serif;
+            color:#000000;
+            margin-bottom: 0;
+        }
+
+        .p{
+            list-style: none;
+
+        }
+    </style>
+@endsection
 
 @section('content')
     <div id="page_content">
@@ -160,58 +178,143 @@
                                             </div>
                                         </div>
 
-                                                <div class="md-list-content uk-width-large-1-1">
-                                                    <h3 class="heading_c uk-margin-small-bottom">Elementos de la campaña</h3>
-                                                    @if($cam->interaction['name'] == 'banner'| $cam->interaction['name'] ==  'banner_link')
-                                                        <div class="md-list-heading uk-width-large-1-2" style="color: #1e88e5;float: left">
-                                                            Imagen chica :
-                                                            <a id="link" class="" data-uk-modal="{target:'#modal_lightbox'}">{!! $cam->content['image'] !!}</a>
-                                                            <div class="uk-modal" id="modal_lightbox">
-                                                                <div class="uk-modal-dialog uk-modal-dialog-lightbox">
-                                                                    <button type="button" class="uk-modal-close uk-close uk-close-alt"></button>
-                                                                    <img src="{!! URL::asset('images/600x602.jpg') !!}" alt=""/>
-                                                                    <div class="uk-modal-caption">Lorem </div>
-                                                                </div>
-                                                            </div>
+                                        <div class="md-list-content uk-width-large-1-1">
+                                            <h3 class="heading_c uk-margin-small-bottom">Elementos de la campaña</h3>
+                                            @if($cam->interaction['name'] == 'banner'|| $cam->interaction['name'] ==  'banner_link')
+                                                <div class="md-list-heading uk-width-large-1-2"
+                                                     style="color: #1e88e5;float: left">
+                                                    Imagen chica :
+                                                    <a id="link" class=""
+                                                       data-uk-modal="{target:'#modal_lightbox-1'}">{!! $cam->content['image'] !!}</a>
+                                                    <div class="uk-modal" id="modal_lightbox-1">
+                                                        <div class="uk-modal-dialog uk-modal-dialog-lightbox">
+                                                            <button type="button"
+                                                                    class="uk-modal-close uk-close uk-close-alt"></button>
+                                                            <img src="{!! URL::asset('images/600x602.jpg') !!}" alt=""/>
+                                                            <div class="uk-modal-caption">Lorem</div>
                                                         </div>
-                                                        <div class="md-list-content uk-width-large-1-2" style=" color: #1e88e5;float: right;">
-                                                            Imagen grande :
-                                                            <a id="link" class="" data-uk-modal="{target:'#modal_lightbox'}">{!! $cam->content['image'] !!}</a>
-                                                            <div class="uk-modal" id="modal_lightbox">
-                                                                <div class="uk-modal-dialog uk-modal-dialog-lightbox">
-                                                                    <button type="button" class="uk-modal-close uk-close uk-close-alt"></button>
-                                                                    <img src="{!! URL::asset('images/600x602.jpg') !!}" alt=""/>
-                                                                    <div class="uk-modal-caption">Lorem </div>
-                                                                </div>
-                                                            </div>
-                                                            {{--<span class="uk-text-small uk-text-muted"><img class="uk-width-large-2-6" src="{!! URL::asset('images/'.$content['imageng']) !!}" alt=""></span>--}}
-                                                        </div>
-                                                        <h3 class="md-hr" style="margin-bottom: 10px;"></h3>
-                                                        <div class="md-list-content uk-width-large-1-2" style=" color: #1e88e5;">
-                                                                    Link a redireccionar :
-                                                                <a id="link" class="" href="http://{{ $cam->content['link'] }}" target="_blank">{!! $cam->content['link'] !!}</a>
-                                                        </div>
-                                                    @endif
-                                                    @if($cam->interaction['name'] == 'captcha')
-                                                        <div>
-                                                            captacha
-                                                        </div>
-                                                    @endif
-                                                    @if($cam->interaction['name'] == 'survey')
-                                                        <div> Preguntas</div>
-                                                        <div class="md-list-content uk-width-large-1-2" style=" color: #1e88e5;">
-                                                            <span> pregunta 1 : {{ $cam->content['survey']['q1']['question'] }}</span>
-                                                            <a id="link" class="" href="http://{{ $cam->content['link'] }}" target="_blank">{!! $cam->content['survey']['question']['answers'] !!}</a>
-                                                        </div>
-
-                                                    @endif
-                                                    @if($cam->interaction['name'] == 'video')
-                                                        <div>
-                                                            video
-                                                        </div>
-                                                    @endif
+                                                    </div>
                                                 </div>
-                                            </div>
+                                                <div class="md-list-content uk-width-large-1-2"
+                                                     style=" color: #1e88e5;float: right;">
+                                                    Imagen grande :
+                                                    <a id="link" class=""
+                                                       data-uk-modal="{target:'#modal_lightbox-2'}">
+                                                        {!! $cam->content['image'] !!}</a>
+                                                    <div class="uk-modal" id="modal_lightbox-2">
+                                                        <div class="uk-modal-dialog uk-modal-dialog-lightbox">
+                                                            <button type="button"
+                                                                    class="uk-modal-close uk-close uk-close-alt"></button>
+                                                            <img src="{!! URL::asset('images/600x602.jpg') !!}" alt=""/>
+                                                            <div class="uk-modal-caption">Lorem</div>
+                                                        </div>
+                                                    </div>
+                                                    {{--<span class="uk-text-small uk-text-muted"><img class="uk-width-large-2-6" src="{!! URL::asset('images/'.$content['imageng']) !!}" alt=""></span>--}}
+                                                </div>
+                                                <h3 class="md-hr" style="margin-bottom: 10px;"></h3>
+                                                <div class="md-list-content uk-width-large-1-2"
+                                                     style=" color: #1e88e5;">
+                                                    Link a redireccionar :
+                                                    <a id="link" class="" href="http://{{ $cam->content['link'] }}"
+                                                       target="_blank">{!! $cam->content['link'] !!}</a>
+                                                </div>
+                                            @endif
+                                            @if($cam->interaction['name'] == 'captcha')
+                                                <div class="md-list-heading uk-width-large-1-2"
+                                                     style="color: #1e88e5;float: left">
+                                                    Imagen Captcha :
+                                                    <a id="link" class=""
+                                                       data-uk-modal="{target:'#captcha-image'}">
+                                                        {!! $cam->content['cover_path'] !!}</a>
+                                                    <div class="uk-modal" id="captcha-image">
+                                                        <div class="uk-modal-dialog uk-modal-dialog-lightbox">
+                                                            <button type="button"
+                                                                    class="uk-modal-close uk-close uk-close-alt"></button>
+                                                            <img src="{!! URL::asset('images/'.$cam->content['cover_path']) !!}"
+                                                                 alt="{{$cam->content['cover_path']}}"/>
+                                                            <div class="uk-modal-caption">Lorem</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="md-list-heading uk-width-large-1-2"
+                                                     style="color: #1e88e5;float: left">
+                                                    Texto Captcha :
+                                                    <a id="link" class="">
+                                                        {!! $cam->content['captcha'] !!}</a>
+                                                </div>
+                                            @endif
+                                            @if($cam->interaction['name'] == 'mailing_list')
+                                                <div class="md-list-heading uk-width-large-1-2"
+                                                     style="color: #1e88e5;float: left">
+                                                    Imagen Maling List :
+                                                    <a id="link" class=""
+                                                       data-uk-modal="{target:'#mailing-image'}">
+                                                        {!! $cam->content['image'] !!}</a>
+                                                    <div class="uk-modal" id="mailing-image">
+                                                        <div class="uk-modal-dialog uk-modal-dialog-lightbox">
+                                                            <button type="button"
+                                                                    class="uk-modal-close uk-close uk-close-alt"></button>
+                                                            <img src="{!! URL::asset('images/'.$cam->content['image']) !!}"
+                                                                 alt="{{$cam->content['cover_path']}}"/>
+                                                            <div class="uk-modal-caption">Lorem</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                            @if($cam->interaction['name'] == 'survey')
+                                                <div class="md-list-heading uk-width-large-1"
+                                                     style="color: #1e88e5;float: left">
+                                                    Imagen Encuesta :
+                                                    <a id="link" class=""
+                                                       data-uk-modal="{target:'#survey-image'}">
+                                                        {!! $cam->content['image'] !!}</a>
+                                                    <div class="uk-modal" id="survey-image">
+                                                        <div class="uk-modal-dialog uk-modal-dialog-lightbox">
+                                                            <button type="button"
+                                                                    class="uk-modal-close uk-close uk-close-alt"></button>
+                                                            <img src="{!! URL::asset('images/'.$cam->content['image']) !!}"
+                                                                 alt="{{$cam->content['cover_path']}}"/>
+                                                            <div class="uk-modal-caption">Lorem</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="md-list-content uk-width-large-1"
+                                                     style=" color: #1e88e5;">
+                                                    @foreach($cam->content['survey'] as $key => $con)
+                                                        <span>Pregunta {!! $key[1] !!} : &nbsp;{!! $con['question'] !!}</span>
+                                                        <br>
+                                                        @foreach($con['answers'] as $key => $a)
+                                                            <ul>
+                                                                <li class="p"> <p>Respuesta {!! $key[1] !!}: {!! $a !!}</p>
+                                                            </ul>
+                                                        @endforeach
+                                                    @endforeach
+
+                                                </div>
+                                            @endif
+                                            @if($cam->interaction['name'] == 'video')
+                                                <div class="md-list-heading uk-width-large-1-2"
+                                                     style="color: #1e88e5;float: left">
+                                                    Video :
+                                                    <a id="link" class=""
+                                                       data-uk-modal="{target:'#video'}">
+                                                        {!! $cam->content['video'] !!}</a>
+                                                    <div class="uk-modal" id="video">
+                                                        <div class="uk-modal-dialog uk-modal-dialog-lightbox">
+                                                            <button type="button"
+                                                                    class="uk-modal-close uk-close uk-close-alt"></button>
+                                                            <video width="600" height="300" controls>
+                                                                <source src="{!! URL::asset('videos/'.$cam->content['video']) !!}"
+                                                                        type="video/mp4">
+                                                                Your browser does not support HTML5 video.
+                                                            </video>
+                                                            {{--<div class="uk-modal-caption">Lorem</div>--}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
 
                                     <div class="uk-width-large-1-2">
                                         <div class="md-card">
@@ -247,7 +350,6 @@
                                         <div class="md-card">
                                             <div class="md-card-content">
                                                 <h3 class="heading_a uk-margin-bottom">Statistics</h3>
-
                                                 <div id="ct-chart" class="chartist"></div>
                                             </div>
                                         </div>
