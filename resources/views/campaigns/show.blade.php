@@ -281,7 +281,7 @@
                                                 <div class="md-list-content uk-width-large-1"
                                                      style=" color: #1e88e5;">
                                                     @foreach($cam->content['survey'] as $key => $con)
-                                                        <span> Pregunta {!! $key[1] !!} : {!! $con['question'] !!}</span>
+                                                        <span>Pregunta {!! $key[1] !!} : &nbsp;{!! $con['question'] !!}</span>
                                                         <br>
                                                         @foreach($con['answers'] as $key => $a)
                                                             <ul>
