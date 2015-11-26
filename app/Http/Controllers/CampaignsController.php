@@ -158,7 +158,7 @@ class CampaignsController extends Controller
         if ($campaign && $campaign->administrator_id == auth()->user()->_id) {
             //the user can manage the campaign:
 
-            return view('campaigns.mailing', array("campaign_id"=>$id) );//, compact('branches', 'noCreateBtn', 'campaignName'));
+            return view('campaigns.mailing', array("campaign_id" => $id));//, compact('branches', 'noCreateBtn', 'campaignName'));
 
         } else {
             //not the user's campaign
@@ -174,8 +174,7 @@ class CampaignsController extends Controller
 
         $campaign = Campaign::find($campaign_id); //get the campaign
 
-        if ($campaign && $campaign->administrator_id == auth()->user()->_id)
-        {
+        if ($campaign && $campaign->administrator_id == auth()->user()->_id) {
 
             //the user can manage the campaign
 
@@ -187,19 +186,19 @@ class CampaignsController extends Controller
 
             //save subcampaign on DB
             $subCampaign = new Subcampaign();
-            $subCampaign->campaign_id=$campaign_id;
-            $subCampaign->from=$from;
-            $subCampaign->from_mail=$from_mail;
-            $subCampaign->subject=$subject;
-            $subCampaign->content=$content;
+            $subCampaign->campaign_id = $campaign_id;
+            $subCampaign->from = $from;
+            $subCampaign->from_mail = $from_mail;
+            $subCampaign->subject = $subject;
+            $subCampaign->content = $content;
             $subCampaign->save();
 
             //setup mail data
             $mail = array(
-                "from"=>$from,
-                "from_mail"=>$from_mail,
-                "subject"=>$subject,
-                "content"=>$content
+                "from" => $from,
+                "from_mail" => $from_mail,
+                "subject" => $subject,
+                "content" => $content
             );
 
             Mail::send('emails.test', ['content' => $mail["content"]], function ($m) use ($mail) {
@@ -298,8 +297,7 @@ class CampaignsController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public
-    function show($id)
+    public function show($id)
     {
         $campaign = Campaign::find($id); //busca la campaña
 
@@ -365,8 +363,7 @@ class CampaignsController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public
-    function edit($id)
+    public function edit($id)
     {
         return view('campaigns.edit', compact('campaign'));
     }
@@ -378,8 +375,7 @@ class CampaignsController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public
-    function update(Request $request, $id)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -390,9 +386,25 @@ class CampaignsController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public
-    function destroy($id)
+    public function destroy($id)
     {
         //
     }
+
+    private function genderAge($id)
+    {   //        $today =date( "Y-m-d",mktime(0, 0, 0, date("m"),date("d")-5, date("Y")));
+        //se obtiene de los logs los usuarios de 5 dias atras
+        $Logs = CampaignLog::groupBy('user')->where('campaign_id',$id)
+            ->where('updated_at', '>', new DateTime('-5 days'))->get(array('user'));
+        $Logs=$Logs->toArray();
+//        dd($Logs);
+        foreach ($Logs as $clave => $valor) {
+//            var_dump($valor['user']);
+            $Log['users'][$clave]['gender'] =$valor['user']['gender'];
+            $Log['users'][$clave]['age'] =$valor['user']['age'];
+        }
+//        dd($Log);
+        return $Log;
+    }
+
 }
