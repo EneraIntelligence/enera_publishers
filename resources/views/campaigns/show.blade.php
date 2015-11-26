@@ -387,10 +387,6 @@
     {!! HTML::script('js/circle-progress.js') !!}
     {!! HTML::style('css/show.css') !!}
     <script>
-        var active = '{{session('data')}}';
-        if (active == 'active') {
-            UIkit.notify("<i class='uk-icon-check'></i>  Tu perfil ha sido modificado con exito", {status: 'success'}, {timeout: 5});
-        }
         //        $("#age_slider").ionRangeSlider();
         //        $("#ionslider_3").ionRangeSlider();
         $('#circle').circleProgress({

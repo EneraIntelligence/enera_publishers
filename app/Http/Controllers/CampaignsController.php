@@ -400,19 +400,25 @@ class CampaignsController extends Controller
         //
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     private function genderAge($id)
     {   //        $today =date( "Y-m-d",mktime(0, 0, 0, date("m"),date("d")-5, date("Y")));
         //se obtiene de los logs los usuarios de 5 dias atras
+        $fecha = new MongoDate(strtotime("-5 days"));
+        $a=$fecha->toDateTime();
+        $fecha = $a->setTime(0,0,0) ;
         $Logs = CampaignLog::groupBy('user')->where('campaign_id',$id)
-            ->where('updated_at', '>', new DateTime('-5 days'))->get(array('user'));
+            ->where('updated_at', '>', $fecha)->get(array('user'));
         $Logs=$Logs->toArray();
-//        dd($Logs);
         foreach ($Logs as $clave => $valor) {
 //            var_dump($valor['user']);
             $Log['users'][$clave]['gender'] =$valor['user']['gender'];
             $Log['users'][$clave]['age'] =$valor['user']['age'];
         }
-//        dd($Log);
+        dd($Log);
         return $Log;
     }
 
