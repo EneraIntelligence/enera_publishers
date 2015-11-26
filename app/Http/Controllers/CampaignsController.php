@@ -174,6 +174,12 @@ class CampaignsController extends Controller
 
         $campaign = Campaign::find($campaign_id); //get the campaign
 
+        if( !isset($campaign->mailing_list) || count($campaign->mailing_list)<=0 )
+        {
+            //no mails on the campaign mailing list
+            return redirect()->route('campaigns::index')->with('data', 'errorCamp');
+        }
+
         if ($campaign && $campaign->administrator_id == auth()->user()->_id)
         {
 
@@ -212,7 +218,9 @@ class CampaignsController extends Controller
             //TODO mostrar vista de subcampaña
             return "mail enviado!"; //view('campaigns.create', compact('branches', 'noCreateBtn', 'campaignName'));
 
-        } else {
+        }
+        else
+        {
             //not the user's campaign
             return redirect()->route('campaigns::index')->with('data', 'errorCamp');
         }
