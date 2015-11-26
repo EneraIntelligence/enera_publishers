@@ -3,6 +3,8 @@
 namespace Publishers\Http\Controllers;
 
 use DateTime;
+use MongoDate;
+use Publishers\CampaignLog;
 use Publishers\Libraries\CampaignStyleHelper;
 use Validator;
 use Illuminate\Support\Facades\Storage;
@@ -308,6 +310,8 @@ class CampaignsController extends Controller
      */
     public function show($id)
     {
+        $this->genderAge($id);
+
         $campaign = Campaign::find($id); //busca la campaña
 
         if ($campaign && $campaign->administrator_id == auth()->user()->_id) {
@@ -407,18 +411,24 @@ class CampaignsController extends Controller
     private function genderAge($id)
     {   //        $today =date( "Y-m-d",mktime(0, 0, 0, date("m"),date("d")-5, date("Y")));
         //se obtiene de los logs los usuarios de 5 dias atras
+        $log=array();
         $fecha = new MongoDate(strtotime("-5 days"));
         $a=$fecha->toDateTime();
         $fecha = $a->setTime(0,0,0) ;
         $Logs = CampaignLog::groupBy('user')->where('campaign_id',$id)
             ->where('updated_at', '>', $fecha)->get(array('user'));
-        $Logs=$Logs->toArray();
-        foreach ($Logs as $clave => $valor) {
-//            var_dump($valor['user']);
-            $Log['users'][$clave]['gender'] =$valor['user']['gender'];
-            $Log['users'][$clave]['age'] =$valor['user']['age'];
+        if($Logs==null){
+            return null;
+        }else{
+            $Logs=$Logs->toArray();
+            foreach ($Logs as $clave => $valor) {
+                var_dump($valor['user']);
+                $log['users'][$clave]['gender'] =$valor['user']['gender'];
+                $Log['users'][$clave]['age'] =$valor['user']['age'];
+            }
         }
-        dd($Log);
+
+//        dd($log);
         return $Log;
     }
 
