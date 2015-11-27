@@ -75,82 +75,13 @@ class CampaignsController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
+     * Obtiene los datos y crea una campaña con estatus "pendiente"
      * @return \Illuminate\Http\Response
+     * @internal param Request $request
      */
-    public function store(Request $request)
+    public function store()
     {
-        /*
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-        ]);
-
-        if ($validator->fails()) {
-            $res = array("success"=>false);
-            echo json_encode($res);
-        }
-        else
-        {
-            $name = $request->get('name');
-
-            redirect('campaigns/new?name='.$name);
-            $res = array("success"=>true);
-            echo json_encode($res);
-
-        }*/
-
-
-        //Image to sftp code  ---->
-
-        $filesystem = new FileCloud();
-
-        $file = Input::file('image');
-
-        if ($file && $file->isValid() && $this->correct_size($file)) {
-            //set newly generated filename and upload to server storage
-            $ext = $file->getClientOriginalExtension();
-            $filename = time() . '.' . $ext;
-            $file->move(storage_path() . '/app', $filename);
-
-            //get uploaded file and copy it to cloud
-            $uploadedFile = Storage::get($filename);
-            $fileSaved = $filesystem->put($filename, $uploadedFile);
-            //delete server file
-            Storage::delete($filename);
-
-            //creating campaign
-            $campaign = new Campaign();
-            $campaign->administrator_id = Auth::user()->_id;
-            $campaign->client_id = "???";//TODO tomar esto
-            $campaign->name = "test " . time();//TODO tomar de input
-            $campaign->branches = [];
-            $campaign->filters = (object)array();
-            $campaign->interaction = (object)array('name' => "banner");
-            $campaign->content = (object)array('image' => $filename);
-            $campaign->status = "pending";
-            $campaign->save();
-
-            //created item related to campaign
-            $item = new Item();
-            $item->filename = $filename;
-            $item->administrator_id = Auth::user()->_id;
-            $item->type = 'image';
-            $item->campaign_id = $campaign->_id;
-            $item->save();
-
-            return "File " . $filename . " saved: " . $fileSaved;
-        } else {
-            if (!$file->isValid())
-                return 'error! no file uploaded';
-            if (!$file->isValid())
-                return 'error! File not valid';
-            if (!$this->correct_size($file))
-                return 'error! File size must be 100x100';
-        }
-
-
+        return response()->json(Input::all());
     }
 
     public function mailing($id)
@@ -176,14 +107,12 @@ class CampaignsController extends Controller
 
         $campaign = Campaign::find($campaign_id); //get the campaign
 
-        if( !isset($campaign->mailing_list) || count($campaign->mailing_list)<=0 )
-        {
+        if (!isset($campaign->mailing_list) || count($campaign->mailing_list) <= 0) {
             //no mails on the campaign mailing list
             return redirect()->route('campaigns::index')->with('data', 'errorCamp');
         }
 
-        if ($campaign && $campaign->administrator_id == auth()->user()->_id)
-        {
+        if ($campaign && $campaign->administrator_id == auth()->user()->_id) {
 
             //the user can manage the campaign
 
@@ -195,19 +124,19 @@ class CampaignsController extends Controller
 
             //save subcampaign on DB
             $subCampaign = new Subcampaign();
-            $subCampaign->campaign_id=$campaign_id;
-            $subCampaign->from=$from;
-            $subCampaign->from_mail=$from_mail;
-            $subCampaign->subject=$subject;
-            $subCampaign->content=$content;
+            $subCampaign->campaign_id = $campaign_id;
+            $subCampaign->from = $from;
+            $subCampaign->from_mail = $from_mail;
+            $subCampaign->subject = $subject;
+            $subCampaign->content = $content;
             $subCampaign->save();
 
             //setup mail data
             $mail = array(
-                "from"=>$from,
-                "from_mail"=>$from_mail,
-                "subject"=>$subject,
-                "content"=>$content
+                "from" => $from,
+                "from_mail" => $from_mail,
+                "subject" => $subject,
+                "content" => $content
             );
 
             Mail::send('emails.test', ['content' => $mail["content"]], function ($m) use ($mail) {
@@ -220,9 +149,7 @@ class CampaignsController extends Controller
             //TODO mostrar vista de subcampaña
             return "mail enviado!"; //view('campaigns.create', compact('branches', 'noCreateBtn', 'campaignName'));
 
-        }
-        else
-        {
+        } else {
             //not the user's campaign
             return redirect()->route('campaigns::index')->with('data', 'errorCamp');
         }
@@ -409,27 +336,26 @@ class CampaignsController extends Controller
      * @return mixed
      */
     private function genderAge($id)
-    {   //        $today =date( "Y-m-d",mktime(0, 0, 0, date("m"),date("d")-5, date("Y")));
-        //se obtiene de los logs los usuarios de 5 dias atras
-        $log=array();
+    {
+        // Obtiene de los logs los usuarios de 5 dias atras
+        $log = array();
         $fecha = new MongoDate(strtotime("-5 days"));
-        $a=$fecha->toDateTime();
-        $fecha = $a->setTime(0,0,0) ;
-        $Logs = CampaignLog::groupBy('user')->where('campaign_id',$id)
+        $a = $fecha->toDateTime();
+        $fecha = $a->setTime(0, 0, 0);
+        $logs = CampaignLog::groupBy('user')->where('campaign_id', $id)
             ->where('updated_at', '>', $fecha)->get(array('user'));
-        if($Logs==null){
+        if ($logs == null) {
             return null;
-        }else{
-            $Logs=$Logs->toArray();
-            foreach ($Logs as $clave => $valor) {
+        } else {
+            $Logs = $logs->toArray();
+            foreach ($logs as $clave => $valor) {
                 var_dump($valor['user']);
-                $log['users'][$clave]['gender'] =$valor['user']['gender'];
-                $Log['users'][$clave]['age'] =$valor['user']['age'];
+                $log['users'][$clave]['gender'] = $valor['user']['gender'];
+                $log['users'][$clave]['age'] = $valor['user']['age'];
             }
         }
 
-//        dd($log);
-        return $Log;
+        return $log;
     }
 
 }

@@ -157,14 +157,10 @@
 
         create_campaign_helper.url_validator();
 
-
     </script>
-
 
     {!! HTML::script('bower_components/parsleyjs/dist/parsley.min.js') !!}
     {!! HTML::script('bower_components/parsleyjs/src/i18n/es.js') !!}
-
-
 
     <!-- animation library -->
     {!! HTML::script('js/greensock/TweenLite.min.js') !!}
@@ -179,8 +175,6 @@
     {!! HTML::script('js/signals.min.js') !!}
     {!! HTML::script('js/marker_map.js') !!}
     {!! HTML::script('js/icon_animations.js') !!}
-
-
 
     <script>
         branchMap.base_url="{!! URL::to('/') !!}";
