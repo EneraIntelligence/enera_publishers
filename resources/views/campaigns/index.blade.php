@@ -9,7 +9,8 @@
     <div id="page_content">
 
         <div class="uk-grid"  id="grid">
-            <div class="uk-width-8-10 uk-container-center"  id="container-center">
+            <div class="uk-width-8-10 uk-container-center" >
+                {{--id="container-center">--}}
                 <h4 class="heading_a uk-align-left" style="display:inline-block;">Campañas</h4>
 
                 <div class="uk-grid uk-align-right">
@@ -20,7 +21,7 @@
                                 <div class="uk-button-dropdown abajo" data-uk-dropdown>
                                     @endif
 
-                                    <button class="md-btn">
+                                    <button class="md-btn bottom-10">
                                         Filtrar campañas
                                         <i class="material-icons"></i>
                                     </button>
@@ -204,12 +205,13 @@
 
                                                 <div class="uk-grid-width-8-10">
 
-                                                    <div class="uk-grid">
-                                                        <div class="uk-width-1-6 margin-10" style="">
+                                                    <div class="uk-grid uk-grid-medium">
+
+                                                        <div class="uk-width-1-6 margin-10 top-bottom-20" style="">
                                                             <i class="uk-icon-calendar"></i>
                                                         </div>
 
-                                                        <div class="uk-width-5-6 margin-10" >
+                                                        <div class="uk-width-5-6 margin-10 top-bottom-20" >
                                                             <div class="uk-progress uk-progress-danger">
                                                                 <div class="uk-progress-bar" style="width: 90%;">2 días
                                                                     restantes
@@ -217,16 +219,18 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="uk-width-1-6 margin-10" >
+                                                        <div class="uk-width-1-6 margin-10 top-bottom-20" >
                                                             <i class="uk-icon-money"></i>
                                                         </div>
 
-                                                        <div class="uk-width-5-6 margin-10" >
+                                                        <div class="uk-width-5-6 margin-10 top-bottom-20" >
                                                             <div class="uk-progress uk-progress-warning">
                                                                 <div class="uk-progress-bar" style="width: 40%;">$100
                                                                 </div>
                                                             </div>
                                                         </div>
+
+
                                                     </div>
 
                                                 </div>
