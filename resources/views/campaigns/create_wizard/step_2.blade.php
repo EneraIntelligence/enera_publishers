@@ -6,6 +6,19 @@
     </h2>
     <hr class="md-hr"/>
 
+    <div class="uk-width-medium-1-1 uk-small-width-1-1 step2-field video">
+
+        <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+
+        <div id="file_upload-drop" class="uk-file-upload parsley-row">
+            <p class="uk-text">Video</p>
+            <a class="uk-form-file md-btn">elige un archivo
+                <input id="video" name="video" type="file" required accept='video/*'>
+            </a>
+
+        </div>
+    </div>
+
 
     <div class="uk-grid step2-field banner-link">
         <div class="uk-width-medium-1-1 parsley-row">
@@ -210,7 +223,37 @@
 
     <div class="uk-grid">
 
-        <div class="uk-width-medium-1-2 uk-small-width-1-1">
+        <div class="uk-width-medium-1-1 uk-small-width-1-1 step2-field captcha">
+            <img style="max-height:200px" class="uk-align-center banner-1" src="http://placehold.it/600x602?text=600x602" alt="">
+            <div class="parsley-errors-list filled banner-1-errors"></div>
+
+            <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+
+            <div id="file_upload-drop" class="uk-file-upload parsley-row">
+                <p class="uk-text">Banner encuesta</p>
+                <a class="uk-form-file md-btn">elige un archivo
+                    <input id="image_captcha" name="image_captcha" type="file" required accept='image/*'>
+                </a>
+
+            </div>
+        </div>
+
+        <div class="uk-width-medium-1-1 uk-small-width-1-1 step2-field survey">
+            <img style="max-height:200px" class="uk-align-center banner-1" src="http://placehold.it/600x602?text=600x602" alt="">
+            <div class="parsley-errors-list filled banner-1-errors"></div>
+
+            <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+
+            <div id="file_upload-drop" class="uk-file-upload parsley-row">
+                <p class="uk-text">Banner encuesta</p>
+                <a class="uk-form-file md-btn">elige un archivo
+                    <input id="image_survey" name="image_survey" type="file" required accept='image/*'>
+                </a>
+
+            </div>
+        </div>
+
+        <div class="uk-width-medium-1-2 uk-small-width-1-1 step2-field banner banner-link mailing-list video">
             <img style="max-height:200px" class="uk-align-center banner-1" src="http://placehold.it/600x602?text=600x602" alt="">
             <div class="parsley-errors-list filled banner-1-errors"></div>
 
@@ -227,7 +270,7 @@
 
 
 
-        <div class="uk-width-medium-1-2 uk-small-width-1-1">
+        <div class="uk-width-medium-1-2 uk-small-width-1-1 step2-field  banner banner-link mailing-list video">
 
             <img style="max-height:200px" class="uk-align-center banner-2" src="http://placehold.it/684x864?text=684x864" alt="">
             <div class="parsley-errors-list filled banner-2-errors"></div>

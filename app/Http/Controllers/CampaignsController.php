@@ -168,8 +168,6 @@ class CampaignsController extends Controller
 
     public function sendMailing(Request $request)
     {
-        //TODO falta validar campaña con usuario
-
         $campaign_id = Input::get("campaign_id");
 
         $campaign = Campaign::find($campaign_id); //get the campaign
