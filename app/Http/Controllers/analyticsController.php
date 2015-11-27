@@ -132,17 +132,22 @@ class AnalyticsController extends Controller
     private function genderAge($id)
     {   //        $today =date( "Y-m-d",mktime(0, 0, 0, date("m"),date("d")-5, date("Y")));
         //se obtiene de los logs los usuarios de 5 dias atras
-        $fecha = new MongoDate(strtotime("-5 days"));
-        $a=$fecha->toDateTime();
-        $fecha = $a->setTime(0,0,0) ;
-        $Logs = CampaignLog::groupBy('user')->where('campaign_id',$id)
-                ->where('updated_at', '>', $fecha)->get(array('user'));
-        $Logs=$Logs->toArray();
-        foreach ($Logs as $clave => $valor) {
+//        $fecha = new MongoDate(strtotime("-5 days"));
+//        $fecha = $a->setTime(0,0,0) ;
+        $fecha = $this->fechaInicio(5); //el numero es entere positivo pero en la funcion se ase negativo
+        if($Logs = CampaignLog::groupBy('user')->where('campaign_id',$id)->where('updated_at', '>', $fecha)->get(array('user')))
+        {
+            $Logs=$Logs->toArray();
+            foreach ($Logs as $clave => $valor) {
 //            var_dump($valor['user']);
-            $Log['users'][$clave]['gender'] =$valor['user']['gender'];
-            $Log['users'][$clave]['age'] =$valor['user']['age'];
+                $Log['users'][$clave]['gender'] =$valor['user']['gender'];
+                $Log['users'][$clave]['age'] =$valor['user']['age'];
+            }
+        }else{
+            return null
         }
+
+
         dd($Log);
         return $Log;
     }
@@ -152,14 +157,14 @@ class AnalyticsController extends Controller
         $this->getRango();//obtengo las fechas de los ultimos 5 dias con la hora correcta para sacar los logs del dia especifico
 
 //        $cam = campaignLog::where('campaign_id',$id)->whereBetween('updated_at', array($ayeri,$ayerf))->get();
-        $dinteracciones['0']= CampaignLog::where('campaign_id',$id)->where('interaction.loaded','exists','true')->where('updated_at', '>', $this->rangoFechas[0]['inicio'])->where('updated_at', '<', $this->rangoFechas[0]['fin'])->count();
+        $interacciones['0']= CampaignLog::where('campaign_id',$id)->where('interaction.loaded','exists','true')->where('updated_at', '>', $this->rangoFechas[0]['inicio'])->where('updated_at', '<', $this->rangoFechas[0]['fin'])->count();
 //        $dia2= CampaignLog::where('campaign_id',$id)->where('updated_at', '>', $this->rangoFechas[1]['inicio'])->where('updated_at', '<', $this->rangoFechas[1]['fin'])->get();
 //        $dia3= CampaignLog::where('campaign_id',$id)->where('updated_at', '>', $this->rangoFechas[2]['inicio'])->where('updated_at', '<', $this->rangoFechas[2]['fin'])->get();
 //        $dia4= CampaignLog::where('campaign_id',$id)->where('updated_at', '>', $this->rangoFechas[3]['inicio'])->where('updated_at', '<', $this->rangoFechas[3]['fin'])->get();
 //        $dia5= CampaignLog::where('campaign_id',$id)->where('updated_at', '>', $this->rangoFechas[4]['inicio'])->where('updated_at', '<', $this->rangoFechas[4]['fin'])->get();
 //        $dia6= CampaignLog::where('campaign_id',$id)->where('updated_at', '>', $this->rangoFechas[5]['inicio'])->where('updated_at', '<', $this->rangoFechas[5]['fin'])->get();
 
-        dd($dia1);
+//        dd($dia1);
     }
 
     /**
@@ -168,14 +173,13 @@ class AnalyticsController extends Controller
     public function getRango()
     {   //para setear el rango de la hora que quiero
         for($i=0;$i<6;$i++){
-            $fecha = new MongoDate(strtotime("-$i days"));
-            $a=$fecha->toDateTime();
-            $b=$fecha->toDateTime();
+            $a = new DateTime("-$i days");
+            $b = new  DateTime("-$i days");
             $this->rangoFechas[$i]['inicio'] = $a->setTime(0,0,0) ;
             $this->rangoFechas[$i]['fin'] = $b->setTime(23,59,59) ;
         }
 
-//        dd($this->rangoFechas);
+        dd($this->rangoFechas);
 
     }
 
@@ -183,11 +187,10 @@ class AnalyticsController extends Controller
      * @param $dias es el numero de dias atras que quieres la fecha 0=hoy
      * @return DateTime|MongoDate
      */
-    public function generarFecha($dias)
+    public function fechaInicio($dias)
     {
-        $fecha = new MongoDate(strtotime("-$dias days"));// saco la fecha con el dia que quiera
-        $a=$fecha->toDateTime();    //lo combierto a otro formato para agregarle la hora en 0
-        $fecha = $a->setTime(0,0,0) ; //le seteo la hora en 0 que es cuando inicia el dia
+        $fecha = new DateTime("-$dias days");// saco la fecha con el dia que quiera
+        $fecha = $fecha->setTime(0,0,0) ; //le seteo la hora en 0 que es cuando inicia el dia
         return $fecha;
     }
 }
