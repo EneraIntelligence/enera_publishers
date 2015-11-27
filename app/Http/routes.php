@@ -21,24 +21,27 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/view/{id}', ['as' => 'show', 'uses' => 'CampaignsController@show']);
         Route::get('/mailing/{id}', ['as' => 'show_mailing', 'uses' => 'CampaignsController@mailing']);
         Route::get('/new', ['as' => 'create', 'uses' => 'CampaignsController@create']);
-        Route::post('/store', ['as' => 'store', 'uses' => 'CampaignsController@store']);
         Route::post('/save_item', ['as' => 'save_item', 'uses' => 'CampaignsController@saveItem']);
         Route::post('/send_mailing', ['as' => 'send_mailing', 'uses' => 'CampaignsController@sendMailing']);
+
+        Route::group(['middleware' => 'ajax'], function () {
+            Route::post('/store', ['as' => 'store', 'uses' => 'CampaignsController@store']);
+        });
     });
 
     Route::group(['prefix' => 'reports', 'as' => 'reports::'], function () {
         Route::get('/', ['as' => 'index', 'uses' => 'ReportsController@index']);
         Route::get('/single', ['as' => 'single', 'uses' => 'ReportsController@single']);
-        Route::get('/invoice',['as'=>'invoice','uses' => 'PdfController@invoice']);
+        Route::get('/invoice', ['as' => 'invoice', 'uses' => 'PdfController@invoice']);
     });
 
     Route::group(['prefix' => 'analytics', 'as' => 'analytics::'], function () {
         Route::get('/', ['as' => 'index', 'uses' => 'AnalyticsController@index']);
-        Route::get('/{id}/{type?}',['as' => 'single', 'uses' => 'AnalyticsController@single']);
+        Route::get('/{id}/{type?}', ['as' => 'single', 'uses' => 'AnalyticsController@single']);
     });
 
     Route::group(['prefix' => 'pdf', 'as' => 'pdf::'], function () {
-        Route::get('/print',['as'=>'invoice'], 'PdfController@invoice');
+        Route::get('/print', ['as' => 'invoice'], 'PdfController@invoice');
 //        Route::get('/print', 'PdfController@invoice');
     });
 
