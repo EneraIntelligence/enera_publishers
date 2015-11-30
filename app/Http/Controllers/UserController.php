@@ -2,6 +2,7 @@
 
 namespace Publishers\Http\Controllers;
 
+use Hash;
 use Illuminate\Http\Request;
 use Publishers\Administrator;
 use Publishers\Campaign;
@@ -156,4 +157,12 @@ class UserController extends Controller
 //        return Input::get('user_edit_avatar_control');
     }
 
+    public function editPass()
+    {
+        $user = Administrator::where('_id', Auth::user()->_id)->first();
+        $user->password = Hash::make(Input::get('pass'));
+        $user->save();
+
+        return redirect()->action('UserController@index')->with('pass', 'active');
+    }
 }

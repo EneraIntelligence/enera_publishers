@@ -176,14 +176,12 @@ class CampaignsController extends Controller
 
         $campaign = Campaign::find($campaign_id); //get the campaign
 
-        if( !isset($campaign->mailing_list) || count($campaign->mailing_list)<=0 )
-        {
+        if (!isset($campaign->mailing_list) || count($campaign->mailing_list) <= 0) {
             //no mails on the campaign mailing list
             return redirect()->route('campaigns::index')->with('data', 'errorCamp');
         }
 
-        if ($campaign && $campaign->administrator_id == auth()->user()->_id)
-        {
+        if ($campaign && $campaign->administrator_id == auth()->user()->_id) {
 
             //the user can manage the campaign
 
@@ -195,19 +193,19 @@ class CampaignsController extends Controller
 
             //save subcampaign on DB
             $subCampaign = new Subcampaign();
-            $subCampaign->campaign_id=$campaign_id;
-            $subCampaign->from=$from;
-            $subCampaign->from_mail=$from_mail;
-            $subCampaign->subject=$subject;
-            $subCampaign->content=$content;
+            $subCampaign->campaign_id = $campaign_id;
+            $subCampaign->from = $from;
+            $subCampaign->from_mail = $from_mail;
+            $subCampaign->subject = $subject;
+            $subCampaign->content = $content;
             $subCampaign->save();
 
             //setup mail data
             $mail = array(
-                "from"=>$from,
-                "from_mail"=>$from_mail,
-                "subject"=>$subject,
-                "content"=>$content
+                "from" => $from,
+                "from_mail" => $from_mail,
+                "subject" => $subject,
+                "content" => $content
             );
 
             Mail::send('emails.test', ['content' => $mail["content"]], function ($m) use ($mail) {
@@ -220,9 +218,7 @@ class CampaignsController extends Controller
             //TODO mostrar vista de subcampaña
             return "mail enviado!"; //view('campaigns.create', compact('branches', 'noCreateBtn', 'campaignName'));
 
-        }
-        else
-        {
+        } else {
             //not the user's campaign
             return redirect()->route('campaigns::index')->with('data', 'errorCamp');
         }
@@ -275,7 +271,7 @@ class CampaignsController extends Controller
 
             $res = array('success' => true, 'filename' => $filename, 'item_id' => $item->_id, 'imageType' => $imageType);
 
-            echo json_encode($res);
+//            echo json_encode($res);
 
         } else {
             $res = array('success' => false, 'msg' => 'error');
@@ -287,7 +283,7 @@ class CampaignsController extends Controller
             if (!$this->correct_size($file))
                 echo 'error! File size must be 100x100';*/
 
-            echo json_encode($res);
+//            echo json_encode($res);
         }
 
 
@@ -364,7 +360,7 @@ class CampaignsController extends Controller
             }
 
             $campaign->porcentaje = $porcentaje;
-            return view('campaigns.show', [$campaign, 'cam' => $campaign]);
+            return view('campaigns.show', [$campaign, 'cam' => $campaign, 'age' => $this->genderAge($id)]);
         } else {
             return redirect()->route('campaigns::index')->with('data', 'errorCamp');
         }
@@ -409,27 +405,27 @@ class CampaignsController extends Controller
      * @return mixed
      */
     private function genderAge($id)
-    {   //        $today =date( "Y-m-d",mktime(0, 0, 0, date("m"),date("d")-5, date("Y")));
+    {
+
+        //$today =date( "Y-m-d",mktime(0, 0, 0, date("m"),date("d")-5, date("Y")));
         //se obtiene de los logs los usuarios de 5 dias atras
-        $log=array();
-        $fecha = new MongoDate(strtotime("-5 days"));
-        $a=$fecha->toDateTime();
-        $fecha = $a->setTime(0,0,0) ;
-        $Logs = CampaignLog::groupBy('user')->where('campaign_id',$id)
+        $log = array();
+        $fecha = new DateTime("-5 days");
+        $fecha = $fecha->setTime(0, 0, 0);
+        $Logs = CampaignLog::groupBy('user')->where('campaign_id', $id)
             ->where('updated_at', '>', $fecha)->get(array('user'));
-        if($Logs==null){
+        if ($Logs == null) {
             return null;
-        }else{
-            $Logs=$Logs->toArray();
+        } else {
+            $Logs = $Logs->toArray();
             foreach ($Logs as $clave => $valor) {
-                var_dump($valor['user']);
-                $log['users'][$clave]['gender'] =$valor['user']['gender'];
-                $Log['users'][$clave]['age'] =$valor['user']['age'];
+                $log['users'][$clave]['gender'] = $valor['user']['gender'];
+                $log['users'][$clave]['age'] = $valor['user']['age'];
             }
         }
-
 //        dd($log);
-        return $Log;
+
+//        return $log;
     }
 
 }

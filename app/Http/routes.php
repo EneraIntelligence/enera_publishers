@@ -57,6 +57,7 @@ Route::group(['middleware' => 'auth'], function () {
     //Rutas de ajax
     Route::group([], function () {
         Route::match(['get', 'post'], 'profile_edit', ['as' => 'edit.profile', 'uses' => 'UserController@editProfile']);
+        Route::match(['get', 'post'], 'profile_pass', ['as' => 'edit.pass', 'uses' => 'UserController@editPass']);
     });
 });
 

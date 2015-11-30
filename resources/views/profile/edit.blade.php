@@ -9,7 +9,7 @@
         <div id="page_content_inner">
             <div class="uk-grid" data-uk-grid-margin>
                 <div class="uk-width-large-1">
-                    <form action="{!! route('edit.profile') !!}" method="post" id="form_validation"
+                    <form action="{!! route('edit.profile') !!}" method="post" id="form" data-parsley-validate
                           enctype="multipart/form-data"
                           class="uk-form-stacked">
                         <div class="md-card profile_mobile">
@@ -45,12 +45,12 @@
                                 {{--<i class="material-icons">&#xE161;</i>--}}
                                 {{--</button>--}}
                                 <div
-                                     id="canvasloader-container" class="wrapper"></div>
+                                        id="canvasloader-container" class="wrapper"></div>
                             </div>
                             <div class="user_content">
                                 <div id="page_content">
                                     <div id="page_content_inner ">
-                                        <h3 class="heading_b uk-margin-bottom">Form Validation</h3>
+                                        <h3 class="heading_b uk-margin-bottom">Información de cuenta</h3>
                                         {{--<div class="md-card">--}}
                                         <div class="md-card-content small-padding">
 
@@ -214,6 +214,79 @@
                         </div>
                     </form>
                 </div>
+                <div class="uk-width-large-1">
+                    <form action="{!! route('edit.pass') !!}" method="post" id="form_validation"
+                          enctype="multipart/form-data" data-parsley-validate
+                          class="uk-form-stacked">
+                        <div class="md-card profile_mobile">
+                            <div class="user_content">
+                                <div id="page_content">
+                                    <div id="page_content_inner ">
+                                        <h3 class="heading_b uk-margin-bottom">Cámbiar contraseña</h3>
+                                        {{--<div class="md-card">--}}
+                                        <div class="md-card-content small-padding">
+
+                                            <div class="uk-grid" data-uk-grid-margin>
+                                                <div class="uk-width-medium-1-2 profile_mobile">
+                                                    <div class="uk-input-group">
+                                                        <span class="uk-input-group-addon">
+                                                            <i class="uk-icon-user uk-icon-medium"></i>
+                                                        </span>
+
+                                                        <div class="parsley-row">
+                                                            <label for="pass">Contraseña<span
+                                                                        class="req">*</span></label>
+                                                            <input type="password" name="pass"
+                                                                   data-parsley-required="true"
+                                                                   data-parsley-type="alphanum"
+                                                                   data-parsley-length="[8, 16]"
+                                                                   data-parsley-equalto="#pass_confir"
+                                                                   class="md-input" id="pass"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="uk-width-medium-1-2 profile_mobile">
+                                                    <div class="uk-input-group">
+                                                        <span class="uk-input-group-addon">
+                                                            <i class="uk-icon-user uk-icon-medium"></i>
+                                                        </span>
+
+                                                        <div class="parsley-row">
+                                                            <label for="pass_confir">Confirmar contraseña<span
+                                                                        class="req">*</span></label>
+                                                            <input type="password" name="pass_confir"
+                                                                   data-parsley-required="true"
+                                                                   data-parsley-type="alphanum"
+                                                                   data-parsley-equalto="#pass"
+                                                                   class="md-input" id="pass_confir"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="uk-grid uk-grid-small">
+                                                    <div class="uk-width-1-2">
+                                                        <button type="submit" class="md-btn md-btn-primary">Actualizar
+                                                        </button>
+                                                    </div>
+                                                    <div class="uk-width-1-2">
+                                                        <button type="button" class="md-btn md-btn-danger"
+                                                                onclick="window.location='{{ route("profile::index")}}'">
+                                                            Cancelar
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+                                                <input type="hidden" name="_id" value="{{$user->_id}}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
 
         </div>
@@ -246,11 +319,12 @@
             }
         }
 
-        $("#user_edit_avatar_control").change(function(){
+        $("#user_edit_avatar_control").change(function () {
             readURL(this);
         });
 
-
+        $('#form_validation').parsley();
+        $('#form').parsley();
 
     </script>
 @stop
