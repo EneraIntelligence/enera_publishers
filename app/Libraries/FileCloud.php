@@ -24,8 +24,7 @@ class FileCloud
             'port' => 22,
             'username' => 'forge',
             'password' => '9X0I9k3EFgYIejMRT0T8',
-//            'privateKey' => 'C:\Users\Eder\key',
-            'privateKey' => '/Users/ARodriguez/.ssh/id_rsa',
+            'privateKey' => env('SSH_KEY'), /* Llave privada */
             'root' => '/home/forge/prueba',
             'timeout' => 10,
             'directoryPerm' => 0755
