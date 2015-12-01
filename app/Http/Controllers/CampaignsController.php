@@ -344,12 +344,14 @@ class CampaignsController extends Controller
             ->where('updated_at', '>', $fecha)->get(array('user'));
         if ($logs == null) {
             return null;
-        } else {
-            $Logs = $logs->toArray();
-            foreach ($logs as $clave => $valor) {
-                var_dump($valor['user']);
-                $log['users'][$clave]['gender'] = $valor['user']['gender'];
+        }else{
+            $Logs=$Logs->toArray();
+            foreach ($Logs as $clave => $valor) {
                 $log['users'][$clave]['age'] = $valor['user']['age'];
+                var_dump($log['users'][$clave]['age']);
+                $log['users'][$clave]['gender'] = $valor['user']['gender'];
+                var_dump($log['users'][$clave]['gender']);
+
             }
         }
 
