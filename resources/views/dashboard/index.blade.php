@@ -72,7 +72,7 @@
                 <div class="uk-width-medium-6-6">
                     <div class="md-card" style="">
                         <div class="md-card-content">
-                            <p>graficas</p>
+                            <div id="chart"></div>
                         </div>
                     </div>
                 </div>
@@ -97,5 +97,19 @@
         };
         var demo = new CountUp("myTargetElement", 0, {{ $logs->count() }}, 0, 2.5, options);
         demo.start();
+
+
+        var chart = c3.generate({
+            data: {
+                // iris data from R
+                columns: [
+                    @foreach($osStats as $k=>$os)
+                    {!! '["'.$k.'",'.$os.' ],'  !!}
+                    @endforeach
+                ],
+                type : 'pie',
+            }
+        });
+
     </script>
 @stop
