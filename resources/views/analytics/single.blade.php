@@ -61,7 +61,8 @@
 
                         {{-- graficas --}}
                         <div id="grafica" class="uk-width-large-1-1 uk-margin-top ">
-                            <div id="{{ $type }}" class="uk-width-large-1-1 uk-margin-right">
+                            <div class="uk-margin-large-left">Grafica de {!! $type !!}</div>
+                            <div id="{!! $type !!}" class="uk-width-large-1-1 uk-margin-right">
 
                             </div>
                             <div class="uk-width-large-1-2 uk-margin-left">
@@ -85,11 +86,16 @@
     {!! HTML::script('bower_components/ionrangeslider/js/ion.rangeSlider.min.js') !!}
     {!! HTML::script('bower_components/jquery.easy-pie-chart/dist/jquery.easypiechart.min.js') !!}
     {!! HTML::script('js/circle-progress.js') !!}
+    {!! HTML::script('js/ajax/graficas.js') !!}
     {!! HTML::script('js/printThis.js') !!}
     <script>
+
         $( document ).ready(function() {
             console.log( "ready!" );
+            //------------------------------------------Grafica---------------------------------------------
+            {{--{!! $grafica !!}--}}
 
+        //------------------------------------------Imprimir reporte---------------------------------------------
             $('#print').click(function() {
                 Popup($('#reporte').html());
 //                print($('#reporte'));
@@ -127,9 +133,9 @@
                         return true;
                     }
 
-            /***  codigo para la animación del circulo    ***/
+//----------------------------Codigo para la animación del circulo---------------------------------------------
             $('#circle').circleProgress({ //se pasa como parametro el id o elemento que se va animar
-                value: {{$cam->porcentaje}}, //lo que se va a llenar con el color
+                value: {!! $porcentaje !!}, //lo que se va a llenar con el color
                 size: 98,   //tamaño del circulo
                 startAngle: -300, //de donde va a empezar la animacion
                 reverse: true, //empieza la animacion al contrario
@@ -139,82 +145,48 @@
                 $(this).find('strong').html(parseInt(100 * progress) + '<i>%</i>');
             }); //fin del codigo de animacion de circulo
 
+            //-----------------------------------------REDIRECCIONA AL TIPO--------------------------------------------
             var select= $( "#select-grafico" );
             $(select).change(function() {
                 var tipo = select.val();
-//                console.log( "Handler for .change() called. "+tipo );
+                console.log( "Handler for .change() called. "+tipo );
                 window.location.href = 'http://localhost:8000/analytics/5638f436a8268b300d479642/'+tipo;
             });
+//------------------------------------------Grafica---------------------------------------------
+            var grafica = new graficas;
+//            console.log('grafica');
+            var tipo = '{{$type}}';
+//            console.log(tipo);
 
-        });
+            switch ( tipo ) {
+                case 'intPerDay':
+                    var gra= grafica.intPerDay(5,4,5,1,2);
+                    break;
+                case 'genderAge':
+                    var gra= grafica.genderAge();
+                    break;
+                case 'so':
+                    var gra= grafica.so();
+                    break;
+            }
 
 
+        }); // ----------------------------- termina document ready -----------------
+
+//         ----------------------------- alertas  -----------------
         var active = '{{session('data')}}';
         if (active == 'active') {
             UIkit.notify("<i class='uk-icon-check'></i>  Tu perfil ha sido modificado con exito", {status: 'success'}, {timeout: 5});
         }
 
-        var chart1 = c3.generate({
-            bindto: '#chart1',
-            data: {
-                columns: [
-                    ['Welcome', 300, 249, 400, 190, 200, 500, 450],
-                    ['Joined', 250, 100, 389, 120, 100, 500, 450],
-                    ['Requested', 200, 100, 300, 100, 450, 450, 420],
-                    ['Loaded', 120, 100, 250, 80, 400, 450, 410],
-                    ['Completed', 25, 90, 200, 60, 312, 400, 402]
-                ],
-                types: {
-                    Welcome: 'area-spline',
-                    Joined: 'area-spline',
-                    Requested: 'area-spline',
-                    Loaded: 'area-spline',
-                    Completed: 'area-spline'
-                    // 'line', 'spline', 'step', 'area', 'area-step' are also available to stack
-                },
-            },
-            color: {
-                pattern: ['red', '#aec7e8', '#ff7f0e', '#ffbb78', '#fff000']
-            },
-            donut: {
-                title: "nombre"
-            }
-        });
-
-
-        //        Interacciones Por Genero
-        /*var chart = c3.generate({
-         data: {
-         xs: {
-         'hombres': 'h',
-         'mujeres': 'm',
-         },
-         columns: [
-         ['hombres','5','10','15'],
-         ['mujeres','3','10','15'],
-         ['h', 10, 30, 15, 50, 70, 100],
-         ['m', 30, 50, 15, 100, 120],
-         ]
-         },
-         axis: {
-         x: {
-         label: 'Sepal.Width',
-         tick: {
-         fit: false
-         }
-         },
-         y: {
-         label: 'Petal.Width'
-         }
-         }
-         });*/
-
-        var chart2 = c3.generate({
+        //------------------------------------------Grafica---------------------------------------------
+        {{--GENERO Y EDAD --}}
+        /*var chart2 = c3.generate({
             bindto: '#genderAge',
             data: {
                 columns: [
                     ['Mujeres', 30, 200, 100, 400, 150, 250],
-                    ['Hombres', -130, -100, -140, -200, -150, 50]
+                    ['Hombres', -130, -100, -140, -200, -150, -50]
                 ],
                 groups: [
                     ['Mujeres', 'Hombres']
@@ -238,23 +210,26 @@
                 rotated: true
             }
         });
-
-
-        //        Interacciones por modelos
+        /!***** INTERACCIONES POR DIA *****!/
         var chart3 = c3.generate({
-            bindto: '#chart3',
+            bindto: '#intPerDay',
             data: {
                 columns: [
-                    ['Android', 30, 200, 200, 400, 150, 250],
-                    ['Blackberry', 130, 100, 100, 200, 150, 50],
-                    ['IOS', 230, 200, 200, 300, 250, 250],
-                    ['Windows Phone', 230, 200, 200, 300, 250, 250],
-                    ['other', 230, 200, 200, 300, 250, 250]
+                    ['hace 1 dia',  $dia1 ],
+                    ['hace 2 dia',  $dia2 ],
+                    ['hace 3 dia',  $dia3 ],
+                    ['hace 4 dia',  $dia4 ],
+                    ['hace 5 dia',  $dia5 ]
+                    /!*['Android', 30, 200, 200, 400, 150, 250],
+                     ['Blackberry', 130, 100, 100, 200, 150, 50],
+                     ['IOS', 230, 200, 200, 300, 250, 250],
+                     ['Windows Phone', 230, 200, 200, 300, 250, 250],
+                     ['other', 230, 200, 200, 300, 250, 250]*!/
                 ],
                 type: 'bar',
-                groups: [
-                    ['Android', 'Blackberry', 'IOS', 'Windows Phone', 'other']
-                ]
+                /!*groups: [
+                 ['Android', 'Blackberry', 'IOS', 'Windows Phone', 'other']
+                 ]*!/
             },
             color: {
                 pattern: ['red', '#aec7e8', '#ff7f0e', '#ffbb78', '#2ca02c', '#98df8a', '#d62728', '#ff9896', '#9467bd', '#c5b0d5', '#8c564b', '#c49c94', '#e377c2', '#f7b6d2', '#7f7f7f', '#c7c7c7', '#bcbd22', '#dbdb8d', '#17becf', '#9edae5']
@@ -264,33 +239,8 @@
                     padding: {top: 200, bottom: 0}
                 }
             }
-        });
+        });*/
 
-        //        Visitantes por edades
-        var chart4 = c3.generate({
-            bindto: '#chart4',
-            data: {
-                columns: [
-                    ['<13-19', 130],
-                    ['20-41', 12],
-                    ['41-60', 1],
-                    ['60+', 10]
-                ],
-                type: 'pie'
-            },
-            color: {
-                pattern: ['red', '#aec7e8', '#ff7f0e', '#ffbb78', '#2ca02c', '#98df8a', '#d62728', '#ff9896', '#9467bd', '#c5b0d5', '#8c564b', '#c49c94', '#e377c2', '#f7b6d2', '#7f7f7f', '#c7c7c7', '#bcbd22', '#dbdb8d', '#17becf', '#9edae5']
-            },
-            axis: {
-                y: {
-                    padding: {top: 200, bottom: 0}
-                },
-                y2: {
-                    padding: {top: 100, bottom: 100},
-                    show: true
-                }
-            }
-        });
     </script>
 @stop
 

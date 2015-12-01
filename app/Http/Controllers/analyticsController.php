@@ -16,7 +16,6 @@ use MongoDate;
 
 class AnalyticsController extends Controller
 {
-
     public function index()
     {
         return view('analytics.index');
@@ -45,7 +44,8 @@ class AnalyticsController extends Controller
             if (method_exists($this, $type) && $type==!null) { //se verifica que el tipo sea valido y no nulo
                 $datosGrafica= $this->$type($campaign['_id']); //se llama el metodo correspondiente
             }else{
-                $datosGrafica= $this->intPerDay();//default, si es un tipo diferente o no existe
+                $data['type']='intPerDay';
+                $datosGrafica= $this->intPerDay($campaign['_id']);//default, si es un tipo diferente o no existe
             }
 
             $campaign->grafica = $datosGrafica;
@@ -80,8 +80,8 @@ class AnalyticsController extends Controller
                     break;
             }
             $campaign->porcentaje = $porcentaje;
-
-            $data=array_merge($campaign->toArray(),$datosGrafica,$data);
+            $campaign->grafica = $datosGrafica;
+            $data=array_merge($campaign->toArray(),$data);
 //            dd($data);
             return view('analytics.single', $data);
         }else {
@@ -95,46 +95,17 @@ class AnalyticsController extends Controller
      */
     private function intPerDay($id) //interacciones por dia
     {//sacar un conteo de cuantas interaccion se hacen por dia 5 dias atras
-        $rangoFechas = $this->getRango();//obtengo las fechas de los ultimos 5 dias con la hora correcta para sacar los logs del dia especifico
+        $rangoFechas = $this->getRangoLast5Days();//obtengo las fechas de los ultimos 5 dias con la hora correcta para sacar los logs del dia especifico
 
 //        $interacciones['0']= CampaignLog::where('campaign_id',$id)->where('interaction.loaded','exists','true')->where('updated_at', '>', $rangoFechas[2]['inicio'])->where('updated_at', '<', $rangoFechas[2]['fin'])->get(array('interaction'));
-        $dia1= CampaignLog::where('campaign_id',$id)->where('interaction.loaded','exists','true')->where('updated_at', '>', $rangoFechas[0]['inicio'])->where('updated_at', '<', $rangoFechas[0]['fin'])->count();
-        $dia2= CampaignLog::where('campaign_id',$id)->where('interaction.loaded','exists','true')->where('updated_at', '>', $rangoFechas[1]['inicio'])->where('updated_at', '<', $rangoFechas[1]['fin'])->count();
-        $dia3= CampaignLog::where('campaign_id',$id)->where('interaction.loaded','exists','true')->where('updated_at', '>', $rangoFechas[2]['inicio'])->where('updated_at', '<', $rangoFechas[2]['fin'])->count();
-        $dia4= CampaignLog::where('campaign_id',$id)->where('interaction.loaded','exists','true')->where('updated_at', '>', $rangoFechas[3]['inicio'])->where('updated_at', '<', $rangoFechas[3]['fin'])->count();
-        $dia5= CampaignLog::where('campaign_id',$id)->where('interaction.loaded','exists','true')->where('updated_at', '>', $rangoFechas[4]['inicio'])->where('updated_at', '<', $rangoFechas[4]['fin'])->count();
+        $grafica['dia1'] = CampaignLog::where('campaign_id',$id)->where('interaction.loaded','exists','true')->where('updated_at', '>', $rangoFechas[0]['inicio'])->where('updated_at', '<', $rangoFechas[0]['fin'])->count();
+        $grafica['dia2']= CampaignLog::where('campaign_id',$id)->where('interaction.loaded','exists','true')->where('updated_at', '>', $rangoFechas[1]['inicio'])->where('updated_at', '<', $rangoFechas[1]['fin'])->count();
+        $grafica['dia3'] = CampaignLog::where('campaign_id',$id)->where('interaction.loaded','exists','true')->where('updated_at', '>', $rangoFechas[2]['inicio'])->where('updated_at', '<', $rangoFechas[2]['fin'])->count();
+        $grafica['dia4'] = CampaignLog::where('campaign_id',$id)->where('interaction.loaded','exists','true')->where('updated_at', '>', $rangoFechas[3]['inicio'])->where('updated_at', '<', $rangoFechas[3]['fin'])->count();
+        $grafica['dia5']= CampaignLog::where('campaign_id',$id)->where('interaction.loaded','exists','true')->where('updated_at', '>', $rangoFechas[4]['inicio'])->where('updated_at', '<', $rangoFechas[4]['fin'])->count();
+        $grafica['grafica']=$grafica;
         //creo la grafica para mandarla como un string e imprimirla
-        $grafica['grafica']='
-        var chart3 = c3.generate({
-            bindto: \'#intPerDay\',
-            data: {
-                columns: [
-                    [\'hace 1 dia\',  '.$dia1.' ],
-                    [\'hace 2 dia\',  '.$dia2.' ],
-                    [\'hace 3 dia\',  '.$dia3.' ],
-                    [\'hace 4 dia\',  '.$dia4.' ],
-                    [\'hace 5 dia\',  '.$dia5.' ]
-                    /*[\'Android\', 30, 200, 200, 400, 150, 250],
-                     [\'Blackberry\', 130, 100, 100, 200, 150, 50],
-                     [\'IOS\', 230, 200, 200, 300, 250, 250],
-                     [\'Windows Phone\', 230, 200, 200, 300, 250, 250],
-                     [\'other\', 230, 200, 200, 300, 250, 250]*/
-                ],
-                type: \'bar\',
-                /*groups: [
-                 [\'Android\', \'Blackberry\', \'IOS\', \'Windows Phone\', \'other\']
-                 ]*/
-            },
-            color: {
-                pattern: [\'red\', \'#aec7e8\', \'#ff7f0e\', \'#ffbb78\', \'#2ca02c\', \'#98df8a\', \'#d62728\', \'#ff9896\', \'#9467bd\', \'#c5b0d5\', \'#8c564b\', \'#c49c94\', \'#e377c2\', \'#f7b6d2\', \'#7f7f7f\', \'#c7c7c7\', \'#bcbd22\', \'#dbdb8d\', \'#17becf\', \'#9edae5\']
-            },
-            axis: {
-                y: {
-                    padding: {top: 200, bottom: 0}
-                }
-            }
-        });
-        ';
+
         return $grafica;
     }
 
@@ -149,7 +120,7 @@ class AnalyticsController extends Controller
         if($Logs = CampaignLog::groupBy('user')->where('campaign_id',$id)->where('updated_at', '>', $fecha)->get(array('user')))
         {
             $Logs=$Logs->toArray();
-            foreach ($Logs as $clave => $valor) {
+            foreach ($Logs as $clave => $valor) {//recorro el arreglo para acomodar los datos en un arreglo mas presentable
 //            var_dump($valor['user']);
                 $Log['users'][$clave]['gender'] =$valor['user']['gender'];
                 $Log['users'][$clave]['age'] =$valor['user']['age'];
@@ -162,6 +133,27 @@ class AnalyticsController extends Controller
         return $Log;
     }
 
+    /**
+     * @param $id
+     * @return array
+     */
+    public function so($id)
+    {
+        //se obtiene de los logs los usuarios de 5 dias atras
+        $fecha = $this->fechaInicio(5); //el numero es entere positivo pero en la funcion se ase negativo para buscar asia atras
+        $so['android'] = CampaignLog::where('campaign_id',$id)->where('device.os','android')->where('updated_at', '>', $fecha)->count();
+        $so['mac'] = CampaignLog::where('campaign_id',$id)->where('device.os','mac')->where('updated_at', '>', $fecha)->count();
+        $so['windows'] = CampaignLog::where('campaign_id',$id)->where('device.os','windows')->where('updated_at', '>', $fecha)->count();
+        $so['otro'] = CampaignLog::where('campaign_id',$id)->where('device.os','other')->where('updated_at', '>', $fecha)->count();
+        dd($so);
+
+        return $so;
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function prueba($id)
     {
         $fecha = $this->fechaInicio(5); //el numero es entere positivo pero en la funcion se ase negativo para buscar asia atras
@@ -181,16 +173,14 @@ class AnalyticsController extends Controller
         foreach($ed as $clave => $valor){
 
         }
-        $grafica['grafica']='
-
-        ';
+//        $grafica['grafica']='';
         return $grafica;
     }
 
     /**
      * @internal param MongoDate $fecha
      */
-    public function getRango()
+    public function getRangoLast5Days()
     {   //para setear el rango de la hora que quiero
         $rangoFechas = array();
         for($i=0;$i<6;$i++){
