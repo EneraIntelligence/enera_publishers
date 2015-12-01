@@ -2,7 +2,7 @@
 
 @section('head_scripts')
     <style type="text/css">
-        body{
+        body {
             scrollbar-arrow-color: #000066;
             scrollbar-base-color: #000033;
             scrollbar-dark-shadow-color: #336699;
@@ -15,13 +15,16 @@
         ::-webkit-scrollbar {
             width: 12px;
         }
+
         ::-webkit-scrollbar-track {
             background-color: #eaeaea;
             border-left: 1px solid #ccc;
         }
+
         ::-webkit-scrollbar-thumb {
             background-color: #ccc;
         }
+
         ::-webkit-scrollbar-thumb:hover {
             background-color: #aaa;
         }
@@ -53,7 +56,8 @@
                     <div class="md-card" style="">
                         <div class="md-card-content">
                             <div style="padding:20px; height:500px; overflow-y: scroll;">
-                                <h4>El ‪#‎WiFi‬ también puede ser un medio publicitario, de hecho es uno de los medios publicitarios más efectivos actualmente en otros países.
+                                <h4>El ‪#‎WiFi‬ también puede ser un medio publicitario, de hecho es uno de los medios
+                                    publicitarios más efectivos actualmente en otros países.
                                     Enera Intelligence
                                     Contáctanos en:
                                     <a href="mailto:contacto@enera.mx">contacto@enera.mx</a>
@@ -62,7 +66,8 @@
 
                                 <hr>
 
-                                <h4>‪#‎México‬ es líder regional en tráfico en internet móvil así como inversión publicitaria móvil. Enera Intelligence</h4>
+                                <h4>‪#‎México‬ es líder regional en tráfico en internet móvil así como inversión
+                                    publicitaria móvil. Enera Intelligence</h4>
                                 <img src="{!! URL::asset('images/news_image_2.jpg') !!}" alt="">
 
                             </div>
@@ -72,7 +77,30 @@
                 <div class="uk-width-medium-6-6">
                     <div class="md-card" style="">
                         <div class="md-card-content">
-                            <div id="chart"></div>
+                            <div class="uk-grid uk-grid-divider">
+                                <div class="uk-width-2-3">
+                                    <div id="chart"></div>
+                                </div>
+                                <div class="uk-width-1-3 ">
+                                    <h2>Porcentajes de dispositivos</h2>
+                                    <ul class="uk-list uk-list-line">
+                                        <li><p>Iphones - {{$osStats['mac']}}
+                                                ({{ round(($osStats['mac'] * 100) / $total , 1)}} %) </p></li>
+                                        <li><p>Android
+                                                - {{$osStats['android']}}
+                                                ({{round($osStats['android'] * 100 / $total, 1)}} %)
+                                            </p></li>
+                                        <li><p>Windos
+                                                - {{$osStats['windows']}}
+                                                ({{ round($osStats['windows'] * 100 / $total, 1)}} %)
+                                            </p></li>
+                                        <li><p>Otros
+                                                - {{$osStats['otro']}} ({{round($osStats['otro'] * 100 / $total, 1 )}}
+                                                %)
+                                            </p></li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -88,12 +116,12 @@
 
     <script>
         var options = {
-            useEasing : true,
-            useGrouping : true,
-            separator : ',',
-            decimal : '.',
-            prefix : '',
-            suffix : ''
+            useEasing: true,
+            useGrouping: true,
+            separator: ',',
+            decimal: '.',
+            prefix: '',
+            suffix: ''
         };
         var demo = new CountUp("myTargetElement", 0, {{ $logs->count() }}, 0, 2.5, options);
         demo.start();
@@ -107,7 +135,7 @@
                     {!! '["'.$k.'",'.$os.' ],'  !!}
                     @endforeach
                 ],
-                type : 'pie',
+                type: 'pie',
             }
         });
 

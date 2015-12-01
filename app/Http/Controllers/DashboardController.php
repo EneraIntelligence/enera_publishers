@@ -4,7 +4,6 @@ namespace Publishers\Http\Controllers;
 
 use Auth;
 use Illuminate\Http\Request;
-
 use Publishers\CampaignLog;
 use Publishers\Http\Requests;
 use Publishers\Http\Controllers\Controller;
@@ -17,6 +16,7 @@ class DashboardController extends Controller
 
         $osLabels = array();
         $osCount = array();
+        $osTotal = 0;
 
         foreach($logs as $log)
         {
@@ -27,18 +27,19 @@ class DashboardController extends Controller
                 if($key!==false)
                 {
                     $osCount[$log->device['os']]++;
-                    //$osTotal++;
+                    $osTotal++;
                 }
                 else
                 {
                     $osLabels[] = $log->device['os'];
                     $osCount[$log->device['os']]=1;
-                    //$osTotal++;
+                    $osTotal++;
                 }
+
             }
         }
 
 
-        return view('dashboard.index', ['user' => Auth::user(), 'logs' => $logs, 'osStats'=>$osCount]);
+        return view('dashboard.index', ['user' => Auth::user(), 'logs' => $logs, 'osStats'=>$osCount, 'total' => $osTotal]);
     }
 }
