@@ -299,7 +299,12 @@
     {!! HTML::script('js/greensock/plugins/CSSPlugin.min.js') !!}
     {!! HTML::script('js/greensock/easing/EasePack.min.js') !!}
     {!! HTML::script('js/greensock/TweenLite.min.js') !!}
+    {!! HTML::script('bower_components/parsleyjs/dist/parsley.min.js') !!}
+    {!! HTML::script('bower_components/parsleyjs/src/i18n/es.js') !!}
+
     <script>
+
+
         $(document).ready(function () {
             $("#phone_number").kendoMaskedTextBox({
                 mask: "(99) 0000-0000"
@@ -323,8 +328,12 @@
             readURL(this);
         });
 
+
+
         $('#form_validation').parsley();
         $('#form').parsley();
+
+
 
     </script>
 @stop
