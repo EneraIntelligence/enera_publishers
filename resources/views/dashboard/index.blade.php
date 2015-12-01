@@ -44,7 +44,8 @@
                     </div>
                     <div class="md-card" style="">
                         <div class="md-card-content">
-                            <p>número</p>
+                            <h3 class="uk-text-center">Total de dipositivos vistos en la red de enera </h3>
+                            <h1 class="jumbo uk-text-center" id="myTargetElement">0</h1>
                         </div>
                     </div>
                 </div>
@@ -80,4 +81,21 @@
         </div>
     </div>
 
+@stop
+
+@section('scripts')
+    {!! HTML::script('bower_components/countUp.js/countUp.js') !!}
+
+    <script>
+        var options = {
+            useEasing : true,
+            useGrouping : true,
+            separator : ',',
+            decimal : '.',
+            prefix : '',
+            suffix : ''
+        };
+        var demo = new CountUp("myTargetElement", 0, {{ $logs->count() }}, 0, 2.5, options);
+        demo.start();
+    </script>
 @stop
