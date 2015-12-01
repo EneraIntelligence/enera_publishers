@@ -147,11 +147,6 @@
             });
 
         });
-        var active = '{{session('data')}}';
-        if (active == 'active') {
-            UIkit.notify("<i class='uk-icon-check'></i>  Tu perfil ha sido modificado con exito", {status: 'success'}, {timeout: 5});
-        }
-
 
 
         var active = '{{session('data')}}';

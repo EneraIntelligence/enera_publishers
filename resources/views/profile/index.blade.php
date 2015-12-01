@@ -188,6 +188,12 @@
             UIkit.notify("<i class='uk-icon-check'></i>  Tu perfil ha sido modificado con exito", {status:'success'},{timeout: 5});
         }
 
+        var active = '{{session('pass')}}';
+        if(active=='active')
+        {
+            UIkit.notify("<i class='uk-icon-check'></i>  Tu contraseña ha sido modificado con exito", {status:'success'},{timeout: 5});
+        }
+
         var chart1 = c3.generate({
             bindto: '#chart1',
             data: {

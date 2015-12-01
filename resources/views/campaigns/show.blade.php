@@ -375,7 +375,6 @@
             </div>
         </div>
     </div>
-
     @stop
 
     @section('scripts')
@@ -411,6 +410,27 @@
         };
         var demo = new CountUp("myTargetElement", 0, {{$cam->logs->count()}}, 0, 5.0, options);
         demo.start();
+
+        var chart = c3.generate({
+            bindto: '#ct-chart',
+            data: {
+                columns: [
+                    ['Mujeres', {{$age[0]}}],
+                    ['Hombres', {{$age[1]}}]
+                ],
+                type: 'bar'
+            },
+            bar: {
+                width: {
+                    ratio: 0.5 // this makes bar width 50% of length between ticks
+                }
+                // or
+                //width: 100 // this makes bar width 100px
+            }
+        });
+
+
+
     </script>
     <!-- enera custom scripts -->
     {{--{!! HTML::script('assets/js/enera/create_campaign_helper.js') !!}--}}

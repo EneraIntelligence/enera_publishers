@@ -200,7 +200,7 @@ class CampaignsController extends Controller
 
             $res = array('success' => true, 'filename' => $filename, 'item_id' => $item->_id, 'imageType' => $imageType);
 
-            echo json_encode($res);
+//            echo json_encode($res);
 
         } else {
             $res = array('success' => false, 'msg' => 'error');
@@ -212,7 +212,7 @@ class CampaignsController extends Controller
             if (!$this->correct_size($file))
                 echo 'error! File size must be 100x100';*/
 
-            echo json_encode($res);
+//            echo json_encode($res);
         }
 
 
