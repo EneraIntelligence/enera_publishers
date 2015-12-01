@@ -35,36 +35,56 @@ graficas = function () {
     }
 //------------------------grafica de barra para los años y edades
     this.genderAge = function genderAge(array) {
-        console.log(array);
+
+
+        var categoriesArr = ['13-17 años', '18-25 años', '26-29 años', '30-39 años', '40-49 años', '> 50 años'];
+
         var chart2 = c3.generate({
             bindto: '#genderAge',
             data: {
                 columns: [
-                    ['Mujeres', 30, 200, 100, 400, 150, 250],
-                    ['Hombres', -130, -100, -140, -200, -150, -50]
+                    ['hombres', -30, -200, -100, -400, -150, -250],
+                    ['mujeres', 30, 200, 100, 100, 150, 250],
                 ],
-                groups: [
-                    ['Mujeres', 'Hombres']
-                ],
-                type: 'bar'
-            },
-            bar: {
-                width: {
-                    ratio: 0.5 // this makes bar width 50% of length between ticks
-                }
-                // or
-                //width: 100 // this makes bar width 100px
+                type:'bar',
+                labels:{
+                    format: function (v,id,i,j) {
+
+                        return categoriesArr[i];
+
+                        /*
+                         if(j==0)
+                         return categoriesArr[i]+" ("+Math.abs(v)+")";
+
+                         return "("+Math.abs(v)+") "+categoriesArr[i];*/
+                    },
+                },
+
+                groups: [ ['hombres','mujeres'] ]
             },
             color: {
-                pattern: ['red', '#aec7e8', '#ff7f0e', '#ffbb78']
+                pattern: ['#5294C2', '#fc92cc']
             },
             axis: {
-                y: {
-                    padding: {top: 10, bottom: 10}
+                rotated: true,
+                y:{
+                    tick: {
+                        format: function (y) { return Math.abs(y) }
+                    },
+                    center: 0
                 },
-                rotated: true
+                x:{
+                    show:false,
+                    type: 'category',
+                    categories: categoriesArr,
+                }
             }
         });
+
+        chart2.ygrids([
+            {value: 0},
+        ]);
+
         return chart2;
     }
 //------------------------grafica de barra para las interacciones por dia

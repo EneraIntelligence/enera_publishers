@@ -33,7 +33,6 @@
 @endsection
 
 @section('content')
-    <div id="fb-root"></div>
 
     <div id="page_content">
         <div id="page_content_inner">
