@@ -415,8 +415,8 @@
             bindto: '#ct-chart',
             data: {
                 columns: [
-                    ['Mujeres', {{$age[0]}}],
-                    ['Hombres', {{$age[1]}}]
+                    ['Mujeres', 15],
+                    ['Hombres', 25]
                 ],
                 type: 'bar'
             },

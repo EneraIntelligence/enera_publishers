@@ -348,10 +348,9 @@ class CampaignsController extends Controller
             $Logs=$logs->toArray();
             foreach ($Logs as $clave => $valor) {
                 $log['users'][$clave]['age'] = $valor['user']['age'];
-                var_dump($log['users'][$clave]['age']);
+//                var_dump($log['users'][$clave]['age']);
                 $log['users'][$clave]['gender'] = $valor['user']['gender'];
-                var_dump($log['users'][$clave]['gender']);
-
+//                var_dump($log['users'][$clave]['gender']);
             }
         }
 
