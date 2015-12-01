@@ -1,21 +1,20 @@
 var graficas;
 graficas = function () {
 
-    this.bar = function bar(paso) {
+    this.bar = function bar() {
 
     }
-
+    //grafica de pastel para los sistemas operativos
     this.so = function so(array) {
-        console.log('grafica de so');
-
+        console.log(array);
         var chart4 = c3.generate({
-            bindto: '#chart4',
+            bindto: '#so',
             data: {
                 columns: [
-                    ['mac', 130],
-                    ['android', 12],
-                    ['windows', 1],
-                    ['60+', 10]
+                    ['mac', 30],
+                    ['android', 120],
+                    ['windows', 34],
+                    ['otros', 10]
                 ],
                 type: 'pie'
             },
@@ -34,8 +33,9 @@ graficas = function () {
         });
         return chart4;
     }
-
-    this.genderAge = function genderAge(paso) {
+//------------------------grafica de barra para los años y edades
+    this.genderAge = function genderAge(array) {
+        console.log(array);
         var chart2 = c3.generate({
             bindto: '#genderAge',
             data: {
@@ -65,11 +65,10 @@ graficas = function () {
                 rotated: true
             }
         });
-
+        return chart2;
     }
-
+//------------------------grafica de barra para las interacciones por dia
     this.intPerDay = function intPerDay (dia1,dia2,dia3,dia4,dia5) {
-        console.log('entro a por dia');
         //        Interacciones por modelos
         var chart3 = c3.generate({
             bindto: '#intPerDay',
@@ -100,7 +99,6 @@ graficas = function () {
             }
         }
     });
-        console.log('regresa valor');
         return chart3;
     }
 

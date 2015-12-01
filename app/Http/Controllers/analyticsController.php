@@ -115,19 +115,35 @@ class AnalyticsController extends Controller
      */
     private function genderAge($id)
     {   //        $today =date( "Y-m-d",mktime(0, 0, 0, date("m"),date("d")-5, date("Y")));
+        $Log['users'] =[];//se inicializa el arreglo
+//        dd($Log);
         //se obtiene de los logs los usuarios de 5 dias atras
         $fecha = $this->fechaInicio(5); //el numero es entere positivo pero en la funcion se ase negativo para buscar asia atras
         if($Logs = CampaignLog::groupBy('user')->where('campaign_id',$id)->where('updated_at', '>', $fecha)->get(array('user')))
         {
             $Logs=$Logs->toArray();
             foreach ($Logs as $clave => $valor) {//recorro el arreglo para acomodar los datos en un arreglo mas presentable
-//            var_dump($valor['user']);
-                $Log['users'][$clave]['gender'] =$valor['user']['gender'];
-                $Log['users'][$clave]['age'] =$valor['user']['age'];
-            }
-
+                if (array_key_exists($valor['user']['age'], $Log['users'])){
+//                    echo 'se encontro <br>';
+                    if($valor['user']['gender']=='male'){
+                        $Log['users'][$valor['user']['age']]['M'] += 1;
+                    }else{
+                        $Log['users'][$valor['user']['age']]['F'] += '1';
+                    }
+                }else{
+//                    echo 'no se encontro'.$valor['user']['age'].' <br>';
+                    if($valor['user']['gender']=='male'){
+                        $Log['users'][$valor['user']['age']]['M'] = 1;
+                    }else{
+                        $Log['users'][$valor['user']['age']]['F'] = '1';
+                    }
+                }
+                    /*$Log['users'][$clave]['gender'] =$valor['user']['gender'];
+                $Log['users'][$clave]['age'] =$valor['user']['age'];*/
+            }//fin del for
         }else{
-            return $Log[0]=[0];
+            $Log['users'][0]['F'] = '0';;
+            $Log['users'][0]['M'] = '0';;
         }
 //        dd($Log);
         return $Log;
@@ -145,7 +161,7 @@ class AnalyticsController extends Controller
         $so['mac'] = CampaignLog::where('campaign_id',$id)->where('device.os','mac')->where('updated_at', '>', $fecha)->count();
         $so['windows'] = CampaignLog::where('campaign_id',$id)->where('device.os','windows')->where('updated_at', '>', $fecha)->count();
         $so['otro'] = CampaignLog::where('campaign_id',$id)->where('device.os','other')->where('updated_at', '>', $fecha)->count();
-        dd($so);
+//        dd($so);
 
         return $so;
     }

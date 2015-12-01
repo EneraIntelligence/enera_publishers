@@ -345,7 +345,7 @@ class CampaignsController extends Controller
         if ($logs == null) {
             return null;
         }else{
-            $Logs=$Logs->toArray();
+            $Logs=$logs->toArray();
             foreach ($Logs as $clave => $valor) {
                 $log['users'][$clave]['age'] = $valor['user']['age'];
                 var_dump($log['users'][$clave]['age']);

@@ -89,13 +89,9 @@
     {!! HTML::script('js/ajax/graficas.js') !!}
     {!! HTML::script('js/printThis.js') !!}
     <script>
-
         $( document ).ready(function() {
             console.log( "ready!" );
-            //------------------------------------------Grafica---------------------------------------------
-            {{--{!! $grafica !!}--}}
-
-        //------------------------------------------Imprimir reporte---------------------------------------------
+//-----------------------------------------Imprimir reporte---------------------------------------------
             $('#print').click(function() {
                 Popup($('#reporte').html());
 //                print($('#reporte'));
@@ -145,7 +141,7 @@
                 $(this).find('strong').html(parseInt(100 * progress) + '<i>%</i>');
             }); //fin del codigo de animacion de circulo
 
-            //-----------------------------------------REDIRECCIONA AL TIPO--------------------------------------------
+            //-------------------------------- TIPO de grafica --------------------------------------
             var select= $( "#select-grafico" );
             $(select).change(function() {
                 var tipo = select.val();
@@ -154,23 +150,19 @@
             });
 //------------------------------------------Grafica---------------------------------------------
             var grafica = new graficas;
-//            console.log('grafica');
             var tipo = '{{$type}}';
-//            console.log(tipo);
 
             switch ( tipo ) {
                 case 'intPerDay':
                     var gra= grafica.intPerDay(5,4,5,1,2);
                     break;
                 case 'genderAge':
-                    var gra= grafica.genderAge();
+                    var gra= grafica.genderAge({!! json_encode($grafica) !!});
                     break;
                 case 'so':
-                    var gra= grafica.so();
+                    var gra= grafica.so({!! json_encode($grafica) !!});
                     break;
             }
-
-
         }); // ----------------------------- termina document ready -----------------
 
 //         ----------------------------- alertas  -----------------
@@ -178,69 +170,6 @@
         if (active == 'active') {
             UIkit.notify("<i class='uk-icon-check'></i>  Tu perfil ha sido modificado con exito", {status: 'success'}, {timeout: 5});
         }
-
-        //------------------------------------------Grafica---------------------------------------------
-        {{--GENERO Y EDAD --}}
-        /*var chart2 = c3.generate({
-            bindto: '#genderAge',
-            data: {
-                columns: [
-                    ['Mujeres', 30, 200, 100, 400, 150, 250],
-                    ['Hombres', -130, -100, -140, -200, -150, -50]
-                ],
-                groups: [
-                    ['Mujeres', 'Hombres']
-                ],
-                type: 'bar'
-            },
-            bar: {
-                width: {
-                    ratio: 0.5 // this makes bar width 50% of length between ticks
-                }
-                // or
-                //width: 100 // this makes bar width 100px
-            },
-            color: {
-                pattern: ['red', '#aec7e8', '#ff7f0e', '#ffbb78']
-            },
-            axis: {
-                y: {
-                    padding: {top: 10, bottom: 10}
-                },
-                rotated: true
-            }
-        });
-        /!***** INTERACCIONES POR DIA *****!/
-        var chart3 = c3.generate({
-            bindto: '#intPerDay',
-            data: {
-                columns: [
-                    ['hace 1 dia',  $dia1 ],
-                    ['hace 2 dia',  $dia2 ],
-                    ['hace 3 dia',  $dia3 ],
-                    ['hace 4 dia',  $dia4 ],
-                    ['hace 5 dia',  $dia5 ]
-                    /!*['Android', 30, 200, 200, 400, 150, 250],
-                     ['Blackberry', 130, 100, 100, 200, 150, 50],
-                     ['IOS', 230, 200, 200, 300, 250, 250],
-                     ['Windows Phone', 230, 200, 200, 300, 250, 250],
-                     ['other', 230, 200, 200, 300, 250, 250]*!/
-                ],
-                type: 'bar',
-                /!*groups: [
-                 ['Android', 'Blackberry', 'IOS', 'Windows Phone', 'other']
-                 ]*!/
-            },
-            color: {
-                pattern: ['red', '#aec7e8', '#ff7f0e', '#ffbb78', '#2ca02c', '#98df8a', '#d62728', '#ff9896', '#9467bd', '#c5b0d5', '#8c564b', '#c49c94', '#e377c2', '#f7b6d2', '#7f7f7f', '#c7c7c7', '#bcbd22', '#dbdb8d', '#17becf', '#9edae5']
-            },
-            axis: {
-                y: {
-                    padding: {top: 200, bottom: 0}
-                }
-            }
-        });*/
-
     </script>
 @stop
 
