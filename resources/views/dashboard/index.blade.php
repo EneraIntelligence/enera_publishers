@@ -29,7 +29,12 @@
             background-color: #aaa;
         }
         .minimenu{height:123px; box-sizing:border-box; line-height:115px;}
+        .minimenu div{height: 100%;}
+        .minimenu div:first-child{text-align:center}
+        .minimenu div i{font-size:80px; margin-top:23px;}
+        .minimenu div:last-child{text-align: left}
         .minimenu h5{margin:30px 0px 0px 0px; }
+        .minimenu span{margin:30px 0px 0px 0px; }
 
     </style>
 @endsection
@@ -49,24 +54,24 @@
                     <div class="md-card">
                         <div class="md-card-content" style="max-height: 370px">
                             <div class="minimenu">
-                                <div class="uk-width-medium-1-3 uk-float-left uk-height-medium-1-1"><i class="md-48 material-icons">phone_android</i></div>
+                                <div class="uk-width-medium-1-3 uk-float-left"><i class="material-icons">phone_android</i></div>
                                 <div class="uk-width-medium-2-3 uk-float-right">
-                                    <h5 class="uk-text-center"> Dipositivos </h5>
-                                    <h5 class="jumbo uk-text-center" id="myTargetElement">0</h5>
+                                    <h5 class="uk-text-left"> Dipositivos </h5>
+                                    <h5 class="uk-text-left" id="myTargetElement">0</h5>
                                 </div>
                             </div>
                             <div class="minimenu">
-                                <div class="uk-width-medium-1-3 uk-float-left"><i class="md-48 material-icons">pin_drop</i></div>
+                                <div class="uk-width-medium-1-3 uk-float-left"><i class="material-icons" >pin_drop</i></div>
                                 <div class="uk-width-medium-2-3 uk-float-right">
-                                    <h5 class="uk-text-center"> Sitios </h5>
-                                    <h5 class="jumbo uk-text-center" id="myTargetElement2">0</h5>
+                                    <h5 class="uk-text-left"> Sitios </h5>
+                                    <h5 class="uk-text-left" id="myTargetElement2">0</h5>
                                 </div>
                             </div>
                             <div class="minimenu">
-                                <div class="uk-width-medium-1-3 uk-float-left"><i class="md-48 material-icons">phone_android</i></div>
-                                <div class="uk-width-medium-2-3 uk-float-right">
-                                    <h5 class="uk-text-center"> Campañas </h5>
-                                    <h5 class="jumbo uk-text-center" id="myTargetElement3">0</h5>
+                                <div class="uk-width-medium-1-3 uk-float-left" ><i class="material-icons">insert_invitation</i></div>
+                                <div class="uk-width-medium-2-3 uk-float-right" >
+                                    <h5 class="uk-text-left"> Campañas </h5>
+                                    <h5 class="uk-text-left" id="myTargetElement3">0</h5>
                                 </div>
                             </div>
                         </div>
@@ -145,7 +150,10 @@
         };
         var demo = new CountUp("myTargetElement", 0, {{ $logs->count() }}, 0, 2.5, options);
         demo.start();
-
+        var demo = new CountUp("myTargetElement2", 0, 120, 0, 2.5, options);
+        demo.start();
+        var demo = new CountUp("myTargetElement3", 0, 120, 0, 2.5, options);
+        demo.start();
 
         var chart = c3.generate({
             data: {
