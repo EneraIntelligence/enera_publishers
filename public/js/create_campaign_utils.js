@@ -54,7 +54,7 @@ create_campaign_helper =
         });
 
         $("#image_survey").change(function(){
-            create_campaign_helper.showPreview(event,'.banner-survey', 684, 300)
+            create_campaign_helper.showPreview(event,'.banner-survey', 684, 400)
         });
 
         //startup sliders

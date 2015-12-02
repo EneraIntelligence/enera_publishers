@@ -172,8 +172,8 @@ class CampaignsController extends Controller
 
         } else  if (Input::get("imgToSave") == ".banner-survey") {
 
-            $file = Input::file('image_small');
-            $imageType = "small";
+            $file = Input::file('image_survey');
+            $imageType = "survey";
         }
         else
         {
