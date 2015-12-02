@@ -224,8 +224,8 @@
     <div class="uk-grid">
 
         <div class="uk-width-medium-1-1 uk-small-width-1-1 step2-field survey">
-            <img style="max-height:200px" class="uk-align-center banner-1" src="http://placehold.it/600x300?text=600x300" alt="">
-            <div class="parsley-errors-list filled banner-1-errors"></div>
+            <img style="max-height:200px" class="uk-align-center banner-survey" src="http://placehold.it/684x300?text=684x300" alt="">
+            <div class="parsley-errors-list filled banner-survey-errors"></div>
 
             <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 

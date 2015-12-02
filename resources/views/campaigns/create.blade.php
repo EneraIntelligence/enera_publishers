@@ -97,7 +97,7 @@
 
                                 <!-- survey preview -->
                                 <div class="preview survey none">
-                                    <img class="banner-1 banner-2 view"  src="http://placehold.it/200x150?text=Tu+banner" alt="Tu banner">
+                                    <img class="banner-survey view"  src="http://placehold.it/200x150?text=Tu+banner" alt="Tu banner">
                                     <h3 class="uk-text-center center-text" style="top:325px; width:70%; position:absolute;">¿Pregunta 1?</h3>
                                     <div style="top:387px" class="md-btn md-btn-primary boton">A</div>
                                     <div class="uk-clearfix"></div>

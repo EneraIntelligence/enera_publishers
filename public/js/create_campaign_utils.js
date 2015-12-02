@@ -53,6 +53,10 @@ create_campaign_helper =
             create_campaign_helper.showPreview(event,'.banner-2', 684, 864)
         });
 
+        $("#image_survey").change(function(){
+            create_campaign_helper.showPreview(event,'.banner-survey', 684, 300)
+        });
+
         //startup sliders
         $('[data-ion-slider]').ionRangeSlider();
 
