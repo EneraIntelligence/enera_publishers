@@ -28,6 +28,8 @@
         ::-webkit-scrollbar-thumb:hover {
             background-color: #aaa;
         }
+        .minimenu{height:123px; box-sizing:border-box; line-height:115px;}
+        .minimenu h5{margin:30px 0px 0px 0px; }
 
     </style>
 @endsection
@@ -44,10 +46,29 @@
                             <img src="{!! URL::asset('images/Enera_logo_400x130.png') !!}">
                         </div>
                     </div>
-                    <div class="md-card" style="">
-                        <div class="md-card-content">
-                            <h3 class="uk-text-center">Total de dipositivos vistos en la red de enera </h3>
-                            <h1 class="jumbo uk-text-center" id="myTargetElement">0</h1>
+                    <div class="md-card">
+                        <div class="md-card-content" style="max-height: 370px">
+                            <div class="minimenu">
+                                <div class="uk-width-medium-1-3 uk-float-left uk-height-medium-1-1"><i class="md-48 material-icons">phone_android</i></div>
+                                <div class="uk-width-medium-2-3 uk-float-right">
+                                    <h5 class="uk-text-center"> Dipositivos </h5>
+                                    <h5 class="jumbo uk-text-center" id="myTargetElement">0</h5>
+                                </div>
+                            </div>
+                            <div class="minimenu">
+                                <div class="uk-width-medium-1-3 uk-float-left"><i class="md-48 material-icons">pin_drop</i></div>
+                                <div class="uk-width-medium-2-3 uk-float-right">
+                                    <h5 class="uk-text-center"> Sitios </h5>
+                                    <h5 class="jumbo uk-text-center" id="myTargetElement2">0</h5>
+                                </div>
+                            </div>
+                            <div class="minimenu">
+                                <div class="uk-width-medium-1-3 uk-float-left"><i class="md-48 material-icons">phone_android</i></div>
+                                <div class="uk-width-medium-2-3 uk-float-right">
+                                    <h5 class="uk-text-center"> Campañas </h5>
+                                    <h5 class="jumbo uk-text-center" id="myTargetElement3">0</h5>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
