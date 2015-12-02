@@ -45,14 +45,14 @@
         <div id="page_content_inner">
             {{--<h3 class="heading_b uk-margin-bottom">Blank Page</h3>--}}
             <div class="uk-grid" data-uk-grid-margin="" data-uk-grid-match="{target:'.md-card'}">
-                <div class="uk-width-medium-2-6">
+                <div class="uk-width-large-1-4">
                     <div class="md-card" style="">
                         <div class="md-card-content">
                             <img src="{!! URL::asset('images/Enera_logo_400x130.png') !!}">
                         </div>
                     </div>
-                    <div class="md-card">
-                        <div class="md-card-content" style="max-height: 370px">
+                    <div class="md-card ">
+                        <div class="md-card-content" style="max-height: 400px">
                             <div class="minimenu">
                                 <div class="uk-width-medium-1-3 uk-float-left"><i class="material-icons">phone_android</i></div>
                                 <div class="uk-width-medium-2-3 uk-float-right">
@@ -77,7 +77,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="uk-width-medium-4-6">
+                <div class="uk-width-medium-3-4">
                     <div class="md-card" style="">
                         <div class="md-card-content">
                             <div style="padding:20px; height:500px; overflow-y: scroll;">
