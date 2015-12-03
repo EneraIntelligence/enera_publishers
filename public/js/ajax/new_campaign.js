@@ -8,6 +8,7 @@ $(function() {
 
 new_campaign =
 {
+    base_url:"",
     url:"",
     token:"",
     modal:null,
@@ -31,7 +32,7 @@ new_campaign =
         else
         {
             UIkit.modal.blockUI('<div class=\'uk-text-center\'> Creando campaña... <br>' +
-                '<img class=\'uk-margin-top\' src=\'assets/img/spinners/spinner.gif\' alt=\'\'>');
+                '<img class=\'uk-margin-top\' src=\''+new_campaign.base_url+'/assets/img/spinners/spinner.gif\' alt=\'\'>');
             window.location=new_campaign.url+"?name="+name;
         }
     }

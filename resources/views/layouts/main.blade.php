@@ -371,6 +371,9 @@
     </script>
 
     <script>
+
+        new_campaign.base_url="{!! URL::to('/') !!}";
+
         $(function () {
             $("body").on("click", ".uk-button[data-message]", function () {
                 UIkit.notify($(this).data());

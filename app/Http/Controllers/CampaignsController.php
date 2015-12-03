@@ -161,41 +161,49 @@ class CampaignsController extends Controller
         //echo "{success: 'true'}";
 
 
-        if (Input::get("imgToSave") == ".banner-1") {
+        if (Input::get("imgType") == ".banner-1")
+        {
             //saving small image
-            $file = Input::file('image_small');
+            $img = Input::get('imgToSave');
             $imageType = "small";
-        } else  if (Input::get("imgToSave") == ".banner-2") {
+        }
+        else  if (Input::get("imgType") == ".banner-2")
+        {
             //saving large image
-            $file = Input::file('image_large');
+            $img = Input::get('imgToSave');
             $imageType = "large";
 
-        } else  if (Input::get("imgToSave") == ".banner-survey") {
+        }
+        else  if (Input::get("imgType") == ".banner-survey")
+        {
 
-            $file = Input::file('image_survey');
+            $img = Input::get('imgToSave');
             $imageType = "survey";
         }
         else
         {
-            $res = array('success' => false, 'msg' => 'error with image selected');
+            $res = array('success' => false, 'msg' => 'error with image type');
             echo $res;
         }
 
+        //transforming string to image file
+        $img = str_replace('data:image/png;base64,', '', $img);
+        $img = str_replace(' ', '+', $img);
+        $data = base64_decode($img);
+        $filename = time() . ".png";
 
-        $fc = new FileCloud();
+        //transferring file to storage
+        $file = storage_path() . '/app/' . $filename;
+        $success = file_put_contents($file, $data);
 
-        //$file = Input::file('image');
-
-        //if ($file && $file->isValid() && $this->correct_size($file)) {
-        if ($file && $file->isValid()) {
-            //set newly generated filename and upload to server storage
-            $ext = $file->getClientOriginalExtension();
-            $filename = time() . '.' . $ext;
-            $file->move(storage_path() . '/app', $filename);
+        if ($success)
+        {
+            //image copied to server successfully
+            $fc = new FileCloud();
 
             //get uploaded file and copy it to cloud
             $uploadedFile = Storage::get($filename);
-            $fileSaved = $fc->put($filename, $uploadedFile);
+            $fileSaved = $fc->put(time() . ".png", $uploadedFile);
             //delete server file
             Storage::delete($filename);
 
@@ -212,29 +220,13 @@ class CampaignsController extends Controller
             echo json_encode($res);
 
         } else {
-            $res = array('success' => false, 'msg' => 'error');
-            /*
-            if (!$file->isValid())
-                echo 'error! no file uploaded';
-            if (!$file->isValid())
-                echo 'error! File not valid';
-            if (!$this->correct_size($file))
-                echo 'error! File size must be 100x100';*/
-
+            $res = array('success' => false, 'msg' => 'error saving cropped image on storage');
             echo json_encode($res);
         }
 
 
     }
 
-    private
-    function correct_size($photo)
-    {
-        $maxHeight = 100;
-        $maxWidth = 100;
-        list($width, $height) = getimagesize($photo);
-        return (($width <= $maxWidth) && ($height <= $maxHeight));
-    }
 
     /**
      * Display the specified resource.
