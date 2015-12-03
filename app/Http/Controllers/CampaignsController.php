@@ -196,6 +196,15 @@ class CampaignsController extends Controller
         $file = storage_path() . '/app/' . $filename;
         $success = file_put_contents($file, $data);
 
+        //compress png to jpg
+        $png = $file;
+        $filename = time() . ".jpg";
+        $file = storage_path() . '/app/' . $filename;
+        $image = imagecreatefrompng($png);
+        imagejpeg($image, $file, 90);
+        imagedestroy($image);
+
+
         if ($success)
         {
             //image copied to server successfully
@@ -203,7 +212,7 @@ class CampaignsController extends Controller
 
             //get uploaded file and copy it to cloud
             $uploadedFile = Storage::get($filename);
-            $fileSaved = $fc->put(time() . ".png", $uploadedFile);
+            $fileSaved = $fc->put(time() . ".jpg", $uploadedFile);
             //delete server file
             Storage::delete($filename);
 

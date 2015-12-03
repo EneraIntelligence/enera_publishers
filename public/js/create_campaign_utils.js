@@ -91,6 +91,7 @@ create_campaign_helper =
         var modal = UIkit.modal.blockUI('<div class=\'uk-text-center\'>Cargando imagen...<br/>' +
             '<img class=\'uk-margin-top\' src=\''+branchMap.base_url+'/assets/img/spinners/spinner.gif\' alt=\'\'>');
 
+        //get the crop data
         var img = create_campaign_helper.cropData.image;
         var x = create_campaign_helper.cropData.x;
         var y = create_campaign_helper.cropData.y;
@@ -101,22 +102,21 @@ create_campaign_helper =
         var previewId = create_campaign_helper.cropData.previewId;
         var input = create_campaign_helper.cropData.input;
 
+        //create canvas
         var resize_canvas = document.createElement('canvas');
         resize_canvas.width = expWidth;
         resize_canvas.height = expHeight;
 
+        //paint canvas with croped portion of image
         resize_canvas.getContext('2d').drawImage(img, x, y, width, height, 0, 0, expWidth, expHeight);
         $(create_campaign_helper.cropData.previewId).attr('src', resize_canvas.toDataURL("image/png"));
 
-        //console.log( create_campaign_helper.cropData );
-
-
-        // resize_canvas.toDataURL("image/png");
-
+        //fill data to send to ajax
         var form_data = new FormData( $('#wizard_advanced_form')[0] );
         form_data.append( "imgType", previewId );
         form_data.append( "imgToSave", resize_canvas.toDataURL("image/png") );
 
+        //div to receive any possible error
         var errorDiv = $(previewId+"-errors");
 
         //upload item via ajax
@@ -152,7 +152,6 @@ create_campaign_helper =
             setTimeout(function(){
                 modal.hide();
             },200);
-
 
         });
 
@@ -193,16 +192,7 @@ create_campaign_helper =
                     rotatable: false,
                     multiple: true,
                     crop: function(e) {
-                        // Output the result data for cropping image.
-/*
-                        console.log("x:" + e.x);
-                        console.log("y:" + e.y);
-                        console.log("width:" + e.width);
-                        console.log("height:" + e.height);
-                        console.log("scaleX:" + e.scaleX);
-                        console.log("scaleY:" + e.scaleY);
-*/
-
+                        // save the crop data to have it available when user clicks save
                         create_campaign_helper.cropData = e;
                         create_campaign_helper.cropData.previewId = previewId;
                         create_campaign_helper.cropData.imageWidth = width;
@@ -220,97 +210,6 @@ create_campaign_helper =
         };
         image.src = _URL.createObjectURL(input.files[0]);
 
-        /*
-        var input = event.target;
-
-        var modal = UIkit.modal.blockUI('<div class=\'uk-text-center\'>Cargando imagen...<br/>' +
-            '<img class=\'uk-margin-top\' src=\''+branchMap.base_url+'/assets/img/spinners/spinner.gif\' alt=\'\'>');
-
-        //check for image size
-        var _URL = window.URL || window.webkitURL;
-        image = new Image();
-        image.onload = function()
-        {
-            var errorDiv = $(previewId+"-errors");
-
-            if(this.width==width && this.height==height)
-            {
-                //image size ok!
-                errorDiv.html('');
-
-                //load image on input field
-                var reader = new FileReader();
-                reader.onload = function(){
-                    var dataURL = reader.result;
-                    var output = $(previewId);
-
-                    //change every instance where the image should go
-                    output.each(function()
-                    {
-                        $(this).attr("src", dataURL);
-                    });
-                };
-                reader.readAsDataURL(input.files[0]);
-
-
-
-                var form_data = new FormData($('#wizard_advanced_form')[0]);
-                form_data.append("imgToSave", previewId);
-
-                //upload item via ajax
-                $.ajax({
-                    url: '/campaigns/save_item',
-                    type: 'POST',
-                    dataType: 'JSON',
-                    data: form_data,
-                    cache: false,
-                    contentType: false,
-                    processData: false
-                }).done(function (data) {
-                    console.log("success");
-                    console.log(data);
-
-                    create_campaign_helper.images[data.imageType] = data.item_id;
-                    console.log(create_campaign_helper);
-
-                    modal.hide()
-
-                }).fail(function (jqXHR, textStatus, errorThrown) {
-                    console.log(jqXHR);
-                    console.log(textStatus);
-                    console.log(errorThrown);
-
-                    input.value="";
-                    errorDiv.html('<span class="parsley-required uk-text-center md-input-danger">' +
-                        'Hubo un problema al subir tu imagen.' +
-                        '</span>');
-
-                    setTimeout(function(){
-                        modal.hide();
-                    },200);
-
-
-                });
-
-            }
-            else
-            {
-                //image size is different than expected
-                input.value="";
-                errorDiv.html('<span class="parsley-required uk-text-center md-input-danger">' +
-                    'El tamaño de la imagen debe ser de <br>'+width+' pixeles de ancho por '+height+' pixeles de alto.' +
-                    '</span>');
-
-                setTimeout(function(){
-                    modal.hide();
-                },200);
-
-
-            }
-        };
-        image.src = _URL.createObjectURL(input.files[0]);
-
-        */
 
     }
 };
