@@ -28,6 +28,13 @@
         ::-webkit-scrollbar-thumb:hover {
             background-color: #aaa;
         }
+        .minimenu{height:123px; box-sizing:border-box; line-height:115px;}
+        .minimenu div{height: 100%;}
+        .minimenu div:first-child{text-align:center}
+        .minimenu div i{font-size:80px; margin-top:23px;}
+        .minimenu div:last-child{text-align: left}
+        .minimenu h5{margin:30px 0px 0px 0px; }
+        .minimenu span{margin:30px 0px 0px 0px; }
 
     </style>
 @endsection
@@ -38,20 +45,39 @@
         <div id="page_content_inner">
             {{--<h3 class="heading_b uk-margin-bottom">Blank Page</h3>--}}
             <div class="uk-grid" data-uk-grid-margin="" data-uk-grid-match="{target:'.md-card'}">
-                <div class="uk-width-medium-2-6">
+                <div class="uk-width-large-1-4">
                     <div class="md-card" style="">
                         <div class="md-card-content">
                             <img src="{!! URL::asset('images/Enera_logo_400x130.png') !!}">
                         </div>
                     </div>
-                    <div class="md-card" style="">
-                        <div class="md-card-content">
-                            <h3 class="uk-text-center">Total de dipositivos vistos en la red de enera </h3>
-                            <h1 class="jumbo uk-text-center" id="myTargetElement">0</h1>
+                    <div class="md-card ">
+                        <div class="md-card-content" style="max-height: 400px">
+                            <div class="minimenu">
+                                <div class="uk-width-medium-1-3 uk-float-left"><i class="material-icons">phone_android</i></div>
+                                <div class="uk-width-medium-2-3 uk-float-right">
+                                    <h5 class="uk-text-left"> Dipositivos </h5>
+                                    <h5 class="uk-text-left" id="myTargetElement">0</h5>
+                                </div>
+                            </div>
+                            <div class="minimenu">
+                                <div class="uk-width-medium-1-3 uk-float-left"><i class="material-icons" >pin_drop</i></div>
+                                <div class="uk-width-medium-2-3 uk-float-right">
+                                    <h5 class="uk-text-left"> Sitios </h5>
+                                    <h5 class="uk-text-left" id="myTargetElement2">0</h5>
+                                </div>
+                            </div>
+                            <div class="minimenu">
+                                <div class="uk-width-medium-1-3 uk-float-left" ><i class="material-icons">insert_invitation</i></div>
+                                <div class="uk-width-medium-2-3 uk-float-right" >
+                                    <h5 class="uk-text-left"> Campañas </h5>
+                                    <h5 class="uk-text-left" id="myTargetElement3">0</h5>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="uk-width-medium-4-6">
+                <div class="uk-width-medium-3-4">
                     <div class="md-card" style="">
                         <div class="md-card-content">
                             <div style="padding:20px; height:500px; overflow-y: scroll;">
@@ -124,7 +150,10 @@
         };
         var demo = new CountUp("myTargetElement", 0, {{ $logs->count() }}, 0, 2.5, options);
         demo.start();
-
+        var demo = new CountUp("myTargetElement2", 0, 120, 0, 2.5, options);
+        demo.start();
+        var demo = new CountUp("myTargetElement3", 0, 120, 0, 2.5, options);
+        demo.start();
 
         var chart = c3.generate({
             data: {

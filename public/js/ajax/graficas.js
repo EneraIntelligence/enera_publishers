@@ -37,7 +37,7 @@ graficas = function () {
     this.genderAge = function genderAge(array) {
 
 
-        var categoriesArr = ['13-17 años', '18-25 años', '26-29 años', '30-39 años', '40-49 años', '> 50 años'];
+        var categoriesArr = ['> 50 años', '40-49 años', '30-39 años', '26-29 años', '18-25 años','13-17 años'];
 
         var chart2 = c3.generate({
             bindto: '#genderAge',
