@@ -1,6 +1,7 @@
 $(function() {
     "use strict";
 
+
     // page onload functions
     create_campaign_helper.init();
     survey.init();
@@ -36,6 +37,9 @@ create_campaign_helper =
     images:{},
     init: function()
     {
+        var cropBtn = $("#crop-btn");
+        cropBtn.click(create_campaign_helper.cropImage);
+
         //disable button until campaign is selected
         var btnNext = $(".button_next");
         btnNext.addClass("disabled");
@@ -79,97 +83,133 @@ create_campaign_helper =
         btnNext.removeClass("disabled");
         btnNext.attr("aria-disabled","false");
     },
-    showPreview: function(event, previewId, width, height)
+    cropData:null,
+    cropImage: function()
     {
-        console.log("create_campaign_helper.showPreview");
-        var input = event.target;
+        create_campaign_helper.modal.hide();
 
         var modal = UIkit.modal.blockUI('<div class=\'uk-text-center\'>Cargando imagen...<br/>' +
             '<img class=\'uk-margin-top\' src=\''+branchMap.base_url+'/assets/img/spinners/spinner.gif\' alt=\'\'>');
 
-        //check for image size
+        //get the crop data
+        var img = create_campaign_helper.cropData.image;
+        var x = create_campaign_helper.cropData.x;
+        var y = create_campaign_helper.cropData.y;
+        var width = create_campaign_helper.cropData.width;
+        var height = create_campaign_helper.cropData.height;
+        var expWidth = create_campaign_helper.cropData.imageWidth;
+        var expHeight = create_campaign_helper.cropData.imageHeight;
+        var previewId = create_campaign_helper.cropData.previewId;
+        var input = create_campaign_helper.cropData.input;
+
+        //create canvas
+        var resize_canvas = document.createElement('canvas');
+        resize_canvas.width = expWidth;
+        resize_canvas.height = expHeight;
+
+        //paint canvas with croped portion of image
+        resize_canvas.getContext('2d').drawImage(img, x, y, width, height, 0, 0, expWidth, expHeight);
+        $(create_campaign_helper.cropData.previewId).attr('src', resize_canvas.toDataURL("image/png"));
+
+        //fill data to send to ajax
+        var form_data = new FormData( $('#wizard_advanced_form')[0] );
+        form_data.append( "imgType", previewId );
+        form_data.append( "imgToSave", resize_canvas.toDataURL("image/png") );
+
+        //div to receive any possible error
+        var errorDiv = $(previewId+"-errors");
+
+        //upload item via ajax
+        $.ajax({
+            url: '/campaigns/save_item',
+            type: 'POST',
+            dataType: 'JSON',
+            data: form_data,
+            cache: false,
+            contentType: false,
+            processData: false
+        }).done(function (data) {
+            input.value="";
+
+            console.log("success");
+            console.log(data);
+
+            create_campaign_helper.images[data.imageType] = data.item_id;
+            console.log(create_campaign_helper);
+
+            modal.hide()
+
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR);
+            console.log(textStatus);
+            console.log(errorThrown);
+
+            input.value="";
+            errorDiv.html('<span class="parsley-required uk-text-center md-input-danger">' +
+                'Hubo un problema al subir tu imagen.' +
+                '</span>');
+
+            setTimeout(function(){
+                modal.hide();
+            },200);
+
+        });
+
+
+    },
+    showPreview: function(event, previewId, width, height)
+    {
+        console.log("create_campaign_helper.showPreview");
+
+        create_campaign_helper.modal = UIkit.modal("#modal_image");
+        create_campaign_helper.modal.show();
+
+        var imageContainer = $(".crop-image");
+        imageContainer.empty();
+        imageContainer.append('<img src="" alt="">');
+
+        var output = $(".crop-image>img");
+        output.attr("src", "");
+
         var _URL = window.URL || window.webkitURL;
-        image = new Image();
+        var input = event.target;
+
+        var image = new Image();
         image.onload = function()
         {
-            var errorDiv = $(previewId+"-errors");
+            //load image on input field
+            var reader = new FileReader();
+            reader.onload = function(){
+                var dataURL = reader.result;
 
-            if(this.width==width && this.height==height)
-            {
-                //image size ok!
-                errorDiv.html('');
+                //change modal image to crop
+                output.attr("src", dataURL);
 
-                //load image on input field
-                var reader = new FileReader();
-                reader.onload = function(){
-                    var dataURL = reader.result;
-                    var output = $(previewId);
-
-                    //change every instance where the image should go
-                    output.each(function()
-                    {
-                        $(this).attr("src", dataURL);
-                    });
-                };
-                reader.readAsDataURL(input.files[0]);
-
-
-
-                var form_data = new FormData($('#wizard_advanced_form')[0]);
-                form_data.append("imgToSave", previewId);
-
-                //upload item via ajax
-                $.ajax({
-                    url: '/campaigns/save_item',
-                    type: 'POST',
-                    dataType: 'JSON',
-                    data: form_data,
-                    cache: false,
-                    contentType: false,
-                    processData: false
-                }).done(function (data) {
-                    console.log("success");
-                    console.log(data);
-
-                    create_campaign_helper.images[data.imageType] = data.item_id;
-                    console.log(create_campaign_helper);
-
-                    modal.hide()
-
-                }).fail(function (jqXHR, textStatus, errorThrown) {
-                    console.log(jqXHR);
-                    console.log(textStatus);
-                    console.log(errorThrown);
-
-                    input.value="";
-                    errorDiv.html('<span class="parsley-required uk-text-center md-input-danger">' +
-                        'Hubo un problema al subir tu imagen.' +
-                        '</span>');
-
-                    setTimeout(function(){
-                        modal.hide();
-                    },200);
-
-
+                output.cropper({
+                    aspectRatio: width/height,
+                    resizable: true,
+                    zoomable: false,
+                    rotatable: false,
+                    multiple: true,
+                    crop: function(e) {
+                        // save the crop data to have it available when user clicks save
+                        create_campaign_helper.cropData = e;
+                        create_campaign_helper.cropData.previewId = previewId;
+                        create_campaign_helper.cropData.imageWidth = width;
+                        create_campaign_helper.cropData.imageHeight = height;
+                        create_campaign_helper.cropData.image = image;
+                        create_campaign_helper.cropData.previewId = previewId;
+                        create_campaign_helper.cropData.input = input;
+                    }
                 });
 
-            }
-            else
-            {
-                //image size is different than expected
-                input.value="";
-                errorDiv.html('<span class="parsley-required uk-text-center md-input-danger">' +
-                    'El tamaño de la imagen debe ser de <br>'+width+' pixeles de ancho por '+height+' pixeles de alto.' +
-                    '</span>');
 
-                setTimeout(function(){
-                    modal.hide();
-                },200);
+            };
+            reader.readAsDataURL(input.files[0]);
 
-
-            }
         };
         image.src = _URL.createObjectURL(input.files[0]);
+
 
     }
 };

@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.1.19 (LTS) on 2015-12-04.
+ * Generated for Laravel 5.1.19 (LTS) on 2015-11-26.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -12443,13 +12443,13 @@ namespace {
          * @param string $name
          * @param string $value
          * @param array $options
-         * @return string 
-         * @static 
+         * @return string
+         * @static
          */
         public static function color($name, $value = null, $options = array()){
             return \Collective\Html\FormBuilder::color($name, $value, $options);
         }
-        
+
         /**
          * Create a submit button element.
          *
@@ -12522,7 +12522,7 @@ namespace {
         /**
          * Get the session store implementation.
          *
-         * @return \Illuminate\Session\SessionInterface $session
+         * @return \Illuminate\Session\Store $session
          * @static 
          */
         public static function getSessionStore(){
@@ -12532,7 +12532,7 @@ namespace {
         /**
          * Set the session store implementation.
          *
-         * @param \Illuminate\Session\SessionInterface $session
+         * @param \Illuminate\Session\Store $session
          * @return $this 
          * @static 
          */

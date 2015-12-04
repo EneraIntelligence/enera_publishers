@@ -240,7 +240,15 @@
 
 
         <div class="uk-width-medium-1-2 uk-small-width-1-1 step2-field banner banner-link captcha mailing-list video">
-            <img style="max-height:200px" class="uk-align-center banner-1" src="http://placehold.it/600x602?text=600x602" alt="">
+            <img style="max-height:200px" id="image-crop" class="uk-align-center banner-1" src="http://placehold.it/600x602?text=600x602" alt="">
+
+            {{--<div style="height:400px; width:300px;" class="featured_image">--}}
+                {{--<img style="max-height:200px" id="image-crop" class="uk-align-center banner-1" src="http://placehold.it/600x602?text=600x602" alt="">--}}
+
+                {{--<img src="{!! URL::asset('images/android_placeholder.png') !!}" alt="">--}}
+            {{--</div>--}}
+
+
             <div class="parsley-errors-list filled banner-1-errors"></div>
 
             <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">

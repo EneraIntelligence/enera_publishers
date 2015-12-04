@@ -2,6 +2,7 @@
 @section('title', ' - Crear Campaña')
 @section('head_scripts')
     {!! HTML::style(asset('assets/css/campaign.css')) !!}
+    {!! HTML::style(asset('css/cropper.min.css')) !!}
 @endsection
 @section('content')
     <div id="page_content">
@@ -133,11 +134,29 @@
         </div>
     </div>
 
+    {{--image crop modal--}}
+    <div class="uk-modal" id="modal_image">
+        <div class="uk-modal-dialog">
+            <div class="uk-modal-header">
+                <h3 class="uk-modal-title">Recorta la imágen</h3>
+            </div>
+
+            <div class="crop-image">
+                <img src="" alt="">
+            </div>
+
+            <div class="uk-modal-footer uk-text-right">
+                <button type="button" class="md-btn md-btn-flat uk-modal-close">Cancelar</button>
+                <button type="button" id="crop-btn" class="md-btn md-btn-flat md-btn-flat-primary">Cortar</button>
+            </div>
+        </div>
+    </div>
 
 
 @stop
 
 @section('scripts')
+
 
         <!-- jquery steps -->
     {!! HTML::script('js/wizard_steps_custom.js') !!}
@@ -175,6 +194,8 @@
     {!! HTML::script('js/signals.min.js') !!}
     {!! HTML::script('js/marker_map.js') !!}
     {!! HTML::script('js/icon_animations.js') !!}
+
+    {!! HTML::script('js/cropper.min.js') !!}
 
     <script>
         branchMap.base_url="{!! URL::to('/') !!}";
