@@ -28,7 +28,8 @@
         ::-webkit-scrollbar-thumb:hover {
             background-color: #aaa;
         }
-        .minimenu{height:123px; box-sizing:border-box; line-height:115px;}
+        #minimenu .minimenu:first-child{margin-top: 2px}
+        .minimenu{height:123px; box-sizing:border-box; line-height:115px; margin-top:15px}
         .minimenu div{height: 100%;}
         .minimenu div:first-child{text-align:center}
         .minimenu div i{font-size:80px; margin-top:23px;}
@@ -52,28 +53,20 @@
                         </div>
                     </div>
                     <div class="md-card ">
-                        <div class="md-card-content" style="max-height: 400px">
-                            <div class="minimenu">
-                                <div class="uk-width-medium-1-3 uk-float-left"><i class="material-icons">phone_android</i></div>
-                                <div class="uk-width-medium-2-3 uk-float-right">
-                                    <h5 class="uk-text-left"> Dipositivos </h5>
-                                    <h5 class="uk-text-left" id="myTargetElement">0</h5>
-                                </div>
-                            </div>
-                            <div class="minimenu">
-                                <div class="uk-width-medium-1-3 uk-float-left"><i class="material-icons" >pin_drop</i></div>
-                                <div class="uk-width-medium-2-3 uk-float-right">
-                                    <h5 class="uk-text-left"> Sitios </h5>
-                                    <h5 class="uk-text-left" id="myTargetElement2">0</h5>
-                                </div>
-                            </div>
-                            <div class="minimenu">
-                                <div class="uk-width-medium-1-3 uk-float-left" ><i class="material-icons">insert_invitation</i></div>
-                                <div class="uk-width-medium-2-3 uk-float-right" >
-                                    <h5 class="uk-text-left"> Campañas </h5>
-                                    <h5 class="uk-text-left" id="myTargetElement3">0</h5>
-                                </div>
-                            </div>
+                        <div class="md-card-content">
+                            <div class="uk-float-right uk-margin-small-right"><span><i class="md-48 material-icons md-color-blue-600 uk-icon-large">phone_android</i></span></div>
+                            <span class="uk-text-muted uk-text-small">Dispositivos Detectados </span>
+                            <h2 class="uk-margin-remove"><span id="myTargetElement" class="countUpMe">0</span></h2>
+                        </div>
+                        <div class="md-card-content">
+                            <div class="uk-float-right uk-margin-small-right"><span><i class="md-48 material-icons md-color-red-A700 uk-icon-large">pin_drop</i></span> </div>
+                            <span class="uk-text-muted uk-text-small">Sitios Activos</span>
+                            <h2 class="uk-margin-remove"><span id="myTargetElement2" class="countUpMe">0</span></h2>
+                        </div>
+                        <div class="md-card-content">
+                            <div class="uk-float-right uk-margin-small-right"><span><i class="md-48 material-icons md-color-deep-orange-500 uk-icon-large">insert_invitation</i></span></div>
+                            <span class="uk-text-muted uk-text-small">Campañas Activas</span>
+                            <h2 class="uk-margin-remove"><span id="myTargetElement3" class="countUpMe">0</span></h2>
                         </div>
                     </div>
                 </div>
@@ -148,11 +141,11 @@
             prefix: '',
             suffix: ''
         };
-        var demo = new CountUp("myTargetElement", 0, {{ $logs->count() }}, 0, 2.5, options);
+        var demo = new CountUp("myTargetElement", 0,{{ $devices }} , 0, 2.5, options);
         demo.start();
-        var demo = new CountUp("myTargetElement2", 0, 120, 0, 2.5, options);
+        var demo = new CountUp("myTargetElement2", 0,{!! $sitios !!}, 0, 2.5, options);
         demo.start();
-        var demo = new CountUp("myTargetElement3", 0, 120, 0, 2.5, options);
+        var demo = new CountUp("myTargetElement3", 0, {{ $campañas }}, 0, 2.5, options);
         demo.start();
 
         var chart = c3.generate({
