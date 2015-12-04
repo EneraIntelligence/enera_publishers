@@ -90,7 +90,7 @@
                                         <i class="material-icons md-36 md-color-light-blue-A700">assessment</i>
                                         <span class="uk-text-muted uk-display-block">Reportes</span>
                                     </a>
-                                    <a href="#">
+                                    <a href="{!! route('budget::index') !!}">
                                         {{--<i class="material-icons md-36">&#xE53E;</i>--}}
                                         <i class="material-icons md-36 md-color-light-blue-A700">attach_money</i>
                                         <span class="uk-text-muted uk-display-block">Presupuesto</span>

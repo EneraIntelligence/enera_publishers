@@ -123,6 +123,7 @@
                                                 - {{$osStats['otro']}} ({{round($osStats['otro'] * 100 / $total, 1 )}}
                                                 %)
                                             </p></li>
+
                                     </ul>
                                 </div>
                             </div>

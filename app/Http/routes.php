@@ -55,6 +55,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/', ['as' => 'index', 'uses' => 'WalletsController@index']);
     });
 
+    Route::group(['prefix' => 'budget', 'as' => 'budget::'], function () {
+        Route::get('/', ['as' => 'index', 'uses' => 'BudgetController@index']);
+    });
+
     Route::match(['get', 'post'], 'logout', ['as' => 'auth.logout', 'uses' => 'AuthController@logout']);
 
     //Rutas de ajax
