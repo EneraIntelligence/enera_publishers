@@ -48,16 +48,16 @@ create_campaign_helper =
         console.log("create_campaign_helper.init");
 
         //set preview when uploading a banner
-        $("#image_small").change(function(){
+        $("#banner-1").change(function(){
             console.log("create_campaign_helper.change.image small");
             create_campaign_helper.showPreview(event,'.banner-1', 600,602)
         });
 
-        $("#image_large").change(function(){
+        $("#banner-2").change(function(){
             create_campaign_helper.showPreview(event,'.banner-2', 684, 864)
         });
 
-        $("#image_survey").change(function(){
+        $("#banner-survey").change(function(){
             create_campaign_helper.showPreview(event,'.banner-survey', 684, 400)
         });
 
@@ -118,6 +118,10 @@ create_campaign_helper =
 
         //div to receive any possible error
         var errorDiv = $(previewId+"-errors");
+        var inputId =  "#"+ previewId.substring(1, previewId.length);
+        console.log("inputId: "+inputId);
+        var inputField = $( inputId );
+
 
         //upload item via ajax
         $.ajax({
@@ -130,7 +134,9 @@ create_campaign_helper =
             processData: false
         }).done(function (data) {
             input.value="";
+            inputField.removeAttr("required");
 
+            console.log(inputField);
             console.log("success");
             console.log(data);
 
@@ -145,6 +151,8 @@ create_campaign_helper =
             console.log(errorThrown);
 
             input.value="";
+            inputField.required = true;
+
             errorDiv.html('<span class="parsley-required uk-text-center md-input-danger">' +
                 'Hubo un problema al subir tu imagen.' +
                 '</span>');

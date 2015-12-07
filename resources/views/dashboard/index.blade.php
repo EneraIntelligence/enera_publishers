@@ -55,17 +55,17 @@
                     <div class="md-card ">
                         <div class="md-card-content">
                             <div class="uk-float-right uk-margin-small-right"><span><i class="md-48 material-icons md-color-blue-600 uk-icon-large">phone_android</i></span></div>
-                            <span class="uk-text-muted uk-text-small">Dispositivos al alcance </span>
+                            <span class="uk-text-muted uk-text-small">Dispositivos Detectados </span>
                             <h2 class="uk-margin-remove"><span id="myTargetElement" class="countUpMe">0</span></h2>
                         </div>
                         <div class="md-card-content">
                             <div class="uk-float-right uk-margin-small-right"><span><i class="md-48 material-icons md-color-red-A700 uk-icon-large">pin_drop</i></span> </div>
-                            <span class="uk-text-muted uk-text-small">Sitios disponibles</span>
+                            <span class="uk-text-muted uk-text-small">Sitios Activos</span>
                             <h2 class="uk-margin-remove"><span id="myTargetElement2" class="countUpMe">0</span></h2>
                         </div>
                         <div class="md-card-content">
                             <div class="uk-float-right uk-margin-small-right"><span><i class="md-48 material-icons md-color-deep-orange-500 uk-icon-large">insert_invitation</i></span></div>
-                            <span class="uk-text-muted uk-text-small">Campañas disponibles</span>
+                            <span class="uk-text-muted uk-text-small">Campañas Activas</span>
                             <h2 class="uk-margin-remove"><span id="myTargetElement3" class="countUpMe">0</span></h2>
                         </div>
                     </div>

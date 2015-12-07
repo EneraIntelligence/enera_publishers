@@ -35,11 +35,9 @@ altair_wizard = {
                     altair_wizard.content_height($wizard_advanced, currentIndex);
 
 
-                    if(currentIndex==2)
-                    {
+                    if (currentIndex == 2) {
                         branchMap.refresh();
-                    }else if(currentIndex==3)
-                    {
+                    } else if (currentIndex == 3) {
                         finalScreen.fillData();
                     }
 
@@ -51,26 +49,22 @@ altair_wizard = {
                 onStepChanging: function (event, currentIndex, newIndex) {
 
                     //skips the parsley for testing purposes
-                    //return true;
+                    return true;
 
                     var step = $wizard_advanced.find('.body.current').attr('data-step'),
                         $current_step = $('.body[data-step=\"' + step + '\"]');
 
 
-
-
                     //skip field check when clicking previous steps
                     if (currentIndex > newIndex) {
 
-                        for(var i = newIndex+1; i<=currentIndex;i++)
-                        {
+                        for (var i = newIndex + 1; i <= currentIndex; i++) {
                             //disable button so you can't skip steps not filled
-                            disableStep(i+1);
+                            disableStep(i + 1);
                         }
                         return true;
                     }
-                    else if(create_campaign_helper.interaction==null)
-                    {
+                    else if (create_campaign_helper.interaction == null) {
                         return false;
                     }
 
@@ -91,54 +85,60 @@ altair_wizard = {
 
                     formObj.survey = [];
 
-                    for(var i=1;i<=5;i++)
-                    {
-                        var question = formObj["survey_q"+i];
-                        delete formObj["survey_q"+i];
+                    for (var i = 1; i <= 5; i++) {
+                        var question = formObj["survey_q" + i];
+                        delete formObj["survey_q" + i];
 
                         var answers = [];
 
-                        for(var j=1;j<=4;j++)
-                        {
-                            var answer = formObj["survey_q"+i+"_a"+j];
-                            delete formObj["survey_q"+i+"_a"+j];
-                            if(answer!="") {
+                        for (var j = 1; j <= 4; j++) {
+                            var answer = formObj["survey_q" + i + "_a" + j];
+                            delete formObj["survey_q" + i + "_a" + j];
+                            if (answer != "") {
                                 answers.push(answer);
                             }
                         }
 
-                        if(question!="")
-                        {
-                            formObj.survey.push({"question":question,"answers":answers});
+                        if (question != "") {
+                            formObj.survey.push({"question": question, "answers": answers});
                         }
 
                     }
 
-                    formObj.images=create_campaign_helper.images;
+                    formObj.images = create_campaign_helper.images;
 
 
                     //removing fields that don't belong to interaction
                     formObj.interactionId = create_campaign_helper.interaction;
 
-                    if(create_campaign_helper.interaction!="survey")
-                    {
+                    if (create_campaign_helper.interaction != "survey") {
                         delete formObj.survey;
                     }
-                    if(create_campaign_helper.interaction!="captcha")
-                    {
+                    if (create_campaign_helper.interaction != "captcha") {
                         delete formObj.captcha;
                     }
-                    if(create_campaign_helper.interaction!="banner-link")
-                    {
+                    if (create_campaign_helper.interaction != "banner-link") {
                         delete formObj.banner_link;
                     }
 
+                    // Ajax
 
-                    var form_serialized = JSON.stringify(formObj, null, 2);
-                    UIkit.modal.alert('<p>Wizard data:</p><pre>' + form_serialized + '</pre>');
+                    $.ajax({
+                        method: "POST",
+                        url: "/campaigns/store",
+                        data: formObj,
+                    }).done(function (data) {
+                        console.log(data);
+                        //$(this).addClass("done");
+                    }).fail(function (data) {
+                        console.log(data);
+                    });
+
+                    //var form_serialized = JSON.stringify(formObj, null, 2);
+                    //UIkit.modal.alert('<p>Wizard data:</p><pre>' + form_serialized + '</pre>');
 
                 },
-        })/*.steps("setStep", 2)*/;
+            })/*.steps("setStep", 2)*/;
 
             $window.on('debouncedresize', function () {
                 var current_step = $wizard_advanced.find('.body.current').attr('data-step');
@@ -195,14 +195,13 @@ altair_wizard = {
 
 };
 
-function disableStep(id)
-{
-    setTimeout( function () {
-        var currentLi = $( ".wizard .steps ul li:nth-child("+(id)+")" );
+function disableStep(id) {
+    setTimeout(function () {
+        var currentLi = $(".wizard .steps ul li:nth-child(" + (id) + ")");
 
         currentLi.removeClass("done");
         currentLi.addClass("disabled");
-        currentLi.attr("aria-disabled","true");
+        currentLi.attr("aria-disabled", "true");
         currentLi.removeAttr("aria-selected");
     }, 10)
 }
