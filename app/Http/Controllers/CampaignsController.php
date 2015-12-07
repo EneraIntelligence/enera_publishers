@@ -236,6 +236,13 @@ class CampaignsController extends Controller
 
     }
 
+    private function correct_size($photo)
+    {
+        $maxHeight = 100;
+        $maxWidth = 100;
+        list($width, $height) = getimagesize($photo);
+        return (($width <= $maxWidth) && ($height <= $maxHeight));
+    }
 
     /**
      * Display the specified resource.
