@@ -55,17 +55,17 @@
                     <div class="md-card ">
                         <div class="md-card-content">
                             <div class="uk-float-right uk-margin-small-right"><span><i class="md-48 material-icons md-color-blue-600 uk-icon-large">phone_android</i></span></div>
-                            <span class="uk-text-muted uk-text-small">Dispositivos Detectados </span>
+                            <span class="uk-text-muted uk-text-small">Dispositivos al alcance </span>
                             <h2 class="uk-margin-remove"><span id="myTargetElement" class="countUpMe">0</span></h2>
                         </div>
                         <div class="md-card-content">
                             <div class="uk-float-right uk-margin-small-right"><span><i class="md-48 material-icons md-color-red-A700 uk-icon-large">pin_drop</i></span> </div>
-                            <span class="uk-text-muted uk-text-small">Sitios Activos</span>
+                            <span class="uk-text-muted uk-text-small">Sitios disponibles</span>
                             <h2 class="uk-margin-remove"><span id="myTargetElement2" class="countUpMe">0</span></h2>
                         </div>
                         <div class="md-card-content">
                             <div class="uk-float-right uk-margin-small-right"><span><i class="md-48 material-icons md-color-deep-orange-500 uk-icon-large">insert_invitation</i></span></div>
-                            <span class="uk-text-muted uk-text-small">Campañas Activas</span>
+                            <span class="uk-text-muted uk-text-small">Campañas disponibles</span>
                             <h2 class="uk-margin-remove"><span id="myTargetElement3" class="countUpMe">0</span></h2>
                         </div>
                     </div>
@@ -101,22 +101,47 @@
                                 </div>
                                 <div class="uk-width-1-3 ">
                                     <h2>Porcentajes de dispositivos</h2>
-                                    <ul class="uk-list uk-list-line">
-                                        <li><p>Iphones - {{$osStats['mac']}}
-                                                ({{ round(($osStats['mac'] * 100) / $total , 1)}} %) </p></li>
-                                        <li><p>Android
-                                                - {{$osStats['android']}}
-                                                ({{round($osStats['android'] * 100 / $total, 1)}} %)
-                                            </p></li>
-                                        <li><p>Windos
-                                                - {{$osStats['windows']}}
-                                                ({{ round($osStats['windows'] * 100 / $total, 1)}} %)
-                                            </p></li>
-                                        <li><p>Otros
-                                                - {{$osStats['otro']}} ({{round($osStats['otro'] * 100 / $total, 1 )}}
-                                                %)
-                                            </p></li>
-
+                                    <ul class="md-list md-list-addon">
+                                        <li>
+                                            <div class="md-list-addon-element">
+                                                <img class="md-user-image md-list-addon-avatar dense-image dense-loading"
+                                                     src="{{asset('images/icons/preview_01.jpg')}}" alt="">
+                                            </div>
+                                            <div class="md-list-content">
+                                                <span class="md-list-heading">Heading</span>
+                                                <span class="uk-text-small uk-text-muted">Voluptatem magnam qui ducimus esse magni.</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="md-list-addon-element">
+                                                <img class="md-user-image md-list-addon-avatar dense-image dense-loading"
+                                                     src="{{asset('images/icons/preview_04.jpg')}}" alt="">
+                                            </div>
+                                            <div class="md-list-content">
+                                                <span class="md-list-heading">Heading</span>
+                                                <span class="uk-text-small uk-text-muted">Consequatur itaque ducimus architecto quasi iste qui eius.</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="md-list-addon-element">
+                                                <img class="md-user-image md-list-addon-avatar dense-image dense-loading"
+                                                     src="{{asset('images/icons/preview_03.jpg')}}" alt="">
+                                            </div>
+                                            <div class="md-list-content">
+                                                <span class="md-list-heading">Heading</span>
+                                                <span class="uk-text-small uk-text-muted">Minima quia natus consequuntur eius delectus perspiciatis at quasi omnis ullam.</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="md-list-addon-element">
+                                                <img class="md-user-image md-list-addon-avatar dense-image dense-loading"
+                                                     src="{{asset('images/icons/preview_02.jpg')}}" alt="">
+                                            </div>
+                                            <div class="md-list-content">
+                                                <span class="md-list-heading">Heading</span>
+                                                <span class="uk-text-small uk-text-muted">Minima quia natus consequuntur eius delectus perspiciatis at quasi omnis ullam.</span>
+                                            </div>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>

@@ -53,8 +53,8 @@
                                     <tr>
                                         <th>Icono</th>
                                         <th>ID</th>
-                                        <th>Concepto</th>
                                         <th>Movimiento</th>
+                                        <th>Concepto</th>
                                         <th>Balance</th>
                                     </tr>
                                     </thead>
@@ -62,18 +62,18 @@
                                     <tr>
                                         <td>Icono</td>
                                         <td>ID</td>
-                                        <td>Concepto</td>
                                         <td>Movimiento</td>
+                                        <td>Concepto</td>
                                         <td>Balance</td>
                                     </tr>
                                     </tfoot>
                                     <tbody>
-                                    @foreach($test as $t)
                                         <tr>
                                             <td class="mov">
                                                 <i class="material-icons md-36 uk-text-success">trending_up</i>
                                             </td>
                                             <td class="mov">#345q345</td>
+                                            <td class="mov">123568</td>
                                             <td class="mov">
                                                 <div class="md-list-content">
                                                     <span class="md-list-heading">Consequatur nobis sint.</span>
@@ -81,22 +81,21 @@
                                                             href="{{route('analytics::single', ['id' => '56393f9aa8268b300d479644'])}}">Campaña </a></span>
                                                 </div>
                                             </td>
-                                            <td class="mov">123568</td>
                                             <td class="mov" id="myTargetElement2">0</td>
                                         </tr>
-                                    @endforeach
                                     <tr>
                                         <td class="mov">
-                                            <i class="material-icons md-36 uk-text-warning">trending_flat</i>
+                                            <i class="material-icons md-36 uk-text-primary">remove</i>
                                         </td>
                                         <td class="mov">#345q345</td>
+                                        <td class="mov">123568</td>
                                         <td class="mov">
                                             <div class="md-list-content">
                                                 <span class="md-list-heading">Consequatur nobis sint.</span>
-                                                <span class="uk-text-small uk-text-muted uk-text-truncate">Qui quis minima dignissimos ab.</span>
+                                                <span class="uk-text-small uk-text-muted uk-text-truncate"><a
+                                                            href="{{route('budget::invoices', ['id' => '56393f9aa8268b300d479644'])}}">Invoice # 56393f9aa8268b300d479644</a></span>
                                             </div>
                                         </td>
-                                        <td class="mov">123568</td>
                                         <td class="mov" id="myTargetElement3">0</td>
                                     </tr>
                                     <tr>
@@ -104,13 +103,13 @@
                                             <i class="material-icons md-36 uk-text-danger">trending_down</i>
                                         </td>
                                         <td class="mov">#345q345</td>
+                                        <td class="mov">123568</td>
                                         <td class="mov">
                                             <div class="md-list-content">
                                                 <span class="md-list-heading">Consequatur nobis sint.</span>
                                                 <span class="uk-text-small uk-text-muted uk-text-truncate">Qui quis minima dignissimos ab.</span>
                                             </div>
                                         </td>
-                                        <td class="mov">123568</td>
                                         <td class="mov" id="myTargetElement4">0</td>
                                     </tr>
                                     </tbody>
@@ -139,7 +138,7 @@
                 separator: ',',
                 decimal: '.',
                 prefix: '$  ',
-                suffix: ' mx'
+                suffix: ' MXN'
             };
                     @foreach($ids as $id)
             var demo = new CountUp("myTargetElement{{$id}}", 0, {{rand (  100 ,  10000 )}}, 2, 3.0, option);

@@ -88,4 +88,9 @@ class BudgetController extends Controller
     {
         //
     }
+
+    public function invoices($id)
+    {
+        return view('budget.invoices');
+    }
 }

@@ -57,11 +57,12 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['prefix' => 'budget', 'as' => 'budget::'], function () {
         Route::get('/', ['as' => 'index', 'uses' => 'BudgetController@index']);
+        Route::get('/invoices/{id}', ['as' => 'invoices' , 'uses' => 'BudgetController@invoices']);
     });
 
     Route::match(['get', 'post'], 'logout', ['as' => 'auth.logout', 'uses' => 'AuthController@logout']);
 
-    //Rutas de ajax
+
     Route::group([], function () {
         Route::match(['get', 'post'], 'profile_edit', ['as' => 'edit.profile', 'uses' => 'UserController@editProfile']);
         Route::match(['get', 'post'], 'profile_pass', ['as' => 'edit.pass', 'uses' => 'UserController@editPass']);
