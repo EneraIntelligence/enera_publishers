@@ -1,7 +1,7 @@
 @extends('layouts.main')
 @section('head_scripts')
     <style>
-        ul {
+        .ul{
             font:bold 18px times;
         }
 
@@ -62,7 +62,7 @@
                                         <div class="uk-grid">
                                             <div class="uk-width-large-1-2">
                                                 <h4 class="heading_c uk-margin-small-bottom">Información</h4>
-                                                <ul class="md-list md-list-addon">
+                                                <ul class="md-list md-list-addon ul">
                                                     <li>
                                                         <div class="md-list-addon-element">
                                                             <i class="md-list-addon-icon uk-icon-archive"></i>
@@ -112,7 +112,7 @@
                                             </div>
                                             <div class="uk-width-large-1-2">
                                                 <h4 class="heading_c uk-margin-small-bottom">Filtros</h4>
-                                                <ul class="md-list">
+                                                <ul class="md-list ul">
                                                     <li>
                                                         <div class="md-list-content">
                                                             <span class="md-list-heading azul">Fecha de la interaccion</span>
