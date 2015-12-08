@@ -5,6 +5,10 @@
         .mov {
             vertical-align: middle !important;
         }
+
+        .budget:hover {
+            background-color: #D8D8D8;
+        }
     </style>
 @stop
 @section('content')
@@ -68,22 +72,22 @@
                                     </tr>
                                     </tfoot>
                                     <tbody>
-                                        <tr>
-                                            <td class="mov">
-                                                <i class="material-icons md-36 uk-text-success">trending_up</i>
-                                            </td>
-                                            <td class="mov">#345q345</td>
-                                            <td class="mov">123568</td>
-                                            <td class="mov">
-                                                <div class="md-list-content">
-                                                    <span class="md-list-heading">Consequatur nobis sint.</span>
+                                    <tr class="budget">
+                                        <td class="mov">
+                                            <i class="material-icons md-36 uk-text-success">trending_up</i>
+                                        </td>
+                                        <td class="mov">#345q345</td>
+                                        <td class="mov">123568</td>
+                                        <td class="mov">
+                                            <div class="md-list-content">
+                                                <span class="md-list-heading">Consequatur nobis sint.</span>
                                                 <span class="uk-text-small uk-text-muted uk-text-truncate"><a
                                                             href="{{route('analytics::single', ['id' => '56393f9aa8268b300d479644'])}}">Campaña </a></span>
-                                                </div>
-                                            </td>
-                                            <td class="mov" id="myTargetElement2">0</td>
-                                        </tr>
-                                    <tr>
+                                            </div>
+                                        </td>
+                                        <td class="mov" id="myTargetElement2">0</td>
+                                    </tr>
+                                    <tr class="budget">
                                         <td class="mov">
                                             <i class="material-icons md-36 uk-text-primary">remove</i>
                                         </td>
@@ -93,12 +97,13 @@
                                             <div class="md-list-content">
                                                 <span class="md-list-heading">Consequatur nobis sint.</span>
                                                 <span class="uk-text-small uk-text-muted uk-text-truncate"><a
-                                                            href="{{route('budget::invoices', ['id' => '56393f9aa8268b300d479644'])}}">Invoice # 56393f9aa8268b300d479644</a></span>
+                                                            href="{{route('budget::invoices', ['id' => '56393f9aa8268b300d479644'])}}">Invoice
+                                                        # 56393f9aa8268b300d479644</a></span>
                                             </div>
                                         </td>
                                         <td class="mov" id="myTargetElement3">0</td>
                                     </tr>
-                                    <tr>
+                                    <tr class="budget">
                                         <td class="mov">
                                             <i class="material-icons md-36 uk-text-danger">trending_down</i>
                                         </td>

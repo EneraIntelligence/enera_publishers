@@ -91,6 +91,7 @@ class BudgetController extends Controller
 
     public function invoices($id)
     {
+//        validar que el invoice sea valido y exista
         return view('budget.invoices');
     }
 }
