@@ -128,10 +128,10 @@ altair_wizard = {
                         url: "/campaigns/store",
                         data: formObj,
                     }).done(function (data) {
-                        console.log(data);
+                        console.log(JSON.stringify(data));
                         //$(this).addClass("done");
                     }).fail(function (data) {
-                        console.log(data);
+                        console.log(JSON.stringify(data));
                     });
 
                     //var form_serialized = JSON.stringify(formObj, null, 2);
