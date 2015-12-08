@@ -10,9 +10,13 @@
         <div class="md-card uk-margin-large-bottom">
             <div class="md-card-content">
 
+                <h2>Nueva campaña de mailing</h2>
+                <h5>{{$campaign_name}}</h5>
+
                 {!!  Form::open( array('url' => "campaigns/send_mailing" ) ) !!}
 
                 <input type="hidden" name="campaign_id" value="{{ $campaign_id }}">
+                <input type="hidden" name="campaign_name" value="{{ $campaign_name }}">
 
                 <div class="uk-grid">
 

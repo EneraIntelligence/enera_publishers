@@ -84,14 +84,25 @@ class CampaignsController extends Controller
         return response()->json(Input::all());
     }
 
-    public function mailing($id)
+    public function mailing($id, Request $request)
     {
         $campaign = Campaign::find($id); //busca la campaña
 
         if ($campaign && $campaign->administrator_id == auth()->user()->_id) {
             //the user can manage the campaign:
 
-            return view('campaigns.mailing', array("campaign_id" => $id));//, compact('branches', 'noCreateBtn', 'campaignName'));
+            $validator = Validator::make($request->all(), [
+                'name' => 'required',
+            ]);
+
+            if ($validator->fails()) {
+                return redirect()->route('campaigns::index')->with('data', 'errorCamp');
+            } else {
+                $campaignName = $request->get('name');
+                return view('campaigns.mailing', array("campaign_id" => $id, "campaign_name"=>$campaignName));
+
+            }
+
 
         } else {
             //not the user's campaign
@@ -116,6 +127,7 @@ class CampaignsController extends Controller
 
             //getting input fields
             $from = Input::get("from");
+            $campaign_name = Input::get("campaign_name");
             $from_mail = Input::get("from_mail");
             $subject = Input::get("subject");
             $content = Input::get("content");
@@ -123,6 +135,7 @@ class CampaignsController extends Controller
             //save subcampaign on DB
             $subCampaign = new Subcampaign();
             $subCampaign->campaign_id = $campaign_id;
+            $subCampaign->name = $campaign_name;
             $subCampaign->from = $from;
             $subCampaign->from_mail = $from_mail;
             $subCampaign->subject = $subject;
@@ -141,7 +154,7 @@ class CampaignsController extends Controller
                 $m->from($mail["from_mail"], $mail["from"]);
 
                 //TODO tomar mails de campaña y mandar a todos
-                $m->to("me@ederdiaz.com", "Eder")->subject($mail["subject"]);
+                $m->to("ederchrono@gmail.com", "Eder")->subject($mail["subject"]);
             });
 
             //TODO mostrar vista de subcampaña

@@ -260,6 +260,20 @@
                                                         </div>
                                                     </div>
                                                 </div>
+
+                                                <!-- create mailing campaign button start -->
+                                                <div class="uk-grid uk-margin-medium-top" data="uk-grid-margin">
+                                                    <div class="uk-width-1-1">
+                                                        <div class="uk-width-medium-1-1">
+                                                            <a class="md-btn md-btn-primary"
+                                                               onclick="new_campaign.promptMailingCampaign('{{$cam->_id}}')"
+                                                                <span class="uk-display-block">Crear campaña de mailing</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- create mailing campaign button end -->
+
                                             @endif
                                             @if($cam->interaction['name'] == 'survey')
                                                 <div class="md-list-heading uk-width-large-1"

@@ -11,6 +11,8 @@ new_campaign =
     base_url:"",
     url:"",
     token:"",
+    mailingId:null,
+    mailingModal:null,
     modal:null,
     prompt:function()
     {
@@ -34,6 +36,31 @@ new_campaign =
             UIkit.modal.blockUI('<div class=\'uk-text-center\'> Creando campaña... <br>' +
                 '<img class=\'uk-margin-top\' src=\''+new_campaign.base_url+'/assets/img/spinners/spinner.gif\' alt=\'\'>');
             window.location=new_campaign.url+"?name="+name;
+        }
+    },
+    promptMailingCampaign:function(mailingId)
+    {
+        new_campaign.mailingId=mailingId;
+        var myLabels = {
+            'Ok': 'Aceptar',
+            'Cancel': 'Cancelar'
+        };
+
+        new_campaign.mailingModal = UIkit.modal.prompt('Nombre de la campaña:', '', new_campaign.createMailingCampaign, {'labels':myLabels});
+    },
+    createMailingCampaign:function(name)
+    {
+        if (!name.trim()) {
+            // is empty or whitespace
+
+            $(".uk-modal-content").find("input").addClass("md-input-danger");
+            new_campaign.mailingModal.show();
+        }
+        else
+        {
+            UIkit.modal.blockUI('<div class=\'uk-text-center\'> Creando campaña... <br>' +
+                '<img class=\'uk-margin-top\' src=\''+new_campaign.base_url+'/assets/img/spinners/spinner.gif\' alt=\'\'>');
+            window.location=new_campaign.base_url+"/campaigns/mailing/"+new_campaign.mailingId+"?name="+name;
         }
     }
 }
