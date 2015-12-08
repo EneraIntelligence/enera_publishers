@@ -13,7 +13,7 @@
 
 App::setLocale('es');
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth','route']], function () {
     Route::get('/', ['as' => 'home', 'uses' => 'DashboardController@index']);
 
     Route::group(['prefix' => 'campaigns', 'as' => 'campaigns::'], function () {
