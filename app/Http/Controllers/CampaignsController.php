@@ -44,7 +44,7 @@ class CampaignsController extends Controller
 
         $campaigns = Auth::user()->campaigns()->latest()->get();
 
-        return view('campaigns.index', ['campaigns' => $campaigns]);
+        return view('campaigns.index', ['campaigns' => $campaigns, 'user' => Auth::user()]);
     }
 
     /**
@@ -91,7 +91,7 @@ class CampaignsController extends Controller
         if ($campaign && $campaign->administrator_id == auth()->user()->_id) {
             //the user can manage the campaign:
 
-            return view('campaigns.mailing', array("campaign_id" => $id));//, compact('branches', 'noCreateBtn', 'campaignName'));
+            return view('campaigns.mailing', array("campaign_id" => $id, 'user' => Auth::user()));//, compact('branches', 'noCreateBtn', 'campaignName'));
 
         } else {
             //not the user's campaign
@@ -306,7 +306,7 @@ class CampaignsController extends Controller
             }
 
             $campaign->porcentaje = $porcentaje;
-            return view('campaigns.show', [$campaign, 'cam' => $campaign]);
+            return view('campaigns.show', [$campaign, 'cam' => $campaign, 'user' => Auth::user()]);
         } else {
             return redirect()->route('campaigns::index')->with('data', 'errorCamp');
         }
