@@ -72,22 +72,37 @@
                 </div>
                 <div class="uk-width-medium-3-4">
                     <div class="md-card" style="">
+                        <div class="md-card-toolbar">
+                            <h3 class="md-card-toolbar-heading-text">
+                                Noticias recientes facebook
+                            </h3>
+                        </div>
                         <div class="md-card-content">
-                            <div style="padding:20px; height:500px; overflow-y: scroll;">
-                                <h4>El ‪#‎WiFi‬ también puede ser un medio publicitario, de hecho es uno de los medios
-                                    publicitarios más efectivos actualmente en otros países.
-                                    Enera Intelligence
-                                    Contáctanos en:
-                                    <a href="mailto:contacto@enera.mx">contacto@enera.mx</a>
-                                </h4>
-                                <img src="{!! URL::asset('images/news_image.png') !!}" alt="">
-
-                                <hr>
-
-                                <h4>‪#‎México‬ es líder regional en tráfico en internet móvil así como inversión
-                                    publicitaria móvil. Enera Intelligence</h4>
-                                <img src="{!! URL::asset('images/news_image_2.jpg') !!}" alt="">
-
+                            <div id="noticias" class="uk-width-1-1" style=" overflow-y: scroll;">
+                                <div class="uk-width-medium-1-2 uk-float-left">
+                                    <div class="uk-width-medium-1-1 uk-comment-body" style="height: 100px">
+                                        <span> <i class="md-36 material-icons">chrome_reader_mode</i>El ‪#‎WiFi‬ también puede ser un medio publicitario, de hecho es uno de los medios
+                                            publicitarios más efectivos actualmente en otros países.
+                                            Enera Intelligence
+                                            Contáctanos en:
+                                            <a href="mailto:contacto@enera.mx">contacto@enera.mx</a>
+                                        </span>
+                                    </div>
+                                    <div class="uk-width-medium-1-1 uk-float-right">
+                                        <img src="{!! URL::asset('images/news_image.png') !!}" alt="">
+                                    </div>
+                                </div>
+                                {{------------- divicion segunda colubna uk-panel-space---------------}}
+                                <div class="uk-width-medium-1-2 uk-float-right">
+                                    <div class="uk-width-medium-1-1  uk-comment-body" style="height: 100px"> {{-- uk-panel-box --}}
+                                        <i class="md-36 material-icons">chrome_reader_mode</i>
+                                    <span>‪#‎México‬ es líder regional en tráfico en internet móvil así como inversión
+                                        publicitaria móvil. Enera Intelligence</span>
+                                    </div>
+                                    <div class="uk-width-medium-1-1 uk-float-right">
+                                        <img src="{!! URL::asset('images/news_image_2.jpg') !!}" alt="">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
