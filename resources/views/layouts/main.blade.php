@@ -40,7 +40,6 @@
 
 </head>
 <body class="sidebar_main_swipe">
-
 <!-- Create campaign button -->
 @if(!isset($noCreateBtn))
 
@@ -74,50 +73,53 @@
                             <i class="material-icons md-24">&#xE8F0;</i> <span class="uk-hidden-small">Publishers</span>
                         </a>
 
-                    <div class="uk-dropdown uk-dropdown-width-3">
-                        <div class="uk-grid uk-dropdown-grid" data-uk-grid-margin>
-                            <div class="uk-width-2-3">
-                                <div class="uk-grid uk-grid-width-medium-1-3 uk-margin-top uk-margin-bottom uk-text-center"
-                                     data-uk-grid-margin>
-                                    <a href="{!! route('campaigns::index') !!}">
-                                        {{--<i class="material-icons md-36">&#xE158;</i>--}}
-                                        <i class="material-icons md-36 md-color-light-blue-A700">event</i>
-                                        <span class="uk-text-muted uk-display-block">Campañas</span>
-                                    </a>
-                                    {{--<a href="{!! route('reports::index') !!}">--}}
-                                    <a href="#">
-                                        {{--<i class="material-icons md-36 md-color-red-600">&#xE0B9;</i>--}}
-                                        <i class="material-icons md-36 md-color-light-blue-A700">assessment</i>
-                                        <span class="uk-text-muted uk-display-block">Reportes</span>
-                                    </a>
-                                    <a href="{!! route('budget::index') !!}">
-                                        {{--<i class="material-icons md-36">&#xE53E;</i>--}}
-                                        <i class="material-icons md-36 md-color-light-blue-A700">attach_money</i>
-                                        <span class="uk-text-muted uk-display-block">Presupuesto</span>
-                                    </a>
+                        <div class="uk-dropdown uk-dropdown-width-3">
+                            <div class="uk-grid uk-dropdown-grid" data-uk-grid-margin>
+                                <div class="uk-width-2-3">
+                                    <div class="uk-grid uk-grid-width-medium-1-3 uk-margin-top uk-margin-bottom uk-text-center"
+                                         data-uk-grid-margin>
+                                        <a href="{!! route('campaigns::index') !!}">
+                                            {{--<i class="material-icons md-36">&#xE158;</i>--}}
+                                            <i class="material-icons md-36 md-color-light-blue-A700">event</i>
+                                            <span class="uk-text-muted uk-display-block">Campañas</span>
+                                        </a>
+                                        {{--<a href="{!! route('reports::index') !!}">--}}
+                                        <a href="#">
+                                            {{--<i class="material-icons md-36 md-color-red-600">&#xE0B9;</i>--}}
+                                            <i class="material-icons md-36 md-color-light-blue-A700">assessment</i>
+                                            <span class="uk-text-muted uk-display-block">Reportes</span>
+                                        </a>
+                                        <a href="{!! route('budget::index') !!}">
+                                            {{--<i class="material-icons md-36">&#xE53E;</i>--}}
+                                            <i class="material-icons md-36 md-color-light-blue-A700">attach_money</i>
+                                            <span class="uk-text-muted uk-display-block">Presupuesto</span>
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="uk-width-1-3 uk-hidden-small">
-                                <ul class="uk-nav uk-nav-dropdown uk-panel">
-                                    <li class="uk-nav-header">Recientes</li>
-                                    <li><a href="#">Accordions</a></li>
-                                    <li><a href="#">Buttons</a></li>
-                                    <li><a href="#">Notifications</a></li>
-                                    <li><a href="#">Sortable</a></li>
-                                    <li><a href="#">Tabs</a></li>
-                                </ul>
+                                <div class="uk-width-1-3 uk-hidden-small">
+                                    <ul class="uk-nav uk-nav-dropdown uk-panel">
+                                        <li class="uk-nav-header">Recientes</li>
+                                        @foreach($user->route as $route)
+                                        <li><a href="#">{{$route}}</a></li>
+                                        @endforeach
+                                        {{--<li><a href="#">Buttons</a></li>--}}
+                                        {{--<li><a href="#">Notifications</a></li>--}}
+                                        {{--<li><a href="#">Sortable</a></li>--}}
+                                        {{--<li><a href="#">Tabs</a></li>--}}
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="uk-navbar-flip">
-                <ul class="uk-navbar-nav user_actions">
-                    <li><a href="#" id="main_search_btn" class="user_action_icon"><i
-                                    class="material-icons md-20 md-light">&#xE8B6;</i></a></li>
-                    <li data-uk-dropdown="{mode:'click'}">
-                        <a href="#" class="user_action_icon"><i class="material-icons md-20 md-light">&#xE7F4;</i><span
-                                    class="uk-badge">99</span></a>
+                <div class="uk-navbar-flip">
+                    <ul class="uk-navbar-nav user_actions">
+                        <li><a href="#" id="main_search_btn" class="user_action_icon"><i
+                                        class="material-icons md-20 md-light">&#xE8B6;</i></a></li>
+                        <li data-uk-dropdown="{mode:'click'}">
+                            <a href="#" class="user_action_icon"><i class="material-icons md-20 md-light">
+                                    &#xE7F4;</i><span
+                                        class="uk-badge">99</span></a>
 
                             <div class="uk-dropdown uk-dropdown-xlarge uk-dropdown-flip">
                                 <div class="md-card-content">
@@ -372,7 +374,7 @@
 
     <script>
 
-        new_campaign.base_url="{!! URL::to('/') !!}";
+        new_campaign.base_url = "{!! URL::to('/') !!}";
 
         $(function () {
             $("body").on("click", ".uk-button[data-message]", function () {
