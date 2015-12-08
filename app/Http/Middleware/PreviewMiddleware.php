@@ -5,6 +5,7 @@ namespace Publishers\Http\Middleware;
 use Auth;
 use Closure;
 use Publishers\Administrator;
+use Publishers\Libraries\PreviewHelper;
 
 class PreviewMiddleware
 {
@@ -21,7 +22,7 @@ class PreviewMiddleware
         $user = Administrator::where('_id', Auth::user()->_id)->first();
         $diff = isset($user->route) ? $user->route : [];
         if ($route != "home" && $route != "campaigns::show")
-            array_unshift($diff, $route);
+            array_unshift($diff, PreviewHelper::getNameRoute($route));
         if (count($diff) > 5) {
             array_pop($diff);
         }
