@@ -23,12 +23,12 @@ class ReportsController extends Controller
     
     public function index()
     {
-        return view('reports.index');
+        return view('reports.index',  ['user' => Auth::user()]);
     }
 
     public function single()
     {
-        return view('reports.single');
+        return view('reports.single', ['user' => Auth::user()]);
     }
     
 }
