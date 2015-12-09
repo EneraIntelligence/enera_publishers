@@ -86,7 +86,7 @@
 
                                 </div>
 
-                                @if(count($campaigns)<=0)
+                                @if(count($campaigns)<=0 && count($subcampaigns)<=0)
                                     <div class="uk-button-dropdown" id="event" data-uk-dropdown>
                                         @else
                                             <div class="uk-button-dropdown" style="" data-uk-dropdown>
@@ -264,7 +264,58 @@
                                         </div>
                                     </div>
 
+                                    @foreach($subcampaigns as $sub)
+
+                                        @if($sub->campaign_id==$campaign->_id)
+
+                                            <div data-uk-filter="campaign-{!! $sub->status !!}, action-mailing"
+                                                 data-name="{!! $sub->name !!}"
+                                                 data-action="mailing"
+                                                 data-company="{!! $sub->publishers_summary['client'] !!}"
+                                                 data-status="{!! CampaignStyle::getStatusValue( $sub->status )  !!}"
+                                                 data-date="{!! $sub->created_at !!}"
+                                                 style="cursor: pointer;">
+
+                                                <div onclick="window.location.href='{!! route('campaigns::sub',['id'=>$sub->_id]) !!}'"
+                                                     class="scrum_task {!! CampaignStyle::getStatusColorClass( $sub->status ) !!}"
+                                                     data-snippet-title="{!! $sub->name !!}" style="margin-left:20px;">
+                                                    <div class="md-card-content uk-grid">
+
+                                                        <div class="interaction-icon uk-width-large-1-10 uk-hidden-small uk-width-medium-1-4 uk-hidden-medium">
+                                                            <div class="uk-vertical-align"  id="name"
+                                                                 data-uk-tooltip="{cls:'long-text'}"
+                                                                 title="{{$sub->interaction['name']}} - {!! $sub->status !!}"
+                                                            >
+
+                                                                <img src="{!! URL::asset('images/icons/mailing.svg') !!}" alt="">
+
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div id="campaign-title"
+                                                             class="uk-width-large-5-10 uk-grid-width-small-2-3  uk-width-medium-1-4 uk-width-large-1">
+                                                            <h4>Subcampaña de mailing</h4>
+                                                            <h2>{{$sub->name}}</h2>
+
+                                                        </div>
+
+
+
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                        @endif
+
+                                    @endforeach
+
                                 @endforeach
+
+
+
+
 
 
                             </div>

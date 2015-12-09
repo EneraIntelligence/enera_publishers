@@ -43,8 +43,9 @@ class CampaignsController extends Controller
         //CityBranchesScript::saveCityBranches();
 
         $campaigns = Auth::user()->campaigns()->latest()->get();
+        $subcampaigns = Auth::user()->subcampaigns()->latest()->get();
 
-        return view('campaigns.index', ['campaigns' => $campaigns, 'user' => Auth::user()]);
+        return view('campaigns.index', ['campaigns' => $campaigns, 'subcampaigns'=>$subcampaigns, 'user' => Auth::user()]);
     }
 
     /**
@@ -125,6 +126,7 @@ class CampaignsController extends Controller
             //the user can manage the campaign
 
             //getting input fields
+            $admin_id = Input::get("admin_id");
             $from = Input::get("from");
             $campaign_name = Input::get("campaign_name");
             $from_mail = Input::get("from_mail");
@@ -133,6 +135,7 @@ class CampaignsController extends Controller
 
             //save subcampaign on DB
             $subCampaign = new Subcampaign();
+            $subCampaign->administrator_id = $admin_id;
             $subCampaign->campaign_id = $campaign_id;
             $subCampaign->name = $campaign_name;
             $subCampaign->from = $from;
@@ -254,6 +257,20 @@ class CampaignsController extends Controller
         $maxWidth = 100;
         list($width, $height) = getimagesize($photo);
         return (($width <= $maxWidth) && ($height <= $maxHeight));
+    }
+
+    public function subcampaign($id)
+    {
+        $subcampaign = Subcampaign::find($id); //busca la campaña
+
+        if ($subcampaign && $subcampaign->administrator_id == auth()->user()->_id)
+        {
+            return view('campaigns.subcampaign', [$subcampaign, 'cam' => $subcampaign, 'user' => Auth::user()]);
+        }
+        else
+        {
+            return redirect()->route('campaigns::index')->with('data', 'errorCamp');
+        }
     }
 
     /**

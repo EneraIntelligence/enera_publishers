@@ -50,5 +50,10 @@ class Administrator extends Model implements AuthenticatableContract, Authorizab
     {
         return $this->hasMany('Publishers\Campaign');
     }
+
+    public function subcampaigns()
+    {
+        return $this->hasMany('Publishers\Subcampaign');
+    }
     // end relations
 }

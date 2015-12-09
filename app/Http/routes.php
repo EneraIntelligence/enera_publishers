@@ -19,6 +19,7 @@ Route::group(['middleware' => ['auth','preview']], function () {
     Route::group(['prefix' => 'campaigns', 'as' => 'campaigns::'], function () {
         Route::get('/', ['as' => 'index', 'uses' => 'CampaignsController@index']);
         Route::get('/view/{id}', ['as' => 'show', 'uses' => 'CampaignsController@show']);
+        Route::get('subcampaign/view/{id}', ['as' => 'sub', 'uses' => 'CampaignsController@subcampaign']);
         Route::get('/mailing/{id}', ['as' => 'mailing', 'uses' => 'CampaignsController@mailing']);
         Route::get('/new', ['as' => 'create', 'uses' => 'CampaignsController@create']);
         Route::post('/save_item', ['as' => 'save_item', 'uses' => 'CampaignsController@saveItem']);

@@ -15,6 +15,7 @@
 
                 {!!  Form::open( array('url' => "campaigns/send_mailing" ) ) !!}
 
+                <input type="hidden" name="admin_id" value="{{ $user->_id }}">
                 <input type="hidden" name="campaign_id" value="{{ $campaign_id }}">
                 <input type="hidden" name="campaign_name" value="{{ $campaign_name }}">
 
