@@ -123,8 +123,8 @@
                                                      src="{{asset('images/icons/preview_01.jpg')}}" alt="">
                                             </div>
                                             <div class="md-list-content">
-                                                <span class="md-list-heading">Heading</span>
-                                                <span class="uk-text-small uk-text-muted">Voluptatem magnam qui ducimus esse magni.</span>
+                                                <span class="md-list-heading">Android</span>
+                                                <span class="uk-text-small uk-text-muted">{{$osStats['android']}} Android vistos en la Red Enera</span>
                                             </div>
                                         </li>
                                         <li>
@@ -133,8 +133,8 @@
                                                      src="{{asset('images/icons/preview_04.jpg')}}" alt="">
                                             </div>
                                             <div class="md-list-content">
-                                                <span class="md-list-heading">Heading</span>
-                                                <span class="uk-text-small uk-text-muted">Consequatur itaque ducimus architecto quasi iste qui eius.</span>
+                                                <span class="md-list-heading">Iphone</span>
+                                                <span class="uk-text-small uk-text-muted">{{$osStats['mac']}} Iphones vistos en la Red Enera</span>
                                             </div>
                                         </li>
                                         <li>
@@ -143,8 +143,8 @@
                                                      src="{{asset('images/icons/preview_03.jpg')}}" alt="">
                                             </div>
                                             <div class="md-list-content">
-                                                <span class="md-list-heading">Heading</span>
-                                                <span class="uk-text-small uk-text-muted">Minima quia natus consequuntur eius delectus perspiciatis at quasi omnis ullam.</span>
+                                                <span class="md-list-heading">Windows Phone</span>
+                                                <span class="uk-text-small uk-text-muted">{{$osStats['windows']}} Windows Phones  vistos en la Red Enera</span>
                                             </div>
                                         </li>
                                         <li>
@@ -153,8 +153,8 @@
                                                      src="{{asset('images/icons/preview_02.jpg')}}" alt="">
                                             </div>
                                             <div class="md-list-content">
-                                                <span class="md-list-heading">Heading</span>
-                                                <span class="uk-text-small uk-text-muted">Minima quia natus consequuntur eius delectus perspiciatis at quasi omnis ullam.</span>
+                                                <span class="md-list-heading">Otros</span>
+                                                <span class="uk-text-small uk-text-muted">{{$osStats['otro']}} Dipositivos vistos de otras marcas </span>
                                             </div>
                                         </li>
                                     </ul>
