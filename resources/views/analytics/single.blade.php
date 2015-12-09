@@ -20,17 +20,18 @@
                             </div>
                             <div class="user_heading_avatar">
                                 <div>
+
                                     <div id="circle" style="max-width:98px;max-height:98px;margin:auto;">
                                         <img style="background-image:none!important;margin:-96px 9px;"
-                                             src="{!! URL::asset('images/icons/'.$interaction['name'].'.svg') !!}"
+                                             src="{!! URL::asset('images/icons/'. $data['interaction']['name'].'.svg') !!}"
                                              alt="producto"/>
                                     </div>
                                 </div>
                             </div>
                             <div class="user_heading_content">
                                 <h2 class="heading_b uk-margin-bottom">
-                                    <span class="uk-text-truncate">{{ $name }} </span>
-                                    <span class="sub-heading">{{ $interaction['name'] }}</span>
+                                    <span class="uk-text-truncate">{{ $data['name'] }} </span>
+                                    <span class="sub-heading">{{ $data['interaction']['name'] }}</span>
                                 </h2>
                             </div>
                             <a class="md-fab md-fab-small md-fab-accent {!! Publishers\Libraries\CampaignStyleHelper::getStatusColor('active') !!}"  {{-- $status--}}
@@ -61,17 +62,18 @@
 
                         {{-- graficas --}}
                         <div id="grafica" class="uk-width-large-1-1 uk-margin-top ">
-                            <div class="uk-margin-large-left">Grafica de {!! $type !!}</div>
-                            <div id="{!! $type !!}" class="uk-width-large-1-1 uk-margin-right">
+                            <div class="uk-margin-large-left">Grafica de {!! $data['type'] !!}</div>
+                            <div id="{!! $data['type'] !!}" class="uk-width-large-1-1 uk-margin-right">
 
                             </div>
                             <div class="uk-width-large-1-2 uk-margin-left">
 
                             </div>
                             <div class="uk-width-1-1 uk-padding">
-                                <span class="uk-margin-large-left "> {{ $name.'  2015/nov/18' }} </span>
+                                <span class="uk-margin-large-left "> {{ $data['name'].'  2015/nov/18' }} </span>
                             </div>
                         </div>
+                            <div id="container" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
                     </div>
                 </div>
             </div>
@@ -83,6 +85,8 @@
     @section('scripts')
 
             <!-- slider script -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
     {!! HTML::script('bower_components/ionrangeslider/js/ion.rangeSlider.min.js') !!}
     {!! HTML::script('bower_components/jquery.easy-pie-chart/dist/jquery.easypiechart.min.js') !!}
     {!! HTML::script('js/circle-progress.js') !!}
@@ -91,23 +95,13 @@
     <script>
         $( document ).ready(function() {
             console.log( "ready!" );
-//-----------------------------------------Imprimir reporte---------------------------------------------
+//-----------------------------------------Imprimir reporte------------------------aclaracion---------------------
             $('#print').click(function() {
                 Popup($('#reporte').html());
 //                print($('#reporte'));
             });
 
-/*            function print(data){
-                $(data).printThis({
-                    debug: false,              //!* show the iframe for debugging
-                    importCSS: true,           //!* import page CSS
-                    printContainer: true,      //!* grab outer container as well as the contents of the selector
-                    loadCSS: "public/bower_components/kendo-ui-core/styles/kendo.common-material.min.css", //!* path to additional css file
-                    loadCSS: "public/bower_components/kendo-ui-core/styles/kendo.material.min.css", //!* path to additional css file
-                    pageTitle: "Grafica",             //!* add title to print page
-                    removeInline: false        //!* remove all inline styles from print elements
-                });
-            }*/
+
 
 //                       funcion nativa
                     function Popup(data)
@@ -131,7 +125,7 @@
 
 //----------------------------Codigo para la animación del circulo---------------------------------------------
             $('#circle').circleProgress({ //se pasa como parametro el id o elemento que se va animar
-                value: {!! $porcentaje !!}, //lo que se va a llenar con el color
+                value: {!! $data['porcentaje'] !!}, //lo que se va a llenar con el color
                 size: 98,   //tamaño del circulo
                 startAngle: -300, //de donde va a empezar la animacion
                 reverse: true, //empieza la animacion al contrario
@@ -150,17 +144,17 @@
             });
 //------------------------------------------Grafica---------------------------------------------
             var grafica = new graficas;
-            var tipo = '{{$type}}';
+            var tipo = '{{$data['type']}}';
 
             switch ( tipo ) {
                 case 'intPerDay':
                     var gra= grafica.intPerDay(5,4,5,1,2);
                     break;
                 case 'genderAge':
-                    var gra= grafica.genderAge({!! json_encode($grafica) !!});
+                    var gra= grafica.genderAge({!! json_encode($data['grafica']) !!});
                     break;
                 case 'so':
-                    var gra= grafica.so({!! json_encode($grafica) !!});
+                    var gra= grafica.so({!! json_encode($data['grafica']) !!});
                     break;
             }
         }); // ----------------------------- termina document ready -----------------

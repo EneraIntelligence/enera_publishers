@@ -8,6 +8,7 @@
 
 namespace Publishers\Http\Controllers;
 
+use Auth;
 use Publishers\Campaign;
 use Publishers\CampaignLog;
 use DateTime;
@@ -81,9 +82,10 @@ class AnalyticsController extends Controller
             }
             $campaign->porcentaje = $porcentaje;
             $campaign->grafica = $datosGrafica;
+            $campaign->user = 'PRUEBA_ER';
             $data=array_merge($campaign->toArray(),$data);
 //            dd($data);
-            return view('analytics.single', $data);
+            return view('analytics.single', ['data' => $data,  'user' => Auth::user()]);
         }else {
             return redirect()->route('campaigns::index')->with('data', 'errorCamp');
 //            return redirect()->action('CampaignsController@index')->with('data', 'error');
