@@ -2,6 +2,7 @@
 @extends('layouts.main')
 
 @section('content')
+    <div> seleccionador de grafica</div>
     <div id="page_content">
         <div id="page_content_inner">
             <div class="uk-grid" data-uk-grid-margin data-uk-grid-match id="user_profile">
@@ -72,6 +73,7 @@
                                 <span class="uk-margin-large-left "> {{ $name.'  2015/nov/18' }} </span>
                             </div>
                         </div>
+                            <div id="container" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
                     </div>
                 </div>
             </div>
@@ -83,6 +85,8 @@
     @section('scripts')
 
             <!-- slider script -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
     {!! HTML::script('bower_components/ionrangeslider/js/ion.rangeSlider.min.js') !!}
     {!! HTML::script('bower_components/jquery.easy-pie-chart/dist/jquery.easypiechart.min.js') !!}
     {!! HTML::script('js/circle-progress.js') !!}
@@ -91,23 +95,13 @@
     <script>
         $( document ).ready(function() {
             console.log( "ready!" );
-//-----------------------------------------Imprimir reporte---------------------------------------------
+//-----------------------------------------Imprimir reporte------------------------aclaracion---------------------
             $('#print').click(function() {
                 Popup($('#reporte').html());
 //                print($('#reporte'));
             });
 
-/*            function print(data){
-                $(data).printThis({
-                    debug: false,              //!* show the iframe for debugging
-                    importCSS: true,           //!* import page CSS
-                    printContainer: true,      //!* grab outer container as well as the contents of the selector
-                    loadCSS: "public/bower_components/kendo-ui-core/styles/kendo.common-material.min.css", //!* path to additional css file
-                    loadCSS: "public/bower_components/kendo-ui-core/styles/kendo.material.min.css", //!* path to additional css file
-                    pageTitle: "Grafica",             //!* add title to print page
-                    removeInline: false        //!* remove all inline styles from print elements
-                });
-            }*/
+
 
 //                       funcion nativa
                     function Popup(data)
@@ -157,7 +151,9 @@
                     var gra= grafica.intPerDay(5,4,5,1,2);
                     break;
                 case 'genderAge':
+                        console.log('años');
                     var gra= grafica.genderAge({!! json_encode($grafica) !!});
+                        console.log(gra);
                     break;
                 case 'so':
                     var gra= grafica.so({!! json_encode($grafica) !!});

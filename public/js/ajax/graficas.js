@@ -34,9 +34,81 @@ graficas = function () {
         return chart4;
     }
 //------------------------grafica de barra para los años y edades
-    this.genderAge = function genderAge(array) {
+    this.genderAge = function genderAge(array){
 
+        // Data gathered from http://populationpyramid.net/germany/2015/
+        $(function () {
+            // Age categories
+            var categories = ['0-15','16-20','21-25', '26-30', '31-35','36-40',
+                '41-45', '46-50', '51-55', '56-60', '61-65', '66-70',
+                '71-75', '76-80', '81-85', '86-90', '91-95', '96-100', '100 + '];
+            var elemento;
+            $('#genderAge').highcharts({
+                chart: {
+                    type: 'bar'
+                },
+                title: {
+                    text: 'DEMOGRAFICO'
+                },
+                subtitle: {
+                    text: ' DISTRIBUCION POR EDADES<a href="http://populationpyramid.net/germany/2015/"></a>'
+                },
+                xAxis: [{
+                    categories: categories,
+                    reversed: false,
+                    labels: {
+                        step: 1
+                    }
+                }, { // mirror axis on right side
+                    opposite: true,
+                    reversed: false,
+                    categories: categories,
+                    linkedTo: 0,
+                    labels: {
+                        step: 1
+                    }
+                }],
+                yAxis: {
+                    title: {
+                        text: null
+                    },
+                    labels: {
+                        formatter: function () {
+                            return Math.abs(this.value) + '%';
+                        }
+                    }
+                },
 
+                plotOptions: {
+                    series: {
+                        stacking: 'normal'
+                    }
+                },
+
+                tooltip: {
+                    formatter: function () {
+                        return '<b>' + this.series.name + ', age ' + this.point.category + '</b><br/>' +
+                            'Population: ' + Highcharts.numberFormat(Math.abs(this.point.y), 0);
+                    }
+                },
+
+                series: [{
+                    name: 'Male',
+                    data: [-2.2, -2.2, -2.3, -2.5, -2.7, -3.1, -3.2,
+                        -3.0, -3.2, -4.3, -4.4, -3.6, -3.1, -2.4,
+                        -2.5, -2.3, -1.2, -0.6, -0.2, -0.0, -0.0]
+                }, {
+                    name: 'Female',
+                    data: [2.1, 2.0, 2.2, 2.4, 2.6, 3.0, 3.1, 2.9,
+                        3.1, 4.1, 4.3, 3.6, 3.4, 2.6, 2.9, 2.9,
+                        1.8, 1.2, 0.6, 0.1, 0.0]
+                }]
+            });
+            return elemento;
+        });
+    }
+//------------------------grafica de barra para los años y edades
+    this.gender = function gender(array) {
         var categoriesArr = ['> 50 años', '40-49 años', '30-39 años', '26-29 años', '18-25 años','13-17 años'];
 
         var chart2 = c3.generate({
@@ -59,7 +131,6 @@ graficas = function () {
                          return "("+Math.abs(v)+") "+categoriesArr[i];*/
                     },
                 },
-
                 groups: [ ['hombres','mujeres'] ]
             },
             color: {
@@ -80,7 +151,6 @@ graficas = function () {
                 }
             }
         });
-
         chart2.ygrids([
             {value: 0},
         ]);

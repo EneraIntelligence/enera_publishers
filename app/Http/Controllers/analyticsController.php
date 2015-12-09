@@ -81,10 +81,13 @@ class AnalyticsController extends Controller
             }
             $campaign->porcentaje = $porcentaje;
             $campaign->grafica = $datosGrafica;
+            $campaign->user = 'PRUEBA_ER';
             $data=array_merge($campaign->toArray(),$data);
 //            dd($data);
+            echo 'bien';
             return view('analytics.single', $data);
         }else {
+            echo 'error';
             return redirect()->route('campaigns::index')->with('data', 'errorCamp');
 //            return redirect()->action('CampaignsController@index')->with('data', 'error');
         }
@@ -95,6 +98,7 @@ class AnalyticsController extends Controller
      */
     private function intPerDay($id) //interacciones por dia
     {//sacar un conteo de cuantas interaccion se hacen por dia 5 dias atras
+        echo 'interacciones';
         $rangoFechas = $this->getRangoLast5Days();//obtengo las fechas de los ultimos 5 dias con la hora correcta para sacar los logs del dia especifico
 
 //        $interacciones['0']= CampaignLog::where('campaign_id',$id)->where('interaction.loaded','exists','true')->where('updated_at', '>', $rangoFechas[2]['inicio'])->where('updated_at', '<', $rangoFechas[2]['fin'])->get(array('interaction'));
@@ -115,6 +119,7 @@ class AnalyticsController extends Controller
      */
     private function genderAge($id)
     {   //        $today =date( "Y-m-d",mktime(0, 0, 0, date("m"),date("d")-5, date("Y")));
+        echo 'años';
         $Log['users'] =[];//se inicializa el arreglo
 //        dd($Log);
         //se obtiene de los logs los usuarios de 5 dias atras

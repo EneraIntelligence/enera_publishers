@@ -88,7 +88,7 @@
                                             <a href="mailto:contacto@enera.mx">contacto@enera.mx</a>
                                         </span>
                                     </div>
-                                    <div class="uk-width-medium-1-1 uk-float-right">
+                                    <div class="uk-width-medium-1-1 uk-float-right uk-comment-body ">
                                         <img src="{!! URL::asset('images/news_image.png') !!}" alt="">
                                     </div>
                                 </div>
@@ -99,7 +99,7 @@
                                     <span>‪#‎México‬ es líder regional en tráfico en internet móvil así como inversión
                                         publicitaria móvil. Enera Intelligence</span>
                                     </div>
-                                    <div class="uk-width-medium-1-1 uk-float-right">
+                                    <div class="uk-width-medium-1-1 uk-float-right uk-comment-body">
                                         <img src="{!! URL::asset('images/news_image_2.jpg') !!}" alt="">
                                     </div>
                                 </div>
