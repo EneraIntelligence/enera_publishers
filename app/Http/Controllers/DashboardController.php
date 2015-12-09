@@ -63,7 +63,7 @@ class DashboardController extends Controller
 
             }
         }
-//        var_dump($osTotal);
+//        var_dump($osCount);
 //        echo '<br>';
 //        var_dump($osLabels);
 //        echo '<br>';
