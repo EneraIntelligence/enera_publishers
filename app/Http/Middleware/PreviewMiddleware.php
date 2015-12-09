@@ -21,8 +21,9 @@ class PreviewMiddleware
         $route = \Request::route()->getName();
         $user = Administrator::where('_id', Auth::user()->_id)->first();
         $diff = isset($user->route) ? $user->route : [];
-        if ($route != "home" && $route != "campaigns::show" && $route != "analytics::single") {
-            array_unshift($diff, PreviewHelper::getNameRoute($route));
+
+        if ($route != "home" && $route != "campaigns::show") {
+            array_unshift($diff, PreviewHelper::getNameRoute($route) . '/'. $route);
         }
         if (count($diff) > 5) {
             array_pop($diff);

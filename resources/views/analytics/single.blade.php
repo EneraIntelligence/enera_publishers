@@ -10,7 +10,6 @@
                         <div class="user_heading">
                             <div class="user_heading_menu" data-uk-dropdown>
                                 <i class="md-icon material-icons md-icon-light">&#xE5D4;</i>
-
                                 <div class="uk-dropdown uk-dropdown-flip uk-dropdown-small">
                                     <ul class="uk-nav">
                                         <li><a href="#">Action 1</a></li>
@@ -20,7 +19,6 @@
                             </div>
                             <div class="user_heading_avatar">
                                 <div>
-
                                     <div id="circle" style="max-width:98px;max-height:98px;margin:auto;">
                                         <img style="background-image:none!important;margin:-96px 9px;"
                                              src="{!! URL::asset('images/icons/'. $data['interaction']['name'].'.svg') !!}"
