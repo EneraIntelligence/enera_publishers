@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         \Publishers\Console\Commands\Inspire::class,
+        \Publishers\Console\Commands\TimeEndEmail::class,
     ];
 
     /**

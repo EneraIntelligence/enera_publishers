@@ -5,6 +5,7 @@ namespace Publishers\Http\Controllers;
 use DateTime;
 use MongoDate;
 use Publishers\CampaignLog;
+use Publishers\Jobs\EmailJob;
 use Publishers\Libraries\CampaignStyleHelper;
 use Validator;
 use Illuminate\Support\Facades\Storage;
