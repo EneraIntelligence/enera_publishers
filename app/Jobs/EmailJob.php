@@ -30,11 +30,10 @@ class EmailJob extends Job implements SelfHandling
     {
         $user = User::findOrFail($this->user);
 
-        Mail::send('emails.reminder', ['user' => $user], function ($m) use ($user) {
-
-            $m->from('hello@app.com', 'Your Application');
-            $m->to($user->email, $user->name)->subject('Your Reminder!');
-
+        $user = Administrator::find($cam->administrator_id);
+        Mail::send('emails.notifications', ['user' => $user], function ($m) use ($user) {
+            $m->from('notificacion@enera.mx', 'Enera Intelligence');
+            $m->to($user->email, $user->name['first'] . ' ' . $user->name['last'])->subject('Terminacion de Camapaña');
         });
     }
 }
