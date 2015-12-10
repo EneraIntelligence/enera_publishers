@@ -70,10 +70,7 @@ altair_wizard = {
 
                     // check input fields for errors
                     $current_step.find('[data-parsley-id]').each(function () {
-                        if( $(this).is(":visible") )
-                        {
-                            $(this).parsley().validate();
-                        }
+                        $(this).parsley().validate();
                     });
 
                     // adjust content height
