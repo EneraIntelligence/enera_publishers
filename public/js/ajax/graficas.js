@@ -39,42 +39,41 @@ graficas = function () {
         // Data gathered from http://populationpyramid.net/germany/2015/
         $(function () {
             // Age categories
-            var categories = ['0-15','16-20','21-25', '26-30', '31-35','36-40',
-                '41-45', '46-50', '51-55', '56-60', '61-65', '66-70',
-                '71-75', '76-80', '81-85', '86-90', '91-95', '96-100', '100 + '];
+            var categories = ['0-17','18-20','21-30', '31-40', '41-50','51-60',
+                '61-70', '71-80', '81-90', '91-100 +'];
             var elemento;
             $('#genderAge').highcharts({
                 chart: {
                     type: 'bar'
                 },
                 title: {
-                    text: 'DEMOGRAFICO'
+                    text: ''
                 },
                 subtitle: {
                     text: ' DISTRIBUCION POR EDADES<a href="http://populationpyramid.net/germany/2015/"></a>'
                 },
                 xAxis: [{
-                    categories: categories,
-                    reversed: false,
+                    categories: categories,//se le pasa el arreglo de categorias
+                    reversed: false,// para decirle el orden en que van a parecer las categorias
                     labels: {
                         step: 1
                     }
                 }, { // mirror axis on right side
-                    opposite: true,
+                    opposite: true, //para que en la grafica se muestren las barras encontradas o no en la misma direccion
                     reversed: false,
                     categories: categories,
                     linkedTo: 0,
                     labels: {
-                        step: 1
-                    }
+                        step: 1 //es como decirle cuantos numeros de la categoria  aparescan en la grafica
+                    },
                 }],
                 yAxis: {
                     title: {
-                        text: null
+                        text: 'numero de personas por edad y genero'
                     },
-                    labels: {
+                    labels: {//en esta parte van las etiquetas que van abajo de la grafica
                         formatter: function () {
-                            return Math.abs(this.value) + '%';
+                            return Math.abs(this.value) + '';
                         }
                     }
                 },
@@ -86,7 +85,7 @@ graficas = function () {
                 },
 
                 tooltip: {
-                    formatter: function () {
+                    formatter: function () {//funcion para hacer operaciones para mostrar los datos
                         return '<b>' + this.series.name + ', age ' + this.point.category + '</b><br/>' +
                             'Population: ' + Highcharts.numberFormat(Math.abs(this.point.y), 0);
                     }
@@ -94,14 +93,12 @@ graficas = function () {
 
                 series: [{
                     name: 'Male',
-                    data: [-2.2, -2.2, -2.3, -2.5, -2.7, -3.1, -3.2,
-                        -3.0, -3.2, -4.3, -4.4, -3.6, -3.1, -2.4,
-                        -2.5, -2.3, -1.2, -0.6, -0.2, -0.0, -0.0]
+                    color:'#5294C2',
+                    data: [-1,-2,-3,-4,-5,-6,-7,-8,-9,-10]
                 }, {
                     name: 'Female',
-                    data: [2.1, 2.0, 2.2, 2.4, 2.6, 3.0, 3.1, 2.9,
-                        3.1, 4.1, 4.3, 3.6, 3.4, 2.6, 2.9, 2.9,
-                        1.8, 1.2, 0.6, 0.1, 0.0]
+                    color:'#fc92cc',
+                    data: [1,2,3,4,5,6,7,8,9,10]
                 }]
             });
             return elemento;
@@ -109,10 +106,11 @@ graficas = function () {
     }
 //------------------------grafica de barra para los años y edades
     this.gender = function gender(array) {
+        console.log('entro a la segunda grafica');
         var categoriesArr = ['> 50 años', '40-49 años', '30-39 años', '26-29 años', '18-25 años','13-17 años'];
 
-        var chart2 = c3.generate({
-            bindto: '#genderAge',
+        var gender = c3.generate({
+            bindto: '#gender',
             data: {
                 columns: [
                     ['hombres', -30, -200, -100, -400, -150, -250],
@@ -151,11 +149,11 @@ graficas = function () {
                 }
             }
         });
-        chart2.ygrids([
+        gender.ygrids([
             {value: 0},
         ]);
 
-        return chart2;
+        return gender;
     }
 //------------------------grafica de barra para las interacciones por dia
     this.intPerDay = function intPerDay (dia1,dia2,dia3,dia4,dia5) {
