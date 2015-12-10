@@ -202,6 +202,12 @@
         branchMap.setBranches( '{!! json_encode($branches) !!}' );
     </script>
 
+    <!-- ckeditor -->
+    {!! HTML::script('bower_components/ckeditor/ckeditor.js') !!}
+    {!! HTML::script('bower_components/ckeditor/adapters/jquery.js') !!}
+
+    {!! HTML::script('assets/js/pages/forms_wysiwyg.min.js') !!}
+
     {{--{!! HTML::script('assets/js/pages/forms_file_upload.js') !!}--}}
 
 
