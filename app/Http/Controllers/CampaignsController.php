@@ -70,7 +70,9 @@ class CampaignsController extends Controller
 
             $noCreateBtn = true;
 
-            return view('campaigns.create', compact('branches', 'noCreateBtn', 'campaignName'));
+            $user = Auth::user();
+
+            return view('campaigns.create', compact('branches', 'noCreateBtn', 'campaignName', 'user'));
         }
 
     }

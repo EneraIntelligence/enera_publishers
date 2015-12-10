@@ -49,7 +49,7 @@ altair_wizard = {
                 onStepChanging: function (event, currentIndex, newIndex) {
 
                     //skips the parsley for testing purposes
-                    return true;
+                    //return true;
 
                     var step = $wizard_advanced.find('.body.current').attr('data-step'),
                         $current_step = $('.body[data-step=\"' + step + '\"]');
@@ -76,7 +76,9 @@ altair_wizard = {
                     // adjust content height
                     $window.resize();
 
-                    return $current_step.find('.md-input-danger:visible').length ? false : true;
+                    var textAreaErrors = $current_step.find('.parsley-errors-list filled:visible').length;
+
+                    return $current_step.find('.md-input-danger:visible').length+textAreaErrors ? false : true;
                 },
                 onFinished: function () {
 

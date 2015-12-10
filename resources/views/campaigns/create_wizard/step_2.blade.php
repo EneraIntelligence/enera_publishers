@@ -34,6 +34,71 @@
         </div>
     </div>
 
+    <!-- mailing list wysiwyg -->
+    <div class="uk-grid step2-field mailing-list">
+
+
+
+        <div class="uk-width-medium-1-3">
+            <div class="uk-form-row">
+                <div class="md-input-wrapper">
+                    <label>Nombre del remitente</label>
+                    <input type="text" name="from" required class="md-input">
+                            <span class="md-input-bar">
+                            </span>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="uk-width-medium-1-3">
+            <div class="uk-form-row">
+
+                <div class="md-input-wrapper">
+                    <label>Dirección de correo del remitente</label>
+                    <input type="email" name="from_mail" required class="md-input">
+                            <span class="md-input-bar">
+
+                            </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="uk-width-medium-1-3">
+            <div class="uk-form-row">
+
+                <div class="md-input-wrapper">
+                    <label>Asunto</label>
+                    <input type="text" name="subject" required class="md-input">
+                            <span class="md-input-bar">
+                            </span>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="uk-width-medium-1-1">
+
+            <br>
+            <br>
+            <label>Correo de suscripción</label>
+            <br>
+            <br>
+
+            <textarea name="mailing_content" id="wysiwyg_editor" cols="30" rows="20"
+                      data-parsley-trigger="keyup" data-parsley-minlength="20"
+                      data-parsley-minlength-message="Tu correo debe incluir al menos 20 caracteres"
+                      data-parsley-validate-if-empty
+                      required="required">
+
+            </textarea>
+
+        </div>
+
+
+    </div>
+
     <div class="uk-block step2-field survey questionContainer">
 
         <!-- q1 -->
@@ -276,5 +341,6 @@
 
 
     </div>
+
 
 </section>
