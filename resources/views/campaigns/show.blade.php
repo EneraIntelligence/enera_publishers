@@ -1,10 +1,6 @@
 @extends('layouts.main')
 @section('head_scripts')
     <style>
-        .ul{
-            font:bold 18px times;
-        }
-
         li p {
             font: 400 14px/18px Roboto,sans-serif;
             color:#000000;
@@ -27,13 +23,12 @@
                         <div class="user_heading">
                             <div class="user_heading_menu" data-uk-dropdown>
                                 <i class="md-icon material-icons md-icon-light">&#xE5D4;</i>
-
-                                <div class="uk-dropdown uk-dropdown-flip uk-dropdown-small">
+                                {{--<div class="uk-dropdown uk-dropdown-flip uk-dropdown-small">
                                     <ul class="uk-nav">
                                         <li><a href="#">Action 1</a></li>
                                         <li><a href="#">Action 2</a></li>
                                     </ul>
-                                </div>
+                                </div>--}}
                             </div>
                             <div class="user_heading_avatar">
                                 <div>
