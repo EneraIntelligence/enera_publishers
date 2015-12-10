@@ -357,31 +357,31 @@
                                                               height="21.77777777777778"></rect>
                                                     </svg>
                                                 </div>
-                                                <span class="uk-text-muted uk-text-small">Número de visitas a la campaña</span>
+                                                {{--<span class="uk-text-muted uk-text-small">Interacciones</span>--}}
+                                                <h3 class="heading_a uk-margin-bottom">Interacciones</h3>
                                                 <h1 class="jumbo uk-text-center" id="myTargetElement">0</h1>
                                             </div>
                                         </div>
                                         <div class="md-card">
-                                            <div class="md-card-content">
-                                                <h3 class="heading_a uk-margin-bottom">Statistics</h3>
-                                                <div id="ct-chart" class="chartist"></div>
+                                            <div id="graficas" class="md-card-content">
+                                                <h3 class="heading_a uk-margin-bottom">Analiticos</h3>
+                                                <div id='genderAge' class="uk-width-large-1-1 uk-panel-teaser" style="height: 350px"></div>
+                                                <h3 class="md-hr" style="margin: 10px;"></h3>
+                                                <div id='gender' class="uk-width-large-1-1 uk-margin-right"></div>
+                                            </div>
+                                        </div>
+                                        <div class="uk-grid uk-margin-medium-top" data="uk-grid-margin">
+                                            <div class="uk-width-1-1">
+                                                <div class="uk-width-medium-1-6">
+                                                    <a class="md-btn md-btn-primary"
+                                                       href="{{route('analytics::single', ['id' => $cam->_id])}}">
+                                                        <span class="uk-display-block">Reportes</span>
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
-                                <ul class="md-list md-list-addon">
-                                    <div class="uk-grid uk-margin-medium-top" data="uk-grid-margin">
-                                        <div class="uk-width-1-1">
-                                            <div class="uk-width-medium-1-6">
-                                                <a class="md-btn md-btn-primary"
-                                                   href="{{route('analytics::single', ['id' => $cam->_id])}}">
-                                                    <span class="uk-display-block">Reportes</span>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </ul>
                             </div>
                         </div>
                     </div>
@@ -394,14 +394,17 @@
     @section('scripts')
 
             <!-- slider script -->
-    {!! HTML::script('bower_components/ionrangeslider/js/ion.rangeSlider.min.js') !!}
     {!! HTML::script('bower_components/jquery.easy-pie-chart/dist/jquery.easypiechart.min.js') !!}
+    {!! HTML::script('bower_components/ionrangeslider/js/ion.rangeSlider.min.js') !!}
     {!! HTML::script('bower_components/countUp.js/countUp.js') !!}
     {!! HTML::script('js/circle-progress.js') !!}
     {!! HTML::style('css/show.css') !!}
+            <!-- links para que funcione la grafica demografica  -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    {!! HTML::script('js/ajax/graficas.js') !!}
     <script>
-        //        $("#age_slider").ionRangeSlider();
-        //        $("#ionslider_3").ionRangeSlider();
+//-------------------------------------- animacion del circulo  ---------------------------------------------
         $('#circle').circleProgress({
             value: {{$cam->porcentaje}}, //lo que se va a llenar con el color
             size: 98,   //tamaño del circulo
@@ -426,7 +429,7 @@
         demo.start();
 
         var chart = c3.generate({
-            bindto: '#ct-chart',
+            bindto: '#gender',
             data: {
                 columns: [
                     ['Mujeres', 15],
@@ -442,8 +445,11 @@
                 //width: 100 // this makes bar width 100px
             }
         });
-
-
+//------------------------------------------Grafica---------------------------------------------
+var grafica = new graficas;
+{{--var gra= grafica.genderAge({!! json_encode($data['grafica']) !!});--}}
+var gra= grafica.genderAge();
+//var gra2= grafica.gender();
 
     </script>
     <!-- enera custom scripts -->
