@@ -99,8 +99,9 @@
                                 <div class="uk-width-1-3 uk-hidden-small">
                                     <ul class="uk-nav uk-nav-dropdown uk-panel">
                                         <li class="uk-nav-header">Recientes</li>
-                                        @foreach($user->route as $route)
-                                        <li><a href="#">{{$route}}</a></li>
+                                        @foreach($user->route as $preview)
+                                            <?php $last = explode('/', $preview) ?>
+                                        <li><a href="{!! route($last[1]) !!}">{{$last[0]}}</a></li>
                                         @endforeach
                                         {{--<li><a href="#">Buttons</a></li>--}}
                                         {{--<li><a href="#">Notifications</a></li>--}}

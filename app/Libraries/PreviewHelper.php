@@ -16,7 +16,10 @@ class PreviewHelper
         'profile::edit' => 'Editar Perfil',
         'profile::index' => 'Perfil',
         'budget::index' => 'Presupuestos',
-        'campaigns::index' => 'Campañas',
+        'campaigns::index' => 'Lista Campañas',
+        'budget::invoices' => 'Invoice',
+        'analytics::single' => 'Analitics',
+        'campaigns::show' => 'Campaña'
     );
 
     public static function getNameRoute($route)
