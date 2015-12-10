@@ -56,11 +56,9 @@ class TimeEndEmail extends Command
         ])->get();
 
         foreach ($campaings as $cam) {
-//            dd($cam->_id);
             $cam->status = 'ended';
-            $cam->history()->create(array('administrator_id' => '0', 'status' => 'ended', 'date' => $today, 'note' => 'Campaña finalizada por fecha de terminación'));
             $cam->save();
-
+            $cam->history()->create(array('administrator_id' => '0', 'status' => 'ended', 'date' => $today, 'note' => 'Campaña finalizada por fecha de terminación'));
 
             $user = Administrator::find($cam->administrator_id);
             Mail::send('emails.notifications', ['user' => $user], function ($m) use ($user) {
