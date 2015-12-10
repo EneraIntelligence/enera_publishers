@@ -70,13 +70,16 @@ altair_wizard = {
 
                     // check input fields for errors
                     $current_step.find('[data-parsley-id]').each(function () {
-                        $(this).parsley().validate();
+                        if( $(this).is(":visible") )
+                        {
+                            $(this).parsley().validate();
+                        }
                     });
 
                     // adjust content height
                     $window.resize();
 
-                    var textAreaErrors = $current_step.find('.parsley-errors-list filled:visible').length;
+                    var textAreaErrors = $current_step.find('.parsley-minlength:visible').length;
 
                     return $current_step.find('.md-input-danger:visible').length+textAreaErrors ? false : true;
                 },

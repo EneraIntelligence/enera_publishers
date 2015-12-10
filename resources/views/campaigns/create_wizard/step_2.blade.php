@@ -22,7 +22,7 @@
 
     <div class="uk-grid step2-field banner-link">
         <div class="uk-width-medium-1-1 parsley-row">
-            <label for="banner_link">Link<span class="req">*</span></label>
+            <label for="banner_link">Link<span class="req">*</span> - incluyendo http:// ó https://</label>
             <input type="text" name="banner_link" id="banner_link" data-parsley-url="true" required class="md-input" />
         </div>
     </div>
@@ -55,7 +55,7 @@
             <div class="uk-form-row">
 
                 <div class="md-input-wrapper">
-                    <label>Dirección de correo del remitente</label>
+                    <label>E-mail del remitente</label>
                     <input type="email" name="from_mail" required class="md-input">
                             <span class="md-input-bar">
 
