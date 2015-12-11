@@ -207,7 +207,16 @@ create_campaign_helper =
         console.log("create_campaign_helper.showPreview");
 
         create_campaign_helper.modal = UIkit.modal("#modal_image");
-        create_campaign_helper.modal.show();
+
+        $('#modal_image').on({
+
+            'hide.uk.modal': function(){
+                console.log("Input clear.");
+                input.value="";
+
+            }
+        });
+
 
         var imageContainer = $(".crop-image");
         imageContainer.empty();
@@ -229,6 +238,9 @@ create_campaign_helper =
 
                 //change modal image to crop
                 output.attr("src", dataURL);
+
+                create_campaign_helper.modal.show();
+
 
                 output.cropper({
                     aspectRatio: width/height,
