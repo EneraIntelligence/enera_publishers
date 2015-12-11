@@ -17,16 +17,20 @@
     @yield('head_scripts')
 
 
-            <!-- uikit -->
+    <!-- uikit -->
     {!! HTML::style('bower_components/kendo-ui-core/styles/kendo.common-material.min.css') !!}
     {!! HTML::style('bower_components/kendo-ui-core/styles/kendo.material.min.css') !!}
     {!! HTML::style('bower_components/uikit/css/uikit.almost-flat.min.css') !!}
 
-            <!-- flag icons -->
+    <!-- flag icons -->
     {!! HTML::style('assets/icons/flags/flags.min.css') !!}
 
-            <!-- altair admin -->
+    <!-- altair admin -->
     {!! HTML::style('assets/css/main.min.css') !!}
+
+        {{--loader--}}
+    {!! HTML::style('assets/css/loader.css') !!}
+
 
             <!-- matchMedia polyfill for testing media queries in JS -->
     <!--[if lte IE 9]>
@@ -40,6 +44,31 @@
 
 </head>
 <body class="sidebar_main_swipe">
+
+    <div id="loader" class="fullscreenTop"
+         style="position: fixed;
+           left: 0px; right: 0px;
+           top: 0px; bottom: 0px;
+           background-color: white;
+           z-index: 99;">
+
+        <div style="position: relative; width: 100%; height: 100%;">
+            <div id="inner_loader"
+                 style="position: absolute;  top: 50%;
+                 left: 50%;  transform: translate(-50%, -50%);">
+
+                <div class="cssload-loader">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
 <!-- Create campaign button -->
 @if(!isset($noCreateBtn))
 
@@ -314,6 +343,11 @@
     {!! HTML::script('bower_components/jquery.inputmask/dist/jquery.inputmask.bundle.min.js') !!}
     {!! HTML::script('assets/js/pages/kendoui.min.js') !!}
 
+    <!-- animation library -->
+    {!! HTML::script('js/greensock/TweenLite.min.js') !!}
+    {!! HTML::script('js/greensock/plugins/CSSPlugin.min.js') !!}
+    {!! HTML::script('js/greensock/easing/EasePack.min.js') !!}
+
 
     <script>
         $(function () {
@@ -375,6 +409,7 @@
 
     <script>
 
+
         new_campaign.base_url = "{!! URL::to('/') !!}";
 
         $(function () {
@@ -382,6 +417,16 @@
                 UIkit.notify($(this).data());
             });
         });
+
+
+        window.onload = function()
+        {
+            //remove loader
+            TweenLite.to("#loader",.3, {"autoAlpha":0, onComplete:function()
+            {
+                $("#loader").css("display","none");
+            }});
+        }
     </script>
 
     @yield('scripts')
