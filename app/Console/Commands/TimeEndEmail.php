@@ -52,7 +52,8 @@ class TimeEndEmail extends Command
 
         try {
             $this->info('------------ Mandando Correo de Notificación -------------');
-            $today = date('Y-m-d');
+            $today = date('Y-m-d h:m:s');
+            dd($today);
             $campaings = Campaign::where('status', 'active')
                 ->whereRaw([
                     'filters.date.end' => [
@@ -70,14 +71,13 @@ class TimeEndEmail extends Command
 
                 Mail::send('emails.notifications', ['user' => $user], function ($m) use ($user) {
                     $m->from('soporte@enera.mx', 'Enera Intelligence');
-                    $m->to($user->email, $user->name['first'] . ' ' . $user->name['last'])->subject('Terminacion de Camapaña');
+                    $m->to('darkdreke@gmail.com', $user->name['first'] . ' ' . $user->name['last'])->subject('Terminacion de Camapaña');
                 });
                 $this->info('             Correo enviado  ' . $user->email . '              ');
             }
             $this->info('-------------------- Fin de comando ----------------------');
 
-        }catch (Exception $e)
-        {
+        } catch (Exception $e) {
             $this->error($e);
         }
     }
