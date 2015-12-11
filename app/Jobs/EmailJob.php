@@ -3,6 +3,7 @@
 namespace Publishers\Jobs;
 
 use Mail;
+use Publishers\Administrator;
 use Publishers\Jobs\Job;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Publishers\User;
