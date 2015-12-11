@@ -24,7 +24,7 @@ use Mail;
 class CampaignsController extends Controller
 {
 
-    public function  __construct()
+    public function __construct()
     {
         $this->filecloud = new FileCloud();
     }
@@ -46,7 +46,7 @@ class CampaignsController extends Controller
         $campaigns = Auth::user()->campaigns()->latest()->get();
         $subcampaigns = Auth::user()->subcampaigns()->latest()->get();
 
-        return view('campaigns.index', ['campaigns' => $campaigns, 'subcampaigns'=>$subcampaigns, 'user' => Auth::user()]);
+        return view('campaigns.index', ['campaigns' => $campaigns, 'subcampaigns' => $subcampaigns, 'user' => Auth::user()]);
     }
 
     /**
@@ -103,7 +103,7 @@ class CampaignsController extends Controller
                 return redirect()->route('campaigns::index')->with('data', 'errorCamp');
             } else {
                 $campaignName = $request->get('name');
-                return view('campaigns.mailing', array("campaign_id" => $id, "campaign_name"=>$campaignName, 'user' => Auth::user() ));
+                return view('campaigns.mailing', array("campaign_id" => $id, "campaign_name" => $campaignName, 'user' => Auth::user()));
             }
 
 
@@ -179,27 +179,20 @@ class CampaignsController extends Controller
         //echo "{success: 'true'}";
 
 
-        if (Input::get("imgType") == ".banner-1")
-        {
+        if (Input::get("imgType") == ".banner-1") {
             //saving small image
             $img = Input::get('imgToSave');
             $imageType = "small";
-        }
-        else  if (Input::get("imgType") == ".banner-2")
-        {
+        } else if (Input::get("imgType") == ".banner-2") {
             //saving large image
             $img = Input::get('imgToSave');
             $imageType = "large";
 
-        }
-        else  if (Input::get("imgType") == ".banner-survey")
-        {
+        } else if (Input::get("imgType") == ".banner-survey") {
 
             $img = Input::get('imgToSave');
             $imageType = "survey";
-        }
-        else
-        {
+        } else {
             $res = array('success' => false, 'msg' => 'error with image type');
             echo $res;
         }
@@ -223,8 +216,7 @@ class CampaignsController extends Controller
         imagedestroy($image);
 
 
-        if ($success)
-        {
+        if ($success) {
             //image copied to server successfully
             $fc = new FileCloud();
 
@@ -266,12 +258,9 @@ class CampaignsController extends Controller
     {
         $subcampaign = Subcampaign::find($id); //busca la campaña
 
-        if ($subcampaign && $subcampaign->administrator_id == auth()->user()->_id)
-        {
+        if ($subcampaign && $subcampaign->administrator_id == auth()->user()->_id) {
             return view('campaigns.subcampaign', [$subcampaign, 'cam' => $subcampaign, 'user' => Auth::user()]);
-        }
-        else
-        {
+        } else {
             return redirect()->route('campaigns::index')->with('data', 'errorCamp');
         }
     }
@@ -393,8 +382,8 @@ class CampaignsController extends Controller
             ->where('updated_at', '>', $fecha)->get(array('user'));
         if ($logs == null) {
             return null;
-        }else{
-            $Logs=$logs->toArray();
+        } else {
+            $Logs = $logs->toArray();
             foreach ($Logs as $clave => $valor) {
                 $log['users'][$clave]['age'] = $valor['user']['age'];
 //                var_dump($log['users'][$clave]['age']);

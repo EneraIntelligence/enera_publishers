@@ -55,5 +55,10 @@ class Administrator extends Model implements AuthenticatableContract, Authorizab
     {
         return $this->hasMany('Publishers\Subcampaign');
     }
+
+    public function balance()
+    {
+        return $this->embedsOne('Publishers\AdministratorBalance');
+    }
     // end relations
 }

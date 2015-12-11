@@ -13,7 +13,7 @@
 
 App::setLocale('es');
 
-Route::group(['middleware' => ['auth','preview']], function () {
+Route::group(['middleware' => ['auth', 'preview']], function () {
     Route::get('/', ['as' => 'home', 'uses' => 'DashboardController@index']);
 
     Route::group(['prefix' => 'campaigns', 'as' => 'campaigns::'], function () {
@@ -25,8 +25,8 @@ Route::group(['middleware' => ['auth','preview']], function () {
         Route::post('/save_item', ['as' => 'save_item', 'uses' => 'CampaignsController@saveItem']);
         Route::post('/send_mailing', ['as' => 'send_mailing', 'uses' => 'CampaignsController@sendMailing']);
 
-        Route::group(['middleware' => 'ajax'], function () {
-            Route::post('/store', ['as' => 'store', 'uses' => 'CampaignsController@store']);
+        Route::group([], function () {
+            Route::match(['post', 'get'], '/store', ['as' => 'store', 'uses' => 'CampaignsController@store']);
         });
     });
 
@@ -58,7 +58,7 @@ Route::group(['middleware' => ['auth','preview']], function () {
 
     Route::group(['prefix' => 'budget', 'as' => 'budget::'], function () {
         Route::get('/', ['as' => 'index', 'uses' => 'BudgetController@index']);
-        Route::get('/invoices/{id}', ['as' => 'invoices' , 'uses' => 'BudgetController@invoices']);
+        Route::get('/invoices/{id}', ['as' => 'invoices', 'uses' => 'BudgetController@invoices']);
     });
 
     Route::match(['get', 'post'], 'logout', ['as' => 'auth.logout', 'uses' => 'AuthController@logout']);
