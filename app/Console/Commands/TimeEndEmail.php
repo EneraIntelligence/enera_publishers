@@ -62,7 +62,7 @@ class TimeEndEmail extends Command
 
             $user = Administrator::find($cam->administrator_id);
             Mail::send('emails.notifications', ['user' => $user], function ($m) use ($user) {
-                $m->from('notificacion@enera.mx', 'Enera Intelligence');
+                $m->from('soporte@enera.mx', 'Enera Intelligence');
                 $m->to($user->email, $user->name['first'] . ' ' . $user->name['last'])->subject('Terminacion de Camapaña');
             });
         }
