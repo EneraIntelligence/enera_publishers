@@ -181,10 +181,7 @@
     {!! HTML::script('bower_components/parsleyjs/dist/parsley.min.js') !!}
     {!! HTML::script('bower_components/parsleyjs/src/i18n/es.js') !!}
 
-    <!-- animation library -->
-    {!! HTML::script('js/greensock/TweenLite.min.js') !!}
-    {!! HTML::script('js/greensock/plugins/CSSPlugin.min.js') !!}
-    {!! HTML::script('js/greensock/easing/EasePack.min.js') !!}
+
 
     {!! HTML::script('http://maps.google.com/maps/api/js') !!}
     {!! HTML::script('js/maps/markerclusterer_compiled.js') !!}
