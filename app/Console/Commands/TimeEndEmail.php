@@ -53,16 +53,17 @@ class TimeEndEmail extends Command
         try {
             $this->info('------------ Mandando Correo de Notificación -------------');
             $today = date('Y-m-d h:m:s');
-            dd($today);
-            $campaings = Campaign::where('status', 'active')
+
+            $campaigns = Campaign::where('status', 'active')
                 ->whereRaw([
                     'filters.date.end' => [
                         '$lt' => new MongoDate(strtotime($today))
                     ]
                 ])
                 ->get();
+            dd($campaigns);
 
-            foreach ($campaings as $key => $cam) {
+            foreach ($campaigns as $key => $cam) {
                 $cam->status = 'ended';
                 $cam->save();
                 $cam->history()->create(array('administrator_id' => '0', 'status' => 'ended', 'date' => $today, 'note' => 'Campaña finalizada por fecha de terminación'));
@@ -71,11 +72,13 @@ class TimeEndEmail extends Command
 
                 Mail::send('emails.notifications', ['user' => $user], function ($m) use ($user) {
                     $m->from('soporte@enera.mx', 'Enera Intelligence');
-                    $m->to('darkdreke@gmail.com', $user->name['first'] . ' ' . $user->name['last'])->subject('Terminacion de Camapaña');
+                    $m->to($user->email, $user->name['first'] . ' ' . $user->name['last'])->subject('Terminacion de Camapaña');
                 });
-                $this->info('             Correo enviado  ' . $user->email . '              ');
+                $key += 1;
+                $this->info('             Correo # '.$key.' enviado  ' . $user->email . '              ');
             }
             $this->info('-------------------- Fin de comando ----------------------');
+
 
         } catch (Exception $e) {
             $this->error($e);
