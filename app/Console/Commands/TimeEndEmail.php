@@ -61,7 +61,7 @@ class TimeEndEmail extends Command
                     ]
                 ])
                 ->get();
-            dd($campaigns);
+//            dd($campaigns);
 
             foreach ($campaigns as $key => $cam) {
                 $cam->status = 'ended';
