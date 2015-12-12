@@ -126,7 +126,7 @@ altair_wizard = {
                     // Ajax
 
                     $.ajax({
-                        method: "POST",
+                        method: "GET",
                         url: "/campaigns/store",
                         data: formObj,
                     }).done(function (data) {
