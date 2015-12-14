@@ -75,7 +75,7 @@ class TimeEndEmail extends Command
 
                 Mail::send('emails.notifications', ['user' => $user], function ($m) use ($user) {
                     $m->from('soporte@enera.mx', 'Enera Intelligence');
-                    $m->to('darkdreke@gmail.com', $user->name['first'] . ' ' . $user->name['last'])->subject('Terminacion de Camapaña');
+                    $m->to($user->email, $user->name['first'] . ' ' . $user->name['last'])->subject('Terminacion de Camapaña');
                 });
                 $key += 1;
                 $this->info('             Correo # ' . $key . ' enviado  ' . $user->email . '              ');
