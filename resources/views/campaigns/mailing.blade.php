@@ -119,6 +119,14 @@
             });
 
         @endif
+
+
+        $(document).ready(function() {
+            $("input[name=from]").focus();
+            $("input[name=from_mail]").focus();
+            $("input[name=subject]").focus();
+            $("input[name=from]").focus();
+        });
     </script>
 
 @stop
