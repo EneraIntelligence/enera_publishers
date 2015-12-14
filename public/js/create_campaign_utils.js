@@ -588,6 +588,27 @@ branchMap =
         }
 
         return htmlResult;
+    },
+    getMarkersById:function()
+    {
+        var global = $("#wizard_location_all");
+
+        if(global.prop("checked"))
+        {
+            return [];
+        }
+
+
+        list = branchMap.map.getActiveMarkers();
+        var result=[];
+
+        for(var i = 0; i<list.length;i++)
+        {
+            var marker = list[i];
+            result.push(marker.id);
+        }
+
+        return result;
     }
 },
 
