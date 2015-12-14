@@ -2,12 +2,14 @@
 
 namespace Publishers\Http\Controllers;
 
+use App;
 use Illuminate\Http\Request;
-
+use Hash;
 use Input;
 use Publishers\Http\Requests;
 use Publishers\Http\Controllers\Controller;
 use Validator;
+use Publishers\Administrator;
 
 class AuthController extends Controller
 {
@@ -49,5 +51,52 @@ class AuthController extends Controller
     {
         auth()->logout();
         return redirect()->route('auth.index');
+    }
+
+    /**
+     *
+     */
+    public function signUp()
+    {
+//        dd(Input::all());
+        App::setLocale('es');
+        $validator = Validator::make(Input::all(), [
+//            'nombre' => array('regex:[^[a-zA-Z]+$|\s*[a-zA-Z]$]'),
+            'nombre' => array('regex:[^([a-z ñáéíóú]{2,60})$]'),
+//            'apellido' => 'required|max:50|alpha_num',
+            'email' => 'required|email|max:250',
+            'password' => 'required|alpha_num|min:8|max:16',
+//            'estado' => 'required|max:250|alpha',
+//            'ciudad' => 'required|max:250|alpha'
+        ]);
+        if ($validator->passes()) {
+            echo 'estan bien <br>';
+//            dd($validator);
+            $password = Hash::make(Input::get('password'));
+//            dd($password);
+            Administrator::create(array('name' => ['first' => Input::get('nombre'), 'last' => Input::get('apellido')],
+                'email' => Input::get('email'), 'password' => $password,
+//                'location'=>['country'=>'mexico','state'=>Input::get('estado'),'city'=>Input::get('ciudad')],
+                'rol_id' => 'usuario', 'status' => 'block'
+            ));
+            echo 'se guardo';
+            return redirect()->route('auth.index')->with('success', 'registro-success');
+
+            /*Administrator::$user = new User;
+            $user->name = 'John';
+            $user->save();*/
+//            dd($validator);
+        } else {
+//            dd($validator);
+            return redirect()->route('auth.index')->withErrors($validator);
+        }
+        /*echo Input::get('register_name');
+        echo Input::get('register_apellido');
+        echo Input::get('register_email');
+        echo Input::get('register_password');
+        echo Input::get('register_password_repeat');
+        echo Input::get('register_Estado');
+        echo Input::get('register_munucipio');
+        dd('hola prueba');*/
     }
 }

@@ -16,7 +16,7 @@ return [
     'accepted'             => 'The :attribute must be accepted.',
     'active_url'           => 'The :attribute is not a valid URL.',
     'after'                => 'The :attribute must be a date after :date.',
-    'alpha'                => 'El :attribute solo debe contener letras',
+    'alpha'                => ':attribute solo debe contener letras',
     'alpha_dash'           => 'The :attribute may only contain letters, numbers, and dashes.',
     'alpha_num'            => ':attribute solo debe contener letras y numeros',
     'array'                => 'The :attribute must be an array.',
@@ -43,22 +43,23 @@ return [
     'ip'                   => 'The :attribute must be a valid IP address.',
     'json'                 => 'The :attribute must be a valid JSON string.',
     'max'                  => [
-        'numeric' => 'The :attribute may not be greater than :max.',
+        'numeric' => 'El :attribute no puede ser mayor a :max.',
         'file'    => 'The :attribute may not be greater than :max kilobytes.',
         'string'  => 'The :attribute may not be greater than :max characters.',
         'array'   => 'The :attribute may not have more than :max items.',
     ],
     'mimes'                => 'The :attribute must be a file of type: :values.',
     'min'                  => [
-        'numeric' => 'The :attribute must be at least :min.',
-        'file'    => 'The :attribute must be at least :min kilobytes.',
-        'string'  => 'The :attribute must be at least :min characters.',
+        'numeric' => ':attribute debe contener por lo menos :min caracteres.',
+        'file'    => 'EL :attribute must be at least :min kilobytes.',
+        'string'  => ':attribute debe tener por lo menos :min caracteres.',
         'array'   => 'The :attribute must have at least :min items.',
     ],
     'not_in'               => 'The selected :attribute is invalid.',
-    'numeric'              => 'The :attribute must be a number.',
-    'regex'                => 'The :attribute format is invalid.',
-    'required'             => 'The :attribute field is required.',
+    'numeric'              => ' :attribute Solo acepta numeros.',
+    'regex'                => ' :attribute tiene un  patron incorrecto.',
+
+    'required'             => ':attribute es un campo requerido.',
     'required_if'          => 'The :attribute field is required when :other is :value.',
     'required_with'        => 'The :attribute field is required when :values is present.',
     'required_with_all'    => 'The :attribute field is required when :values is present.',
@@ -90,6 +91,9 @@ return [
     'custom' => [
         'attribute-name' => [
             'rule-name' => 'custom-message',
+        ],
+        'nombre' => [
+            'nombre' => 'este campo solo acepta letras',
         ],
     ],
 

@@ -70,8 +70,9 @@ Route::group(['middleware' => ['auth', 'preview']], function () {
 Route::group(['middleware' => 'auth.ready'], function () {
     Route::get('login', ['as' => 'auth.index', 'uses' => 'AuthController@index']);
     Route::post('login', ['as' => 'auth.login', 'uses' => 'AuthController@login']);
-
+    Route::post('signUp', ['as' => 'auth.signUp', 'uses' => 'AuthController@signUp']);
 });
+
 
 
 
