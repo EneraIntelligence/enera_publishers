@@ -25,7 +25,7 @@
                             <div class="uk-form-row">
                                 <div class="md-input-wrapper">
                                     <label>Nombre del remitente *</label>
-                                    <input type="text" name="from" class="md-input" required>
+                                    <input type="text" name="from" class="md-input" value="{!! Input::old("from") !!}" required>
                                 <span class="md-input-bar">
                                 </span>
                                 </div>
@@ -38,7 +38,7 @@
 
                                 <div class="md-input-wrapper">
                                     <label>Dirección de correo del remitente *</label>
-                                    <input type="text" name="from_mail" class="md-input" required
+                                    <input type="text" name="from_mail" class="md-input" value="{!! Input::old("from_mail") !!}" required
                                            data-parsley-type="email">
                                 <span class="md-input-bar">
 
@@ -52,7 +52,7 @@
 
                                 <div class="md-input-wrapper">
                                     <label>Asunto *</label>
-                                    <input type="text" name="subject" class="md-input" required>
+                                    <input type="text" name="subject" class="md-input" value="{!! Input::old("subject") !!}" required>
                                 <span class="md-input-bar">
                                 </span>
                                 </div>
@@ -70,6 +70,7 @@
                 <textarea name="content" id="wysiwyg_editor" cols="30" rows="20" autofocus
                           data-parsley-required="true" >
 
+                    {!! Input::old("content") !!}
 
                 </textarea>
 
@@ -101,6 +102,23 @@
 
     <script>
         $('#form_validation').parsley();
+
+
+        @if( isset($errors) && count($errors)>0 )
+
+            var errors="";
+
+            @foreach ($errors->all() as $error)
+                errors+="{!! $error !!}<br>";
+            @endforeach
+
+            UIkit.notify("<i class='material-icons uk-icon-large'> &#xE002; </i> &nbsp;&nbsp;" +errors+
+                " <span style='float:right'><i class='material-icons uk-icon-large'> clear </i></span>", {
+                timeout: 0,
+                status: 'danger'
+            });
+
+        @endif
     </script>
 
 @stop
