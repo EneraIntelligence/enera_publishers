@@ -332,8 +332,8 @@
 @section('scripts')
     <script>
         var error = '{{session('data')}}';
-        if (error == 'errorCamp') {
-            UIkit.notify("<i class='material-icons uk-icon-large'> &#xE002; </i> &nbsp;&nbsp;La campaña no existe o es inaccesible. <span style='float:right'><i class='material-icons uk-icon-large'> clear </i></span>", {
+        if (error == 'NoMail') {
+            UIkit.notify("<i class='material-icons uk-icon-large'> &#xE002; </i> &nbsp;&nbsp;No puedes mandar correos de la subcamapaña dado que la campaña no tiene correos asignados <span style='float:right'><i class='material-icons uk-icon-large'> clear </i></span>", {
                 timeout: 0,
                 status: 'danger'
             });

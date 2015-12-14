@@ -10,9 +10,6 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-
-App::setLocale('es');
-
 Route::group(['middleware' => ['auth', 'preview']], function () {
     Route::get('/', ['as' => 'home', 'uses' => 'DashboardController@index']);
 

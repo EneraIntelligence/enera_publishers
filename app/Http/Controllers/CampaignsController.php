@@ -118,10 +118,10 @@ class CampaignsController extends Controller
         $campaign_id = Input::get("campaign_id");
 
         $campaign = Campaign::find($campaign_id); //get the campaign
-
+//        dd($campaign);
         if (!isset($campaign->mailing_list) || count($campaign->mailing_list) <= 0) {
             //no mails on the campaign mailing list
-            return redirect()->route('campaigns::index')->with('data', 'errorCamp');
+            return redirect()->route('campaigns::index')->with('data', 'NoMail');
         }
 
         if ($campaign && $campaign->administrator_id == auth()->user()->_id) {
