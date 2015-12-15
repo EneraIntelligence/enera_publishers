@@ -19,19 +19,18 @@ class PreviewMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (auth()->check()) {
-            $route = Request::route()->getName();
-            $test = isset(auth()->user()->route) ? auth()->user()->route : [];
-            $diff = array_unique($test);
-            if ($route != "home" && $route != "campaigns::show") {
-                array_unshift($diff, PreviewHelper::getNameRoute($route) . '/' . $route);
-            }
-            if (count($diff) > 5) {
-                array_pop($diff);
-            }
-            auth()->user()->route = $diff;
-            auth()->user()->save();
+        $route = \Request::route()->getName();
+        $user = Administrator::where('_id', Auth::user()->_id)->first();
+        $test = isset($user->route) ? $user->route : [];
+        $diff = array_unique($test);
+        if ($route != "home" && $route != "campaigns::show" && $route != "campaigns::sub") {
+            array_unshift($diff, PreviewHelper::getNameRoute($route) . '/' . $route);
         }
+        if (count($diff) > 5) {
+            array_pop($diff);
+        }
+        $user->route = $diff;
+        $user->save();
         return $next($request);
     }
 }

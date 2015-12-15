@@ -301,6 +301,9 @@
         </div>
     </header><!-- main header end -->
 
+    <img style="display:none" src="{!! URL::asset('assets/img/spinners/spinner.gif') !!}" alt="">
+
+
     @yield('content')
 
 
