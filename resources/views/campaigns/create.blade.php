@@ -9,25 +9,24 @@
         <div id="page_content_inner">
 
 
-
             <div class="uk-grid" data-uk-grid-margin data-uk-grid-match id="user_profile">
                 <div class="uk-width-large-7-10">
                     <div class="md-card uk-margin-large-bottom">
                         <div class="md-card-content">
-                            <form class="uk-form-stacked" id="wizard_advanced_form">
+                            {!! Form::open(['id'=>'wizard_advanced_form','class'=>'uk-form-stacked']) !!}
+                            <input type="hidden" name="title" value="{!! Input::get('name') !!}">
+                            <div id="wizard_advanced">
 
-                                <div id="wizard_advanced">
+                                @include('campaigns.create_wizard.step_1')
 
-                                    @include('campaigns.create_wizard.step_1')
+                                @include('campaigns.create_wizard.step_2')
 
-                                    @include('campaigns.create_wizard.step_2')
+                                @include('campaigns.create_wizard.step_3')
 
-                                    @include('campaigns.create_wizard.step_3')
+                                @include('campaigns.create_wizard.step_4')
 
-                                    @include('campaigns.create_wizard.step_4')
-
-                                </div>
-                            </form>
+                            </div>
+                            {!! Form::close() !!}
                         </div>
                     </div>
                 </div>
@@ -43,10 +42,12 @@
                             <!-- preview -->
                             <div class="uk-margin-medium-bottom">
                                 <h3 class="heading_c uk-margin-bottom">Vista previa</h3>
-                                <img class="uk-align-center vista"  src="{!! URL::asset('images/android_placeholder.png') !!}" alt="">
+                                <img class="uk-align-center vista"
+                                     src="{!! URL::asset('images/android_placeholder.png') !!}" alt="">
 
                                 <div class="preview">
-                                    <img class="img_preview"  id="interaccion" style="" src="http://placehold.it/207x325/444444?text=+" alt="vista previa">
+                                    <img class="img_preview" id="interaccion" style=""
+                                         src="http://placehold.it/207x325/444444?text=+" alt="vista previa">
                                     <div class="uk-text-center center-text">
                                         Elige una interacción.
                                     </div>
@@ -54,7 +55,8 @@
 
                                 <!-- banner preview -->
                                 <div class="preview banner none">
-                                    <img class="banner-1 banner-2 view" src="http://placehold.it/200x250?text=Tu+banner" alt="Tu banner">
+                                    <img class="banner-1 banner-2 view" src="http://placehold.it/200x250?text=Tu+banner"
+                                         alt="Tu banner">
                                     <div style="" class="md-btn md-btn-primary boton">Navegar en internet</div>
 
                                     <div class="uk-text-center center-text">
@@ -64,8 +66,9 @@
 
                                 <!-- banner_link preview -->
                                 <div class="preview banner-link none">
-                                    <img class="banner-1 banner-2 view"  src="http://placehold.it/200x250?text=Tu+banner" alt="Tu banner">
-                                    <div  class="md-btn md-btn-primary boton">Navegar en internet</div>
+                                    <img class="banner-1 banner-2 view" src="http://placehold.it/200x250?text=Tu+banner"
+                                         alt="Tu banner">
+                                    <div class="md-btn md-btn-primary boton">Navegar en internet</div>
 
                                     <div class="uk-text-center center-text">
                                         Promociónate con un banner y recibe a los usuarios de redes Enera en tu sitio.
@@ -74,32 +77,38 @@
 
                                 <!-- mailing_list preview -->
                                 <div class="preview mailing-list none">
-                                    <img class="banner-1 banner-2 view" src="http://placehold.it/200x250?text=Tu+banner" alt="Tu banner">
+                                    <img class="banner-1 banner-2 view" src="http://placehold.it/200x250?text=Tu+banner"
+                                         alt="Tu banner">
                                     <div style="top: 455px;" class="md-btn md-btn-primary boton">Suscribirme</div>
-                                    <a id="Suscribirme"  href="">Deseo navegar en internet sin suscribirme</a>
+                                    <a id="Suscribirme" href="">Deseo navegar en internet sin suscribirme</a>
 
-                                    <div class="uk-text-center center-text" >
-                                        Invita a los usuarios de redes Enera a unirse a una lista de correos para contactarlos aún terminada la campaña.
+                                    <div class="uk-text-center center-text">
+                                        Invita a los usuarios de redes Enera a unirse a una lista de correos para
+                                        contactarlos aún terminada la campaña.
                                     </div>
 
                                 </div>
 
                                 <!-- captcha preview -->
                                 <div class="preview captcha none">
-                                    <img class="banner-1 banner-2 view-c"  src="http://placehold.it/200x250?text=Tu+captcha" alt="Tu banner">
-                                    <input  class="uk-text-center boton" type="text" value="Mi producto">
-                                    <div  class="md-btn md-btn-primary boton">Navegar en internet</div>
+                                    <img class="banner-1 banner-2 view-c"
+                                         src="http://placehold.it/200x250?text=Tu+captcha" alt="Tu banner">
+                                    <input class="uk-text-center boton" type="text" value="Mi producto">
+                                    <div class="md-btn md-btn-primary boton">Navegar en internet</div>
 
                                     <div class="uk-text-center center-text">
-                                        Haz que los usuarios de redes Enera escriban una palabra relacionada con tu producto.
+                                        Haz que los usuarios de redes Enera escriban una palabra relacionada con tu
+                                        producto.
                                     </div>
 
                                 </div>
 
                                 <!-- survey preview -->
                                 <div class="preview survey none">
-                                    <img class="banner-survey view"  src="http://placehold.it/200x150?text=Tu+banner" alt="Tu banner">
-                                    <h3 class="uk-text-center center-text" style="top:325px; width:70%; position:absolute;">¿Pregunta 1?</h3>
+                                    <img class="banner-survey view" src="http://placehold.it/200x150?text=Tu+banner"
+                                         alt="Tu banner">
+                                    <h3 class="uk-text-center center-text"
+                                        style="top:325px; width:70%; position:absolute;">¿Pregunta 1?</h3>
                                     <div style="top:387px" class="md-btn md-btn-primary boton">A</div>
                                     <div class="uk-clearfix"></div>
                                     <div style="top:427px" class="md-btn md-btn-primary boton">B</div>
@@ -113,9 +122,10 @@
 
                                 <!-- video preview -->
                                 <div class="preview video none">
-                                    <img class="banner-1 banner-2 view"  src="http://placehold.it/200x250/010101?text=+" alt="Tu video">
-                                    <img  id="video_id"  src="{!! URL::asset('images/icons/video.svg') !!}" alt="">
-                                    <div  class="md-btn md-btn-primary boton">Navegar en internet</div>
+                                    <img class="banner-1 banner-2 view" src="http://placehold.it/200x250/010101?text=+"
+                                         alt="Tu video">
+                                    <img id="video_id" src="{!! URL::asset('images/icons/video.svg') !!}" alt="">
+                                    <div class="md-btn md-btn-primary boton">Navegar en internet</div>
 
                                     <div class="uk-text-center center-text">
                                         Muestra un video que verán nuestros usuarios para acceder a las redes Enera.
@@ -153,12 +163,12 @@
     </div>
 
 
-@stop
+    @stop
 
-@section('scripts')
+    @section('scripts')
 
 
-        <!-- jquery steps -->
+            <!-- jquery steps -->
     {!! HTML::script('js/wizard_steps_custom.js') !!}
             <!--  forms wizard functions -->
     {!! HTML::script('js/form_wizard_custom.js') !!}
@@ -195,8 +205,8 @@
     {!! HTML::script('js/cropper.min.js') !!}
 
     <script>
-        branchMap.base_url="{!! URL::to('/') !!}";
-        branchMap.setBranches( '{!! json_encode($branches) !!}' );
+        branchMap.base_url = "{!! URL::to('/') !!}";
+        branchMap.setBranches('{!! json_encode($branches) !!}');
     </script>
 
     <!-- ckeditor -->

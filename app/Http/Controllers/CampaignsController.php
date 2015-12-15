@@ -85,7 +85,85 @@ class CampaignsController extends Controller
      */
     public function store()
     {
-        return response()->json(Input::all());
+        sleep(30);
+        dd(Input::all());
+        $validator = Validator::make(Input::all(), [
+            'title' => 'required',
+            'start_date' => 'required',
+            'end_date' => 'required',
+            'time' => 'required',
+            'days' => 'required',
+            'gender' => 'required',
+            'age' => 'required',
+            'images' => 'required',
+            'ubication' => 'required',
+            'interactionId' => 'required',
+            /* condicionales */
+            'from' => 'required_if:interactionId,mailing-list',
+            'from_mail' => 'required_if:interactionId,mailing-list',
+            'subject' => 'required_if:interactionId,mailing-list',
+            'mailing_content' => 'required_if:interactionId,mailing-list',
+            'survey' => 'required_if:interactionId,survey',
+            'captcha' => 'required_if:interactionId,captcha',
+            'video' => 'required_if:interactionId,video',
+            'branches' => 'required_if:ubication,select',
+        ]);
+        if ($validator->passes()) {
+            if ($camp = Campaign::create([
+                'client_id' => isset(auth()->user()->client_id) ? auth()->user()->client_id : '0',
+                'administrator_id' => auth()->user()->_id,
+                'name' => Input::get('title'),
+                'branches' => Input::get('ubication') == 'all' ? 'all' : Input::get('branches'),
+                'interaction' => [
+                    'name' => Input::get('interactionId'),
+                ],
+                'filter' => [
+                    'age' => explode(';', Input::get('age')),
+                    'date' => [
+                        'start' => new MongoDate(strtotime(Input::get('start_date'))),
+                        'end' => new MongoDate(strtotime(Input::get('end_date')))
+                    ],
+                    'gender' => Input::get('gender') == 'both' ? ['male', 'female'] : [Input::get('gender')],
+                    'week_days' => Input::get('days'),
+                    'day_hours' => range(explode(';', Input::get('time'))[0], explode(';', Input::get('time'))[1]),
+                ],
+                'content' => [
+                    'items' => Input::get('images'),
+                    'images' => [
+                        'small' => Item::find(Input::get('images.small'))->filename,
+                        'large' => Item::find(Input::get('images.large'))->filename,
+                        'survey' => Item::find(Input::get('images.large'))->filename,
+                    ],
+                    'mail' => [
+                        'from_name' => Input::get('from'),
+                        'from_mail' => Input::get('from_mail'),
+                        'subject' => Input::get('subject'),
+                        'content' => Input::get('content'),
+                        'captcha' => Input::get('captcha'),
+                        'video' => Input::get('video'),
+                    ],
+                    'survey' => Input::get('survey'),
+                ],
+                'status' => 'pending',
+            ])
+            ) {
+                return response()->json([
+                    'ok' => true,
+                    'id' => $camp->_id
+                ]);
+            } else {
+                return response()->json([
+                    'ok' => false,
+                    'msg' => 'No fue posible guardar la información.'
+                ]);
+            }
+        } else {
+            dd($validator->errors());
+            return response()->json([
+                'ok' => false,
+                'msg' => 'Uno o más datos no son validos.'
+            ]);
+        }
     }
 
     public function mailing($id, Request $request)
@@ -118,7 +196,6 @@ class CampaignsController extends Controller
         $campaign_id = Input::get("campaign_id");
 
 
-
         $validator = Validator::make(Input::all(), [
             'campaign_name' => 'required',
             'from_mail' => 'required|email',
@@ -127,8 +204,7 @@ class CampaignsController extends Controller
             'content' => 'required'
         ]);
 
-        if ($validator->passes())
-        {
+        if ($validator->passes()) {
 
             $campaign = Campaign::find($campaign_id); //get the campaign
 
@@ -183,7 +259,7 @@ class CampaignsController extends Controller
                 return redirect()->route('campaigns::index')->with('data', 'errorCamp');
             }
         } else {
-            return redirect()->route('campaigns::mailing',["id"=>Input::get("campaign_id"),"name"=>Input::get("campaign_name")])->withErrors($validator)->withInput(Input::old());
+            return redirect()->route('campaigns::mailing', ["id" => Input::get("campaign_id"), "name" => Input::get("campaign_name")])->withErrors($validator)->withInput(Input::old());
         }
     }
 

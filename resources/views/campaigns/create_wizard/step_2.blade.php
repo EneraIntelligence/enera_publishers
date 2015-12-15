@@ -8,8 +8,6 @@
 
     <div class="uk-width-medium-1-1 uk-small-width-1-1 step2-field video">
 
-        <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-
         <div id="file_upload-drop" class="uk-file-upload parsley-row">
             <p class="uk-text">Video</p>
             <a class="uk-form-file md-btn">elige un archivo
@@ -292,8 +290,6 @@
             <img style="max-height:200px" class="uk-align-center banner-survey" src="http://placehold.it/684x400?text=684x400" alt="">
             <div class="parsley-errors-list filled banner-survey-errors"></div>
 
-            <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-
             <div id="file_upload-drop" class="uk-file-upload parsley-row">
                 <p class="uk-text">Banner encuesta</p>
                 <a class="uk-form-file md-btn">elige un archivo
@@ -308,8 +304,6 @@
             <img style="max-height:200px" id="image-crop" class="uk-align-center banner-1" src="http://placehold.it/600x602?text=600x602" alt="">
 
             <div class="parsley-errors-list filled banner-1-errors"></div>
-
-            <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 
             <div id="file_upload-drop" class="uk-file-upload parsley-row">
                 <p class="uk-text">Banner dispositivos pequeños</p>

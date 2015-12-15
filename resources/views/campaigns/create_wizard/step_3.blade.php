@@ -76,35 +76,35 @@
 
                         <div class="uk-width-medium-1-5 uk-width-small-1-2">
                             <span class="icheck-inline">
-                                <input data-parsley-mincheck="1" required="" class="wizard-icheck" type="checkbox" name="days" value="monday" checked id="checkbox_demo_inline_1"/>
+                                <input data-parsley-mincheck="1" required="" class="wizard-icheck" type="checkbox" name="days" value="1" checked id="checkbox_demo_inline_1"/>
                                 <label for="checkbox_demo_inline_1" class="inline-label">Lunes</label>
                             </span>
                         </div>
 
                         <div class="uk-width-medium-1-5 uk-width-small-1-2">
                             <span class="icheck-inline">
-                                <input class="wizard-icheck" type="checkbox" name="days" value="tuesday" checked id="checkbox_demo_inline_2"/>
+                                <input class="wizard-icheck" type="checkbox" name="days" value="2" checked id="checkbox_demo_inline_2"/>
                                 <label for="checkbox_demo_inline_2" class="inline-label">Martes</label>
                             </span>
                         </div>
 
                         <div class="uk-width-medium-1-5 uk-width-small-1-2">
                             <span class="icheck-inline">
-                                <input class="wizard-icheck" type="checkbox" name="days" value="wednesday" checked id="checkbox_demo_inline_3"/>
+                                <input class="wizard-icheck" type="checkbox" name="days" value="3" checked id="checkbox_demo_inline_3"/>
                                 <label for="checkbox_demo_inline_3" class="inline-label">Miercoles</label>
                             </span>
                         </div>
 
                         <div class="uk-width-medium-1-5 uk-width-small-1-2">
                             <span class="icheck-inline">
-                                <input class="wizard-icheck" type="checkbox" name="days" value="thursday" checked id="checkbox_demo_inline_4"/>
+                                <input class="wizard-icheck" type="checkbox" name="days" value="4" checked id="checkbox_demo_inline_4"/>
                                 <label for="checkbox_demo_inline_4" class="inline-label">Jueves</label>
                             </span>
                         </div>
 
                         <div class="uk-width-medium-1-5 uk-width-small-1-2">
                             <span class="icheck-inline">
-                                <input class="wizard-icheck" type="checkbox" name="days" value="friday" checked id="checkbox_demo_inline_5"/>
+                                <input class="wizard-icheck" type="checkbox" name="days" value="5" checked id="checkbox_demo_inline_5"/>
                                 <label for="checkbox_demo_inline_5" class="inline-label">Viernes</label>
                             </span>
                         </div>
@@ -119,14 +119,14 @@
 
                         <div class="uk-width-medium-1-5 uk-width-small-1-2">
                             <span class="icheck-inline">
-                                <input class="wizard-icheck" type="checkbox" name="days" value="saturday" checked id="checkbox_demo_inline_6"/>
+                                <input class="wizard-icheck" type="checkbox" name="days" value="6" checked id="checkbox_demo_inline_6"/>
                                 <label for="checkbox_demo_inline_6" class="inline-label">Sábado</label>
                             </span>
                         </div>
 
                         <div class="uk-width-medium-1-5 uk-width-small-1-2">
                             <span class="icheck-inline">
-                                <input class="wizard-icheck" type="checkbox" name="days" value="sunday" checked id="checkbox_demo_inline_7"/>
+                                <input class="wizard-icheck" type="checkbox" name="days" value="7" checked id="checkbox_demo_inline_7"/>
                                 <label for="checkbox_demo_inline_7" class="inline-label">Domingo</label>
                             </span>
                         </div>
