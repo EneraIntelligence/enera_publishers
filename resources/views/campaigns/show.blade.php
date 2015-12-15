@@ -2,12 +2,12 @@
 @section('head_scripts')
     <style>
         li p {
-            font: 400 14px/18px Roboto,sans-serif;
-            color:#000000;
+            font: 400 14px/18px Roboto, sans-serif;
+            color: #000000;
             margin-bottom: 0;
         }
 
-        .p{
+        .p {
             list-style: none;
 
         }
@@ -34,7 +34,9 @@
                                 <div>
                                     <div id="circle" style="max-width:98px;max-height:98px;margin:auto;">
                                         <img style="background-image:none!important;margin:-96px 9px;"
-                                             src="{!! URL::asset('images/icons/'.$cam->interaction['name'].'.svg') !!}"
+                                             src="{!! URL::asset('images/icons/'.
+                                                                CampaignStyle::getCampaignIcon( $cam->interaction['name']
+                                                             ) ) !!}"
                                              alt="producto"/>
                                     </div>
                                 </div>
@@ -262,7 +264,7 @@
                                                         <div class="uk-width-medium-1-1">
                                                             <a class="md-btn md-btn-primary"
                                                                onclick="new_campaign.promptMailingCampaign('{{$cam->_id}}')"
-                                                                <span class="uk-display-block">Crear campaña de mailing</span>
+                                                            <span class="uk-display-block">Crear campaña de mailing</span>
                                                             </a>
                                                         </div>
                                                     </div>
@@ -290,11 +292,13 @@
                                                 <div class="md-list-content uk-width-large-1"
                                                      style=" color: #1e88e5;">
                                                     @foreach($cam->content['survey'] as $key => $con)
-                                                        <span>Pregunta {!! $key[1] !!} : &nbsp;{!! $con['question'] !!}</span>
+                                                        <span>Pregunta {!! $key[1] !!}
+                                                            : &nbsp;{!! $con['question'] !!}</span>
                                                         <br>
                                                         @foreach($con['answers'] as $key => $a)
                                                             <ul>
-                                                                <li class="p"> <p>Respuesta {!! $key[1] !!}: {!! $a !!}</p>
+                                                                <li class="p"><p>Respuesta {!! $key[1] !!}
+                                                                        : {!! $a !!}</p>
                                                             </ul>
                                                         @endforeach
                                                     @endforeach
@@ -360,7 +364,8 @@
                                         <div class="md-card">
                                             <div id="graficas" class="md-card-content">
                                                 <h3 class="heading_a uk-margin-bottom">Analiticos</h3>
-                                                <div id='genderAge' class="uk-width-large-1-1 uk-panel-teaser" style="height: 350px"></div>
+                                                <div id='genderAge' class="uk-width-large-1-1 uk-panel-teaser"
+                                                     style="height: 350px"></div>
                                                 <h3 class="md-hr" style="margin: 10px;"></h3>
                                                 <div id='gender' class="uk-width-large-1-1 uk-margin-right"></div>
                                             </div>
@@ -399,7 +404,7 @@
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     {!! HTML::script('js/ajax/graficas.js') !!}
     <script>
-//-------------------------------------- animacion del circulo  ---------------------------------------------
+        //-------------------------------------- animacion del circulo  ---------------------------------------------
         $('#circle').circleProgress({
             value: {{$cam->porcentaje}}, //lo que se va a llenar con el color
             size: 98,   //tamaño del circulo
@@ -440,11 +445,11 @@
                 //width: 100 // this makes bar width 100px
             }
         });
-//------------------------------------------Grafica---------------------------------------------
-var grafica = new graficas;
-{{--var gra= grafica.genderAge({!! json_encode($data['grafica']) !!});--}}
-var gra= grafica.genderAge();
-//var gra2= grafica.gender();
+        //------------------------------------------Grafica---------------------------------------------
+        var grafica = new graficas;
+                {{--var gra= grafica.genderAge({!! json_encode($data['grafica']) !!});--}}
+        var gra = grafica.genderAge();
+        //var gra2= grafica.gender();
 
     </script>
     <!-- enera custom scripts -->
