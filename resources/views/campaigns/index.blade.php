@@ -339,6 +339,14 @@
             });
         }
 
+        var send = '{{session('data')}}';
+        if (send == 'send') {
+            UIkit.notify("<i class='material-icons uk-icon-large'> &#xE877; </i> &nbsp;&nbsp;Tus correos se han enviado <span style='float:right'><i class='material-icons uk-icon-large'> clear </i></span>", {
+                timeout: 0,
+                status: 'success'
+            });
+        }
+
                 @foreach($campaigns as $campaign)
         var chart = c3.generate({
                     bindto: '#chart_{!! $campaign->_id !!}',

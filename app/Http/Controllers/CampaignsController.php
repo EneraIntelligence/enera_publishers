@@ -6,6 +6,7 @@ use DateTime;
 use MongoDate;
 use Publishers\CampaignLog;
 use Publishers\Jobs\EmailJob;
+use Publishers\Jobs\mailingJob;
 use Publishers\Libraries\CampaignStyleHelper;
 use Validator;
 use Illuminate\Support\Facades\Storage;
@@ -113,6 +114,10 @@ class CampaignsController extends Controller
         }
     }
 
+    /**
+     * @param Request $request
+     * @return $this|\Illuminate\Http\RedirectResponse|string
+     */
     public function sendMailing(Request $request)
     {
         $campaign_id = Input::get("campaign_id");
@@ -131,7 +136,8 @@ class CampaignsController extends Controller
         {
 
             $campaign = Campaign::find($campaign_id); //get the campaign
-
+            $mail = $campaign->mailing_list;
+            $campaign_id = $campaign->_id;
             if (!isset($campaign->mailing_list) || count($campaign->mailing_list) <= 0) {
                 //no mails on the campaign mailing list
                 return redirect()->route('campaigns::index')->with('data', 'NoMail');
@@ -149,34 +155,38 @@ class CampaignsController extends Controller
                 $subject = Input::get("subject");
                 $content = Input::get("content");
 
+                $data = compact('admin_id', 'from','campaign_name','from_mail','subject', 'content', 'mail', 'campaign_id');
+                $this->dispatch(new MailingJob($data));
+
+
                 //save subcampaign on DB
-                $subCampaign = new Subcampaign();
-                $subCampaign->administrator_id = $admin_id;
-                $subCampaign->campaign_id = $campaign_id;
-                $subCampaign->name = $campaign_name;
-                $subCampaign->from = $from;
-                $subCampaign->from_mail = $from_mail;
-                $subCampaign->subject = $subject;
-                $subCampaign->content = $content;
-                $subCampaign->save();
-
-                //setup mail data
-                $mail = array(
-                    "from" => $from,
-                    "from_mail" => $from_mail,
-                    "subject" => $subject,
-                    "content" => $content
-                );
-
-                Mail::send('emails.test', ['content' => $mail["content"]], function ($m) use ($mail) {
-                    $m->from($mail["from_mail"], $mail["from"]);
-
-                    //TODO tomar mails de campaña y mandar a todos
-                    $m->to("ederchrono@gmail.com", "Eder")->subject($mail["subject"]);
-                });
+//                $subCampaign = new Subcampaign();
+//                $subCampaign->administrator_id = $admin_id;
+//                $subCampaign->campaign_id = $campaign_id;
+//                $subCampaign->name = $campaign_name;
+//                $subCampaign->from = $from;
+//                $subCampaign->from_mail = $from_mail;
+//                $subCampaign->subject = $subject;
+//                $subCampaign->content = $content;
+//                $subCampaign->save();
+//
+//                //setup mail data
+//                $mail = array(
+//                    "from" => $from,
+//                    "from_mail" => $from_mail,
+//                    "subject" => $subject,
+//                    "content" => $content
+//                );
+//
+//                Mail::send('emails.test', ['content' => $mail["content"]], function ($m) use ($mail) {
+//                    $m->from($mail["from_mail"], $mail["from"]);
+//
+//                    //TODO tomar mails de campaña y mandar a todos
+//                    $m->to("ederchrono@gmail.com", "Eder")->subject($mail["subject"]);
+//                });
 
                 //TODO mostrar vista de subcampaña
-                return "mail enviado!"; //view('campaigns.create', compact('branches', 'noCreateBtn', 'campaignName'));
+                return redirect()->route('campaigns::index')->with('data', 'send');; //view('campaigns.create', compact('branches', 'noCreateBtn', 'campaignName'));
 
             } else {
                 //not the user's campaign
