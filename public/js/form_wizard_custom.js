@@ -137,7 +137,9 @@ altair_wizard = {
                     }).done(function (data) {
                         modal.hide();
                         if (data.ok) {
-                            window.location('/campaigns');
+                            window.location.href = '/campaigns';
+                        } else if (!data.ok) {
+                            UIkit.modal.alert('<p>Enera Publishers</p><pre>' + data.msg + '</pre>');
                         } else {
                             UIkit.modal.alert('<p>Enera Publishers</p><pre>Ocurrio un error al intentar guardar la campañar.</pre>');
                         }

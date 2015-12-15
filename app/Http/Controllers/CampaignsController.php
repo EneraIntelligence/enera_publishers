@@ -86,8 +86,8 @@ class CampaignsController extends Controller
      */
     public function store()
     {
-        sleep(30);
-        dd(Input::all());
+//        sleep(30);
+//        dd(Input::all());
         $validator = Validator::make(Input::all(), [
             'title' => 'required',
             'start_date' => 'required',
@@ -118,7 +118,7 @@ class CampaignsController extends Controller
                 'interaction' => [
                     'name' => Input::get('interactionId'),
                 ],
-                'filter' => [
+                'filters' => [
                     'age' => explode(';', Input::get('age')),
                     'date' => [
                         'start' => new MongoDate(strtotime(Input::get('start_date'))),
