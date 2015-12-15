@@ -23,7 +23,7 @@ class PreviewMiddleware
         $user = Administrator::where('_id', Auth::user()->_id)->first();
         $test = isset($user->route) ? $user->route : [];
         $diff = array_unique($test);
-        if ($route != "home" && $route != "campaigns::show" && $route != "campaigns::sub") {
+        if ($route != "home" && $route != "campaigns::show" && $route != "campaigns::sub" && $route != 'campaigns::store' && $route != 'campaigns::save_item') {
             array_unshift($diff, PreviewHelper::getNameRoute($route) . '/' . $route);
         }
         if (count($diff) > 5) {

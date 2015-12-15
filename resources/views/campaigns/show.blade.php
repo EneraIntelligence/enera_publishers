@@ -44,7 +44,7 @@
                             <div class="user_heading_content">
                                 <h2 class="heading_b uk-margin-bottom"><span
                                             class="uk-text-truncate">{{ $cam->name }} </span><span
-                                            class="sub-heading">{{ $cam->interaction['name'] }}</span>
+                                            class="sub-heading">{{ (str_replace("_", " ",$cam->interaction['name'])) }}</span>
                                 </h2>
                             </div>
                             <a class="md-fab md-fab-small md-fab-accent {!! Publishers\Libraries\CampaignStyleHelper::getStatusColor($cam->status) !!}"
