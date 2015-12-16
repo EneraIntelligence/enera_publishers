@@ -25,7 +25,7 @@
 
 </head>
 <body class="login_page">
-
+    {{  $registro = ''}}
 <div class="login_page_wrapper">
 
     <div class="md-card" id="login_card">
@@ -129,38 +129,29 @@
         </div>
         {{--style="display: none;"--}}
         <div class="md-card-content large-padding" id="register_form" style="display: none;">
+
             <button type="button"
                     class="uk-position-top-right uk-close uk-margin-right uk-margin-top back_to_login"></button>
             <h2 class="heading_a uk-margin-medium-bottom">Crear Cuenta</h2>
 
             {!! Form::open(['route'=>'auth.signUp', 'class'=>'uk-form-stacked', 'id'=>'form_validation2']) !!}
-            @if( Session::has('error') )
-                <div style="text-align: center; color: red;">{{ session('error') }}</div>
+            @if( Session::has('errors') )
+                <div style="text-align: center; color: red;">hubo un {!! $registro = 'error'  !!} al registrarte verifica los campos</div>
             @endif
             {{--{{ dd($errors) }}--}}
-            @foreach($errors->get('nombre') as $m)
-                <div style="text-align: center; color: red;">{{ $m }}</div>
-            @endforeach
+            {{--{{ var_dump($errors)  }}--}}
 
-            @foreach($errors->get('apellido') as $m)
-                <div style="text-align: center; color: red;">{{ $m }}</div>
-            @endforeach
-
-            @foreach($errors->get('email') as $m)
-                <div style="text-align: center; color: red;">{{ $m }}</div>
-            @endforeach
-
-            @foreach($errors->get('password') as $m)
-                <div style="text-align: center; color: red;">{{ $m }}</div>
-            @endforeach
-
-            @foreach($errors->get('estado') as $m)
+            {{--@foreach($errors->get('estado') as $m)
                 <div style="text-align: center; color: red;">{{ $m }}</div>
             @endforeach
 
             @foreach($errors->get('municipio') as $m)
                 <div style="text-align: center; color: red;">{{ $m }}</div>
-            @endforeach
+            @endforeach--}}
+            {{--@if($errors->get('registro'))
+                {{ $registro = 'error' }}
+            @endif--}}
+            {{--{{ var_dump($errors)  }}--}}
 
             <div class="uk-form-row">
                 <label for="register_name">Nombre </label>
@@ -169,6 +160,12 @@
                        data-parsley-maxlength="16" data-parsley-maxlength-message="maximo 16 caracteres"
                        data-parsley-required-message="nombre"
                 />
+                @foreach($errors->get('nombre') as $m)
+                    {{--<div style="text-align: center; color: red;">{{ $m }}</div>--}}
+                    <ul class="parsley-errors-list filled" id="parsley-id-8">
+                        <li class="parsley-type">{{ $m }}</li>
+                    </ul>
+                @endforeach
                 <span class="md-input-bar"> </span>
             </div>
             <div class="uk-form-row">
@@ -178,6 +175,12 @@
                        data-parsley-maxlength="16" data-parsley-maxlength-message="maximo 16 caracteres"
                        data-parsley-required-message="apellido"
                 />
+                @foreach($errors->get('apellido') as $m)
+                    {{--<div style="text-align: center; color: red;">{{ $m }}</div>--}}
+                    <ul class="parsley-errors-list filled" id="parsley-id-8">
+                        <li class="parsley-type">{{ $m }}</li>
+                    </ul>
+                @endforeach
                 <span class="md-input-bar"> </span>
             </div>
                 <div class="uk-form-row">
@@ -186,6 +189,12 @@
                            data-parsley-trigger="change" class="md-input"
                            data-parsley-type-message="ingresa un correo valido"
                            data-parsley-required-message="Ingresa tu correo"/>
+                    @foreach($errors->get('email') as $m)
+                        {{--<div style="text-align: center; color: red;">{{ $m }}</div>--}}
+                        <ul class="parsley-errors-list filled" id="parsley-id-8">
+                            <li class="parsley-type">{{ $m }}</li>
+                        </ul>
+                    @endforeach
                     <span class="md-input-bar"> </span>
                 </div>
                 <div class="uk-form-row">
@@ -198,6 +207,12 @@
                            data-parsley-required-message="se requiere de una contraseña"
                            data-parsley-equalto="#register_password_repeat" data-parsley-equalto-message="las contraseñas deben ser iguales"
                     />
+                    @foreach($errors->get('password') as $m)
+                        {{--<div style="text-align: center; color: red;">{{ $m }}</div>--}}
+                        <ul class="parsley-errors-list filled" id="parsley-id-8">
+                            <li class="parsley-type">{{ $m }}</li>
+                        </ul>
+                    @endforeach
                     <span class="md-input-bar"> </span>
                 </div>
                 <div class="uk-form-row">
@@ -251,6 +266,8 @@
     </div>
 </div>
 
+{{--{{ dd($errors) }}--}}
+
 <!-- common functions -->
 {!! HTML::script('assets/js/common.min.js') !!}
         <!-- altair core functions -->
@@ -272,10 +289,19 @@
     }else{
         console.log('no hay nada');
     }
+    var registro2 = '{{$registro}}';
+    if (registro2) {
+        console.log('fallo el registro regreso a registro');
+        console.log(registro2);
+        $("#registro").hide();
+        $("#login_form").hide();
+        $("#create").show();
+        $("#register_form").show();
+    }
 
     altair_forms.parsley_validation_config();
     //        llamada al parsley
-    //        $('#form_validation2').parsley();
+//            $('#form_validation2').parsley();
 </script>
 
 

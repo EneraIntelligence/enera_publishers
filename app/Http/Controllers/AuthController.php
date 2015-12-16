@@ -63,31 +63,25 @@ class AuthController extends Controller
         $validator = Validator::make(Input::all(), [
 //            'nombre' => array('regex:[^[a-zA-Z]+$|\s*[a-zA-Z]$]'),
             'nombre' => array('regex:[^([a-z ñáéíóú]{2,60})$]'),
-//            'apellido' => 'required|max:50|alpha_num',
+            'apellido' => array('regex:[^([a-z ñáéíóú]{2,60})$]'),
             'email' => 'required|email|max:250',
             'password' => 'required|alpha_num|min:8|max:16',
 //            'estado' => 'required|max:250|alpha',
 //            'ciudad' => 'required|max:250|alpha'
         ]);
+/**     despues de las validaciones    **/
         if ($validator->passes()) {
-            echo 'estan bien <br>';
-//            dd($validator);
-            $password = Hash::make(Input::get('password'));
+            $password = Hash::make(Input::get('password')); //encrypta la contraseña
 //            dd($password);
+//  consulta que guarda el documento en mongo
             Administrator::create(array('name' => ['first' => Input::get('nombre'), 'last' => Input::get('apellido')],
                 'email' => Input::get('email'), 'password' => $password,
 //                'location'=>['country'=>'mexico','state'=>Input::get('estado'),'city'=>Input::get('ciudad')],
                 'rol_id' => 'usuario', 'status' => 'block'
             ));
-            echo 'se guardo';
+//            echo 'se guardo';
             return redirect()->route('auth.index')->with('success', 'registro-success');
-
-            /*Administrator::$user = new User;
-            $user->name = 'John';
-            $user->save();*/
-//            dd($validator);
         } else {
-//            dd($validator);
             return redirect()->route('auth.index')->withErrors($validator);
         }
         /*echo Input::get('register_name');
