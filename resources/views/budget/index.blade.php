@@ -9,6 +9,9 @@
         .budget:hover {
             background-color: #90caf9;
         }
+        .border-bottom{
+            margin-bottom: 10px;
+        }
     </style>
 @stop
 @section('content')
@@ -16,7 +19,7 @@
         <div id="page_content_inner" style="padding-bottom: 20px;">
             <div class="uk-grid">
                 <div class="uk-width-medium-1-3 uk-visible-small">
-                    <div style="">
+                    <div style="margin: 10px 0 20px 0;">
                         <h4 class="heading_a uk-margin-bottom">Información de presupuestos</h4>
                         <div class="md-card">
                             <div class="md-card-content">
@@ -52,7 +55,8 @@
                                     </tfoot>
                                     <tbody>
                                     <tr class="budget">
-                                        <td class="mov">
+                                        <td class="mov" data-uk-tooltip="{cls:'long-text'}"
+                                            title="Aumento de fondos">
                                             <i class="material-icons md-36 uk-text-success">trending_up</i>
                                         </td>
                                         <td class="mov">#345q345</td>
@@ -83,7 +87,8 @@
                                         <td class="mov" id="">0</td>
                                     </tr>
                                     <tr class="budget">
-                                        <td class="mov">
+                                        <td class="mov" data-uk-tooltip="{cls:'long-text'}"
+                                            title="Disminución de fondos">
                                             <i class="material-icons md-36 uk-text-danger">trending_down</i>
                                         </td>
                                         <td class="mov">#345q345</td>
@@ -107,13 +112,13 @@
                         <h4 class="heading_a uk-margin-bottom">Información de presupuestos</h4>
                         <div class="md-card">
                             <div class="md-card-content">
-                                <span class="uk-text-muted uk-text-small">Balance Actual</span>
-                                <h2 class="uk-margin-remove uk-text-center" id="myTargetElement2">23</h2>
-                                <span class="uk-text-muted uk-text-small">Agregar fondos</span>
+                                <span class="uk-text-small" >Balance Actual</span>
+                                <h2 class="uk-text-center" id="myTargetElement2" style="margin: 10px;">23</h2>
+                                <span class="uk-text-small border-bottom" style="margin: 10px;">Agregar fondos</span>
                                 <div class="uk-width-medium-1 uk-text-center">
-                                    <a class="md-btn md-btn-primary" href="#">Paypal</a>
+                                    <a class="md-btn md-btn-primary" href="#" style="margin: 10px;">Paypal</a>
                                 </div>
-                                <span class="uk-text-muted uk-text-small">Fondos Camapañas Activas</span>
+                                <span class=" uk-text-small">Fondos Camapañas Activas</span>
                                 <div class="uk-width-large-1 uk-width-medium-1 uk-grid-margin">
                                     <ul class="md-list md-list-addon">
                                         <li>
