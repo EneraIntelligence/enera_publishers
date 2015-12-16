@@ -57,7 +57,7 @@ return [
     ],
     'not_in'               => 'The selected :attribute is invalid.',
     'numeric'              => ' :attribute Solo acepta numeros.',
-    'regex'                => ' :attribute tiene un  patron incorrecto.',
+    'regex'                => ' :attribute solo debe tener letras y espacios.',
 
     'required'             => ':attribute es un campo requerido.',
     'required_if'          => 'The :attribute field is required when :other is :value.',

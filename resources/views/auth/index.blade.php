@@ -153,51 +153,44 @@
             @endif--}}
             {{--{{ var_dump($errors)  }}--}}
 
-            <div class="uk-form-row">
+            <div class="uk-form-row {{ $errors->get('nombre')? 'md-input-wrapper-danger md-input-focus':' '}}">
                 <label for="register_name">Nombre </label>
                 <input class="md-input" type="text" id="register_name" name="nombre"
-                       data-parsley-trigger="change"
+                       data-parsley-trigger="change" data-parsley-required-message="nombre"
                        data-parsley-maxlength="16" data-parsley-maxlength-message="maximo 16 caracteres"
-                       data-parsley-required-message="nombre"
+                       data-parsley-pattern="^([a-zA-Z ñáéíóú]{2,60})$" data-parsley-pattern-message="solo acepta letras y espacios"
                 />
                 @foreach($errors->get('nombre') as $m)
-                    {{--<div style="text-align: center; color: red;">{{ $m }}</div>--}}
-                    <ul class="parsley-errors-list filled" id="parsley-id-8">
-                        <li class="parsley-type">{{ $m }}</li>
-                    </ul>
+                    <div style="text-align: center; color: red;">{{ $m }}</div>
                 @endforeach
                 <span class="md-input-bar"> </span>
             </div>
-            <div class="uk-form-row">
+            <div class="uk-form-row {{ $errors->get('apellido')? 'md-input-wrapper-danger md-input-focus':' '}}">
                 <label for="register_apellido">Apellido </label>
                 <input class="md-input" type="text" id="register_apellido" name="apellido"
                        required data-parsley-trigger="change"
                        data-parsley-maxlength="16" data-parsley-maxlength-message="maximo 16 caracteres"
                        data-parsley-required-message="apellido"
+                       data-parsley-pattern="^([a-zA-Z ñáéíóú]{2,60})$" data-parsley-pattern-message="solo acepta letras y espacios"
                 />
                 @foreach($errors->get('apellido') as $m)
-                    {{--<div style="text-align: center; color: red;">{{ $m }}</div>--}}
-                    <ul class="parsley-errors-list filled" id="parsley-id-8">
-                        <li class="parsley-type">{{ $m }}</li>
-                    </ul>
+                    <div style="text-align: center; color: red;">{{ $m }}</div>
                 @endforeach
                 <span class="md-input-bar"> </span>
             </div>
-                <div class="uk-form-row">
+                <div class="uk-form-row {{ $errors->get('email')? 'md-input-wrapper-danger md-input-focus':' '}}">
                     <label for="register_email">E-mail </label>
-                    <input data-parsley-type="email" id="register_email" name="email" required
+                    <input class="md-input" data-parsley-type="email" id="register_email" name="email" required
                            data-parsley-trigger="change" class="md-input"
                            data-parsley-type-message="ingresa un correo valido"
                            data-parsley-required-message="Ingresa tu correo"/>
                     @foreach($errors->get('email') as $m)
-                        {{--<div style="text-align: center; color: red;">{{ $m }}</div>--}}
-                        <ul class="parsley-errors-list filled" id="parsley-id-8">
-                            <li class="parsley-type">{{ $m }}</li>
-                        </ul>
+                        <div style="text-align: center; color: red;">{{ $m }}</div>
+                        <span id="Rerror" class="md-input-bar"> </span>
                     @endforeach
-                    <span class="md-input-bar"> </span>
+
                 </div>
-                <div class="uk-form-row">
+                <div class="uk-form-row {{ $errors->get('password')? 'md-input-wrapper-danger md-input-focus':' '}}" >
                     <label for="register_password">Contraseña </label>
                     <input class="md-input" type="password" id="register_password" name="password" required
                            data-parsley-trigger="change"
@@ -208,14 +201,11 @@
                            data-parsley-equalto="#register_password_repeat" data-parsley-equalto-message="las contraseñas deben ser iguales"
                     />
                     @foreach($errors->get('password') as $m)
-                        {{--<div style="text-align: center; color: red;">{{ $m }}</div>--}}
-                        <ul class="parsley-errors-list filled" id="parsley-id-8">
-                            <li class="parsley-type">{{ $m }}</li>
-                        </ul>
+                        <div style="text-align: center; color: red;">{{ $m }}</div>
+                        <span id="Rerror" class="md-input-bar" style="background: red"> </span>
                     @endforeach
-                    <span class="md-input-bar"> </span>
                 </div>
-                <div class="uk-form-row">
+                <div class="uk-form-row {{ $errors->get('password')? 'md-input-wrapper-danger md-input-focus':' '}}">
                     <label for="register_password_repeat">Confirmar Contraseña</label>
                     <input class="md-input" type="password" id="register_password_repeat" name="confirma_contraseña"
                            required data-parsley-trigger="change"
@@ -225,6 +215,11 @@
                            data-parsley-required-message="se requiere de una contraseña"
                            data-parsley-equalto="#register_password" data-parsley-equalto-message="las contraseñas deben ser iguales"
                     />
+                    @foreach($errors->get('password') as $m)
+                        <div style="text-align: center; color: red;">{{ $m }}</div>
+                        <span class="md-input-bar"> </span>
+                    @endforeach
+
                 </div>
             {{--<div class="uk-form-row">
                 <label for="register_password_repeat">Estado</label>
@@ -297,11 +292,12 @@
         $("#login_form").hide();
         $("#create").show();
         $("#register_form").show();
+//        $("#Rerror").show();
     }
 
     altair_forms.parsley_validation_config();
     //        llamada al parsley
-//            $('#form_validation2').parsley();
+            $('#form_validation2').parsley();
 </script>
 
 
