@@ -76,12 +76,12 @@
 
     <div class="md-fab-wrapper md-fab-speed-dial" id="fab-create">
 
-        <a class="md-fab md-fab-primary" href="#">
+        <a class="md-fab md-fab-danger" href="#">
             <i id="fab-open" class="material-icons"></i>
         </a>
         <div class="md-fab-wrapper-small">
 
-            <a class="md-fab md-fab-small md-fab-danger" id="note_add" > <i class="uk-icon-plus-circle"></i>  </a>
+            <a class="md-fab md-fab-small md-fab-primary" id="note_add" > <i class="material-icons">event</i>  </a>
             <a class="md-fab md-fab-small md-fab-success" href="#"> <i class="uk-icon-usd"></i> </a>
         </div>
 
