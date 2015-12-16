@@ -3,6 +3,7 @@
 if (typeof UIkit !== 'undefined') {
     UIkit.on('beforeready.uk.dom', function () {
 
+        // accrodion
         if (typeof UIkit.components.accordion !== "undefined") { // check if accordion component is defined
             $.extend(UIkit.components.accordion.prototype.defaults, {
                 easing: $.bez(easing_swiftOut),
@@ -10,7 +11,8 @@ if (typeof UIkit !== 'undefined') {
             });
         }
 
-        if (typeof UIkit.components.dropdown.prototype !== "undefined") { // check if tooltip component is defined
+        // dropdown
+        if (typeof UIkit.components.dropdown.prototype !== "undefined") { // check if dropdown component is defined
 
             $.extend(UIkit.components.dropdown.prototype.defaults, {
                 remaintime: 150,
@@ -28,9 +30,7 @@ if (typeof UIkit !== 'undefined') {
                         })
                         .addClass('uk-dropdown-active uk-dropdown-shown');
 
-                    var show_function = old_show_function.apply(this, arguments);
-
-                    return show_function;
+                    return old_show_function.apply(this, arguments);
                 }
             })();
 
@@ -41,22 +41,19 @@ if (typeof UIkit !== 'undefined') {
 
                     var this_dropdown = this.dropdown;
 
-                    this_dropdown
-                        .removeClass('uk-dropdown-shown');
+                    this_dropdown.removeClass('uk-dropdown-shown');
 
                     var dropdown_timeout = setTimeout(function() {
-                        this_dropdown
-                            .removeClass('uk-dropdown-active')
+                        this_dropdown.removeClass('uk-dropdown-active')
                     },280);
 
-                    var hide_function = old_hide_function.apply(this, arguments);
-
-                    return hide_function;
+                    return old_hide_function.apply(this, arguments);
                 }
             })();
 
         }
 
+        // modal
         if (typeof UIkit.components.modal !== "undefined") { // check if modal component is defined
             $.extend(UIkit.components.modal.prototype.defaults, {
                 center: true
@@ -92,13 +89,15 @@ if (typeof UIkit !== 'undefined') {
                 });
         }
 
+        // tooltip
         if (typeof UIkit.components.tooltip !== "undefined") { // check if tooltip component is defined
             $.extend(UIkit.components.tooltip.prototype.defaults, {
-                animation: true,
+                animation: 280,
                 offset: 8
             });
         }
 
+        // sortable
         if (typeof UIkit.components.sortable !== "undefined") { // check if sortable component is defined
             if(Modernizr.touch) {
                 $('[data-uk-sortable]').children().addClass('needsclick');

@@ -1,17 +1,17 @@
 $(function() {
-    // make table cell focusable
-    var $focus_highlight = $('.focus-highlight');
-    if ( $focus_highlight.length ) {
-        $focus_highlight
-            .find('td, th')
-            .attr('tabindex', '1')
-            .on('touchstart', function() {
-                $(this).focus();
-            });
-    }
 
-    // disable fastclick on table headers (touch devices)
     if(Modernizr.touch) {
+        // make table cell focusable
+        var $focus_highlight = $('.focus-highlight');
+        if ( $focus_highlight.length ) {
+            $focus_highlight
+                .find('td, th')
+                .attr('tabindex', '1')
+                .on('touchstart', function() {
+                    $(this).focus();
+                });
+        }
+        // disable fastclick on table headers (touch devices)
         $('.tablesorter').find('th').addClass('needsclick');
     }
 

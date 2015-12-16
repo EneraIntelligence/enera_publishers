@@ -10,30 +10,27 @@ altair_form_file_upload = {
         var progressbar = $("#file_upload-progressbar"),
             bar         = progressbar.find('.uk-progress-bar'),
             settings    = {
-
-                action: '/', // upload url
-
-                allow : '*.(jpg|jpeg|gif|png)', // allow only images
-
+                action: '/', // Target url for the upload
+                allow : '*.(jpg|jpeg|gif|png)', // File filter
                 loadstart: function() {
                     bar.css("width", "0%").text("0%");
                     progressbar.removeClass("uk-hidden");
                 },
-
                 progress: function(percent) {
                     percent = Math.ceil(percent);
                     bar.css("width", percent+"%").text(percent+"%");
                 },
-
-                allcomplete: function(response) {
-
+                allcomplete: function(response,xhr) {
                     bar.css("width", "100%").text("100%");
-
                     setTimeout(function(){
                         progressbar.addClass("uk-hidden");
                     }, 250);
-
-                    alert("Upload Completed")
+                    setTimeout(function() {
+                        UIkit.notify({
+                            message: "Upload Completed",
+                            pos: 'top-right'
+                        });
+                    },280);
                 }
             };
 

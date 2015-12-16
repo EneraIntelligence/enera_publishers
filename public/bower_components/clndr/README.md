@@ -265,6 +265,7 @@ $('.parent-element').clndr({
   // always make the calendar six rows tall (42 days) so that every month has a
   // consistent height. defaults to 'false'.
   forceSixRows: null,
+
   // set this to true, if you want the plugin to track the last clicked day.
   // if trackSelectedDate is true, "selected" class will always be applied only
   // to the most recently clicked date; otherwise - selectedDate will not change.
@@ -273,6 +274,9 @@ $('.parent-element').clndr({
   // plugin init.
   // defualts to null - no initially selected date
   selectedDate: null,
+  // Set this to true if you don't want `inactive` dates to be selectable.
+  // This will only matter if you are using the `constraints` option.
+  ignoreInactiveDaysInSelection: null,
 
   // CLNDR can render in any time interval!
   // You can specify if you want to render one or more months, or one ore more
@@ -314,7 +318,10 @@ $('.parent-element').clndr({
   constraints: {
     startDate: '2017-12-22',
     endDate: '2018-01-09'
-  }
+  },
+
+  // optionally, you can pass a Moment instance to use instead of the global
+  moment: null
 });
 ```
 
@@ -630,6 +637,18 @@ Todo
 
 Changelog
 =========
+`v1.3.4 ~ 2015-11-05`: Fixed a bug where calling `destroy` and reinstantiating a clndr on the same element would not bind new click handlers.
+
+`v1.3.3 ~ 2015-10-22`: Adds `ignoreInactiveDaysInSelection` option for disabling selection of inactive dates when using both `trackSelectedDates` and `constraints`.
+
+`v1.3.2 ~ 2015-10-21`: Adding moment instance as a config option to use instead of global moment object.
+
+`v1.3.1 ~ 2015-10-21`: Trailing comma removed to work in IE11.
+
+`v1.3.0 ~ 2015-10-13`: Adds destroy and get-instance methods.
+
+`v1.2.16 ~ 2015-08-18`: Resolves issue 200; nextMonth click event was firing previousMonth's event erroneously.
+
 `v1.2.15 ~ 2015-07-21`: Resolves issue 185; next and previous month not working correctly with today under certain configurations.
 
 `v1.2.14 ~ 2015-07-08`: Small typo fixed.

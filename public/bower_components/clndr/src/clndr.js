@@ -1,5 +1,5 @@
 /*
- *               ~ CLNDR v1.2.15 ~
+ *               ~ CLNDR v1.3.4 ~
  * ==============================================
  *       https://github.com/kylestetz/CLNDR
  * ==============================================
@@ -111,11 +111,13 @@
     forceSixRows: null,
     trackSelectedDate: false,
     selectedDate: null,
+    ignoreInactiveDaysInSelection: null,
     lengthOfTime: {
       months: null,
       days: null,
       interval: 1
-    }
+    },
+    moment: null
   };
 
   // The actual plugin constructor
@@ -124,6 +126,11 @@
 
     // merge the default options with user-provided options
     this.options = $.extend(true, {}, defaults, options);
+
+    // check if moment was passed in as a dependency
+    if(this.options.moment) {
+      moment = this.options.moment;
+    }
 
     // if there are events, we should run them through our addMomentObjectToEvents function
     // which will add a date object that we can use to make life easier. This is only necessary
@@ -415,7 +422,7 @@
     var properties = {
       isInactive: false,
       isAdjacentMonth: false,
-      isToday: false,
+      isToday: false
     };
     var extraClasses = "";
 
@@ -489,8 +496,12 @@
 
   Clndr.prototype.render = function() {
     // get rid of the previous set of calendar parts.
-    // TODO: figure out if this is the right way to ensure proper garbage collection?
-    this.calendarContainer.children().remove();
+    // this should handle garbage collection according to jQuery's docs:
+    // http://api.jquery.com/empty/
+    //  > To avoid memory leaks, jQuery removes other constructs such as
+    //  > data and event handlers from the child elements before removing
+    //  > the elements themselves.
+    this.calendarContainer.empty();
 
     var data = {};
 
@@ -627,6 +638,15 @@
       eventType = 'touchstart';
     }
 
+    // Make sure we don't already have events
+    $container.off( eventType +'.clndr', '.'+this.options.targets.day )
+      .off( eventType +'.clndr', '.'+this.options.targets.empty )
+      .off( eventType +'.clndr', '.'+this.options.targets.previousButton )
+      .off( eventType +'.clndr', '.'+this.options.targets.nextButton )
+      .off( eventType +'.clndr', '.'+this.options.targets.todayButton )
+      .off( eventType +'.clndr', '.'+this.options.targets.nextYearButton )
+      .off( eventType +'.clndr', '.'+this.options.targets.previousYearButton );
+
     // target the day elements and give them click events
     $container.on(eventType +'.clndr', '.'+this.options.targets.day, function(event) {
       if(self.options.clickEvents.click) {
@@ -643,6 +663,9 @@
       }
       // if trackSelectedDate is on, we need to handle click on a new day
       if (self.options.trackSelectedDate) {
+        if(self.options.ignoreInactiveDaysInSelection && $(event.currentTarget).hasClass('inactive')) {
+          return;
+        }
         // remember new selected date
         self.options.selectedDate = self.getTargetDateString(event.currentTarget);
 
@@ -823,8 +846,8 @@
     self.render();
 
     if(!self.options.lengthOfTime.days && !self.options.lengthOfTime.months) {
-      if(self.options.clickEvents.previousMonth) {
-        self.options.clickEvents.previousMonth.apply( self, [moment(self.month)] );
+      if(self.options.clickEvents.nextMonth) {
+        self.options.clickEvents.nextMonth.apply( self, [moment(self.month)] );
       }
       if(self.options.clickEvents.onMonthChange) {
         self.options.clickEvents.onMonthChange.apply( self, [moment(self.month)] );
@@ -940,7 +963,6 @@
     var self = event.data.context;
     // before we do anything, check if there is an inactive class on the month control.
     // if it does, we want to return and take no action.
-    console.log(self.element.find('.' + self.options.targets.previousYear));
     if(self.element.find('.' + self.options.targets.previousYearButton).hasClass('inactive')) {
       return;
     }
@@ -1206,6 +1228,14 @@
     return $.extend({}, defaults, options);
   }
 
+  Clndr.prototype.destroy = function() {
+    var $container = $( this.calendarContainer );
+    $container.parent().data( 'plugin_clndr', null );
+    this.options = defaults;
+    $container.empty().remove();
+    this.element = null;
+  };
+
   $.fn.clndr = function(options) {
     if(this.length === 1) {
       if(!this.data('plugin_clndr')) {
@@ -1213,6 +1243,7 @@
         this.data('plugin_clndr', clndr_instance);
         return clndr_instance;
       }
+      return this.data('plugin_clndr');
     } else if(this.length > 1) {
       throw new Error("CLNDR does not support multiple elements yet. Make sure your clndr selector returns only one element.");
     }
