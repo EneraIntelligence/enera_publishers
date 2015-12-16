@@ -3,6 +3,17 @@ $(function() {
 
     // page onload functions
 
+    $("#note_add").click(function( event ) {
+        event.stopPropagation();
+        new_campaign.prompt();
+
+        $("#fab-create").removeClass("md-fab-active");
+        $("#fab-open").css("display","block");
+        $(".md-fab-action-close").css("display","none");
+    });
+
+    //$("#fab-create").open();
+
 
 });
 
