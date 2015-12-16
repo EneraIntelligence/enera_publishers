@@ -153,31 +153,32 @@
             @endif--}}
             {{--{{ var_dump($errors)  }}--}}
 
-            <div class="uk-form-row {{ $errors->get('password')? 'md-input-wrapper-danger md-input-focus':' '}}">
+            <div class="uk-form-row {{ $errors->get('nombre')? 'md-input-wrapper-danger md-input-focus':' '}}">
                 <label for="register_name">Nombre </label>
                 <input class="md-input" type="text" id="register_name" name="nombre"
-                       data-parsley-trigger="change"
+                       data-parsley-trigger="change" data-parsley-required-message="nombre"
                        data-parsley-maxlength="16" data-parsley-maxlength-message="maximo 16 caracteres"
-                       data-parsley-required-message="nombre"
+                       data-parsley-pattern="^([a-zA-Z ñáéíóú]{2,60})$" data-parsley-pattern-message="solo acepta letras y espacios"
                 />
                 @foreach($errors->get('nombre') as $m)
                     <div style="text-align: center; color: red;">{{ $m }}</div>
                 @endforeach
                 <span class="md-input-bar"> </span>
             </div>
-            <div class="uk-form-row {{ $errors->get('password')? 'md-input-wrapper-danger md-input-focus':' '}}">
+            <div class="uk-form-row {{ $errors->get('apellido')? 'md-input-wrapper-danger md-input-focus':' '}}">
                 <label for="register_apellido">Apellido </label>
                 <input class="md-input" type="text" id="register_apellido" name="apellido"
                        required data-parsley-trigger="change"
                        data-parsley-maxlength="16" data-parsley-maxlength-message="maximo 16 caracteres"
                        data-parsley-required-message="apellido"
+                       data-parsley-pattern="^([a-zA-Z ñáéíóú]{2,60})$" data-parsley-pattern-message="solo acepta letras y espacios"
                 />
                 @foreach($errors->get('apellido') as $m)
                     <div style="text-align: center; color: red;">{{ $m }}</div>
                 @endforeach
                 <span class="md-input-bar"> </span>
             </div>
-                <div class="uk-form-row {{ $errors->get('password')? 'md-input-wrapper-danger md-input-focus':' '}}">
+                <div class="uk-form-row {{ $errors->get('email')? 'md-input-wrapper-danger md-input-focus':' '}}">
                     <label for="register_email">E-mail </label>
                     <input class="md-input" data-parsley-type="email" id="register_email" name="email" required
                            data-parsley-trigger="change" class="md-input"
