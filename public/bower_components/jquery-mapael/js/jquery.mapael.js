@@ -3,7 +3,7 @@
 * Jquery Mapael - Dynamic maps jQuery plugin (based on raphael.js)
 * Requires jQuery and raphael.js
 *
-* Version: 1.0.1
+* Version: 1.1.0
 *
 * Copyright (c) 2015 Vincent Brouté (http://www.vincentbroute.fr/mapael)
 * Licensed under the MIT license (http://www.opensource.org/licenses/mit-license.php).
@@ -13,6 +13,7 @@
 
 	"use strict";
 	
+
 	$.fn.mapael = function(options) {
 	
 		// Extend legend default options with user options
@@ -30,16 +31,20 @@
 		return this.each(function() {
 		
 			var $self = $(this)
-				, $tooltip = $("<div>").addClass(options.map.tooltip.cssClass).css("display", "none")
-				, $container = $("." + options.map.cssClass, this).empty().append($tooltip)
+				, $container = $("." + options.map.cssClass, this).empty()
+				, $tooltip = $("<div>").addClass(options.map.tooltip.cssClass).css("display", "none").appendTo(options.map.tooltip.target || $container)
 				, mapConf = $.fn.mapael.maps[options.map.name]
 				, paper = new Raphael($container[0], mapConf.width, mapConf.height)
 				, elemOptions = {}
 				, resizeTO = 0
 				, areas = {}
 				, plots = {}
+				, links = {}
 				, legends = []
-				, id = 0;
+				, id = 0
+				, zoomCenterX = 0
+				, zoomCenterY = 0
+				, previousPinchDist = 0;
 			
 			options.map.tooltip.css && $tooltip.css(options.map.tooltip.css);
 			paper.setViewBox(0, 0, mapConf.width, mapConf.height, false);
@@ -53,6 +58,9 @@
 				);
 				areas[id] = {"mapElem" : paper.path(mapConf.elems[id]).attr(elemOptions.attrs)};
 			}
+
+			// Hook that allows to add custom processing on the map
+			options.map.beforeInit && options.map.beforeInit($self, paper, options);
 			
 			// Init map areas in a second loop (prevent texts to be hidden by map elements)
 			for (id in mapConf.elems) {
@@ -63,15 +71,15 @@
 				);
 				$.fn.mapael.initElem(paper, areas[id], elemOptions, $tooltip, id);
 			}
-			
+
 			// Draw links
-			$.fn.mapael.drawLinksCollection(paper, options, mapConf.getCoords, $tooltip);
-			
+			links = $.fn.mapael.drawLinksCollection(paper, options, options.links, mapConf.getCoords, $tooltip);
+
 			// Draw plots
 			for (id in options.plots) {
 				plots[id] = $.fn.mapael.drawPlot(id, options, mapConf, paper, $tooltip);
 			}
-			
+
 			/**
 			* Zoom on the map at a specific level focused on specific coordinates
 			* If no coordinates are specified, the zoom will be focused on the center of the map
@@ -102,26 +110,32 @@
 
 				if (typeof zoomOptions.y == "undefined")
 					zoomOptions.y = (paper._viewBox[1] + paper._viewBox[3] / 2);
-				
-				// Update zoom level of the map
+
 				if (newLevel == 0) {
-					paper.setViewBox(panX, panY, mapConf.width, mapConf.height);
+					panX = 0;
+					panY = 0;
+				} else if (typeof zoomOptions.fixedCenter != 'undefined' && zoomOptions.fixedCenter == true) {
+					offsetX = $self.data("panX") + ((zoomOptions.x - $self.data("panX")) * (zoomLevel - previousZoomLevel)) / zoomLevel;
+					offsetY = $self.data("panY") + ((zoomOptions.y - $self.data("panY")) * (zoomLevel - previousZoomLevel)) / zoomLevel;
+				
+					panX = Math.min(Math.max(0, offsetX), (mapConf.width - (mapConf.width / zoomLevel)));
+					panY = Math.min(Math.max(0, offsetY), (mapConf.height - (mapConf.height / zoomLevel)));
 				} else {
-					if (typeof zoomOptions.fixedCenter != 'undefined' && zoomOptions.fixedCenter == true) {
-						if (zoomLevel == previousZoomLevel) return;
-						
-						offsetX = $self.data("panX") + ((zoomOptions.x - $self.data("panX")) * (zoomLevel - previousZoomLevel)) / zoomLevel;
-						offsetY = $self.data("panY") + ((zoomOptions.y - $self.data("panY")) * (zoomLevel - previousZoomLevel)) / zoomLevel;
-					
-						panX = Math.min(Math.max(0, offsetX), (mapConf.width - (mapConf.width / zoomLevel)));
-						panY = Math.min(Math.max(0, offsetY), (mapConf.height - (mapConf.height / zoomLevel)));
-					} else {
-						panX = Math.min(Math.max(0, zoomOptions.x - (mapConf.width / zoomLevel)/2), (mapConf.width - (mapConf.width / zoomLevel)));
-						panY = Math.min(Math.max(0, zoomOptions.y - (mapConf.height / zoomLevel)/2), (mapConf.height - (mapConf.height / zoomLevel)));
-					}
-					
-					paper.setViewBox(panX, panY, mapConf.width / zoomLevel, mapConf.height / zoomLevel);
+					panX = Math.min(Math.max(0, zoomOptions.x - (mapConf.width / zoomLevel)/2), (mapConf.width - (mapConf.width / zoomLevel)));
+					panY = Math.min(Math.max(0, zoomOptions.y - (mapConf.height / zoomLevel)/2), (mapConf.height - (mapConf.height / zoomLevel)));
 				}
+
+				// Update zoom level of the map
+				if (zoomLevel == previousZoomLevel && panX == $self.data('panX') && panY == $self.data('panY')) return;
+
+				if (options.map.zoom.animDuration > 0) {
+					$.fn.mapael.animateViewBox($container, paper, panX, panY, mapConf.width / zoomLevel, mapConf.height / zoomLevel, options.map.zoom.animDuration, options.map.zoom.animEasing);
+				} else {
+					paper.setViewBox(panX, panY, mapConf.width / zoomLevel, mapConf.height / zoomLevel);
+					clearTimeout($.fn.mapael.zoomTO);
+					$.fn.mapael.zoomTO = setTimeout(function(){$container.trigger("afterZoom", {x1 : panX, y1 : panY, x2 : (panX+(mapConf.width / zoomLevel)), y2 : (panY+(mapConf.height / zoomLevel))});}, 150);
+				}
+
 				$self.data({"zoomLevel" : newLevel, "panX" : panX, "panY" : panY, "zoomX" : zoomOptions.x, "zoomY" : zoomOptions.y});
 			});
 			
@@ -135,12 +149,44 @@
 					, zoomFactor = 1 / (1 + ($self.data("zoomLevel")) * options.map.zoom.step)
 					, x = zoomFactor * initFactor * (e.clientX + $(window).scrollLeft() - offset.left) + $self.data("panX")
 					, y = zoomFactor * initFactor * (e.clientY + $(window).scrollTop() - offset.top) + $self.data("panY");
-					
-				$self.trigger("zoom", {fixedCenter : true, "level" : $self.data("zoomLevel") + zoomLevel, "x" : x, "y" : y});
+
+				$self.trigger("zoom", {"fixedCenter" : true, "level" : $self.data("zoomLevel") + zoomLevel, "x" : x, "y" : y});
 					
 				return false;
 			});
-			
+
+			/**
+			* Update the zoom level of the map on touch pinch
+			*/
+			options.map.zoom.enabled && options.map.zoom.touch && $self.on("touchstart", function(e) {
+				if (e.originalEvent.touches.length === 2) {
+					zoomCenterX = (e.originalEvent.touches[0].clientX + e.originalEvent.touches[1].clientX) / 2;
+					zoomCenterY = (e.originalEvent.touches[0].clientY + e.originalEvent.touches[1].clientY) / 2;
+					previousPinchDist = Math.sqrt(Math.pow((e.originalEvent.touches[1].clientX - e.originalEvent.touches[0].clientX), 2) + Math.pow((e.originalEvent.touches[1].clientY - e.originalEvent.touches[0].clientY), 2));
+				}
+			});
+
+			options.map.zoom.enabled && options.map.zoom.touch && $self.on("touchmove", function(e) {
+				var offset = 0, initFactor = 0, zoomFactor = 0, x = 0, y = 0, pinchDist = 0, zoomLevel = 0;
+
+				if (e.originalEvent.touches.length === 2) {
+					pinchDist = Math.sqrt(Math.pow((e.originalEvent.touches[1].clientX - e.originalEvent.touches[0].clientX), 2) + Math.pow((e.originalEvent.touches[1].clientY - e.originalEvent.touches[0].clientY), 2));
+
+					if (Math.abs(pinchDist - previousPinchDist) > 15) {
+						offset = $container.offset();
+						initFactor = (options.map.width) ? ($.fn.mapael.maps[options.map.name].width / options.map.width) : ($.fn.mapael.maps[options.map.name].width / $container.width());
+						zoomFactor = 1 / (1 + ($self.data("zoomLevel")) * options.map.zoom.step);
+						x = zoomFactor * initFactor * (zoomCenterX + $(window).scrollLeft() - offset.left) + $self.data("panX");
+						y = zoomFactor * initFactor * (zoomCenterY + $(window).scrollTop() - offset.top) + $self.data("panY");
+
+						zoomLevel = (pinchDist - previousPinchDist) / Math.abs(pinchDist - previousPinchDist);
+						$self.trigger("zoom", {"fixedCenter" : true, "level" : $self.data("zoomLevel") + zoomLevel, "x" : x, "y" : y});
+						previousPinchDist = pinchDist;
+					}
+					return false;
+				}
+			});
+
 			// Enable zoom
 			if (options.map.zoom.enabled)
 				$.fn.mapael.initZoom($container, paper, mapConf.width, mapConf.height, options.map.zoom);
@@ -164,7 +210,10 @@
 			*  opt.animDuration animation duration in ms (default = 0)
 			*  opt.resetAreas true to reset previous areas options
 			*  opt.resetPlots true to reset previous plots options
+			*  opt.resetLinks true to reset previous links options
 			*  opt.afterUpdate Hook that allows to add custom processing on the map
+			*  opt.newLinks new links to add to the map
+			*  opt.deletedLinks links to remove from the map
 			*/
 			$self.on("update", function(e, updatedOptions, newPlots, deletedPlots, opt) {
 				var i = 0
@@ -184,11 +233,12 @@
 				if (typeof opt != "undefined") {
 					(opt.resetAreas) && (options.areas = {});
 					(opt.resetPlots) && (options.plots = {});
+					(opt.resetLinks) && (options.links = {});
 					(opt.animDuration) && (animDuration = opt.animDuration);
 				}
 				
 				$.extend(true, options, updatedOptions);
-				
+
 				// Delete plots
 				if (typeof deletedPlots == "object") {
 					for (;i < deletedPlots.length; i++) {
@@ -210,6 +260,28 @@
 						}
 					}
 				}
+
+				// Delete links
+				if (typeof opt != "undefined" && typeof opt.deletedLinks == "object") {
+					for (i = 0;i < opt.deletedLinks.length; i++) {
+						if (typeof links[opt.deletedLinks[i]] != "undefined") {
+							if (animDuration > 0) {
+								(function(plot) {
+									plot.mapElem.animate({"opacity":0}, animDuration, "linear", function() {plot.mapElem.remove();});
+									if (plot.textElem) {
+										plot.textElem.animate({"opacity":0}, animDuration, "linear", function() {plot.textElem.remove();});
+									}
+								})(links[opt.deletedLinks[i]]);
+							} else {
+								links[opt.deletedLinks[i]].mapElem.remove();
+								if (links[opt.deletedLinks[i]].textElem) {
+									links[opt.deletedLinks[i]].textElem.remove();
+								}
+							}
+							delete links[opt.deletedLinks[i]];
+						}
+					}
+				}
 				
 				// New plots
 				if (typeof newPlots == "object") {
@@ -219,14 +291,34 @@
 							plots[id] = $.fn.mapael.drawPlot(id, options, mapConf, paper, $tooltip);
 							if (animDuration > 0) {
 								plots[id].mapElem.attr({opacity : 0});
-								plots[id].textElem.attr({opacity : 0});
 								plots[id].mapElem.animate({"opacity": (typeof plots[id].mapElem.originalAttrs.opacity != "undefined") ? plots[id].mapElem.originalAttrs.opacity : 1}, animDuration);
-								plots[id].textElem.animate({"opacity": (typeof plots[id].textElem.originalAttrs.opacity != "undefined") ? plots[id].textElem.originalAttrs.opacity : 1}, animDuration);
+								
+								if (plots[id].textElem) {
+									plots[id].textElem.attr({opacity : 0});
+									plots[id].textElem.animate({"opacity": (typeof plots[id].textElem.originalAttrs.opacity != "undefined") ? plots[id].textElem.originalAttrs.opacity : 1}, animDuration);
+								}
 							}
 						}
 					}
 				}
-				
+
+				// New links
+				if (typeof opt != "undefined" && typeof opt.newLinks == "object") {
+					var newLinks = $.fn.mapael.drawLinksCollection(paper, options, opt.newLinks, mapConf.getCoords, $tooltip);
+					$.extend(links);
+					if (animDuration > 0) {
+						for (id in newLinks) {
+							newLinks[id].mapElem.attr({opacity : 0});
+							newLinks[id].mapElem.animate({"opacity": (typeof newLinks[id].mapElem.originalAttrs.opacity != "undefined") ? newLinks[id].mapElem.originalAttrs.opacity : 1}, animDuration);
+
+							if (newLinks[id].textElem) {
+								newLinks[id].textElem.attr({opacity : 0});
+								newLinks[id].textElem.animate({"opacity": (typeof newLinks[id].textElem.originalAttrs.opacity != "undefined") ? newLinks[id].textElem.originalAttrs.opacity : 1}, animDuration);
+							}
+						}
+					}
+				}
+
 				// Update areas attributes and tooltips
 				for (id in areas) {
 					elemOptions = $.fn.mapael.getElemOptions(
@@ -251,6 +343,8 @@
 						elemOptions.attrs.x = plots[id].mapElem.attrs.x - (elemOptions.size - plots[id].mapElem.attrs.width) / 2;
 						elemOptions.attrs.y = plots[id].mapElem.attrs.y - (elemOptions.size - plots[id].mapElem.attrs.height) / 2;
 					} else if (elemOptions.type == "image") {
+						elemOptions.attrs.width = elemOptions.width;
+						elemOptions.attrs.height = elemOptions.height;
 						elemOptions.attrs.x = plots[id].mapElem.attrs.x - (elemOptions.width - plots[id].mapElem.attrs.width) / 2;
 						elemOptions.attrs.y = plots[id].mapElem.attrs.y - (elemOptions.height - plots[id].mapElem.attrs.height) / 2;
 					} else { // Default : circle
@@ -258,6 +352,17 @@
 					}
 					
 					$.fn.mapael.updateElem(elemOptions, plots[id], $tooltip, animDuration);
+				}
+
+				// Update links attributes and tooltips
+				for (id in links) {
+					elemOptions = $.fn.mapael.getElemOptions(
+						options.map.defaultLink
+						, (options.links[id] ? options.links[id] : {})
+						, {}
+					);
+					
+					$.fn.mapael.updateElem(elemOptions, links[id], $tooltip, animDuration);
 				}
 				
 				if(typeof opt != "undefined")
@@ -297,6 +402,8 @@
 			$(paper.desc).append(" and Mapael (http://www.vincentbroute.fr/mapael/)");
 		});
 	};
+
+	$.fn.mapael.zoomTO = 0;
 	
 	/**
 	* Init the element "elem" on the map (drawing, setting attributes, events, tooltip, ...)
@@ -317,21 +424,21 @@
 			options.text.attrs["text-anchor"] = textPosition.textAnchor;
 			elem.textElem = paper.text(textPosition.x, textPosition.y, options.text.content).attr(options.text.attrs);
 			$.fn.mapael.setHoverOptions(elem.textElem, options.text.attrs, options.text.attrsHover);
-			$.fn.mapael.setHover(paper, elem.mapElem, elem.textElem);
 			options.eventHandlers && $.fn.mapael.setEventHandlers(id, options, elem.mapElem, elem.textElem);
+			$.fn.mapael.setHover(paper, elem.mapElem, elem.textElem);
 			$(elem.textElem.node).attr("data-id", id);
 		} else {
-			$.fn.mapael.setHover(paper, elem.mapElem);
 			options.eventHandlers && $.fn.mapael.setEventHandlers(id, options, elem.mapElem);
+			$.fn.mapael.setHover(paper, elem.mapElem);
 		}
 		
 		// Init the tooltip
-		if (options.tooltip && options.tooltip.content) {
-			elem.mapElem.tooltipContent = options.tooltip.content;
+		if (options.tooltip) {
+			elem.mapElem.tooltip = options.tooltip;
 			$.fn.mapael.setTooltip(elem.mapElem, $tooltip);
 			
 			if (options.text && typeof options.text.content != "undefined") {
-				elem.textElem.tooltipContent = options.tooltip.content;
+				elem.textElem.tooltip = options.tooltip;
 				$.fn.mapael.setTooltip(elem.textElem, $tooltip);
 			}
 		}
@@ -355,43 +462,45 @@
 	/**
 	* Draw all links between plots on the paper
 	*/
-	$.fn.mapael.drawLinksCollection = function(paper, options, getCoords, $tooltip) {
+	$.fn.mapael.drawLinksCollection = function(paper, options, linksCollection, getCoords, $tooltip) {
 		var p1 = {}
 			, p2 = {}
 			, elemOptions = {}
 			, coordsP1 = {}
-			, coordsP2 ={};
-		
-		for (var id in options.links) {
-			elemOptions = $.fn.mapael.getElemOptions(options.map.defaultLink, options.links[id], {});
+			, coordsP2 ={}
+			, links = {};
+
+		for (var id in linksCollection) {
+			elemOptions = $.fn.mapael.getElemOptions(options.map.defaultLink, linksCollection[id], {});
 			
-			if (typeof options.links[id].between[0] == 'string') {
-				p1 = options.plots[options.links[id].between[0]];
+			if (typeof linksCollection[id].between[0] == 'string') {
+				p1 = options.plots[linksCollection[id].between[0]];
 			} else {
-				p1 = options.links[id].between[0];
+				p1 = linksCollection[id].between[0];
 			}
-			
-			if (typeof options.links[id].between[1] == 'string') {
-				p2 = options.plots[options.links[id].between[1]];
+
+			if (typeof linksCollection[id].between[1] == 'string') {
+				p2 = options.plots[linksCollection[id].between[1]];
 			} else {
-				p2 = options.links[id].between[1];
+				p2 = linksCollection[id].between[1];
 			}
-			
+
 			if (typeof p1.latitude != "undefined" && typeof p1.longitude != "undefined") {
 				coordsP1 = getCoords(p1.latitude, p1.longitude);
 			} else {
 				coordsP1.x = p1.x;
 				coordsP1.y = p1.y;
 			}
-		
+
 			if (typeof p2.latitude != "undefined" && typeof p2.longitude != "undefined") {
 				coordsP2 = getCoords(p2.latitude, p2.longitude);
 			} else {
 				coordsP2.x = p2.x;
 				coordsP2.y = p2.y;
 			}
-			$.fn.mapael.drawLink(id, paper, coordsP1.x, coordsP1.y, coordsP2.x, coordsP2.y, elemOptions, $tooltip);
+			links[id] = $.fn.mapael.drawLink(id, paper, coordsP1.x, coordsP1.y, coordsP2.x, coordsP2.y, elemOptions, $tooltip);
 		}
+		return links;
 	};
 	
 	/**
@@ -444,23 +553,31 @@
 	* Update the element "elem" on the map with the new elemOptions options
 	*/
 	$.fn.mapael.updateElem = function(elemOptions, elem, $tooltip, animDuration) {
-		var bbox, textPosition, plotOffset;
+		var bbox, textPosition, plotOffsetX, plotOffsetY;
 		if (typeof elemOptions.value != "undefined")
 			elem.value = elemOptions.value;
-		
+
 		// Update the label
 		if (elem.textElem) {
 			if (typeof elemOptions.text != "undefined" && typeof elemOptions.text.content != "undefined" && elemOptions.text.content != elem.textElem.attrs.text)
 				elem.textElem.attr({text : elemOptions.text.content});
 
 			bbox = elem.mapElem.getBBox();
-			if (elemOptions.size) {
-				plotOffset = (elemOptions.size - bbox.height) / 2;
-				bbox.x -= plotOffset;
-				bbox.x2 += plotOffset;
-				bbox.y -= plotOffset;
-				bbox.y2 += plotOffset;
+
+			if (elemOptions.size || (elemOptions.width && elemOptions.height)) {
+				if (elemOptions.type == "image" || elemOptions.type == "svg") {
+					plotOffsetX = (elemOptions.width - bbox.width) / 2;
+					plotOffsetY = (elemOptions.height - bbox.height) / 2;
+				} else {
+					plotOffsetX = (elemOptions.size - bbox.width) / 2;
+					plotOffsetY = (elemOptions.size - bbox.height) / 2;
+				}
+				bbox.x -= plotOffsetX;
+				bbox.x2 += plotOffsetX;
+				bbox.y -= plotOffsetY;
+				bbox.y2 += plotOffsetY;
 			}
+
 			textPosition = $.fn.mapael.getTextPosition(bbox, elemOptions.text.position, elemOptions.text.margin);
 			if (textPosition.x != elem.textElem.attrs.x || textPosition.y != elem.textElem.attrs.y) {
 				if (animDuration > 0) {
@@ -483,15 +600,20 @@
 			elem.mapElem.animate(elemOptions.attrs, animDuration);
 		else
 			elem.mapElem.attr(elemOptions.attrs);
-		
+
+		// Update dimensions of SVG plots
+		if (elemOptions.type == "svg") {
+			elem.mapElem.transform("m"+(elemOptions.width / elem.mapElem.originalWidth)+",0,0,"+(elemOptions.height / elem.mapElem.originalHeight)+","+bbox.x+","+bbox.y);
+		}
+
 		// Update the tooltip
-		if (elemOptions.tooltip && typeof elemOptions.tooltip.content != "undefined") {
-			if (typeof elem.mapElem.tooltipContent == "undefined") {
+		if (elemOptions.tooltip) {
+			if (typeof elem.mapElem.tooltip == "undefined") {
 				$.fn.mapael.setTooltip(elem.mapElem, $tooltip);
 				(elem.textElem) && $.fn.mapael.setTooltip(elem.textElem, $tooltip);
 			}
-			elem.mapElem.tooltipContent = elemOptions.tooltip.content;
-			(elem.textElem) && (elem.textElem.tooltipContent = elemOptions.tooltip.content);
+			elem.mapElem.tooltip = elemOptions.tooltip;
+			(elem.textElem) && (elem.textElem.tooltip = elemOptions.tooltip);
 		}
 		
 		// Update the link
@@ -543,12 +665,16 @@
 					, elemOptions.height
 				).attr(elemOptions.attrs)
 			};
+		} else if (elemOptions.type == "svg") {
+			plot = {"mapElem" : paper.path(elemOptions.path).attr(elemOptions.attrs)};
+			plot.mapElem.originalWidth = plot.mapElem.getBBox().width;
+			plot.mapElem.originalHeight = plot.mapElem.getBBox().height;
+			plot.mapElem.transform("m"+(elemOptions.width / plot.mapElem.originalWidth)+",0,0,"+(elemOptions.height / plot.mapElem.originalHeight)+","+(coords.x - elemOptions.width / 2)+","+(coords.y - elemOptions.height / 2));
 		} else { // Default = circle
 			plot = {"mapElem" : paper.circle(coords.x, coords.y, elemOptions.size / 2).attr(elemOptions.attrs)};
 		}
 		
 		$.fn.mapael.initElem(paper, plot, elemOptions, $tooltip, id);
-		
 		return plot;
 	};
 	
@@ -570,15 +696,24 @@
 	* @param content the content to set in the tooltip
 	*/
 	$.fn.mapael.setTooltip = function(elem, $tooltip) {
-		var tooltipTO = 0
-			, $container = $tooltip.parent()
-			, containerY2 = $container.offset().left + $container.width();
+		var tooltipTO = 0, $container = $tooltip.parent(), cssClass = $tooltip.attr('class');
 	
 		$(elem.node).on("mouseover", function(e) {
 			tooltipTO = setTimeout(
 				function() {
-					elem.tooltipContent && $tooltip.html(elem.tooltipContent).css("display", "block");
-					$tooltip.css({"left" : Math.min(containerY2 - $tooltip.outerWidth() - 5, e.pageX + 10 - $(window).scrollLeft()), "top" : e.pageY + 20 - $(window).scrollTop()});
+					$tooltip.attr("class", cssClass);
+					if (typeof elem.tooltip != "undefined") {
+						if (typeof elem.tooltip.content != "undefined") {
+							$tooltip.html(elem.tooltip.content).css("display", "block");
+						}
+						if (typeof elem.tooltip.cssClass != "undefined") {
+							$tooltip.addClass(elem.tooltip.cssClass);
+						} 
+					}
+					$tooltip.css({
+						"left" : Math.min($container.offset().left + $container.width() - $tooltip.outerWidth() - 5, e.pageX + 10) - $(window).scrollLeft(),
+						"top" : Math.min($container.offset().top + $container.height() - $tooltip.outerHeight() - 5, e.pageY + 20) - $(window).scrollTop()
+					});
 				}
 				, 120
 			);
@@ -586,7 +721,10 @@
 			clearTimeout(tooltipTO);
 			$tooltip.css("display", "none");
 		}).on("mousemove", function(e) {
-			$tooltip.css({"left" : Math.min(containerY2 - $tooltip.outerWidth() - 5, e.pageX + 10 - $(window).scrollLeft()), "top" : e.pageY + 20 - $(window).scrollTop()});
+			$tooltip.css({
+				"left" : Math.min($container.offset().left + $container.width() - $tooltip.outerWidth() - 5, e.pageX + 10) - $(window).scrollLeft(),
+				"top" : Math.min($container.offset().top + $container.height() - $tooltip.outerHeight() - 5 , e.pageY + 20)- $(window).scrollTop()
+			});
 		});
 	};
 	
@@ -607,6 +745,7 @@
 	};
 	
 	$.fn.mapael.panning = false;
+	$.fn.mapael.panningTO = 0;
 	
 	/**
 	* Init zoom and panning for the map
@@ -632,21 +771,43 @@
 		$zoomOut.on("click", function() {$parentContainer.trigger("zoom", {"level" : $parentContainer.data("zoomLevel") - 1});});
 		
 		// Panning
-		$("body").on("mouseup", function(e) {
+		$("body").on("mouseup" + (options.touch ? " touchend" : ""), function(e) {
 			mousedown = false;
 			setTimeout(function () {$.fn.mapael.panning = false;}, 50);
 		});
 		
-		$container.on("mousedown", function(e) {
-			mousedown = true;
-			previousX = e.pageX;
-			previousY = e.pageY;
-			return false;
-		}).on("mousemove", function(e) {
-			var currentLevel = $parentContainer.data("zoomLevel");
+		$container.on("mousedown" + (options.touch ? " touchstart" : ""), function(e) {
+			if (typeof e.pageX !== 'undefined') {
+				mousedown = true;
+				previousX = e.pageX;
+				previousY = e.pageY;
+			} else {
+				if (e.originalEvent.touches.length === 1) {
+					mousedown = true;
+					previousX = e.originalEvent.touches[0].pageX;
+					previousY = e.originalEvent.touches[0].pageY;
+				}
+			}
+		}).on("mousemove" + (options.touch ? " touchmove" : ""), function(e) {
+			var currentLevel = $parentContainer.data("zoomLevel")
+				, pageX = 0
+				, pageY = 0;
+
+			if (typeof e.pageX !== 'undefined') {
+				pageX = e.pageX;
+				pageY = e.pageY;
+			} else {
+				if (e.originalEvent.touches.length === 1) {
+					pageX = e.originalEvent.touches[0].pageX;
+					pageY = e.originalEvent.touches[0].pageY;
+				} else {
+					mousedown = false;
+				}
+			}
+
 			if (mousedown && currentLevel != 0) {
-				var offsetX = (previousX - e.pageX) / (1 + (currentLevel * options.step)) * (mapWidth / paper.width)
-					, offsetY = (previousY - e.pageY) / (1 + (currentLevel * options.step)) * (mapHeight / paper.height)
+				var offsetX = (previousX - pageX) / (1 + (currentLevel * options.step)) * (mapWidth / paper.width)
+					, offsetY = (previousY - pageY) / (1 + (currentLevel * options.step)) * (mapHeight / paper.height)
 					, panX = Math.min(Math.max(0, paper._viewBox[0] + offsetX), (mapWidth - paper._viewBox[2]))
 					, panY = Math.min(Math.max(0, paper._viewBox[1] + offsetY), (mapHeight - paper._viewBox[3]));					
 				
@@ -654,13 +815,16 @@
 					$parentContainer.data({"panX" : panX, "panY" : panY});
 					
 					paper.setViewBox(panX, panY, paper._viewBox[2], paper._viewBox[3]);
-					
-					previousX = e.pageX;
-					previousY = e.pageY;
+
+					clearTimeout($.fn.mapael.panningTO);
+					$.fn.mapael.panningTO = setTimeout(function(){$container.trigger("afterPanning", {x1 : panX, y1 : panY, x2 : (panX+paper._viewBox[2]), y2 : (panY+paper._viewBox[3])});}, 150);
+
+					previousX = pageX;
+					previousY = pageY;
 					$.fn.mapael.panning = true;
 				}
+				return false;
 			}
-			return false;
 		});
 	};
 	
@@ -727,7 +891,7 @@
 						sliceAttrs[i].width = legendOptions.slices[i].size;
 					if (typeof sliceAttrs[i].height == "undefined")
 						sliceAttrs[i].height = legendOptions.slices[i].size;
-				} else if (legendOptions.slices[i].type == "image") {
+				} else if (legendOptions.slices[i].type == "image" || legendOptions.slices[i].type == "svg") {
 					if (typeof sliceAttrs[i].width == "undefined")
 						sliceAttrs[i].width = legendOptions.slices[i].width;
 					if (typeof sliceAttrs[i].height == "undefined")
@@ -737,10 +901,10 @@
 						sliceAttrs[i].r = legendOptions.slices[i].size / 2;
 				}
 				
-				if(legendOptions.slices[i].type == "image" || legendType == "area") {
-					yCenter = Math.max(yCenter, legendOptions.marginBottomTitle + title.getBBox().height + scale * sliceAttrs[i].height/2);
+				if(legendType == "plot" && (typeof legendOptions.slices[i].type == "undefined" || legendOptions.slices[i].type == "circle")) {
+					yCenter = Math.max(yCenter, legendOptions.marginBottomTitle + title.getBBox().height + scale * sliceAttrs[i].r);	
 				} else {
-					yCenter = Math.max(yCenter, legendOptions.marginBottomTitle + title.getBBox().height + scale * sliceAttrs[i].r);
+					yCenter = Math.max(yCenter, legendOptions.marginBottomTitle + title.getBBox().height + scale * sliceAttrs[i].height/2);
 				}
 			}
 				
@@ -772,7 +936,7 @@
 						
 						elem = paper.rect(x, y, scale * (sliceAttrs[i].width), scale * (sliceAttrs[i].height));
 							
-					} else if(legendOptions.slices[i].type == "image") {					
+					} else if(legendOptions.slices[i].type == "image" || legendOptions.slices[i].type == "svg") {					
 						if (legendOptions.mode == "horizontal") {
 							x = width + legendOptions.marginLeft;
 							y = yCenter - (0.5 * scale * sliceAttrs[i].height);
@@ -781,8 +945,13 @@
 							y = height;
 						}
 
-						elem = paper.image(
-							legendOptions.slices[i].url, x, y, scale * sliceAttrs[i].width, scale * sliceAttrs[i].height);
+						if (legendOptions.slices[i].type == "image") {
+							elem = paper.image(
+								legendOptions.slices[i].url, x, y, scale * sliceAttrs[i].width, scale * sliceAttrs[i].height);
+						} else {
+							elem = paper.path(legendOptions.slices[i].path);
+							elem.transform("m"+((scale*legendOptions.slices[i].width) / elem.getBBox().width)+",0,0,"+((scale*legendOptions.slices[i].height) / elem.getBBox().height)+","+x+","+y);
+						}
 					} else {
 						if (legendOptions.mode == "horizontal") {
 							x = width + legendOptions.marginLeft + scale * (sliceAttrs[i].r);
@@ -800,7 +969,7 @@
 					delete sliceAttrs[i].r;
 					elem.attr(sliceAttrs[i]);
 					elemBBox = elem.getBBox();
-					
+
 					// Draw the label associated with the element
 					if (legendOptions.mode == "horizontal") {
 						x = width + legendOptions.marginLeft + elemBBox.width + legendOptions.marginLeftLabel;
@@ -825,8 +994,8 @@
 						height += legendOptions.marginBottom + elemBBox.height;
 					}
 					
-					$(elem.node).attr({"data-type": "elem", "data-index": i});
-					$(label.node).attr({"data-type": "label", "data-index": i});
+					$(elem.node).attr({"data-type": "elem", "data-index": i, "data-hidden": 0});
+					$(label.node).attr({"data-type": "label", "data-index": i, "data-hidden": 0});
 					
 					// Hide map elements when the user clicks on a legend item
 					if (legendOptions.hideElemsOnClick.enabled) {
@@ -837,9 +1006,7 @@
 						$.fn.mapael.setHoverOptions(elem, sliceAttrs[i], sliceAttrs[i]);
 						$.fn.mapael.setHoverOptions(label, legendOptions.labelAttrs, legendOptions.labelAttrsHover);
 						$.fn.mapael.setHover(paper, elem, label);
-						
-						label.hidden = false;
-						$.fn.mapael.handleClickOnLegendElem(legendOptions, legendOptions.slices[i], label, elem, elems, legendIndex);
+						$.fn.mapael.handleClickOnLegendElem($container, legendOptions, legendOptions.slices[i], label, elem, elems, legendIndex);
 					}
 				}
 			}
@@ -855,6 +1022,7 @@
 	
 	/**
 	* Allow to hide elements of the map when the user clicks on a related legend item
+	* @param $container the map container
 	* @param legendOptions options for the legend to draw
 	* @param sliceOptions options of the slice
 	* @param label label of the legend item
@@ -862,11 +1030,13 @@
 	* @param elems collection of plots or areas displayed on the map
 	* @param legendIndex index of the legend in the conf array
 	*/
-	$.fn.mapael.handleClickOnLegendElem = function(legendOptions, sliceOptions, label, elem, elems, legendIndex) {
-		var hideMapElems = function() {
-			var elemValue = 0;
-			
-			if (!label.hidden) {
+	$.fn.mapael.handleClickOnLegendElem = function($container, legendOptions, sliceOptions, label, elem, elems, legendIndex) {
+		var hideMapElems = function(e, hideOtherElems) {
+			var elemValue = 0
+				, hidden = $(label.node).attr('data-hidden')
+				, hiddenNewAttr = (hidden == 0) ? {"data-hidden": 1} : {"data-hidden": 0};
+
+			if (hidden == 0) {
 				label.animate({"opacity":0.5}, 300);
 			} else {
 				label.animate({"opacity":1}, 300);
@@ -885,7 +1055,7 @@
 						&& (typeof sliceOptions.max == "undefined" || elemValue < sliceOptions.max))
 				) {
 					(function(id) {
-						if (!label.hidden) {
+						if (hidden == 0) {
 							elems[id].mapElem.animate({"opacity":legendOptions.hideElemsOnClick.opacity}, 300, "linear", function() {(legendOptions.hideElemsOnClick.opacity == 0) && elems[id].mapElem.hide();});
 							elems[id].textElem && elems[id].textElem.animate({"opacity":legendOptions.hideElemsOnClick.opacity}, 300, "linear", function() {(legendOptions.hideElemsOnClick.opacity == 0) && elems[id].textElem.hide();});
 						} else {
@@ -899,10 +1069,26 @@
 					})(id);
 				}
 			}
-			label.hidden = !label.hidden;
+
+			$(elem.node).attr(hiddenNewAttr);
+			$(label.node).attr(hiddenNewAttr);
+
+			if ((typeof hideOtherElems === "undefined" || hideOtherElems === true) 
+				&& typeof legendOptions.exclusive !== "undefined" && legendOptions.exclusive === true
+			) {
+				$("[data-type='elem'][data-hidden=0]", $container).each(function() {
+					if ($(this).attr('data-index') !== $(elem.node).attr('data-index')) {
+						$(this).trigger('click', false);
+					}
+				});
+			}
 		};
 		$(label.node).on("click", hideMapElems);
 		$(elem.node).on("click", hideMapElems);
+
+		if (typeof sliceOptions.clicked !== "undefined" && sliceOptions.clicked === true) {
+			$(elem.node).trigger('click', false);
+		}
 	};
 	
 	/**
@@ -1066,13 +1252,62 @@
 		}
 		return {};
 	};
+
+	$.fn.mapael.animationIntervalID = null;
+
+	/**
+	 * Animated view box changes
+	 * As from http://code.voidblossom.com/animating-viewbox-easing-formulas/,
+	 * (from https://github.com/theshaun works on mapael)
+	 * @param paper paper Raphael paper object
+	 * @param x coordinate of the point to focus on
+	 * @param y coordinate of the point to focus on
+	 * @param w map defined width
+	 * @param h map defined height
+	 * @param duration defined length of time for animation
+	 * @param easying_function defined Raphael supported easing_formula to use
+	 * @param callback method when animated action is complete
+	 */
+	$.fn.mapael.animateViewBox = function animateViewBox($container, paper, x, y, w, h, duration, easingFunction ) {
+		var cx = paper._viewBox ? paper._viewBox[0] : 0
+			, dx = x - cx
+			, cy = paper._viewBox ? paper._viewBox[1] : 0
+			, dy = y - cy
+			, cw = paper._viewBox ? paper._viewBox[2] : paper.width
+			, dw = w - cw
+			, ch = paper._viewBox ? paper._viewBox[3] : paper.height
+			, dh = h - ch
+			, easingFunction = easingFunction || "linear"
+			, interval = 25
+			, steps = duration / interval
+			, current_step = 0
+			, easingFormula = Raphael.easing_formulas[easingFunction];
+
+		clearInterval($.fn.mapael.animationIntervalID);
+	 
+		$.fn.mapael.animationIntervalID = setInterval(function() {
+				var ratio = current_step / steps;
+				paper.setViewBox(cx + dx * easingFormula(ratio),
+								cy + dy * easingFormula(ratio),
+								cw + dw * easingFormula(ratio),
+								ch + dh * easingFormula(ratio), false);
+				if (current_step++ >= steps) {
+					clearInterval($.fn.mapael.animationIntervalID);
+					clearTimeout($.fn.mapael.zoomTO);
+					$.fn.mapael.zoomTO = setTimeout(function(){$container.trigger("afterZoom", {x1 : x, y1 : y, x2 : (x+w), y2 : (y+h)});}, 150);
+				}
+			}
+			, interval
+		);
+	};
 	
 	// Default map options
 	$.fn.mapael.defaultOptions = {
 		map : {
 			cssClass : "map"
 			, tooltip : {
-				cssClass : "mapTooltip"
+				cssClass : "mapTooltip",
+				target: null
 			}
 			, defaultArea : {
 				attrs : {
@@ -1151,11 +1386,14 @@
 			}
 			, zoom : {
 				enabled : false
-				, maxLevel : 5
+				, maxLevel : 10
 				, step : 0.25
 				, zoomInCssClass : "zoomIn"
 				, zoomOutCssClass : "zoomOut"
 				, mousewheel : true
+				, touch : true
+				, animDuration : 200
+				, animEasing : "linear"
 			}
 		}
 		, legend : {

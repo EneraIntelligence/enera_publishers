@@ -1,6 +1,6 @@
 // google maps variables
 var marker_url = isHighDensity() ? 'assets/img/md-images/ic_place_black_48dp.png' : 'assets/img/md-images/ic_place_black_24dp.png',
-    marker_url_beenhere = isHighDensity() ? 'assets/img/md-images/ic_beenhere_black_48dp' : 'assets/img/md-images/ic_beenhere_black_24dp',
+    marker_url_beenhere = isHighDensity() ? 'assets/img/md-images/ic_beenhere_black_48dp.png' : 'assets/img/md-images/ic_beenhere_black_24dp.png',
     marker_url_history = isHighDensity() ? 'assets/img/md-images/ic_location_history_black_48dp.png' : 'assets/img/md-images/ic_location_history_black_24dp.png',
     marker_url_dining = isHighDensity() ? 'assets/img/md-images/ic_local_dining_black_48dp.png' : 'assets/img/md-images/ic_local_dining_black_24dp.png',
     marker_size = isHighDensity() ? new google.maps.Size(48, 48) : new google.maps.Size(24, 24),

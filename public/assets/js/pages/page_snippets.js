@@ -64,7 +64,8 @@ altair_snippets = {
                         // show message
                         UIkit.modal.alert("Snipped saved!");
                     }
-                });*/
+                });
+                */
             });
 
 

@@ -1,9 +1,9 @@
 # Weather Icons
-*Version 2.0 - August 2015*
+*Version 2.0.10 - September 19th, 2015*
 
-## 215 Weather Themed Icons and CSS
+## 222 Weather Themed Icons and CSS
 
-Weather Icons is the only icon font and CSS with 215 weather themed icons, ready to be dropped right into [Bootstrap](http://www.getbootstrap.com), or any project that needs high quality weather, maritime, and meteorological based icons!
+Weather Icons is the only icon font and CSS with 222 weather themed icons, ready to be dropped right into [Bootstrap](http://www.getbootstrap.com), or any project that needs high quality weather, maritime, and meteorological based icons!
 
 Get started at [http://weathericons.io](http://weathericons.io)!
 
@@ -16,6 +16,10 @@ Place the 5 font files and the main `weather-icons.min.css` file in your project
 The icons are displayed by using an `i` element and adding the base class `wi` and then the icon class you want, such as `day-sunny`. This then looks like `<i class="wi wi-day-sunny"></i>`.
 
 To add a modifier, include the class you want after the icon name, which looks like `<i class="wi wi-day-sunny wi-flip-vertical"></i>`. You can flip, rotate, or add a fixed with. See it all at [http://weathericons.io](http://weathericons.io).
+
+## API Usage
+
+This set includes companion CSS files for popular weather service API. Presently there are mappings for Forecast.io, Open Weather Map, World Meteorological Organization, Weather Underground, and Yahoo. Check the [API List](https://erikflowers.github.io/weather-icons/api-list.html) to see the class names.
 
 ## Wind Usage
 

@@ -19,7 +19,7 @@ class PreviewMiddleware
      */
     public function handle($request, Closure $next)
     {
-        $route = \Request::route()->getName();
+        $route = $request->route()->getName();
         $user = Administrator::where('_id', Auth::user()->_id)->first();
         $test = isset($user->route) ? $user->route : [];
         $diff = array_unique($test);

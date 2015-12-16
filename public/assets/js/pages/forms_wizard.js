@@ -22,13 +22,22 @@ altair_wizard = {
                 trigger: 'change',
                 onInit: function(event, currentIndex) {
                     altair_wizard.content_height($wizard_advanced,currentIndex);
-                    // initialize checkboxes
+                    // reinitialize checkboxes
                     altair_md.checkbox_radio($(".wizard-icheck"));
                     // reinitialize uikit margin
                     altair_uikit.reinitialize_grid_margin();
+                    // reinitialize selects
+                    altair_forms.select_elements($wizard_advanced);
+                    // reinitialize switches
+                    $wizard_advanced.find('span.switchery').remove();
+                    altair_forms.switches();
+                    // resize content when accordion is toggled
+                    $('.uk-accordion').on('toggle.uk.accordion',function() {
+                        $window.resize();
+                    });
                     setTimeout(function() {
                         $window.resize();
-                    },100)
+                    },100);
                 },
                 onStepChanged: function (event, currentIndex) {
                     altair_wizard.content_height($wizard_advanced,currentIndex);
@@ -39,7 +48,6 @@ altair_wizard = {
                 onStepChanging: function (event, currentIndex, newIndex) {
                     var step = $wizard_advanced.find('.body.current').attr('data-step'),
                         $current_step = $('.body[data-step=\"'+ step +'\"]');
-
 
                     // check input fields for errors
                     $current_step.find('[data-parsley-id]').each(function() {
@@ -82,10 +90,6 @@ altair_wizard = {
                         altair_wizard.content_height($wizard_advanced,currentIndex);
                     },100);
 
-
-                    /*$(parsleyField.$element).each(function() {
-                        console.log($this);
-                    });*/
                 });
 
         }
