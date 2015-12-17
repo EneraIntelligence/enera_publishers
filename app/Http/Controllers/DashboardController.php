@@ -69,6 +69,6 @@ class DashboardController extends Controller
 //        echo '<br>';
 //        dd($osCount);
 
-        return view('dashboard.index', ['user' => Auth::user(), 'logs' => $logs, 'osStats'=>$osCount, 'total' => $osTotal,'devices'=>$devices,'campañas'=>$campañas,'sitios'=>$sitios]);
+        return view('dashboard.index', ['logs' => $logs, 'osStats'=>$osCount, 'total' => $osTotal,'devices'=>$devices,'campañas'=>$campañas,'sitios'=>$sitios]);
     }
 }

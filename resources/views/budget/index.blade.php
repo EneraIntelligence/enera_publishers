@@ -9,7 +9,8 @@
         .budget:hover {
             background-color: #90caf9;
         }
-        .border-bottom{
+
+        .border-bottom {
             margin-bottom: 10px;
         }
     </style>
@@ -37,70 +38,38 @@
                                 <table class="uk-table uk-text-nowrap">
                                     <thead>
                                     <tr>
-                                        <th>Icono</th>
+                                        <th></th>
                                         <th>ID</th>
-                                        <th>Movimiento</th>
                                         <th>Concepto</th>
                                         <th>Monto</th>
                                     </tr>
                                     </thead>
-                                    <tfoot>
-                                    <tr>
-                                        <td>Icono</td>
-                                        <td>ID</td>
-                                        <td>Movimiento</td>
-                                        <td>Concepto</td>
-                                        <td>Monto</td>
-                                    </tr>
-                                    </tfoot>
                                     <tbody>
-                                    <tr class="budget">
-                                        <td class="mov" data-uk-tooltip="{cls:'long-text'}"
-                                            title="Aumento de fondos">
-                                            <i class="material-icons md-36 uk-text-success">trending_up</i>
-                                        </td>
-                                        <td class="mov">#345q345</td>
-                                        <td class="mov">123568</td>
-                                        <td class="mov">
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading">Consequatur nobis sint.</span>
-                                                <span class="uk-text-small uk-text-muted uk-text-truncate"><a
-                                                            href="{{route('analytics::single', ['id' => '56393f9aa8268b300d479644'])}}">Campaña </a></span>
-                                            </div>
-                                        </td>
-                                        <td class="mov" id="">0</td>
-                                    </tr>
-                                    <tr class="budget">
-                                        <td class="mov">
-                                            <i class="material-icons md-36 uk-text-primary">remove</i>
-                                        </td>
-                                        <td class="mov">#345q345</td>
-                                        <td class="mov">123568</td>
-                                        <td class="mov">
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading">Consequatur nobis sint.</span>
-                                                <span class="uk-text-small uk-text-muted uk-text-truncate"><a
-                                                            href="{{route('budget::invoices', ['id' => '56393f9aa8268b300d479644'])}}">Invoice
-                                                        # 56393f9aa8268b300d479644</a></span>
-                                            </div>
-                                        </td>
-                                        <td class="mov" id="">0</td>
-                                    </tr>
-                                    <tr class="budget">
-                                        <td class="mov" data-uk-tooltip="{cls:'long-text'}"
-                                            title="Disminución de fondos">
-                                            <i class="material-icons md-36 uk-text-danger">trending_down</i>
-                                        </td>
-                                        <td class="mov">#345q345</td>
-                                        <td class="mov">123568</td>
-                                        <td class="mov">
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading">Consequatur nobis sint.</span>
-                                                <span class="uk-text-small uk-text-muted uk-text-truncate">Qui quis minima dignissimos ab.</span>
-                                            </div>
-                                        </td>
-                                        <td class="mov" id="">0</td>
-                                    </tr>
+                                    @foreach($movements as $movement)
+                                        <tr class="budget">
+                                            <td class="mov" data-uk-tooltip="{cls:'long-text'}"
+                                                title="Aumento de fondos">
+                                                @if($movement->movement['type'] == 'income')
+                                                    <i class="material-icons md-36 uk-text-success">trending_up</i>
+                                                @elseif($movement->movement['type'] == 'income')
+                                                    <i class="material-icons md-36 uk-text-danger">trending_down</i>
+                                                @endif
+                                                {{-- <i class="material-icons md-36 uk-text-primary">remove</i> --}}
+                                            </td>
+                                            <td class="mov">{{ $movement->id }}</td>
+                                            <td class="mov">
+                                                <div class="md-list-content">
+                                                    <span class="md-list-heading">{{ $movement->movement['concept'] }}</span>
+                                                    <span class="uk-text-small uk-text-muted uk-text-truncate">
+                                                        <a href="{{route('analytics::single', ['id' => '56393f9aa8268b300d479644'])}}">Campaña </a>
+                                                    </span>
+                                                </div>
+                                            </td>
+                                            <td class="mov">
+                                                <b>$ {{ number_format($movement->amount,2,'.',',') }}</b>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -112,7 +81,7 @@
                         <h4 class="heading_a uk-margin-bottom">Información de presupuestos</h4>
                         <div class="md-card">
                             <div class="md-card-content">
-                                <span class="uk-text-small" >Balance Actual</span>
+                                <span class="uk-text-small">Balance actual</span>
                                 <h2 class="uk-text-center" id="myTargetElement2" style="margin: 10px;">23</h2>
                                 <span class="uk-text-small border-bottom" style="margin: 10px;">Agregar fondos</span>
                                 <div class="uk-width-medium-1 uk-text-center">
@@ -172,11 +141,11 @@
                 suffix: ' MXN'
             };
 
-            var demo = new CountUp("myTargetElement1", 0, {{rand (  100 ,  10000 )}}, 2, 3.0, option);
-            demo.start();
-            var demo = new CountUp("myTargetElement2", 0, {{rand (  100 ,  10000 )}}, 2, 3.0, option);
-            demo.start();
-
+            var balance = {{ $admin->balance['current'] }};
+            var demo1 = new CountUp("myTargetElement1", 0, balance, 2, 3.0, option);
+            var demo2 = new CountUp("myTargetElement2", 0, balance, 2, 3.0, option);
+            demo1.start();
+            demo2.start();
         })
     </script>
 @stop

@@ -28,7 +28,7 @@
     <!-- altair admin -->
     {!! HTML::style('assets/css/main.min.css') !!}
 
-        {{--loader--}}
+    {{--loader--}}
     {!! HTML::style('assets/css/loader.css') !!}
 
 
@@ -45,29 +45,29 @@
 </head>
 <body class="sidebar_main_swipe">
 
-    <div id="loader" class="fullscreenTop"
-         style="position: fixed;
+<div id="loader" class="fullscreenTop"
+     style="position: fixed;
            left: 0px; right: 0px;
            top: 0px; bottom: 0px;
            background-color: white;
            z-index: 99;">
 
-        <div style="position: relative; width: 100%; height: 100%;">
-            <div id="inner_loader"
-                 style="position: absolute;  top: 50%;
+    <div style="position: relative; width: 100%; height: 100%;">
+        <div id="inner_loader"
+             style="position: absolute;  top: 50%;
                  left: 50%;  transform: translate(-50%, -50%);">
 
-                <div class="cssload-loader">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </div>
-
+            <div class="cssload-loader">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
             </div>
+
         </div>
     </div>
+</div>
 
 <!-- Create campaign button -->
 @if(!isset($noCreateBtn))
@@ -81,8 +81,12 @@
         </a>
         <div class="md-fab-wrapper-small">
 
-            <a class="md-fab md-fab-small md-fab-primary" id="note_add" data-uk-tooltip="{pos:'left'}" title="Crear campaña"> <i class="material-icons">event</i>  </a>
-            <a class="md-fab md-fab-small md-fab-success" href="#" data-uk-tooltip="{pos:'left'}" title="Agregar fondos"> <i class="uk-icon-usd"></i> </a>
+            <a class="md-fab md-fab-small md-fab-primary" id="note_add">
+                <i class="material-icons">event</i>
+            </a>
+            <a class="md-fab md-fab-small md-fab-success" href="{!! URL::route('budget::index') !!}">
+                <i class="uk-icon-usd"></i>
+            </a>
         </div>
 
         <!--
@@ -92,7 +96,7 @@
         -->
     </div>
 
-@endif
+    @endif
 
 
             <!-- main header -->
@@ -142,9 +146,9 @@
                                 <div class="uk-width-1-3 uk-hidden-small">
                                     <ul class="uk-nav uk-nav-dropdown uk-panel">
                                         <li class="uk-nav-header">Recientes</li>
-                                        @foreach($user->route as $preview)
+                                        @foreach(auth()->user()->route as $preview)
                                             <?php $last = explode('/', $preview) ?>
-                                        <li><a href="{!! route($last[1]) !!}">{{$last[0]}}</a></li>
+                                            <li><a href="{!! route($last[1]) !!}">{{$last[0]}}</a></li>
                                         @endforeach
                                         {{--<li><a href="#">Buttons</a></li>--}}
                                         {{--<li><a href="#">Notifications</a></li>--}}
@@ -360,7 +364,7 @@
     {!! HTML::script('bower_components/jquery.inputmask/dist/jquery.inputmask.bundle.min.js') !!}
     {!! HTML::script('assets/js/pages/kendoui.min.js') !!}
 
-    <!-- animation library -->
+            <!-- animation library -->
     {!! HTML::script('js/greensock/TweenLite.min.js') !!}
     {!! HTML::script('js/greensock/plugins/CSSPlugin.min.js') !!}
     {!! HTML::script('js/greensock/easing/EasePack.min.js') !!}
@@ -436,13 +440,13 @@
         });
 
 
-        window.onload = function()
-        {
+        window.onload = function () {
             //remove loader
-            TweenLite.to("#loader",.3, {"autoAlpha":0, onComplete:function()
-            {
-                $("#loader").css("display","none");
-            }});
+            TweenLite.to("#loader", .3, {
+                "autoAlpha": 0, onComplete: function () {
+                    $("#loader").css("display", "none");
+                }
+            });
         }
     </script>
 

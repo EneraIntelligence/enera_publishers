@@ -22,7 +22,7 @@ Route::group(['middleware' => ['auth', 'preview']], function () {
         Route::post('/save_item', ['as' => 'save_item', 'uses' => 'CampaignsController@saveItem']);
         Route::post('/send_mailing', ['as' => 'send_mailing', 'uses' => 'CampaignsController@sendMailing']);
 
-        Route::group([], function () {
+        Route::group(['middleware' => 'ajax'], function () {
             Route::match(['post', 'get'], '/store', ['as' => 'store', 'uses' => 'CampaignsController@store']);
         });
     });
@@ -55,6 +55,7 @@ Route::group(['middleware' => ['auth', 'preview']], function () {
 
     Route::group(['prefix' => 'budget', 'as' => 'budget::'], function () {
         Route::get('/', ['as' => 'index', 'uses' => 'BudgetController@index']);
+        Route::get('/deposits', ['as' => 'deposits', 'uses' => 'BudgetController@deposits']);
         Route::get('/invoices/{id}', ['as' => 'invoices', 'uses' => 'BudgetController@invoices']);
     });
 
