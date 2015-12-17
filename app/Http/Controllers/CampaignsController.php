@@ -131,8 +131,8 @@ class CampaignsController extends Controller
                 'content' => [
                     'items' => Input::get('images'),
                     'images' => [
-                        'small' => Item::find(Input::get('images.small'))->filename,
-                        'large' => Item::find(Input::get('images.large'))->filename,
+                        'small' => Input::has('images.small') ? Item::find(Input::get('images.small'))->filename : null,
+                        'large' => Input::has('images.large') ? Item::find(Input::get('images.large'))->filename : null,
                         'survey' => Item::find(Input::get('images.large'))->filename,
                     ],
                     'mail' => [
@@ -164,7 +164,6 @@ class CampaignsController extends Controller
                 ]);
             }
         } else {
-//            dd($validator->errors());
             return response()->json([
                 'ok' => false,
                 'msg' => 'Uno o más datos no son validos.'
@@ -236,7 +235,7 @@ class CampaignsController extends Controller
                 $subject = Input::get("subject");
                 $content = Input::get("content");
 
-                $data = compact('admin_id', 'from','campaign_name','from_mail','subject', 'content', 'mail', 'campaign_id');
+                $data = compact('admin_id', 'from', 'campaign_name', 'from_mail', 'subject', 'content', 'mail', 'campaign_id');
                 $this->dispatch(new MailingJob($data));
 
 
