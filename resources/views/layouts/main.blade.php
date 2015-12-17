@@ -16,8 +16,8 @@
     <title>Enera Publishers @yield('title')</title>
     @yield('head_scripts')
 
-
-            <!-- uikit -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- uikit -->
     {!! HTML::style('bower_components/kendo-ui-core/styles/kendo.common-material.min.css') !!}
     {!! HTML::style('bower_components/kendo-ui-core/styles/kendo.material.min.css') !!}
     {!! HTML::style('bower_components/uikit/css/uikit.almost-flat.min.css') !!}

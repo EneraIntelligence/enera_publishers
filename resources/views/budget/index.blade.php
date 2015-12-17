@@ -92,31 +92,30 @@
                                     <ul class="md-list md-list-addon">
                                         <li>
                                             <div class="md-list-addon-element">
-                                                <i class="md-list-addon-icon material-icons"></i>
+                                                <i class="md-list-addon-icon material-icons uk-text-primary">
+                                                    &#xE918;
+                                                </i>
                                             </div>
                                             <div class="md-list-content">
                                                 <span class="md-list-heading">Total Asignado</span>
-                                                <span class="uk-text-small uk-text-muted">$ {{  }}</span>
+                                                <span class="uk-text-small uk-text-muted">
+                                                    $ {{ number_format($campaigns->sum('balance.current'),2,'.',',') }}
+                                                </span>
                                             </div>
                                         </li>
-                                        <li>
-                                            <div class="md-list-addon-element">
-                                                <i class="md-list-addon-icon material-icons uk-text-success"></i>
-                                            </div>
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading">Heading</span>
-                                                <span class="uk-text-small uk-text-muted">Dolore libero omnis et excepturi sit repellendus ex.</span>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="md-list-addon-element">
-                                                <i class="md-list-addon-icon material-icons"></i>
-                                            </div>
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading">Heading</span>
-                                                <span class="uk-text-small uk-text-muted">Eveniet et aperiam in eaque ut itaque cum.</span>
-                                            </div>
-                                        </li>
+                                        @foreach($campaigns as $campaign)
+                                            <li>
+                                                <div class="md-list-addon-element">
+                                                    {{--<i class="md-list-addon-icon material-icons uk-text-success"></i>--}}
+                                                </div>
+                                                <div class="md-list-content">
+                                                    <span class="md-list-heading">{{ $campaign->name }}</span>
+                                                    <span class="uk-text-small uk-text-muted">
+                                                        $ {{ number_format($campaign->balance['current'],2,'.',',') }}
+                                                    </span>
+                                                </div>
+                                            </li>
+                                        @endforeach
                                     </ul>
                                 </div>
                             </div>

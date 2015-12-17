@@ -133,7 +133,7 @@ class CampaignsController extends Controller
                     'images' => [
                         'small' => Input::has('images.small') ? Item::find(Input::get('images.small'))->filename : null,
                         'large' => Input::has('images.large') ? Item::find(Input::get('images.large'))->filename : null,
-                        'survey' => Item::find(Input::get('images.survey'))->filename,
+                        'survey' => Input::has('images.survey') ? Item::find(Input::get('images.survey'))->filename : null,
                     ],
                     'mail' => [
                         'from_name' => Input::get('from'),
@@ -141,7 +141,7 @@ class CampaignsController extends Controller
                         'subject' => Input::get('subject'),
                         'content' => Input::get('mailing_content'),
                     ],
-                    'survey' => Input::get('survey'),
+                    'survey' => $this->storeSurvey(Input::get('survey')),
                     'captcha' => Input::get('captcha'),
                     'video' => Input::get('video'),
                 ],
@@ -169,6 +169,11 @@ class CampaignsController extends Controller
                 'msg' => 'Uno o más datos no son validos.'
             ]);
         }
+    }
+
+    private function storeSurvey($survey)
+    {
+
     }
 
     public function mailing($id, Request $request)
