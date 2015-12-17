@@ -5,7 +5,7 @@
     <div class="uk-grid uk-grid-medium" data-uk-grid-margin data-uk-grid-match="{target:'.md-card'}">
 
         <div id="banner" class="uk-width-medium-1-3">
-            <div class="interaction-btn md-card md-btn" data-interaction="banner" style="width: 100%">
+            <div class="interaction-btn md-card md-btn" data-interaction="like" style="width: 100%">
                 <div class="md-card-content">
                     {{--<img src="{!! URL::asset('images/icons/banner.svg') !!}" alt="">--}}
 
@@ -27,7 +27,7 @@
 </g>
                     </svg>
                     <div class="uk-clearfix"></div>
-                    <span>banner</span>
+                    <span>like</span>
                 </div>
             </div>
         </div>
