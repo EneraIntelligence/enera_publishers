@@ -53,14 +53,17 @@
                                     </div>
                                 </div>
 
-                                <!-- banner preview -->
-                                <div class="preview banner none">
+                                <!-- like preview -->
+                                <div class="preview like none">
                                     <img class="banner-1 banner-2 view" src="http://placehold.it/200x250?text=Tu+banner"
                                          alt="Tu banner">
-                                    <div style="" class="md-btn md-btn-primary boton">Navegar en internet</div>
+
+                                    <img style="position: absolute; top: 450px; margin-left: -41px; left: 50%;" src="{!! URL::asset('images/elements/megusta.jpg') !!}" alt="">
+
+                                    <a style="left:-60px;" id="Suscribirme" href="">Deseo navegar en internet</a>
 
                                     <div class="uk-text-center center-text">
-                                        Promociónate con un banner que será visto por los usuarios de redes Enera.
+                                        Invita a los usuarios de redes Enera a darle like a una página.
                                     </div>
                                 </div>
 

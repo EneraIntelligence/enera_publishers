@@ -53,8 +53,15 @@ enera_icons_animation = {
 
 
         //animate banner icon
+        /*
         TweenLite.fromTo(svg.find("#line_banner1"),.7,{y:"-=40", alpha:0},{y:0, alpha:1});
         TweenLite.fromTo(svg.find("#line_banner2"),.7,{y:"-=40", alpha:0},{y:0, alpha:1});
+        */
+
+        //animate like icon
+        TweenLite.fromTo(svg.find("#hand"),.2,{rotation:0,y:0},{rotation:5, y:5, ease:Power2.easeIn});
+        TweenLite.fromTo(svg.find("#hand"),.3,{rotation:0,y:0},{rotation:-10, y:-10, ease:Power2.easeOut, delay:.2});
+        TweenLite.to(svg.find("#hand"),.2,{rotation:0, y:0, ease:Power2.easeIn, delay:0.3});
 
         //animate banner link
         TweenLite.fromTo(svg.find("#chain"),.7,{rotation:0, transformOrigin:"50% 50%"},{rotation:360});
