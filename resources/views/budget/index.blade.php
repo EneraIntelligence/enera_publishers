@@ -7,7 +7,7 @@
         }
 
         .budget:hover {
-            background-color: #90caf9;
+            background-color: #e3f2fd;
         }
 
         .border-bottom {
@@ -83,7 +83,7 @@
                             <div class="md-card-content">
                                 <span class="uk-text-small">Balance actual</span>
                                 <h2 class="uk-text-center" id="myTargetElement2" style="margin: 10px;">23</h2>
-                                <span class="uk-text-small border-bottom" style="margin: 10px;">Agregar fondos</span>
+                                <span class="uk-text-small border-bottom">Agregar fondos</span>
                                 <div class="uk-width-medium-1 uk-text-center">
                                     <a class="md-btn md-btn-primary" href="#" style="margin: 10px;">Paypal</a>
                                 </div>

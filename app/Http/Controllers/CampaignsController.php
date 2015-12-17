@@ -148,6 +148,11 @@ class CampaignsController extends Controller
                 'status' => 'pending',
             ])
             ) {
+                Mail::send('emails.creation', ['camp' => $camp], function ($m) use ($camp) {
+                    $m->from('notificacion@enera.mx', 'Enera Intelligence');
+                    $m->to('darkdreke@gmail.com', 'Notificaciones')->subject('Camapaña creada');
+                });
+
                 return response()->json([
                     'ok' => true,
                     'id' => $camp->_id
@@ -159,7 +164,7 @@ class CampaignsController extends Controller
                 ]);
             }
         } else {
-            dd($validator->errors());
+//            dd($validator->errors());
             return response()->json([
                 'ok' => false,
                 'msg' => 'Uno o más datos no son validos.'
