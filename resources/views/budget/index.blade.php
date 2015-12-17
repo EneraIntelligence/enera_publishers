@@ -87,7 +87,7 @@
                                 <div class="uk-width-medium-1 uk-text-center">
                                     <a class="md-btn md-btn-primary" href="#" style="margin: 10px;">Paypal</a>
                                 </div>
-                                <span class=" uk-text-small">Fondos Camapañas Activas</span>
+                                <span class=" uk-text-small">Fondos camapañas activas</span>
                                 <div class="uk-width-large-1 uk-width-medium-1 uk-grid-margin">
                                     <ul class="md-list md-list-addon">
                                         <li>
@@ -95,8 +95,8 @@
                                                 <i class="md-list-addon-icon material-icons"></i>
                                             </div>
                                             <div class="md-list-content">
-                                                <span class="md-list-heading">Heading</span>
-                                                <span class="uk-text-small uk-text-muted">Beatae eos eos qui omnis ducimus at quia qui molestiae quaerat.</span>
+                                                <span class="md-list-heading">Total Asignado</span>
+                                                <span class="uk-text-small uk-text-muted">$ {{  }}</span>
                                             </div>
                                         </li>
                                         <li>

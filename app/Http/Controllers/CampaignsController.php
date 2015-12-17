@@ -133,7 +133,7 @@ class CampaignsController extends Controller
                     'images' => [
                         'small' => Input::has('images.small') ? Item::find(Input::get('images.small'))->filename : null,
                         'large' => Input::has('images.large') ? Item::find(Input::get('images.large'))->filename : null,
-                        'survey' => Item::find(Input::get('images.large'))->filename,
+                        'survey' => Item::find(Input::get('images.survey'))->filename,
                     ],
                     'mail' => [
                         'from_name' => Input::get('from'),
