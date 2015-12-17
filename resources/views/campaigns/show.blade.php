@@ -120,14 +120,16 @@
                                                     <li>
                                                         <div class="md-list-content">
                                                             <span class="md-list-heading azul">Rango de Edad</span>
-                                                            <span class="uk-text-small uk-text-muted">{{$cam->filters['age'][0].' a '.$cam->filters['age'][1]}} </span>
+                                                            {{--<span class="uk-text-small uk-text-muted">{{  $cam->filters['age'][0].' a '.$cam->filters['age'][1]}} </span>--}}
+                                                            <span class="uk-text-small uk-text-muted">{{ isset($cam->filters['age'][0])? $cam->filters['age'][0].' a '.$cam->filters['age'][1] :'no definido'   }} </span>
                                                         </div>
                                                     </li>
                                                     <li>
                                                         <div class="md-list-content">
                                                             <span class="md-list-heading azul">Generos</span>
                                                                     <span class="uk-text-small uk-text-muted">
-                                                                        {{ trans_choice('gender.'.$cam->filters['gender'][0],1) }}
+                                                                        {{--{{ trans_choice('gender.'.$cam->filters['gender'][0],1) }}--}}
+                                                                        {{ isset($filters['gender'][1]) ? trans_choice('gender.'.$cam->filters['gender'][0],1):'' }}
                                                                         , {{ isset($filters['gender'][1]) ? trans_choice('gender.'.$cam->filters['gender'][1],1):'' }}
                                                                     </span>
                                                             {{--{{$filters['gender'][0].',  '.$filters['gender'][1]}}--}}
@@ -136,11 +138,13 @@
                                                     <li>
                                                         <div class="md-list-content">
                                                             <span class="md-list-heading azul">Dias</span>
-                                                                    <span class="uk-text-small uk-text-muted">
-                                                                        @foreach($cam->filters['week_days'] as $dia)
-                                                                            {{ trans('days.'.$dia) }},
-                                                                        @endforeach
-                                                                    </span>
+                                                            <span class="uk-text-small uk-text-muted">
+                                                                @if(isset($cam->filters['week_days'] ))
+                                                                    @foreach($cam->filters['week_days'] as $dia)
+                                                                        {{ trans('days.'.$dia) }},
+                                                                    @endforeach
+                                                                @endif
+                                                            </span>
                                                         </div>
                                                     </li>
                                                     <li>

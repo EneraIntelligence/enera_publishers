@@ -133,7 +133,7 @@ class CampaignsController extends Controller
                     'images' => [
                         'small' => Input::has('images.small') ? Item::find(Input::get('images.small'))->filename : null,
                         'large' => Input::has('images.large') ? Item::find(Input::get('images.large'))->filename : null,
-                        'survey' => Item::find(Input::get('images.large'))->filename,
+                        'survey' => Item::find(Input::get('images.survey'))->filename,
                     ],
                     'mail' => [
                         'from_name' => Input::get('from'),
@@ -379,12 +379,12 @@ class CampaignsController extends Controller
      */
     public function show($id)
     {
-        $this->genderAge($id);
+//        $this->genderAge($id);
 
         $campaign = Campaign::find($id); //busca la campaña
 
         if ($campaign && $campaign->administrator_id == auth()->user()->_id) {
-
+//            dd($campaign);
             //este arreglo se usa para poder convertir los numeros de los dias a letras
             $semana = array(0 => '', 1 => 'lunes', 2 => 'martes', 3 => 'miércoles', 4 => 'jueves', 5 => 'viernes', 6 => 'sabado', 7 => 'domingo');
 
@@ -395,7 +395,7 @@ class CampaignsController extends Controller
             $color = [];
             $color['icon'] = CampaignStyleHelper::getStatusIcon($campaign->status);
             $color['color'] = CampaignStyleHelper::getStatusColor($campaign->status);
-
+//            dd($color);
 
             /****  conversion de fechas de segundos a formato Y-m-d  ****/
 //            $campaign['filters']['date']['start'] = date('Y-m-d', $campaign['filters']['date']['start']->sec);
@@ -431,8 +431,9 @@ class CampaignsController extends Controller
                     $porcentaje = $diff->format('%a') / $total->format('%a');
                     break;
             }
-
+//            dd($porcentaje);
             $campaign->porcentaje = $porcentaje;
+//            dd($campaign);
             return view('campaigns.show', [$campaign, 'cam' => $campaign, 'user' => Auth::user()]);
         } else {
             return redirect()->route('campaigns::index')->with('data', 'errorCamp');
@@ -479,6 +480,7 @@ class CampaignsController extends Controller
      */
     private function genderAge($id)
     {
+        echo 'entro en la grafica';
         // Obtiene de los logs los usuarios de 5 dias atras
         $log = array();
         $fecha = new MongoDate(strtotime("-5 days"));
@@ -487,9 +489,12 @@ class CampaignsController extends Controller
         $logs = CampaignLog::groupBy('user')->where('campaign_id', $id)
             ->where('updated_at', '>', $fecha)->get(array('user'));
         if ($logs == null) {
-            return null;
+            echo 'no encontro nada';
+            $log['error']=['error'];
         } else {
+            echo 'encontro algo';
             $Logs = $logs->toArray();
+            dd($logs);
             foreach ($Logs as $clave => $valor) {
                 $log['users'][$clave]['age'] = $valor['user']['age'];
 //                var_dump($log['users'][$clave]['age']);
@@ -497,7 +502,7 @@ class CampaignsController extends Controller
 //                var_dump($log['users'][$clave]['gender']);
             }
         }
-
+        dd($log);
         return $log;
     }
 
