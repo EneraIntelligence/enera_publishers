@@ -17,15 +17,15 @@
     @yield('head_scripts')
 
 
-    <!-- uikit -->
+            <!-- uikit -->
     {!! HTML::style('bower_components/kendo-ui-core/styles/kendo.common-material.min.css') !!}
     {!! HTML::style('bower_components/kendo-ui-core/styles/kendo.material.min.css') !!}
     {!! HTML::style('bower_components/uikit/css/uikit.almost-flat.min.css') !!}
 
-    <!-- flag icons -->
+            <!-- flag icons -->
     {!! HTML::style('assets/icons/flags/flags.min.css') !!}
 
-    <!-- altair admin -->
+            <!-- altair admin -->
     {!! HTML::style('assets/css/main.min.css') !!}
 
     {{--loader--}}
@@ -81,10 +81,10 @@
         </a>
         <div class="md-fab-wrapper-small">
 
-            <a class="md-fab md-fab-small md-fab-primary" id="note_add">
-                <i class="material-icons">event</i>
-            </a>
-            <a class="md-fab md-fab-small md-fab-success" href="{!! URL::route('budget::index') !!}">
+            <a class="md-fab md-fab-small md-fab-primary" id="note_add" data-uk-tooltip="{pos:'left'}"
+               title="Crear campaña"> <i class="material-icons">event</i> </a>
+            <a class="md-fab md-fab-small md-fab-success" href="{!! URL::route('budget::index') !!}"
+               data-uk-tooltip="{pos:'left'}" title="Agregar fondos">
                 <i class="uk-icon-usd"></i>
             </a>
         </div>
