@@ -3,9 +3,28 @@ $(function() {
 
     // page onload functions
 
+    $("#fab-open").click(function( event ) {
+        if(tour!=null)
+        {
+            setTimeout(function()
+            {
+                $('#joyRideTipContent').joyride('nextTip');
+            },500);
+        }
+    });
+
+    $("#funds-btn").click(function( event ) {
+        if(tour!=null)
+        {
+            $('#joyRideTipContent').joyride('nextTip');
+        }
+    });
+
     $("#note_add").click(function( event ) {
         event.stopPropagation();
         new_campaign.prompt();
+
+
 
         $("#fab-create").removeClass("md-fab-active");
         $("#fab-open").css("display","block");

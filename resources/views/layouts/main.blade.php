@@ -76,14 +76,14 @@
 
     <div class="md-fab-wrapper md-fab-speed-dial" id="fab-create">
 
-        <a class="md-fab md-fab-danger" href="#">
+        <a class="md-fab md-fab-danger">
             <i id="fab-open" class="material-icons"></i>
         </a>
         <div class="md-fab-wrapper-small">
 
             <a class="md-fab md-fab-small md-fab-primary" id="note_add" data-uk-tooltip="{pos:'left'}"
                title="Crear campaña"> <i class="material-icons">event</i> </a>
-            <a class="md-fab md-fab-small md-fab-success" href="{!! URL::route('budget::index') !!}"
+            <a class="md-fab md-fab-small md-fab-success" id="funds-btn" href="{!! URL::route('budget::index') !!}"
                data-uk-tooltip="{pos:'left'}" title="Agregar fondos">
                 <i class="uk-icon-usd"></i>
             </a>
