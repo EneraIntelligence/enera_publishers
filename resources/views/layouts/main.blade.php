@@ -119,7 +119,7 @@
                 {{--</a>--}}
 
                 <div id="menu_top" class="uk-float-left ">
-                    <div class="uk-button-dropdown" data-uk-dropdown="{mode:'click'}" style="position: fixed; top: 13px;">
+                    <div class="uk-button-dropdown" data-uk-dropdown="{mode:'click'}" style="position: fixed; top: 13px; margin-left: 10px;">
                         <a href="#" class="top_menu_toggle" style="color: #FFFFff;">
                             <i class="material-icons md-24" style="color: #FFFFff;">&#xE8F0;</i> <span class="uk-hidden-small">Publishers</span>
                         </a>
