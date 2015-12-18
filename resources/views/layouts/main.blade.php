@@ -40,7 +40,11 @@
 
     <!-- c3 charts -->
     {!! HTML::style('bower_components/c3js-chart/c3.min.css') !!}
-
+    <style>
+        .uk-dropdown .uk-dropdown-width-3 .uk-dropdown-active .uk-dropdown-shown .uk-dropdown-bottom{
+            top: 100px; min-width: 600px; left: 0px;
+        }
+    </style>
 
 </head>
 <body class="sidebar_main_swipe">
@@ -115,12 +119,12 @@
                 {{--</a>--}}
 
                 <div id="menu_top" class="uk-float-left ">
-                    <div class="uk-button-dropdown" data-uk-dropdown="{mode:'click'}">
-                        <a href="#" class="top_menu_toggle">
-                            <i class="material-icons md-24">&#xE8F0;</i> <span class="uk-hidden-small">Publishers</span>
+                    <div class="uk-button-dropdown" data-uk-dropdown="{mode:'click'}" style="position: fixed; top: 13px; margin-left: 10px;">
+                        <a href="#" class="top_menu_toggle" style="color: #FFFFff;">
+                            <i class="material-icons md-24" style="color: #FFFFff;">&#xE8F0;</i> <span class="uk-hidden-small">Publishers</span>
                         </a>
 
-                        <div class="uk-dropdown uk-dropdown-width-3">
+                        <div class="uk-dropdown uk-dropdown-width-3" style="top: -20px;">
                             <div class="uk-grid uk-dropdown-grid" data-uk-grid-margin>
                                 <div class="uk-width-2-3">
                                     <div class="uk-grid uk-grid-width-medium-1-3 uk-margin-top uk-margin-bottom uk-text-center"

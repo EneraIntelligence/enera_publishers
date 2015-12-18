@@ -51,7 +51,7 @@ class AuthController extends Controller
     public function logout()
     {
         auth()->logout();
-        return redirect()->route('auth.index');
+        return redirect()->route('auth.index')->with('registro', 'no');
     }
 
     /**
@@ -84,9 +84,9 @@ class AuthController extends Controller
                 echo 'se guardo';
                 $this->dispatch(new newAdminJob([
                     'session' => session('_token'),
-                    'client_mac' => Input::get('client_mac'),
-                    'campaign_id' => $campaignSelected->_id,
-                    'user_id' => $user_id
+                    'nombre' => Input::get('nombre'),
+                    'apellido' => Input::get('apellido'),
+                    'email' => Input::get('email')
                 ]));
                 return redirect()->route('auth.index')->with('success', 'registro-success');
             }
@@ -103,5 +103,10 @@ class AuthController extends Controller
         echo Input::get('register_Estado');
         echo Input::get('register_munucipio');
         dd('hola prueba');*/
+    }
+
+    public function register()
+    {
+        return redirect()->route('auth.index')->with('registro', 'si');
     }
 }
