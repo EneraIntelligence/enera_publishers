@@ -8,6 +8,7 @@ use Hash;
 use Input;
 use Publishers\Http\Requests;
 use Publishers\Http\Controllers\Controller;
+use Publishers\Jobs\newAdminJob;
 use Validator;
 use Publishers\Administrator;
 
@@ -50,7 +51,7 @@ class AuthController extends Controller
     public function logout()
     {
         auth()->logout();
-        return redirect()->route('auth.index');
+        return redirect()->route('auth.index')->with('registro', 'no');
     }
 
     /**
@@ -62,8 +63,8 @@ class AuthController extends Controller
         App::setLocale('es');
         $validator = Validator::make(Input::all(), [
 //            'nombre' => array('regex:[^[a-zA-Z]+$|\s*[a-zA-Z]$]'),
-            'nombre' => array('regex:[^([a-z ñáéíóú]{2,60})$]'),
-            'apellido' => array('regex:[^([a-z ñáéíóú]{2,60})$]'),
+            'nombre' => array('regex:[^([a-zA-Z ñáéíóú]{2,60})$]'),
+            'apellido' => array('regex:[^([a-zA-Z ñáéíóú]{2,60})$]'),
             'email' => 'required|email|max:250',
             'password' => 'required|alpha_num|min:8|max:16',
 //            'estado' => 'required|max:250|alpha',
@@ -74,13 +75,23 @@ class AuthController extends Controller
             $password = Hash::make(Input::get('password')); //encrypta la contraseña
 //            dd($password);
 //  consulta que guarda el documento en mongo
-            Administrator::create(array('name' => ['first' => Input::get('nombre'), 'last' => Input::get('apellido')],
+            $newAdmin= Administrator::create(array('name' => ['first' => Input::get('nombre'), 'last' => Input::get('apellido')],
                 'email' => Input::get('email'), 'password' => $password,
 //                'location'=>['country'=>'mexico','state'=>Input::get('estado'),'city'=>Input::get('ciudad')],
                 'rol_id' => 'usuario', 'status' => 'block'
             ));
-//            echo 'se guardo';
-            return redirect()->route('auth.index')->with('success', 'registro-success');
+            if($newAdmin){
+                echo 'se guardo';
+                $this->dispatch(new newAdminJob([
+                    'session' => session('_token'),
+                    'nombre' => Input::get('nombre'),
+                    'apellido' => Input::get('apellido'),
+                    'email' => Input::get('email')
+                ]));
+                return redirect()->route('auth.index')->with('success', 'registro-success');
+            }
+
+
         } else {
             return redirect()->route('auth.index')->withErrors($validator);
         }
@@ -92,5 +103,10 @@ class AuthController extends Controller
         echo Input::get('register_Estado');
         echo Input::get('register_munucipio');
         dd('hola prueba');*/
+    }
+
+    public function register()
+    {
+        return redirect()->route('auth.index')->with('registro', 'si');
     }
 }

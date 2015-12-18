@@ -22,7 +22,14 @@
             <!-- altair admin login page -->
     {!! HTML::style('assets/css/login_page.min.css') !!}
     {!! HTML::style('assets/css/main.min.css') !!}
-
+    <style>
+        span {
+            list-style: none;
+        }
+        ul {
+            list-style: none;
+        }
+    </style>
 </head>
 <body class="login_page">
     {{  $registro = ''}}
@@ -51,14 +58,15 @@
             <div class="uk-grid" data-uk-grid-margin>
                 <div class="uk-width-medium-1-1">
                     <div class="parsley-row">
-                        <div class="md-input-wrapper">
-                            <label for="email">Email <span class="req"></span></label>
-                            <input data-parsley-type="email" id="email" name="email" required
-                                   data-parsley-trigger="change" class="md-input" data-parsley-id="1"
+                        <label for="email">Email <span class="req"></span></label>
+                        {{--<div class="md-input-wrapper md-input-filled md-input-wrapper-danger">--}}
+                            {{--<input data-parsley-type="email" id="email" name="email" required
+                                   data-parsley-trigger="change" class="md-input"
                                    data-parsley-type-message="ingresa un correo valido"
-                                   data-parsley-required-message="Ingresa tu correo"/>
-                        </div>
-                        <div class="parsley-errors-list filled" id="parsley-id-4">
+                                   data-parsley-required-message="Ingresa tu correo"/>--}}
+                            <input type="email" name="email" data-parsley-trigger="change" required  class="md-input" />
+                        {{--</div>--}}
+                        <div class="parsley-errors-list filled" id="parsley-id-6">
                             @foreach($errors->get('email') as $m)
                                 <span class="parsley-type">{{ $m }}</span>
                             @endforeach

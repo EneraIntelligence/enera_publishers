@@ -61,7 +61,6 @@ Route::group(['middleware' => ['auth', 'preview']], function () {
 
     Route::match(['get', 'post'], 'logout', ['as' => 'auth.logout', 'uses' => 'AuthController@logout']);
 
-
     Route::group([], function () {
         Route::match(['get', 'post'], 'profile_edit', ['as' => 'edit.profile', 'uses' => 'UserController@editProfile']);
         Route::match(['get', 'post'], 'profile_pass', ['as' => 'edit.pass', 'uses' => 'UserController@editPass']);
@@ -72,6 +71,7 @@ Route::group(['middleware' => 'auth.ready'], function () {
     Route::get('login', ['as' => 'auth.index', 'uses' => 'AuthController@index']);
     Route::post('login', ['as' => 'auth.login', 'uses' => 'AuthController@login']);
     Route::post('signUp', ['as' => 'auth.signUp', 'uses' => 'AuthController@signUp']);
+    Route::get('register', ['as' => 'auth.register', 'uses' => 'AuthController@register']);
 });
 
 

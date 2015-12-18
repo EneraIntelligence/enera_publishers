@@ -18,7 +18,7 @@
     </div>
 
 
-    <div class="uk-grid step2-field banner-link">
+    <div class="uk-grid step2-field banner-link like">
         <div class="uk-width-medium-1-1 parsley-row">
             <label for="banner_link">Link<span class="req">*</span> - incluyendo http:// ó https://</label>
             <input type="text" name="banner_link" id="banner_link" data-parsley-url="true" required class="md-input" />
@@ -300,7 +300,7 @@
         </div>
 
 
-        <div class="uk-width-medium-1-2 uk-small-width-1-1 step2-field banner banner-link captcha mailing-list video">
+        <div class="uk-width-medium-1-2 uk-small-width-1-1 step2-field like banner-link captcha mailing-list video">
             <img style="max-height:200px" id="image-crop" class="uk-align-center banner-1" src="http://placehold.it/600x602?text=600x602" alt="">
 
             <div class="parsley-errors-list filled banner-1-errors"></div>
@@ -316,7 +316,7 @@
 
 
 
-        <div class="uk-width-medium-1-2 uk-small-width-1-1 step2-field  banner banner-link captcha mailing-list video">
+        <div class="uk-width-medium-1-2 uk-small-width-1-1 step2-field  like banner-link captcha mailing-list video">
 
             <img style="max-height:200px" class="uk-align-center banner-2" src="http://placehold.it/684x864?text=684x864" alt="">
             <div class="parsley-errors-list filled banner-2-errors"></div>

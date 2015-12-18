@@ -151,6 +151,8 @@ create_campaign_helper =
 
         //div to receive any possible error
         var errorDiv = $(previewId + "-errors");
+        errorDiv.html('');
+
         var inputId = "#" + previewId.substring(1, previewId.length);
         console.log("inputId: " + inputId);
         var inputField = $(inputId);

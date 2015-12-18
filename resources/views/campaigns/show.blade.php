@@ -120,15 +120,17 @@
                                                     <li>
                                                         <div class="md-list-content">
                                                             <span class="md-list-heading azul">Rango de Edad</span>
-                                                            <span class="uk-text-small uk-text-muted">{{$cam->filters['age'][0].' a '.$cam->filters['age'][1]}} </span>
+                                                            {{--<span class="uk-text-small uk-text-muted">{{  $cam->filters['age'][0].' a '.$cam->filters['age'][1]}} </span>--}}
+                                                            <span class="uk-text-small uk-text-muted">{{ isset($cam->filters['age'][0])? $cam->filters['age'][0].' a '.$cam->filters['age'][1] :'no definido'   }} </span>
                                                         </div>
                                                     </li>
                                                     <li>
                                                         <div class="md-list-content">
                                                             <span class="md-list-heading azul">Generos</span>
                                                                     <span class="uk-text-small uk-text-muted">
-                                                                        {{ trans_choice('gender.'.$cam->filters['gender'][0],1) }}
-                                                                        , {{ isset($filters['gender'][1]) ? trans_choice('gender.'.$cam->filters['gender'][1],1):'' }}
+                                                                        {{--{{ trans_choice('gender.'.$cam->filters['gender'][0],1) }}--}}
+                                                                        {{ isset($filters['gender'][1]) ? trans_choice('gender.'.$cam->filters['gender'][0],1):'no definido' }}
+                                                                        , {{ isset($filters['gender'][1]) ? trans_choice('gender.'.$cam->filters['gender'][1],1):'no definido' }}
                                                                     </span>
                                                             {{--{{$filters['gender'][0].',  '.$filters['gender'][1]}}--}}
                                                         </div>
@@ -136,19 +138,27 @@
                                                     <li>
                                                         <div class="md-list-content">
                                                             <span class="md-list-heading azul">Dias</span>
-                                                                    <span class="uk-text-small uk-text-muted">
-                                                                        @foreach($cam->filters['week_days'] as $dia)
-                                                                            {{ trans('days.'.$dia) }},
-                                                                        @endforeach
-                                                                    </span>
+                                                            <span class="uk-text-small uk-text-muted">
+                                                                @if(isset($cam->filters['week_days'] ))
+                                                                    @foreach($cam->filters['week_days'] as $dia)
+                                                                        {{ trans('days.'.$dia) }},
+                                                                    @endforeach
+                                                                @else
+                                                                    no definido
+                                                                @endif
+                                                            </span>
                                                         </div>
                                                     </li>
                                                     <li>
                                                         <div class="md-list-content">
                                                             <span class="md-list-heading azul">Horario</span>
                                                                     <span class="uk-text-small uk-text-muted">
-                                                                        {{ $cam->filters['day_hours'][0].':00' }}
-                                                                        a {{ $cam->filters['day_hours'][count($cam->filters['day_hours'])-1].':00' }}
+                                                                        @if(isset($cam->filters['day_hours']))
+                                                                            {{ $cam->filters['day_hours'][0].':00' }}
+                                                                            a {{ $cam->filters['day_hours'][count($cam->filters['day_hours'])-1].':00' }}
+                                                                        @else
+                                                                            no se definio horario
+                                                                        @endif
                                                                     </span>
                                                         </div>
                                                     </li>
@@ -156,7 +166,7 @@
                                                     <li>
                                                         <div class="md-list-content azul">
                                                             <span class="md-list-heading">Usuario unico </span>
-                                                            <span class="uk-text-small uk-text-muted">{{ $cam->filters['unique_user']?'SI':'NO' }}</span>
+                                                            <span class="uk-text-small uk-text-muted">{{ isset($cam->filters['unique_user'])?'SI':'NO' }}</span>
                                                         </div>
                                                     </li>
                                                     <li>
@@ -168,7 +178,7 @@
                                                     <li>
                                                         <div class="md-list-content azul">
                                                             <span class="md-list-heading">Meta de interacciones </span>
-                                                            <span class="uk-text-small uk-text-muted">{{ $cam->filters['max_interactions'] }}</span>
+                                                            <span class="uk-text-small uk-text-muted">{{ isset($cam->filters['max_interactions'])?$cam->filters['max_interactions']:'no definido' }}</span>
                                                         </div>
                                                     </li>
                                                 </ul>
@@ -182,7 +192,7 @@
                                                      style="color: #1e88e5;float: left">
                                                     Imagen chica :
                                                     <a id="link" class=""
-                                                       data-uk-modal="{target:'#modal_lightbox-1'}">{!! $cam->content['image'] !!}</a>
+                                                       data-uk-modal="{target:'#modal_lightbox-1'}">{!! isset($cam->content['image'])?$cam->content['image']:'no hay imagen' !!}</a>
                                                     <div class="uk-modal" id="modal_lightbox-1">
                                                         <div class="uk-modal-dialog uk-modal-dialog-lightbox">
                                                             <button type="button"
@@ -197,7 +207,7 @@
                                                     Imagen grande :
                                                     <a id="link" class=""
                                                        data-uk-modal="{target:'#modal_lightbox-2'}">
-                                                        {!! $cam->content['image'] !!}</a>
+                                                        {!! isset($cam->content['image'])?$cam->content['image']:'no hay imagen' !!}</a>
                                                     <div class="uk-modal" id="modal_lightbox-2">
                                                         <div class="uk-modal-dialog uk-modal-dialog-lightbox">
                                                             <button type="button"
@@ -212,8 +222,8 @@
                                                 <div class="md-list-content uk-width-large-1-2"
                                                      style=" color: #1e88e5;">
                                                     Link a redireccionar :
-                                                    <a id="link" class="" href="http://{{ $cam->content['link'] }}"
-                                                       target="_blank">{!! $cam->content['link'] !!}</a>
+                                                    <a id="link" class="" href="http://{{ isset($cam->content['link'])? $cam->content['link']:'no definido' }}"
+                                                       target="_blank">{!! isset($cam->content['link'])? $cam->content['link']:'no hay una definida www.enera.com ' !!}</a>
                                                 </div>
                                             @endif
                                             @if($cam->interaction['name'] == 'captcha')
@@ -222,13 +232,13 @@
                                                     Imagen Captcha :
                                                     <a id="link" class=""
                                                        data-uk-modal="{target:'#captcha-image'}">
-                                                        {!! $cam->content['cover_path'] !!}</a>
+                                                        {!! isset($cam->content['cover_path'])?$cam->content['cover_path']:'imagen no definida' !!}</a>
                                                     <div class="uk-modal" id="captcha-image">
                                                         <div class="uk-modal-dialog uk-modal-dialog-lightbox">
-                                                            <button type="button"
-                                                                    class="uk-modal-close uk-close uk-close-alt"></button>
-                                                            <img src="{!! URL::asset('images/'.$cam->content['cover_path']) !!}"
-                                                                 alt="{{$cam->content['cover_path']}}"/>
+                                                            <button type="button" class="uk-modal-close uk-close uk-close-alt"></button>
+                                                            @if(isset($cam->content['cover_path']))
+                                                                <img src="{!! URL::asset('images/'.$cam->content['cover_path']) !!}" alt="{{$cam->content['cover_path']}}"/>
+                                                            @endif
                                                             <div class="uk-modal-caption">Lorem</div>
                                                         </div>
                                                     </div>
@@ -237,16 +247,18 @@
                                                      style="color: #1e88e5;float: left">
                                                     Texto Captcha :
                                                     <a id="link" class="">
-                                                        {!! $cam->content['captcha'] !!}</a>
+                                                        {!!isset($cam->content['captcha'])?  $cam->content['captcha']:'texto no definido' !!}</a>
                                                 </div>
                                             @endif
                                             @if($cam->interaction['name'] == 'mailing_list')
+                                                @if(isset($cam->content['image']))
                                                 <div class="md-list-heading uk-width-large-1-2"
                                                      style="color: #1e88e5;float: left">
                                                     Imagen Maling List :
                                                     <a id="link" class=""
                                                        data-uk-modal="{target:'#mailing-image'}">
-                                                        {!! $cam->content['image'] !!}</a>
+                                                       {!! $cam->content['image'] !!}
+                                                    </a>
                                                     <div class="uk-modal" id="mailing-image">
                                                         <div class="uk-modal-dialog uk-modal-dialog-lightbox">
                                                             <button type="button"
@@ -257,6 +269,11 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                @else
+                                                <div class="md-list-heading uk-width-large-1-2" style="color: #1e88e5;float: left">
+                                                    no hay imagen definida
+                                                </div>
+                                                @endif
 
                                                 <!-- create mailing campaign button start -->
                                                 <div class="uk-grid uk-margin-medium-top" data="uk-grid-margin">
@@ -273,41 +290,54 @@
 
                                             @endif
                                             @if($cam->interaction['name'] == 'survey')
-                                                <div class="md-list-heading uk-width-large-1"
-                                                     style="color: #1e88e5;float: left">
-                                                    Imagen Encuesta :
-                                                    <a id="link" class=""
-                                                       data-uk-modal="{target:'#survey-image'}">
-                                                        {!! $cam->content['image'] !!}</a>
-                                                    <div class="uk-modal" id="survey-image">
-                                                        <div class="uk-modal-dialog uk-modal-dialog-lightbox">
-                                                            <button type="button"
-                                                                    class="uk-modal-close uk-close uk-close-alt"></button>
-                                                            <img src="{!! URL::asset('images/'.$cam->content['image']) !!}"
-                                                                 alt="{{$cam->content['cover_path']}}"/>
-                                                            <div class="uk-modal-caption">Lorem</div>
+                                                @if(isset($cam->content['image']))
+                                                    <div class="md-list-heading uk-width-large-1"
+                                                         style="color: #1e88e5;float: left">
+                                                        Imagen Encuesta :
+                                                        <a id="link" class=""
+                                                           data-uk-modal="{target:'#survey-image'}">
+                                                            {!! $cam->content['image'] !!}</a>
+                                                        <div class="uk-modal" id="survey-image">
+                                                            <div class="uk-modal-dialog uk-modal-dialog-lightbox">
+                                                                <button type="button"
+                                                                        class="uk-modal-close uk-close uk-close-alt"></button>
+                                                                <img src="{!! URL::asset('images/'.$cam->content['image']) !!}"
+                                                                     alt="{{$cam->content['cover_path']}}"/>
+                                                                <div class="uk-modal-caption">Lorem</div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                @else
+                                                    <div>
+                                                        no hay imagen que mostrar
+                                                    </div>
+                                                @endif
+                                            <!------- informacion de survey  ---->
                                                 <div class="md-list-content uk-width-large-1"
                                                      style=" color: #1e88e5;">
-                                                    @foreach($cam->content['survey'] as $key => $con)
-                                                        <span>Pregunta {!! $key[1] !!}
-                                                            : &nbsp;{!! $con['question'] !!}</span>
-                                                        <br>
-                                                        @foreach($con['answers'] as $key => $a)
-                                                            <ul>
-                                                                <li class="p"><p>Respuesta {!! $key[1] !!}
-                                                                        : {!! $a !!}</p>
-                                                            </ul>
+                                                    @if(isset($cam->content['survey']))
+                                                        @foreach($cam->content['survey'] as $key => $con)
+                                                            <span>Pregunta {!! $key[1] !!}
+                                                                : &nbsp;{!! $con['question'] !!}</span>
+                                                            <br>
+                                                            @foreach($con['answers'] as $key => $a)
+                                                                <ul>
+                                                                    <li class="p"><p>Respuesta {!! $key[1] !!}
+                                                                            : {!! $a !!}</p>
+                                                                </ul>
+                                                            @endforeach
                                                         @endforeach
-                                                    @endforeach
+                                                    @else
+                                                    <div>
+                                                        no hay preguntas que mostrar
+                                                    </div>
+                                                    @endif
 
                                                 </div>
                                             @endif
                                             @if($cam->interaction['name'] == 'video')
-                                                <div class="md-list-heading uk-width-large-1-2"
-                                                     style="color: #1e88e5;float: left">
+                                                <div class="md-list-heading uk-width-large-1-2" style="color: #1e88e5;float: left">
+                                                    @if(isset($cam->content['video']))
                                                     Video :
                                                     <a id="link" class=""
                                                        data-uk-modal="{target:'#video'}">
@@ -324,6 +354,11 @@
                                                             {{--<div class="uk-modal-caption">Lorem</div>--}}
                                                         </div>
                                                     </div>
+                                                    @else
+                                                    <span>
+                                                        no hay video asignado
+                                                    </span>
+                                                    @endif
                                                 </div>
                                             @endif
                                         </div>
