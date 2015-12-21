@@ -59,7 +59,6 @@ class AuthController extends Controller
      */
     public function signUp()
     {
-//        dd(Input::all());
         App::setLocale('es');
         $validator = Validator::make(Input::all(), [
 //            'nombre' => array('regex:[^[a-zA-Z]+$|\s*[a-zA-Z]$]'),
@@ -73,41 +72,32 @@ class AuthController extends Controller
 /**     despues de las validaciones    **/
         if ($validator->passes()) {
             $confirmation_code = str_random(30);
+//            $data['aleatorio'] = uniqid(); //Genera un id único para identificar la cuenta a traves del correo.
             $password = Hash::make(Input::get('password')); //encrypta la contraseña
-//            dd($password);
-//  consulta que guarda el documento en mongo
+/***+*****  consulta que guarda el documento en mongo *************/
             $newAdmin= Administrator::create(array('name' => ['first' => Input::get('nombre'), 'last' => Input::get('apellido')],
                 'email' => Input::get('email'), 'password' => $password,
-//                'location'=>['country'=>'mexico','state'=>Input::get('estado'),'city'=>Input::get('ciudad')],
-                'rol_id' => 'usuario', 'status' => $confirmation_code
+                'rol_id' => 'usuario', 'status' => 'pending', 'codigo'=>$confirmation_code
             ));
+            //                'location'=>['country'=>'mexico','state'=>Input::get('estado'),'city'=>Input::get('ciudad')],
+/********** si el usuario se creo se llama el job para mandarle el correo de confirmacion ***************/
             if($newAdmin){
-//                echo 'se guardo';
-                $data['aleatorio'] = uniqid(); //Genera un id único para identificar la cuenta a traves del correo.
+                //se  crea un array con los datos que se ocupan para formar el correo
                 $data['nombre']=Input::get('nombre');
                 $data['apellido']=Input::get('apellido');
                 $data['email']=Input::get('email');
-                $data['confirmation_code']=$confirmation_code;
-//            dd($data);
+                $data['confirmation_code']=$confirmation_code;  //codigo generado para validar el correo
+//                dd($data);
+                //se llama el job mandar correo confirmacion
                 $this->dispatch(new newAdminJob([
                     'session' => session('_token'),
                     $data
                 ]));
                 return redirect()->route('auth.index')->with('success', 'registro-success');
             }
-
-
         } else {
             return redirect()->route('auth.index')->withErrors($validator);
         }
-        /*echo Input::get('register_name');
-        echo Input::get('register_apellido');
-        echo Input::get('register_email');
-        echo Input::get('register_password');
-        echo Input::get('register_password_repeat');
-        echo Input::get('register_Estado');
-        echo Input::get('register_munucipio');
-        dd('hola prueba');*/
     }
 
     public function register()
@@ -117,12 +107,16 @@ class AuthController extends Controller
 
     public function verify($id)
     {
-
         echo 'verificando <br>';
-        $confirm = Administrator::where('confirmation_code','=',$id);
-
-        var_dump($confirm);
-        return 'verificando';
+        $confirm = Administrator::where('codigo','=',$id)->get();
+        if($confirm->count() > 0){
+            echo 'se activo';
+//            dd($confirm);
+            return redirect()->route('auth.index')->with('data', 'active');
+        }else{
+            return redirect()->route('auth.index')->with('data','invalido');
+        }
+//        return 'verificando';
 
     }
 }

@@ -41,6 +41,16 @@
                 <div style="width: 290px;height: 100px; display:inline-block;text-align:center;">
                     <img src="images/publisher.png" alt="">
                 </div>
+                @if(session('data')=='active')
+                    <div class="uk-alert uk-alert-success" style="padding-right:10px">
+                        <a href="#" class="uk-alert-close "></a>
+                        Tu cuenta ha sido activada.
+                    </div>
+                @elseif(session('data')=='invalido')
+                    <div class="uk-alert uk-alert-danger" style="padding-right:10px">
+                        <span class="uk-margin">Codigo invalido.</span>
+                    </div>
+                @endif
             </div>
             {!! Form::open(['route'=>'auth.login', 'class'=>'uk-form-stacked', 'id'=>'form_validation']) !!}
             @if( Session::has('error') )
@@ -285,8 +295,9 @@
 {!! HTML::script('bower_components/parsleyjs/dist/parsley.min.js') !!}
 {!! HTML::script('bower_components/parsleyjs/src/i18n/es.js') !!}
 {!! HTML::script('assets/js/pages/forms_validation.min.js') !!}
+
 <script>
-    //         load parsley config (altair_admin_common.js)
+
     var registro = '{!!  session('success') !!}';
     console.log(registro);
     if (registro) {
@@ -308,6 +319,7 @@
 //        $("#Rerror").show();
     }
 
+    //         load parsley config (altair_admin_common.js)
     altair_forms.parsley_validation_config();
     //        llamada al parsley
             $('#form_validation2').parsley();
