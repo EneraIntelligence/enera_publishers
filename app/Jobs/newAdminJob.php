@@ -2,21 +2,22 @@
 
 namespace Publishers\Jobs;
 
+use Mail;
 use Publishers\Jobs\Job;
 use Illuminate\Contracts\Bus\SelfHandling;
 
 class newAdminJob extends Job implements SelfHandling
 {
-    protected $data;
-    protected $email;
+    protected $data=array();
+    protected $correo;
+    protected $nombre;
 
-    /**
+    /**P
      * Create a new job instance.
-     *
+     * @param $data
      */
     public function __construct($data)
     {
-        //
         $this->data=$data;
     }
 
@@ -27,7 +28,14 @@ class newAdminJob extends Job implements SelfHandling
      */
     public function handle()
     {
-        //
+        $this->data=$this->data[0];
+        $correo=$this->data['email'];
+        $nombre=$this->data['nombre'];
 
+//        dd($this->data);
+        Mail::send('emails.verify',['data' => $this->data] , function ($message) use($correo,$nombre)   {
+            $message->from('notificacion@enera.mx', 'Enera Intelligence');
+            $message->to($correo, $nombre)->subject('Confirmacion de registro');
+        });
     }
 }
