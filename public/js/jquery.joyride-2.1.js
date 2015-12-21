@@ -163,6 +163,9 @@
       },
 
       nextTip: function(){
+            if(typeof settings.$li === 'undefined')
+              return;
+
             if (settings.$li.next().length < 1) {
             methods.end();
             } else if (settings.timer > 0) {
