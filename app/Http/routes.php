@@ -47,6 +47,8 @@ Route::group(['middleware' => ['auth', 'preview']], function () {
         Route::get('/', ['as' => 'index', 'uses' => 'UserController@index']);
         Route::get('/edit', ['as' => 'edit', 'uses' => 'UserController@edit']);
         Route::get('/charts', ['as' => 'charts', 'uses' => 'UserController@charts']);
+        /*Route::match(['get', 'post'], 'profile_edit', ['as' => 'edit.profile', 'uses' => 'UserController@editProfile']);
+        Route::match(['get', 'post'], 'profile_pass', ['as' => 'edit.pass', 'uses' => 'UserController@editPass']);*/
     });
 
     Route::group(['prefix' => 'wallet', 'as' => 'wallet::'], function () {
@@ -72,6 +74,7 @@ Route::group(['middleware' => 'auth.ready'], function () {
     Route::post('login', ['as' => 'auth.login', 'uses' => 'AuthController@login']);
     Route::post('signUp', ['as' => 'auth.signUp', 'uses' => 'AuthController@signUp']);
     Route::get('register', ['as' => 'auth.register', 'uses' => 'AuthController@register']);
+    Route::get('register/verify/{id}', ['as' => 'auth.verify', 'uses' => 'AuthController@verify']);
 });
 
 
