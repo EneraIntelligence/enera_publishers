@@ -121,7 +121,8 @@
                 <div id="menu_top" class="uk-float-left ">
                     <div class="uk-button-dropdown" data-uk-dropdown="{mode:'click'}" style="position: fixed; top: 13px; margin-left: 10px;">
                         <a href="#" class="top_menu_toggle" style="color: #FFFFff;">
-                            <i class="material-icons md-24" style="color: #FFFFff;">&#xE8F0;</i> <span class="uk-hidden-small">Publishers</span>
+                            <img src="{!! URL::asset('images/icons/icon_publisher.png') !!}" alt="Enera"
+                                 style="top: -0px; left: 0; position: relative;"> <span class="uk-hidden-small" style="top: 2px; position: relative;">Publishers</span>
                         </a>
 
                         <div class="uk-dropdown uk-dropdown-width-3" style="top: -20px;">
