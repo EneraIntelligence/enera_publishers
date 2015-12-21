@@ -14,7 +14,8 @@
         "league/flysystem-sftp": "^1.0",
         "guzzlehttp/guzzle": "~4.0",
         "barryvdh/laravel-dompdf": "0.6.*",
-        "jenssegers/agent": "^2.3"
+        "jenssegers/agent": "^2.3",
+        "anouar/paypalpayment": "~1.0"
 
     },
     "require-dev": {

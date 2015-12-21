@@ -173,7 +173,7 @@ class CampaignsController extends Controller
 
     private function storeSurvey($survey)
     {
-
+        return 'HOLA';
     }
 
     public function mailing($id, Request $request)

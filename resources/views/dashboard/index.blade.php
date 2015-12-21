@@ -33,14 +33,42 @@
         ::-webkit-scrollbar-thumb:hover {
             background-color: #aaa;
         }
-        #minimenu .minimenu:first-child{margin-top: 2px}
-        .minimenu{height:123px; box-sizing:border-box; line-height:115px; margin-top:15px}
-        .minimenu div{height: 100%;}
-        .minimenu div:first-child{text-align:center}
-        .minimenu div i{font-size:80px; margin-top:23px;}
-        .minimenu div:last-child{text-align: left}
-        .minimenu h5{margin:30px 0px 0px 0px; }
-        .minimenu span{margin:30px 0px 0px 0px; }
+
+        #minimenu .minimenu:first-child {
+            margin-top: 2px
+        }
+
+        .minimenu {
+            height: 123px;
+            box-sizing: border-box;
+            line-height: 115px;
+            margin-top: 15px
+        }
+
+        .minimenu div {
+            height: 100%;
+        }
+
+        .minimenu div:first-child {
+            text-align: center
+        }
+
+        .minimenu div i {
+            font-size: 80px;
+            margin-top: 23px;
+        }
+
+        .minimenu div:last-child {
+            text-align: left
+        }
+
+        .minimenu h5 {
+            margin: 30px 0px 0px 0px;
+        }
+
+        .minimenu span {
+            margin: 30px 0px 0px 0px;
+        }
 
     </style>
 @endsection
@@ -59,17 +87,23 @@
                     </div>
                     <div class="md-card ">
                         <div class="md-card-content">
-                            <div class="uk-float-right uk-margin-small-right"><span><i class="md-48 material-icons md-color-blue-600 uk-icon-large">phone_android</i></span></div>
+                            <div class="uk-float-right uk-margin-small-right"><span><i
+                                            class="md-48 material-icons md-color-blue-600 uk-icon-large">phone_android</i></span>
+                            </div>
                             <span class="uk-text-muted uk-text-small">Dispositivos </span>
                             <h2 class="uk-margin-remove"><span id="myTargetElement" class="countUpMe">0</span></h2>
                         </div>
                         <div class="md-card-content">
-                            <div class="uk-float-right uk-margin-small-right"><span><i class="md-48 material-icons md-color-red-A700 uk-icon-large">pin_drop</i></span> </div>
+                            <div class="uk-float-right uk-margin-small-right"><span><i
+                                            class="md-48 material-icons md-color-red-A700 uk-icon-large">pin_drop</i></span>
+                            </div>
                             <span class="uk-text-muted uk-text-small">Sitios </span>
                             <h2 class="uk-margin-remove"><span id="myTargetElement2" class="countUpMe">0</span></h2>
                         </div>
                         <div class="md-card-content">
-                            <div class="uk-float-right uk-margin-small-right"><span><i class="md-48 material-icons md-color-deep-orange-500 uk-icon-large">insert_invitation</i></span></div>
+                            <div class="uk-float-right uk-margin-small-right"><span><i
+                                            class="md-48 material-icons md-color-deep-orange-500 uk-icon-large">insert_invitation</i></span>
+                            </div>
                             <span class="uk-text-muted uk-text-small">Campañas </span>
                             <h2 class="uk-margin-remove"><span id="myTargetElement3" class="countUpMe">0</span></h2>
                         </div>
@@ -99,7 +133,8 @@
                                 </div>
                                 {{------------- divicion segunda colubna uk-panel-space---------------}}
                                 <div class="uk-width-medium-1-2 uk-float-right">
-                                    <div class="uk-width-medium-1-1  uk-comment-body" style="height: 100px"> {{-- uk-panel-box --}}
+                                    <div class="uk-width-medium-1-1  uk-comment-body"
+                                         style="height: 100px"> {{-- uk-panel-box --}}
                                         <i class="md-36 material-icons">chrome_reader_mode</i>
                                     <span>‪#‎México‬ es líder regional en tráfico en internet móvil así como inversión
                                         publicitaria móvil. Enera Intelligence</span>
@@ -129,7 +164,8 @@
                                             </div>
                                             <div class="md-list-content">
                                                 <span class="md-list-heading">Android</span>
-                                                <span class="uk-text-small uk-text-muted">{{$osStats['android']}} Android vistos en la Red Enera</span>
+                                                <span class="uk-text-small uk-text-muted">{{ isset($osStats['android'])?$osStats['android']:0 }}
+                                                    Android vistos en la Red Enera</span>
                                             </div>
                                         </li>
                                         <li>
@@ -149,7 +185,8 @@
                                             </div>
                                             <div class="md-list-content">
                                                 <span class="md-list-heading">Windows Phone</span>
-                                                <span class="uk-text-small uk-text-muted">{{$osStats['windows']}} Windows Phones  vistos en la Red Enera</span>
+                                                <span class="uk-text-small uk-text-muted">{{$osStats['windows']}}
+                                                    Windows Phones  vistos en la Red Enera</span>
                                             </div>
                                         </li>
                                         <li>
@@ -159,7 +196,8 @@
                                             </div>
                                             <div class="md-list-content">
                                                 <span class="md-list-heading">Otros</span>
-                                                <span class="uk-text-small uk-text-muted">{{$osStats['otro']}} Dipositivos vistos de otras marcas </span>
+                                                <span class="uk-text-small uk-text-muted">{{$osStats['otro']}}
+                                                    Dipositivos vistos de otras marcas </span>
                                             </div>
                                         </li>
                                     </ul>
@@ -174,15 +212,17 @@
     </div>
 
     <!-- TOUR Content -->
-    <ol id="joyRideTipContent" >
+    <ol id="joyRideTipContent">
         <li data-button="Siguiente">
             <h2>Bienvenido a Enera</h2>
             <p>Publica tu primer campaña en pocos minutos.</p>
         </li>
-        <li data-id="fab-create" data-text="Siguiente" class="tour-bottom-right" data-options="nubPosition: right; tipLocation: right;">
+        <li data-id="fab-create" data-text="Siguiente" class="tour-bottom-right"
+            data-options="nubPosition: right; tipLocation: right;">
             <h4>Haz click para empezar.</h4>
         </li>
-        <li data-id="funds-btn" data-button="Siguiente" class="tour-bottom-right" data-options="nubPosition: right; tipLocation: right;">
+        <li data-id="funds-btn" data-button="Siguiente" class="tour-bottom-right"
+            data-options="nubPosition: right; tipLocation: right;">
             <h4>Añade fondos</h4>
         </li>
 
@@ -233,17 +273,17 @@
         var tour;
         window.addEventListener('load', function () {
             tour = $('#joyRideTipContent').joyride({
-                autoStart : true,
-                postStepCallback : function (index, tip) {
+                autoStart: true,
+                postStepCallback: function (index, tip) {
                     if (index == 2) {
                         $(this).joyride('set_li', false, 1);
                     }
                 },
-                modal:true,
+                modal: true,
                 expose: true,
-                scroll:false,
-                cookieMonster:true,
-                cookieName:'EneraPublishers_test'
+                scroll: false,
+                cookieMonster: true,
+                cookieName: 'EneraPublishers_test'
             });
         }, false);
 
