@@ -72,21 +72,26 @@ class AuthController extends Controller
         ]);
 /**     despues de las validaciones    **/
         if ($validator->passes()) {
+            $confirmation_code = str_random(30);
             $password = Hash::make(Input::get('password')); //encrypta la contraseña
 //            dd($password);
 //  consulta que guarda el documento en mongo
             $newAdmin= Administrator::create(array('name' => ['first' => Input::get('nombre'), 'last' => Input::get('apellido')],
                 'email' => Input::get('email'), 'password' => $password,
 //                'location'=>['country'=>'mexico','state'=>Input::get('estado'),'city'=>Input::get('ciudad')],
-                'rol_id' => 'usuario', 'status' => 'block'
+                'rol_id' => 'usuario', 'status' => $confirmation_code
             ));
             if($newAdmin){
-                echo 'se guardo';
+//                echo 'se guardo';
+                $data['aleatorio'] = uniqid(); //Genera un id único para identificar la cuenta a traves del correo.
+                $data['nombre']=Input::get('nombre');
+                $data['apellido']=Input::get('apellido');
+                $data['email']=Input::get('email');
+                $data['confirmation_code']=$confirmation_code;
+//            dd($data);
                 $this->dispatch(new newAdminJob([
                     'session' => session('_token'),
-                    'nombre' => Input::get('nombre'),
-                    'apellido' => Input::get('apellido'),
-                    'email' => Input::get('email')
+                    $data
                 ]));
                 return redirect()->route('auth.index')->with('success', 'registro-success');
             }
@@ -108,5 +113,16 @@ class AuthController extends Controller
     public function register()
     {
         return redirect()->route('auth.index')->with('registro', 'si');
+    }
+
+    public function verify($id)
+    {
+
+        echo 'verificando <br>';
+        $confirm = Administrator::where('confirmation_code','=',$id);
+
+        var_dump($confirm);
+        return 'verificando';
+
     }
 }

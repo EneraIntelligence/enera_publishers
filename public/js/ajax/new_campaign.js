@@ -4,7 +4,7 @@ $(function() {
     // page onload functions
 
     $("#fab-open").click(function( event ) {
-        if(tour!=null)
+        if(typeof tour !== "undefined")
         {
             setTimeout(function()
             {
@@ -14,7 +14,7 @@ $(function() {
     });
 
     $("#funds-btn").click(function( event ) {
-        if(tour!=null)
+        if(typeof tour !== "undefined")
         {
             $('#joyRideTipContent').joyride('nextTip');
         }
