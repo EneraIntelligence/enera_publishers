@@ -1,6 +1,11 @@
 @extends('layouts.main')
 
 @section('head_scripts')
+
+    {{--joyride-2.1--}}
+    {!! HTML::style('css/joyride-2.1.css') !!}
+
+
     <style type="text/css">
         body {
             scrollbar-arrow-color: #000066;
@@ -168,9 +173,29 @@
         </div>
     </div>
 
+    <!-- TOUR Content -->
+    <ol id="joyRideTipContent" >
+        <li data-button="Siguiente">
+            <h2>Bienvenido a Enera</h2>
+            <p>Publica tu primer campaña en pocos minutos.</p>
+        </li>
+        <li data-id="fab-create" data-text="Siguiente" class="tour-bottom-right" data-options="nubPosition: right; tipLocation: right;">
+            <h4>Haz click para empezar.</h4>
+        </li>
+        <li data-id="funds-btn" data-button="Siguiente" class="tour-bottom-right" data-options="nubPosition: right; tipLocation: right;">
+            <h4>Añade fondos</h4>
+        </li>
+
+    </ol>
+
 @stop
 
 @section('scripts')
+    {{--TOUR scripts--}}
+    {!! HTML::script('js/jquery.cookie.js') !!}
+    {!! HTML::script('js/modernizer.mq.js') !!}
+    {!! HTML::script('js/jquery.joyride-2.1.js') !!}
+
     {!! HTML::script('bower_components/countUp.js/countUp.js') !!}
 
     <script>
@@ -200,6 +225,27 @@
                 type: 'pie',
             }
         });
+
+    </script>
+
+    {{--TOUR--}}
+    <script>
+        var tour;
+        window.addEventListener('load', function () {
+            tour = $('#joyRideTipContent').joyride({
+                autoStart : true,
+                postStepCallback : function (index, tip) {
+                    if (index == 2) {
+                        $(this).joyride('set_li', false, 1);
+                    }
+                },
+                modal:true,
+                expose: true,
+                scroll:false,
+                cookieMonster:true,
+                cookieName:'EneraPublishers_test'
+            });
+        }, false);
 
     </script>
 @stop

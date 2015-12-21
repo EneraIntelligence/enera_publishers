@@ -80,14 +80,14 @@
 
     <div class="md-fab-wrapper md-fab-speed-dial" id="fab-create">
 
-        <a class="md-fab md-fab-danger" href="#">
+        <a class="md-fab md-fab-danger">
             <i id="fab-open" class="material-icons"></i>
         </a>
         <div class="md-fab-wrapper-small">
 
             <a class="md-fab md-fab-small md-fab-primary" id="note_add" data-uk-tooltip="{pos:'left'}"
                title="Crear campaña"> <i class="material-icons">event</i> </a>
-            <a class="md-fab md-fab-small md-fab-success" href="{!! URL::route('budget::index') !!}"
+            <a class="md-fab md-fab-small md-fab-success" id="funds-btn" href="{!! URL::route('budget::index') !!}"
                data-uk-tooltip="{pos:'left'}" title="Agregar fondos">
                 <i class="uk-icon-usd"></i>
             </a>
@@ -119,7 +119,7 @@
                 {{--</a>--}}
 
                 <div id="menu_top" class="uk-float-left ">
-                    <div class="uk-button-dropdown" data-uk-dropdown="{mode:'click'}" style="position: fixed; top: 13px;">
+                    <div class="uk-button-dropdown" data-uk-dropdown="{mode:'click'}" style="position: fixed; top: 13px; margin-left: 10px;">
                         <a href="#" class="top_menu_toggle" style="color: #FFFFff;">
                             <i class="material-icons md-24" style="color: #FFFFff;">&#xE8F0;</i> <span class="uk-hidden-small">Publishers</span>
                         </a>
