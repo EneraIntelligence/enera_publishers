@@ -21,6 +21,7 @@ Route::group(['middleware' => ['auth', 'preview']], function () {
         Route::get('/new', ['as' => 'create', 'uses' => 'CampaignsController@create']);
         Route::post('/save_item', ['as' => 'save_item', 'uses' => 'CampaignsController@saveItem']);
         Route::post('/send_mailing', ['as' => 'send_mailing', 'uses' => 'CampaignsController@sendMailing']);
+        Route::get('/deposits', ['as' => 'deposits', 'uses' => 'CampaignsController@deposits']);
 
         Route::group(['middleware' => 'ajax'], function () {
             Route::match(['post', 'get'], '/store', ['as' => 'store', 'uses' => 'CampaignsController@store']);
@@ -59,6 +60,7 @@ Route::group(['middleware' => ['auth', 'preview']], function () {
         Route::get('/', ['as' => 'index', 'uses' => 'BudgetController@index']);
         Route::get('/deposits', ['as' => 'deposits', 'uses' => 'BudgetController@deposits']);
         Route::get('/invoices/{id}', ['as' => 'invoices', 'uses' => 'BudgetController@invoices']);
+        Route::get('/conekta', ['as' => 'conekta', 'uses' => 'ConektaController@index']);
     });
 
     Route::match(['get', 'post'], 'logout', ['as' => 'auth.logout', 'uses' => 'AuthController@logout']);
