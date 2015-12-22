@@ -30,7 +30,7 @@ class newAdminJob extends Job implements SelfHandling
     {
         $this->data=$this->data[0];
         $correo=$this->data['email'];
-        $nombre=$this->data['nombre'];
+        $nombre=$this->data['nombre'].' '.$this->data['apellido'];
 
 //        dd($this->data);
         Mail::send('emails.verify',['data' => $this->data] , function ($message) use($correo,$nombre)   {
