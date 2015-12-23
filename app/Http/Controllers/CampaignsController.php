@@ -46,7 +46,8 @@ class CampaignsController extends Controller
 
         $campaigns = Auth::user()->campaigns()->latest()->get();
         $subcampaigns = Auth::user()->subcampaigns()->latest()->get();
-
+//        dd($subcampaigns);
+//        dd($campaigns);
         return view('campaigns.index', ['campaigns' => $campaigns, 'subcampaigns' => $subcampaigns, 'user' => Auth::user()]);
     }
 
@@ -477,6 +478,36 @@ class CampaignsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function porcentaje($status)
+    {
+        switch ($status) {
+            case 'pending':
+                $porcentaje = 0.0;
+                break;
+            case 'rejected':
+                $porcentaje = 0.0;
+                break;
+            case 'ended':
+                $ended = new DateTime($campaign->history->where('status', 'ended')->first()->date);
+                $total = $start->diff($end);
+                $diff = $start->diff($ended);
+                $porcentaje = $diff->format('%a') / $total->format('%a');
+                break;
+            case 'active':
+                $today = new DateTime();
+                $total = $start->diff($end);
+                $diff = $start->diff($today);
+                $porcentaje = $diff->format('%a') / $total->format('%a');
+                break;
+            case 'canceled':
+                $canceled = new DateTime($campaign->history->where('status', 'canceled')->first()->date);
+                $total = $start->diff($end);
+                $diff = $start->diff($canceled);
+                $porcentaje = $diff->format('%a') / $total->format('%a');
+                break;
+        }
     }
 
     /**

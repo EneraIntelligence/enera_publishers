@@ -186,9 +186,7 @@
                                                 <div class="interaction-icon uk-width-large-1-10 uk-hidden-small uk-width-medium-1-4 uk-hidden-medium">
                                                     <div class="uk-vertical-align"  id="name"
                                                          data-uk-tooltip="{cls:'long-text'}"
-                                                         title="{{$campaign->interaction['name']}} - {!! $campaign->status !!}"
-                                                         >
-
+                                                         title="{{$campaign->interaction['name']}} - {!! $campaign->status !!}">
                                                         <img src="{!! URL::asset('images/icons/'.
                                                                 CampaignStyle::getCampaignIcon( $campaign->interaction['name']
                                                              ) ) !!}" alt="">
@@ -224,9 +222,11 @@
                                                         </div>
 
                                                         <div class="uk-width-5-6 margin-10 top-bottom-20" >
-                                                            <div class="uk-progress uk-progress-warning">
-                                                                <div class="uk-progress-bar" style="width: 40%;">$100
-                                                                </div>
+                                                            <div class="uk-progress uk-progress-warning" style="z-index: -5">
+                                                                <div class="uk-progress-bar" style="width: {{$campaign->balance['current']!=0 ?($campaign->balance['current']*100)/$campaign->balance['init']:'0' }}%;"> </div>
+                                                            </div>
+                                                            <div style="z-index:10; text-align:center; margin-top:-35px;">
+                                                                <span style="margin:auto; color: #000; ">${{ $campaign->balance['current']!=0?$campaign->balance['current']:'0' }}</span>
                                                             </div>
                                                         </div>
 

@@ -33,6 +33,12 @@
 </head>
 <body class="login_page">
     {!! $registro = '' !!}
+{{--    {{ session('registro') ? $registro=session('registro') : '' }}--}}
+    @if(null!=session('registro'))
+        <div style="display: none">
+            {!! $registro=session('registro')!!}
+        </div>
+    @endif
 <div class="login_page_wrapper">
 
     <div class="md-card" id="login_card">
