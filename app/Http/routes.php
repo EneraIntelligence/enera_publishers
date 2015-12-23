@@ -60,6 +60,8 @@ Route::group(['middleware' => ['auth', 'preview']], function () {
         Route::get('/', ['as' => 'index', 'uses' => 'BudgetController@index']);
         Route::get('/deposits', ['as' => 'deposits', 'uses' => 'BudgetController@deposits']);
         Route::get('/invoices/{id}', ['as' => 'invoices', 'uses' => 'BudgetController@invoices']);
+
+        Route::get('/paypal', ['as' => 'paypal', 'uses' => 'PayPalPaymentController@index']);
         Route::get('/conekta', ['as' => 'conekta', 'uses' => 'ConektaController@index']);
     });
 

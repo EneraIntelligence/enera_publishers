@@ -175,7 +175,8 @@
                                             </div>
                                             <div class="md-list-content">
                                                 <span class="md-list-heading">Iphone</span>
-                                                <span class="uk-text-small uk-text-muted">{{isset($osStats['mac']) ? $osStats:0}} Iphones vistos en la Red Enera</span>
+                                                <span class="uk-text-small uk-text-muted">{{ isset($osStats['mac'])?$osStats['mac']:0 }}
+                                                    Iphones vistos en la Red Enera</span>
                                             </div>
                                         </li>
                                         <li>
@@ -185,7 +186,7 @@
                                             </div>
                                             <div class="md-list-content">
                                                 <span class="md-list-heading">Windows Phone</span>
-                                                <span class="uk-text-small uk-text-muted">{{isset($osStats['windows']) ? $osStats : 0}}
+                                                <span class="uk-text-small uk-text-muted">{{ isset($osStats['windows'])?$osStats['windows']:0 }}
                                                     Windows Phones  vistos en la Red Enera</span>
                                             </div>
                                         </li>
@@ -196,7 +197,7 @@
                                             </div>
                                             <div class="md-list-content">
                                                 <span class="md-list-heading">Otros</span>
-                                                <span class="uk-text-small uk-text-muted">{{isset($osStats['otro']) ? $osStats : 0}}
+                                                <span class="uk-text-small uk-text-muted">{{ isset($osStats['otro'])?$osStats['otro']:0 }}
                                                     Dipositivos vistos de otras marcas </span>
                                             </div>
                                         </li>
