@@ -6,6 +6,7 @@ use Auth;
 use Conekta;
 use Conekta_Charge;
 use Illuminate\Http\Request;
+use Input;
 use Publishers\Http\Requests;
 use Publishers\Http\Controllers\Controller;
 
@@ -14,16 +15,16 @@ class ConektaController extends Controller
     /**
      *
      */
-    public function index()
+    public function conekta()
     {
 //        require_once("/path/to/lib/Conekta.php");
-        Conekta::setApiKey("key_eYvWV7gSDkNYXsmr");
+        Conekta::setApiKey("key_YXGVyAwwMa3rXM3LRR53EQ");
         Conekta::setLocale('es');
 
         $charge = Conekta_Charge::create(array(
             'description'=> 'Stogies',
             'reference_id'=> '9839-wolf_pack',
-            'amount'=> 20000,
+            'amount'=> Input::get('money'),
             'currency'=>'MXN',
             'card'=> 'tok_test_visa_4242',
             'details'=> array(
@@ -64,7 +65,7 @@ class ConektaController extends Controller
             )
         ));
 
-        echo $charge->status;
-        return view('budget.invoices');
+        echo $charge;
+        return view('budget.invoices', [$charge]);
     }
 }

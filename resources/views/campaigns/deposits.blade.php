@@ -21,6 +21,12 @@
                                     <span class="card-errors"></span>
                                     <div class="form-row">
                                         <label>
+                                            <span>Monto</span>
+                                            <input type="text" size="20" name="money" data-conekta="card[money]"/>
+                                        </label>
+                                    </div>
+                                    <div class="form-row">
+                                        <label>
                                             <span>Nombre del tarjetahabiente</span>
                                             <input type="text" size="20" data-conekta="card[name]"/>
                                         </label>

@@ -21,6 +21,7 @@ class PreviewHelper
         'analytics::single' => 'Analitics',
         'campaigns::show' => 'Campaña',
         'campaigns::create' => 'Crear Campaña',
+        'budget::deposits' => 'Depositos',
     );
 
     public static function getNameRoute($route)
