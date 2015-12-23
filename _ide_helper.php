@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.1.19 (LTS) on 2015-12-21.
+ * Generated for Laravel 5.1.19 (LTS) on 2015-12-22.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -12851,130 +12851,305 @@ namespace {
     }
 
 
-    class PDF extends \Barryvdh\DomPDF\Facade{
+    class Paypalpayment extends \Anouar\Paypalpayment\Facades\PaypalPayment{
         
         /**
-         * Get the DomPDF instance
+         * 
          *
-         * @return \DOMPDF 
+         * @return \Anouar\Paypalpayment\Paypal\Api\Address 
          * @static 
          */
-        public static function getDomPDF(){
-            return \Barryvdh\DomPDF\PDF::getDomPDF();
+        public static function address(){
+            return \Anouar\Paypalpayment\PaypalPayment::address();
         }
         
         /**
-         * Set the paper size (default A4)
+         * 
          *
-         * @param string $paper
-         * @param string $orientation
-         * @return $this 
+         * @return \Anouar\Paypalpayment\Paypal\Api\Amount 
          * @static 
          */
-        public static function setPaper($paper, $orientation = null){
-            return \Barryvdh\DomPDF\PDF::setPaper($paper, $orientation);
+        public static function amount(){
+            return \Anouar\Paypalpayment\PaypalPayment::amount();
         }
         
         /**
-         * Set the orientation (default portrait)
+         * 
          *
-         * @param string $orientation
-         * @return static 
+         * @return \Anouar\Paypalpayment\Paypal\Api\Details 
          * @static 
          */
-        public static function setOrientation($orientation){
-            return \Barryvdh\DomPDF\PDF::setOrientation($orientation);
+        public static function details(){
+            return \Anouar\Paypalpayment\PaypalPayment::details();
         }
         
         /**
-         * Show or hide warnings
+         * 
          *
-         * @param bool $warnings
-         * @return $this 
+         * @return \Anouar\Paypalpayment\Paypal\Api\Authorization 
          * @static 
          */
-        public static function setWarnings($warnings){
-            return \Barryvdh\DomPDF\PDF::setWarnings($warnings);
+        public static function authorization(){
+            return \Anouar\Paypalpayment\PaypalPayment::authorization();
         }
         
         /**
-         * Load a HTML string
+         * 
          *
-         * @param string $string
-         * @param string $encoding Not used yet
-         * @return static 
+         * @return \Anouar\Paypalpayment\Paypal\Api\Capture 
          * @static 
          */
-        public static function loadHTML($string, $encoding = null){
-            return \Barryvdh\DomPDF\PDF::loadHTML($string, $encoding);
+        public static function capture(){
+            return \Anouar\Paypalpayment\PaypalPayment::capture();
         }
         
         /**
-         * Load a HTML file
+         * 
          *
-         * @param string $file
-         * @return static 
+         * @return \Anouar\Paypalpayment\Paypal\Api\CreditCard 
          * @static 
          */
-        public static function loadFile($file){
-            return \Barryvdh\DomPDF\PDF::loadFile($file);
+        public static function creditCard(){
+            return \Anouar\Paypalpayment\PaypalPayment::creditCard();
         }
         
         /**
-         * Load a View and convert to HTML
+         * 
          *
-         * @param string $view
-         * @param array $data
-         * @param array $mergeData
-         * @param string $encoding Not used yet
-         * @return static 
+         * @return \Anouar\Paypalpayment\Paypal\Api\CreditCardToken 
          * @static 
          */
-        public static function loadView($view, $data = array(), $mergeData = array(), $encoding = null){
-            return \Barryvdh\DomPDF\PDF::loadView($view, $data, $mergeData, $encoding);
+        public static function creditCardToken(){
+            return \Anouar\Paypalpayment\PaypalPayment::creditCardToken();
         }
         
         /**
-         * Output the PDF as a string.
+         * 
          *
-         * @return string The rendered PDF as string
+         * @return \Anouar\Paypalpayment\Paypal\Api\FundingInstrument 
          * @static 
          */
-        public static function output(){
-            return \Barryvdh\DomPDF\PDF::output();
+        public static function fundingInstrument(){
+            return \Anouar\Paypalpayment\PaypalPayment::fundingInstrument();
         }
         
         /**
-         * Save the PDF to a file
+         * 
          *
-         * @param $filename
-         * @return static 
+         * @return \Anouar\Paypalpayment\Paypal\Api\Item 
          * @static 
          */
-        public static function save($filename){
-            return \Barryvdh\DomPDF\PDF::save($filename);
+        public static function item(){
+            return \Anouar\Paypalpayment\PaypalPayment::item();
         }
         
         /**
-         * Make the PDF downloadable by the user
+         * 
          *
-         * @param string $filename
-         * @return \Illuminate\Http\Response 
+         * @return \Anouar\Paypalpayment\Paypal\Api\ItemList 
          * @static 
          */
-        public static function download($filename = 'document.pdf'){
-            return \Barryvdh\DomPDF\PDF::download($filename);
+        public static function itemList(){
+            return \Anouar\Paypalpayment\PaypalPayment::itemList();
         }
         
         /**
-         * Return a response with the PDF to show in the browser
+         * 
          *
-         * @param string $filename
-         * @return \Illuminate\Http\Response 
+         * @return \Anouar\Paypalpayment\Paypal\Api\Links 
          * @static 
          */
-        public static function stream($filename = 'document.pdf'){
-            return \Barryvdh\DomPDF\PDF::stream($filename);
+        public static function links(){
+            return \Anouar\Paypalpayment\PaypalPayment::links();
+        }
+        
+        /**
+         * 
+         *
+         * @return \Anouar\Paypalpayment\Paypal\Api\Payee 
+         * @static 
+         */
+        public static function payee(){
+            return \Anouar\Paypalpayment\PaypalPayment::payee();
+        }
+        
+        /**
+         * 
+         *
+         * @return \Anouar\Paypalpayment\Paypal\Api\Payer 
+         * @static 
+         */
+        public static function payer(){
+            return \Anouar\Paypalpayment\PaypalPayment::payer();
+        }
+        
+        /**
+         * 
+         *
+         * @return \Anouar\Paypalpayment\Paypal\Api\PayerInfo 
+         * @static 
+         */
+        public static function payerInfo(){
+            return \Anouar\Paypalpayment\PaypalPayment::payerInfo();
+        }
+        
+        /**
+         * 
+         *
+         * @return \Anouar\Paypalpayment\Paypal\Api\Payment 
+         * @static 
+         */
+        public static function payment(){
+            return \Anouar\Paypalpayment\PaypalPayment::payment();
+        }
+        
+        /**
+         * 
+         *
+         * @return \Anouar\Paypalpayment\Paypal\Api\PaymentExecution 
+         * @static 
+         */
+        public static function paymentExecution(){
+            return \Anouar\Paypalpayment\PaypalPayment::paymentExecution();
+        }
+        
+        /**
+         * 
+         *
+         * @return \Anouar\Paypalpayment\Paypal\Api\PaymentHistory 
+         * @static 
+         */
+        public static function paymentHistory(){
+            return \Anouar\Paypalpayment\PaypalPayment::paymentHistory();
+        }
+        
+        /**
+         * 
+         *
+         * @return \Anouar\Paypalpayment\Paypal\Api\RedirectUrls 
+         * @static 
+         */
+        public static function redirectUrls(){
+            return \Anouar\Paypalpayment\PaypalPayment::redirectUrls();
+        }
+        
+        /**
+         * 
+         *
+         * @return \Anouar\Paypalpayment\Paypal\Api\Refund 
+         * @static 
+         */
+        public static function refund(){
+            return \Anouar\Paypalpayment\PaypalPayment::refund();
+        }
+        
+        /**
+         * 
+         *
+         * @return \Anouar\Paypalpayment\Paypal\Api\RelatedResources 
+         * @static 
+         */
+        public static function relatedResources(){
+            return \Anouar\Paypalpayment\PaypalPayment::relatedResources();
+        }
+        
+        /**
+         * 
+         *
+         * @return \Anouar\Paypalpayment\Paypal\Api\Sale 
+         * @static 
+         */
+        public static function sale(){
+            return \Anouar\Paypalpayment\PaypalPayment::sale();
+        }
+        
+        /**
+         * 
+         *
+         * @return \Anouar\Paypalpayment\Paypal\Api\ShippingAddress 
+         * @static 
+         */
+        public static function shippingAddress(){
+            return \Anouar\Paypalpayment\PaypalPayment::shippingAddress();
+        }
+        
+        /**
+         * 
+         *
+         * @return \Anouar\Paypalpayment\Paypal\Api\Transactions 
+         * @static 
+         */
+        public static function transactions(){
+            return \Anouar\Paypalpayment\PaypalPayment::transactions();
+        }
+        
+        /**
+         * 
+         *
+         * @return \Anouar\Paypalpayment\Paypal\Api\Transaction 
+         * @static 
+         */
+        public static function transaction(){
+            return \Anouar\Paypalpayment\PaypalPayment::transaction();
+        }
+        
+        /**
+         * 
+         *
+         * @param null $clientId
+         * @param null $clientSecret
+         * @param null $requestId
+         * @return \Anouar\Paypalpayment\Paypal\Rest\ApiContext 
+         * @static 
+         */
+        public static function apiContext($clientId = null, $clientSecret = null, $requestId = null){
+            return \Anouar\Paypalpayment\PaypalPayment::apiContext($clientId, $clientSecret, $requestId);
+        }
+        
+        /**
+         * 
+         *
+         * @param null $ClientId
+         * @param null $ClientSecret
+         * @return \Anouar\Paypalpayment\PayPal/Auth/OAuthTokenCredential 
+         * @static 
+         */
+        public static function OAuthTokenCredential($ClientId = null, $ClientSecret = null){
+            return \Anouar\Paypalpayment\PaypalPayment::OAuthTokenCredential($ClientId, $ClientSecret);
+        }
+        
+        /**
+         * Get the base URL
+         *
+         * @return mixed 
+         * @static 
+         */
+        public static function getBaseUrl(){
+            return \Anouar\Paypalpayment\PaypalPayment::getBaseUrl();
+        }
+        
+        /**
+         * grape payment details using the paymentId
+         *
+         * @param $paymentId
+         * @param null $apiContext
+         * @return \Anouar\Paypalpayment\Paypal\Api\Payment 
+         * @static 
+         */
+        public static function getById($paymentId, $apiContext = null){
+            return \Anouar\Paypalpayment\PaypalPayment::getById($paymentId, $apiContext);
+        }
+        
+        /**
+         * grape all payment details
+         *
+         * @param $param
+         * @param null $apiContext
+         * @return \Anouar\Paypalpayment\Paypal\Api\Payment 
+         * @static 
+         */
+        public static function getAll($param, $apiContext = null){
+            return \Anouar\Paypalpayment\PaypalPayment::getAll($param, $apiContext);
         }
         
     }

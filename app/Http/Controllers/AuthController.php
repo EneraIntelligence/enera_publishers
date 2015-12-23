@@ -9,8 +9,9 @@ use Input;
 use Publishers\Http\Requests;
 use Publishers\Http\Controllers\Controller;
 use Publishers\Jobs\newAdminJob;
-use Validator;
+use Publishers\ValidationCode;
 use Publishers\Administrator;
+use Validator;
 
 class AuthController extends Controller
 {
@@ -71,21 +72,32 @@ class AuthController extends Controller
         ]);
 /**     despues de las validaciones    **/
         if ($validator->passes()) {
-            $confirmation_code = str_random(30);
+//            $confirmation_code = str_random(30);
+            $confirmation_code = Hash::make(Input::get('email'));
 //            $data['aleatorio'] = uniqid(); //Genera un id único para identificar la cuenta a traves del correo.
             $password = Hash::make(Input::get('password')); //encrypta la contraseña
 /***+*****  consulta que guarda el documento en mongo *************/
             $newAdmin= Administrator::create(array('name' => ['first' => Input::get('nombre'), 'last' => Input::get('apellido')],
                 'email' => Input::get('email'), 'password' => $password,
-                'rol_id' => 'usuario', 'status' => 'pending', 'codigo'=>$confirmation_code
+                'rol_id' => 'usuario', 'status' => 'pending'
             ));
             //                'location'=>['country'=>'mexico','state'=>Input::get('estado'),'city'=>Input::get('ciudad')],
+
+//            dd($newAdmin);
 /********** si el usuario se creo se llama el job para mandarle el correo de confirmacion ***************/
             if($newAdmin){
+                echo 'se guardo el usuario';
+                $Token = validationCode::create(array(
+                    'administrator_id'=> $newAdmin->_id,'type'=>'validationEmail', 'token'=>$confirmation_code
+                ));
+                if($Token->count() > 0){
+                    echo 'se guardo la tabla de token';
+                }
                 //se  crea un array con los datos que se ocupan para formar el correo
                 $data['nombre']=Input::get('nombre');
                 $data['apellido']=Input::get('apellido');
                 $data['email']=Input::get('email');
+                $data['id_usuario']=$newAdmin->_id;  //usuario
                 $data['confirmation_code']=$confirmation_code;  //codigo generado para validar el correo
 //                dd($data);
                 //se llama el job mandar correo confirmacion
@@ -108,10 +120,15 @@ class AuthController extends Controller
     public function verify($id)
     {
         echo 'verificando <br>';
-        $confirm = Administrator::where('codigo','=',$id)->get();
-        if($confirm->count() > 0){
-            echo 'se activo';
-//            dd($confirm);
+        $code = ValidationCode::where('administrator_id','=',$id)->first();// busco el codigo en la base de datos
+        if($code->count() > 0){ //si se encuentra cambio el status de pending a active
+//            echo 'se activo';
+//            dd($code);
+            $admin= Administrator::where('_id','=',$id)->first();
+//            dd($admin);
+            $admin->status = 'active';
+            $admin->save();
+//            dd($admin);
             return redirect()->route('auth.index')->with('data', 'active');
         }else{
             return redirect()->route('auth.index')->with('data','invalido');
