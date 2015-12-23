@@ -67,7 +67,7 @@
                     <br>
                     <br>
 
-                <textarea name="content" id="wysiwyg_editor" cols="30" rows="20" autofocus
+                <textarea name="content" id="wysiwyg_ckeditor" cols="30" rows="20" autofocus
                           data-parsley-required="true" >
 
                     {!! Input::old("content") !!}
