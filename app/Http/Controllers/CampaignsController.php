@@ -542,4 +542,10 @@ class CampaignsController extends Controller
         return $log;
     }
 
+    public function deposits()
+    {
+
+        return view('campaigns.deposits');
+    }
+
 }

@@ -90,6 +90,12 @@ class BudgetController extends Controller
         //
     }
 
+    public function deposits()
+    {
+        return view('campaigns.deposits');
+    }
+
+
     public function invoices($id)
     {
 //        validar que el invoice sea valido y exista
