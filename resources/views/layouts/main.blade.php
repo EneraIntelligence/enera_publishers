@@ -41,8 +41,10 @@
     <!-- c3 charts -->
     {!! HTML::style('bower_components/c3js-chart/c3.min.css') !!}
     <style>
-        .uk-dropdown .uk-dropdown-width-3 .uk-dropdown-active .uk-dropdown-shown .uk-dropdown-bottom{
-            top: 100px; min-width: 600px; left: 0px;
+        .uk-dropdown .uk-dropdown-width-3 .uk-dropdown-active .uk-dropdown-shown .uk-dropdown-bottom {
+            top: 100px;
+            min-width: 600px;
+            left: 0px;
         }
     </style>
 
@@ -119,10 +121,12 @@
                 {{--</a>--}}
 
                 <div id="menu_top" class="uk-float-left ">
-                    <div class="uk-button-dropdown" data-uk-dropdown="{mode:'click'}" style="position: fixed; top: 13px; margin-left: 10px;">
+                    <div class="uk-button-dropdown" data-uk-dropdown="{mode:'click'}"
+                         style="position: fixed; top: 13px; margin-left: 10px;">
                         <a href="#" class="top_menu_toggle" style="color: #FFFFff;">
                             <img src="{!! URL::asset('images/icons/icon_publisher.png') !!}" alt="Enera"
-                                 style="top: -0px; left: 0; position: relative;"> <span class="uk-hidden-small" style="top: 2px; position: relative;">Publishers</span>
+                                 style="top: -0px; left: 0; position: relative;"> <span class="uk-hidden-small"
+                                                                                        style="top: 2px; position: relative;">Publishers</span>
                         </a>
 
                         <div class="uk-dropdown uk-dropdown-width-3" style="top: -20px;">
@@ -152,10 +156,9 @@
                                     <ul class="uk-nav uk-nav-dropdown uk-panel">
                                         <li class="uk-nav-header">Recientes</li>
                                         <?php
-                                            if( !isset( auth()->user()->route ) )
-                                            {
-                                                auth()->user()->route=[];
-                                            }
+                                        if (!isset(auth()->user()->route)) {
+                                            auth()->user()->route = [];
+                                        }
 
                                         ?>
                                         @foreach(auth()->user()->route as $preview)
@@ -444,7 +447,7 @@
 
 
         new_campaign.base_url = "{!! URL::to('/') !!}";
-        new_campaign.user_budget = parseFloat( "{{auth()->user()["balance"]["current"]}}" );
+        new_campaign.user_budget = parseFloat("{!! auth()->user()->wallet()->current !!}");
 
         $(function () {
             $("body").on("click", ".uk-button[data-message]", function () {
