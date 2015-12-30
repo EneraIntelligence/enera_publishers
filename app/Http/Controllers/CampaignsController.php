@@ -140,8 +140,8 @@ class CampaignsController extends Controller
                                 'name' => Input::get('title'),
                                 'branches' => Input::get('ubication') == 'all' ? 'all' : Input::get('branches'),
                                 'balance' => [
-                                    'init' => Input::get('budget'),
-                                    'current' => Input::get('budget'),
+                                    'init' => $budget,
+                                    'current' => $budget,
                                 ],
                                 'interaction' => [
                                     'name' => Input::get('interactionId'),

@@ -4,11 +4,6 @@
 |--------------------------------------------------------------------------
 | Application Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
 */
 Route::group(['middleware' => ['auth', 'preview']], function () {
     Route::get('/', ['as' => 'home', 'uses' => 'DashboardController@index']);
@@ -23,7 +18,7 @@ Route::group(['middleware' => ['auth', 'preview']], function () {
         Route::post('/send_mailing', ['as' => 'send_mailing', 'uses' => 'CampaignsController@sendMailing']);
         Route::get('/deposits', ['as' => 'deposits', 'uses' => 'CampaignsController@deposits']);
 
-        Route::group(['middleware' => 'ajax'], function () {
+        Route::group([], function () {
             Route::match(['post', 'get'], '/store', ['as' => 'store', 'uses' => 'CampaignsController@store']);
         });
     });
