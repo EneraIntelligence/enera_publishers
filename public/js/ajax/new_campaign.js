@@ -41,17 +41,36 @@ new_campaign =
     base_url:"",
     url:"",
     token:"",
+    user_budget:0.0,
     mailingId:null,
     mailingModal:null,
     modal:null,
     prompt:function()
     {
+
         var myLabels = {
             'Ok': 'Aceptar',
             'Cancel': 'Cancelar'
         };
 
-        new_campaign.modal = UIkit.modal.prompt('Nombre de la campaña:', '', new_campaign.create, {'labels':myLabels});
+        if(new_campaign.user_budget<100)
+        {
+            myLabels = {
+                'Ok': 'Agregar fondos',
+                'Cancel': 'Cancelar'
+            };
+            new_campaign.modal = UIkit.modal.confirm('<p style="text-align:center;"> <strong>¡Ups!</strong><br> No tienes fondos suficientes.</p>', new_campaign.goBudget,{'labels':myLabels});
+        }
+        else
+        {
+            new_campaign.modal = UIkit.modal.prompt('Nombre de la campaña:', '', new_campaign.create, {'labels':myLabels});
+        }
+
+    },
+    goBudget:function()
+    {
+        window.location=new_campaign.base_url+"/budget";
+
     },
     create:function(name)
     {
