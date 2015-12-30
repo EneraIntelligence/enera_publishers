@@ -4,10 +4,12 @@ namespace Publishers\Http\Controllers;
 
 use DateTime;
 use MongoDate;
+use Publishers\AdministratorMovement;
 use Publishers\CampaignLog;
 use Publishers\Jobs\EmailJob;
 use Publishers\Jobs\mailingJob;
 use Publishers\Libraries\CampaignStyleHelper;
+use Publishers\Libraries\EneraTools;
 use Validator;
 use Illuminate\Support\Facades\Storage;
 use League\Flysystem\Sftp\SftpAdapter;
@@ -100,7 +102,7 @@ class CampaignsController extends Controller
             'images' => 'required',
             'ubication' => 'required',
             'interactionId' => 'required',
-            'budget' => 'required|numeric|min:100|max:',
+            'budget' => 'required',
             /* condicionales */
             'from' => 'required_if:interactionId,mailing-list',
             'from_mail' => 'required_if:interactionId,mailing-list',
@@ -112,68 +114,112 @@ class CampaignsController extends Controller
             'branches' => 'required_if:ubication,select',
         ]);
         if ($validator->passes()) {
-            if (auth()->user()->wallet()->current >= Input::get('budget')) {
-                if ($camp = Campaign::create([
-                    'client_id' => isset(auth()->user()->client_id) ? auth()->user()->client_id : '0',
-                    'administrator_id' => auth()->user()->_id,
-                    'name' => Input::get('title'),
-                    'branches' => Input::get('ubication') == 'all' ? 'all' : Input::get('branches'),
-                    'balance' => [
-                        'init' => Input::get('budget'),
-                        'current' => Input::get('budget'),
-                    ],
-                    'interaction' => [
-                        'name' => Input::get('interactionId'),
-                    ],
-                    'filters' => [
-                        'age' => explode(';', Input::get('age')),
-                        'date' => [
-                            'start' => new MongoDate(strtotime(Input::get('start_date'))),
-                            'end' => new MongoDate(strtotime(Input::get('end_date')))
-                        ],
-                        'gender' => Input::get('gender') == 'both' ? ['male', 'female'] : [Input::get('gender')],
-                        'week_days' => Input::get('days'),
-                        'day_hours' => range(explode(';', Input::get('time'))[0], explode(';', Input::get('time'))[1]),
-                    ],
-                    'content' => [
-                        'items' => Input::get('images'),
-                        'images' => [
-                            'small' => Input::has('images.small') ? Item::find(Input::get('images.small'))->filename : null,
-                            'large' => Input::has('images.large') ? Item::find(Input::get('images.large'))->filename : null,
-                            'survey' => Input::has('images.survey') ? Item::find(Input::get('images.survey'))->filename : null,
-                        ],
-                        'mail' => [
-                            'from_name' => Input::get('from'),
-                            'from_mail' => Input::get('from_mail'),
-                            'subject' => Input::get('subject'),
-                            'content' => Input::get('mailing_content'),
-                        ],
-                        'survey' => $this->storeSurvey(Input::get('survey')),
-                        'captcha' => Input::get('captcha'),
-                        'video' => Input::get('video'),
-                    ],
-                    'status' => 'pending',
-                ])
-                ) {
-                    Mail::send('emails.creation', ['camp' => $camp], function ($m) use ($camp) {
-                        $m->from('notificacion@enera.mx', 'Enera Intelligence');
-                        $m->to('darkdreke@gmail.com', 'Notificaciones')->subject('Camapaña creada');
-                    });
+            $budget = EneraTools::Getfloat(Input::get('budget'));
+            if ($budget > 99) {
+                if (auth()->user()->wallet()->current >= $budget) {
+                    $pre = auth()->user()->wallet()->current;
+                    auth()->user()->wallet()->decrement('current', $budget);
+                    if (($pre - $budget) == auth()->user()->wallet()->current) {
+                        $move = auth()->user()->movements()->create([
+                            'client_id' => auth()->user()->client_id,
+                            'movement' => [
+                                'type' => 'outcome',   //income, outcome
+                                'concept' => 'new_campaign',
+                                'from' => 'balance',
+                                'to' => 'campaign',
+                            ],
+                            'reference_id' => '',
+                            'reference_type' => '',
+                            'amount' => $budget,
+                            'balance' => $budget,
+                        ]);
+                        if ($move) {
+                            if ($camp = Campaign::create([
+                                'client_id' => isset(auth()->user()->client_id) ? auth()->user()->client_id : '0',
+                                'administrator_id' => auth()->user()->_id,
+                                'name' => Input::get('title'),
+                                'branches' => Input::get('ubication') == 'all' ? 'all' : Input::get('branches'),
+                                'balance' => [
+                                    'init' => Input::get('budget'),
+                                    'current' => Input::get('budget'),
+                                ],
+                                'interaction' => [
+                                    'name' => Input::get('interactionId'),
+                                ],
+                                'filters' => [
+                                    'age' => explode(';', Input::get('age')),
+                                    'date' => [
+                                        'start' => new MongoDate(strtotime(Input::get('start_date'))),
+                                        'end' => new MongoDate(strtotime(Input::get('end_date')))
+                                    ],
+                                    'gender' => Input::get('gender') == 'both' ? ['male', 'female'] : [Input::get('gender')],
+                                    'week_days' => Input::get('days'),
+                                    'day_hours' => range(explode(';', Input::get('time'))[0], explode(';', Input::get('time'))[1]),
+                                ],
+                                'content' => [
+                                    'items' => Input::get('images'),
+                                    'images' => [
+                                        'small' => Input::has('images.small') ? Item::find(Input::get('images.small'))->filename : null,
+                                        'large' => Input::has('images.large') ? Item::find(Input::get('images.large'))->filename : null,
+                                        'survey' => Input::has('images.survey') ? Item::find(Input::get('images.survey'))->filename : null,
+                                    ],
+                                    'mail' => [
+                                        'from_name' => Input::get('from'),
+                                        'from_mail' => Input::get('from_mail'),
+                                        'subject' => Input::get('subject'),
+                                        'content' => Input::get('mailing_content'),
+                                    ],
+                                    'survey' => $this->storeSurvey(Input::get('survey')),
+                                    'captcha' => Input::get('captcha'),
+                                    'video' => Input::get('video'),
+                                ],
+                                'status' => 'pending',
+                            ])
+                            ) {
+                                $move->reference_id = $camp->_id;
+                                $move->reference_type = 'Campaign';
 
-                    return response()->json([
-                        'ok' => true,
-                        'id' => $camp->_id
-                    ]);
+                                Mail::send('emails.creation', ['camp' => $camp], function ($m) use ($camp) {
+                                    $m->from('notificacion@enera.mx', 'Enera Intelligence');
+                                    $m->to('darkdreke@gmail.com', 'Notificaciones')->subject('Camapaña creada');
+                                });
+
+                                return response()->json([
+                                    'ok' => true,
+                                    'id' => $camp->_id
+                                ]);
+                            } else {
+                                return response()->json([
+                                    'ok' => false,
+                                    'msg' => 'No fue posible guardar la información.'
+                                ]);
+                            }
+                        } else {
+                            auth()->user()->wallet()->increment('current', $budget);
+                            return response()->json([
+                                'ok' => false,
+                                'msg' => 'No fue posible el registro de movimientos.'
+                            ]);
+                        }
+
+                    } else {
+                        auth()->user()->wallet()->increment('current', $budget);
+                        return response()->json([
+                            'ok' => false,
+                            'msg' => 'No cuentas con los fondos suficientes.'
+                        ]);
+                    }
+
                 } else {
                     return response()->json([
                         'ok' => false,
-                        'msg' => 'No fue posible guardar la información.'
+                        'msg' => 'No cuentas con los fondos suficientes.'
                     ]);
                 }
             } else {
                 return response()->json([
                     'ok' => false,
-                    'msg' => 'No cuentas con los fondos suficientes.'
+                    'msg' => 'Debes de asignar por lo menos $100 MXN'
                 ]);
             }
         } else {
@@ -465,40 +511,6 @@ class CampaignsController extends Controller
         }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        return view('campaigns.edit', compact('campaign'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
     public function porcentaje($status)
     {
         switch ($status) {
@@ -563,7 +575,6 @@ class CampaignsController extends Controller
 
     public function deposits()
     {
-
         return view('campaigns.deposits');
     }
 

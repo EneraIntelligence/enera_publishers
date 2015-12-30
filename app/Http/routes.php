@@ -59,6 +59,7 @@ Route::group(['middleware' => ['auth', 'preview']], function () {
     Route::group(['prefix' => 'budget', 'as' => 'budget::'], function () {
         Route::get('/', ['as' => 'index', 'uses' => 'BudgetController@index']);
         Route::get('/deposits', ['as' => 'deposits', 'uses' => 'BudgetController@deposits']);
+
         Route::get('/invoices/{id}', ['as' => 'invoices', 'uses' => 'BudgetController@invoices']);
 
         Route::get('/paypal', ['as' => 'paypal', 'uses' => 'PayPalPaymentController@index']);
@@ -67,7 +68,7 @@ Route::group(['middleware' => ['auth', 'preview']], function () {
         Route::get('/paypal/cancel', ['as' => 'paypal.cancel', 'uses' => 'PayPalPaymentController@getCancel']);
         Route::get('/paypal/index', ['as' => 'paypal.index', 'uses' => 'PayPalPaymentController@index']);
 
-        Route::get('/conekta', ['as' => 'conekta', 'uses' => 'ConektaController@index']);
+        Route::get('/conekta', ['as' => 'conekta', 'uses' => 'ConektaController@conekta']);
     });
 
     Route::match(['get', 'post'], 'logout', ['as' => 'auth.logout', 'uses' => 'AuthController@logout']);

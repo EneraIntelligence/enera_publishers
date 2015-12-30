@@ -142,28 +142,31 @@
 @section('scripts')
     {!! HTML::script('js/printThis.js') !!}
     <script>
-        $('#invoice_print').click(function () {
-            Popup($('#invoice').html());
+        $(document).ready(function()
+        {
+            $('#invoice_print').click(function () {
+                Popup($('#invoice').html());
+            });
+
+
+            // funcion nativa
+            function Popup(data) {
+                var mywindow = window.open('', 'my div', 'height=600,width=800');
+                mywindow.document.write("<html><head><title>my div</title>");
+                /*optional stylesheet*/
+                mywindow.document.write('<link rel="stylesheet" href="public/bower_components/kendo-ui-core/styles/kendo.common-material.min.css" type="text/css" />');
+                mywindow.document.write('</head><body >');
+                mywindow.document.write(data);
+                mywindow.document.write('</body></html>');
+
+                mywindow.document.close(); // necessary for IE >= 10
+                mywindow.focus(); // necessary for IE >= 10
+
+                mywindow.print();
+                mywindow.close();
+
+                return true
+            }
         });
-
-
-        // funcion nativa
-        function Popup(data) {
-            var mywindow = window.open('', 'my div', 'height=600,width=800');
-            mywindow.document.write("<html><head><title>my div</title>");
-            /*optional stylesheet*/
-            mywindow.document.write('<link rel="stylesheet" href="public/bower_components/kendo-ui-core/styles/kendo.common-material.min.css" type="text/css" />');
-            mywindow.document.write('</head><body >');
-            mywindow.document.write(data);
-            mywindow.document.write('</body></html>');
-
-            mywindow.document.close(); // necessary for IE >= 10
-            mywindow.focus(); // necessary for IE >= 10
-
-            mywindow.print();
-            mywindow.close();
-
-            return true;
-        }
     </script>
 @stop
