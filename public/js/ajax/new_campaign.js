@@ -59,7 +59,7 @@ new_campaign =
                 'Ok': 'Agregar fondos',
                 'Cancel': 'Cancelar'
             };
-            new_campaign.modal = UIkit.modal.confirm('<p style="text-align:center;"> <strong>¡Ups!</strong><br> No tienes fondos suficientes.</p>', new_campaign.goBudget,{'labels':myLabels});
+            new_campaign.modal = UIkit.modal.confirm('<p style="text-align:center;"> <strong>¡Ups!</strong><br><br> No tienes fondos suficientes.</p>', new_campaign.goBudget,{'labels':myLabels});
         }
         else
         {
