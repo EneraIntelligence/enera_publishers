@@ -418,6 +418,37 @@ preview =
                 .stop()
                 .animate({"marginTop": ($(window).scrollTop() )}, "slow");
         });
+
+        $("#budget_input").change(function()
+        {
+
+            var budgetStr = $("#budget_input").val().substr(1);//remove $
+            budgetStr = budgetStr.replace(/,/g, '');//remove commas
+
+            var budget = parseFloat( budgetStr );
+            var balance =  parseFloat( new_campaign.user_budget-budget );
+
+            console.log(budget);
+            console.log(new_campaign.user_budget);
+            console.log(balance);
+
+            var msg = "";
+            if(balance<0)
+            {
+                $("#balance").css("color","red");
+                msg = '<div class="md-input-danger"> La cantidad debe ser menor o igual a tu balance actual </div> ';
+            }
+            else
+            {
+                $("#balance").css("color","black");
+                if(budget<100)
+                {
+                    msg = '<div style="color:red" class="md-input-danger"> La cantidad debe ser al menos $100</div> ';
+                }
+            }
+            $("#balance").html( "$"+balance.toFixed(2)+msg );
+        });
+
     }
 }
 

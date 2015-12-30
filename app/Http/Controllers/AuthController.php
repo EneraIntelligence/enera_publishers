@@ -114,22 +114,23 @@ class AuthController extends Controller
 
     public function register()
     {
-        return redirect()->route('auth.index')->with('registro', 'si');
+        return redirect()->route('auth.index')->with('registro', 'registrar');
     }
 
-    public function verify($id)
+    public function verify($id,$token)
     {
         echo 'verificando <br>';
         $code = ValidationCode::where('administrator_id','=',$id)->first();// busco el codigo en la base de datos
-        if($code->count() > 0){ //si se encuentra cambio el status de pending a active
-//            echo 'se activo';
-//            dd($code);
-            $admin= Administrator::where('_id','=',$id)->first();
-//            dd($admin);
-            $admin->status = 'active';
-            $admin->save();
-//            dd($admin);
-            return redirect()->route('auth.index')->with('data', 'active');
+        if($code->count() > 0){ //si se encuentra el usuario
+            if($code->token==$token){  //verifico si el token es el mismo
+                $admin= Administrator::where('_id','=',$id)->first();
+                $admin->status = 'active';   //cambio el status de pending a active
+                $admin->save();
+                //  se regresa al login con mensaje de que se activo cuenta
+                return redirect()->route('auth.index')->with('data', 'active');
+            }else{
+                return redirect()->route('auth.index')->with('data','invalido');
+            }
         }else{
             return redirect()->route('auth.index')->with('data','invalido');
         }

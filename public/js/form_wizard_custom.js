@@ -37,7 +37,7 @@ altair_wizard = {
 
                     if (currentIndex == 2) {
                         branchMap.refresh();
-                    } else if (currentIndex == 3) {
+                    } else if (currentIndex == 4) {
                         finalScreen.fillData();
                     }
 

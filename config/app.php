@@ -151,7 +151,7 @@ return [
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
-        Anouar\Paypalpayment\PaypalpaymentServiceProvider::class,
+        Netshell\Paypal\PaypalServiceProvider::class,
 
 
     ],
@@ -208,7 +208,7 @@ return [
         'HTML'      => Collective\Html\HtmlFacade::class,
         'CampaignStyle'  => Publishers\Libraries\CampaignStyleHelper::class,
         // 'PDF' => Barryvdh\DomPDF\Facade::class,
-        'Paypalpayment'   => Anouar\Paypalpayment\Facades\PaypalPayment::class,
+        'Paypal'    => Netshell\Paypal\Facades\Paypal::class,
 
     ],
 

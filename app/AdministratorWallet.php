@@ -4,7 +4,7 @@ namespace Publishers;
 
 use Jenssegers\Mongodb\Model;
 
-class AdministratorBalance extends Model
+class AdministratorWallet extends Model
 {
     protected $fillable = ['current'];
     protected $table = null;

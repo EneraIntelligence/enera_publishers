@@ -124,3 +124,19 @@
   margin-top: 15px;
   height: 100px;
 }
+
+@media only screen and (min-width: 960px)
+{
+  .wizard
+  {
+    .steps
+    {
+      ul{
+        li
+        {
+          width: 20% !important;
+        }
+      }
+    }
+  }
+}

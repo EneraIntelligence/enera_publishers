@@ -84,7 +84,7 @@
             <br>
             <br>
 
-            <textarea name="mailing_content" id="wysiwyg_editor" cols="30" rows="20"
+            <textarea name="mailing_content" id="wysiwyg_ckeditor" cols="30" rows="20"
                       data-parsley-trigger="keyup" data-parsley-minlength="20"
                       data-parsley-minlength-message="Tu correo debe incluir al menos 20 caracteres"
                       data-parsley-validate-if-empty
