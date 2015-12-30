@@ -114,7 +114,7 @@ class CampaignsController extends Controller
             'branches' => 'required_if:ubication,select',
         ]);
         if ($validator->passes()) {
-            $budget = EneraTools::Getfloat(Input::get('budget');
+            $budget = EneraTools::Getfloat(Input::get('budget'));
             if ($budget > 99) {
                 if (auth()->user()->wallet()->current >= $budget) {
                     $pre = auth()->user()->wallet()->current;
