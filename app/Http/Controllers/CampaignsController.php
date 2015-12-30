@@ -100,6 +100,7 @@ class CampaignsController extends Controller
             'images' => 'required',
             'ubication' => 'required',
             'interactionId' => 'required',
+            'budget' => 'required|numeric|min:100|max:',
             /* condicionales */
             'from' => 'required_if:interactionId,mailing-list',
             'from_mail' => 'required_if:interactionId,mailing-list',
@@ -111,57 +112,68 @@ class CampaignsController extends Controller
             'branches' => 'required_if:ubication,select',
         ]);
         if ($validator->passes()) {
-            if ($camp = Campaign::create([
-                'client_id' => isset(auth()->user()->client_id) ? auth()->user()->client_id : '0',
-                'administrator_id' => auth()->user()->_id,
-                'name' => Input::get('title'),
-                'branches' => Input::get('ubication') == 'all' ? 'all' : Input::get('branches'),
-                'interaction' => [
-                    'name' => Input::get('interactionId'),
-                ],
-                'filters' => [
-                    'age' => explode(';', Input::get('age')),
-                    'date' => [
-                        'start' => new MongoDate(strtotime(Input::get('start_date'))),
-                        'end' => new MongoDate(strtotime(Input::get('end_date')))
+            if (auth()->user()->wallet()->current >= Input::get('budget')) {
+                if ($camp = Campaign::create([
+                    'client_id' => isset(auth()->user()->client_id) ? auth()->user()->client_id : '0',
+                    'administrator_id' => auth()->user()->_id,
+                    'name' => Input::get('title'),
+                    'branches' => Input::get('ubication') == 'all' ? 'all' : Input::get('branches'),
+                    'balance' => [
+                        'init' => Input::get('budget'),
+                        'current' => Input::get('budget'),
                     ],
-                    'gender' => Input::get('gender') == 'both' ? ['male', 'female'] : [Input::get('gender')],
-                    'week_days' => Input::get('days'),
-                    'day_hours' => range(explode(';', Input::get('time'))[0], explode(';', Input::get('time'))[1]),
-                ],
-                'content' => [
-                    'items' => Input::get('images'),
-                    'images' => [
-                        'small' => Input::has('images.small') ? Item::find(Input::get('images.small'))->filename : null,
-                        'large' => Input::has('images.large') ? Item::find(Input::get('images.large'))->filename : null,
-                        'survey' => Input::has('images.survey') ? Item::find(Input::get('images.survey'))->filename : null,
+                    'interaction' => [
+                        'name' => Input::get('interactionId'),
                     ],
-                    'mail' => [
-                        'from_name' => Input::get('from'),
-                        'from_mail' => Input::get('from_mail'),
-                        'subject' => Input::get('subject'),
-                        'content' => Input::get('mailing_content'),
+                    'filters' => [
+                        'age' => explode(';', Input::get('age')),
+                        'date' => [
+                            'start' => new MongoDate(strtotime(Input::get('start_date'))),
+                            'end' => new MongoDate(strtotime(Input::get('end_date')))
+                        ],
+                        'gender' => Input::get('gender') == 'both' ? ['male', 'female'] : [Input::get('gender')],
+                        'week_days' => Input::get('days'),
+                        'day_hours' => range(explode(';', Input::get('time'))[0], explode(';', Input::get('time'))[1]),
                     ],
-                    'survey' => $this->storeSurvey(Input::get('survey')),
-                    'captcha' => Input::get('captcha'),
-                    'video' => Input::get('video'),
-                ],
-                'status' => 'pending',
-            ])
-            ) {
-                Mail::send('emails.creation', ['camp' => $camp], function ($m) use ($camp) {
-                    $m->from('notificacion@enera.mx', 'Enera Intelligence');
-                    $m->to('darkdreke@gmail.com', 'Notificaciones')->subject('Camapaña creada');
-                });
+                    'content' => [
+                        'items' => Input::get('images'),
+                        'images' => [
+                            'small' => Input::has('images.small') ? Item::find(Input::get('images.small'))->filename : null,
+                            'large' => Input::has('images.large') ? Item::find(Input::get('images.large'))->filename : null,
+                            'survey' => Input::has('images.survey') ? Item::find(Input::get('images.survey'))->filename : null,
+                        ],
+                        'mail' => [
+                            'from_name' => Input::get('from'),
+                            'from_mail' => Input::get('from_mail'),
+                            'subject' => Input::get('subject'),
+                            'content' => Input::get('mailing_content'),
+                        ],
+                        'survey' => $this->storeSurvey(Input::get('survey')),
+                        'captcha' => Input::get('captcha'),
+                        'video' => Input::get('video'),
+                    ],
+                    'status' => 'pending',
+                ])
+                ) {
+                    Mail::send('emails.creation', ['camp' => $camp], function ($m) use ($camp) {
+                        $m->from('notificacion@enera.mx', 'Enera Intelligence');
+                        $m->to('darkdreke@gmail.com', 'Notificaciones')->subject('Camapaña creada');
+                    });
 
-                return response()->json([
-                    'ok' => true,
-                    'id' => $camp->_id
-                ]);
+                    return response()->json([
+                        'ok' => true,
+                        'id' => $camp->_id
+                    ]);
+                } else {
+                    return response()->json([
+                        'ok' => false,
+                        'msg' => 'No fue posible guardar la información.'
+                    ]);
+                }
             } else {
                 return response()->json([
                     'ok' => false,
-                    'msg' => 'No fue posible guardar la información.'
+                    'msg' => 'No cuentas con los fondos suficientes.'
                 ]);
             }
         } else {
@@ -174,7 +186,14 @@ class CampaignsController extends Controller
 
     private function storeSurvey($survey)
     {
-        return 'HOLA';
+        $salida = [];
+        foreach ($survey as $k => $v) {
+            $salida['q' . $k]['question'] = $v['question'];
+            foreach ($v['answers'] as $kk => $vv) {
+                $salida['q' . $k]['answers']['a' . $kk] = $vv;
+            }
+        }
+        return count($salida) > 0 ? $salida : null;
     }
 
     public function mailing($id, Request $request)
@@ -526,7 +545,7 @@ class CampaignsController extends Controller
             ->where('updated_at', '>', $fecha)->get(array('user'));
         if ($logs == null) {
             echo 'no encontro nada';
-            $log['error']=['error'];
+            $log['error'] = ['error'];
         } else {
             echo 'encontro algo';
             $Logs = $logs->toArray();
