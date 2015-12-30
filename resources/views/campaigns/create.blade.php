@@ -25,6 +25,8 @@
 
                                 @include('campaigns.create_wizard.step_4')
 
+                                @include('campaigns.create_wizard.step_5')
+
                             </div>
                             {!! Form::close() !!}
                         </div>
@@ -177,6 +179,9 @@
     {!! HTML::script('js/form_wizard_custom.js') !!}
             <!-- slider script -->
     {!! HTML::script('bower_components/ionrangeslider/js/ion.rangeSlider.min.js') !!}
+    {!! HTML::script('bower_components/jquery.inputmask/dist/jquery.inputmask.bundle.js') !!}
+    {!! HTML::script('assets/js/pages/forms_advanced.min.js') !!}
+
 
             <!-- enera custom scripts -->
     {!! HTML::script('js/create_campaign_utils.js') !!}
@@ -208,11 +213,11 @@
     {!! HTML::script('js/cropper.min.js') !!}
 
     <script>
-        branchMap.base_url = "{!! URL::to('/') !!}";
-        branchMap.setBranches('{!! json_encode($branches) !!}');
+                branchMap.base_url = "{!! URL::to('/') !!}";
+                branchMap.setBranches('{!! json_encode($branches) !!}');
     </script>
 
-    <!-- ckeditor -->
+            <!-- ckeditor -->
     {!! HTML::script('bower_components/ckeditor/ckeditor.js') !!}
     {!! HTML::script('bower_components/ckeditor/adapters/jquery.js') !!}
 
