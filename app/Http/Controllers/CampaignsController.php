@@ -114,11 +114,12 @@ class CampaignsController extends Controller
             'branches' => 'required_if:ubication,select',
         ]);
         if ($validator->passes()) {
-            if (EneraTools::Getfloat(Input::get('budget')) > 99) {
-                if (auth()->user()->wallet()->current >= Input::get('budget')) {
+            $budget = EneraTools::Getfloat(Input::get('budget');
+            if ($budget > 99) {
+                if (auth()->user()->wallet()->current >= $budget) {
                     $pre = auth()->user()->wallet()->current;
-                    auth()->user()->wallet()->decrement('current', Input::get('budget'));
-                    if (($pre - Input::get('budget')) == auth()->user()->wallet()->current) {
+                    auth()->user()->wallet()->decrement('current', $budget);
+                    if (($pre - $budget) == auth()->user()->wallet()->current) {
                         $move = auth()->user()->movements()->create([
                             'client_id' => auth()->user()->client_id,
                             'movement' => [
@@ -129,8 +130,8 @@ class CampaignsController extends Controller
                             ],
                             'reference_id' => '',
                             'reference_type' => '',
-                            'amount' => floatval(Input::get('budget')),
-                            'balance' => floatval($pre - Input::get('budget')),
+                            'amount' => $budget,
+                            'balance' => $budget,
                         ]);
                         if ($move) {
                             if ($camp = Campaign::create([
@@ -194,7 +195,7 @@ class CampaignsController extends Controller
                                 ]);
                             }
                         } else {
-                            auth()->user()->wallet()->increment('current', Input::get('budget'));
+                            auth()->user()->wallet()->increment('current', $budget);
                             return response()->json([
                                 'ok' => false,
                                 'msg' => 'No fue posible el registro de movimientos.'
@@ -202,7 +203,7 @@ class CampaignsController extends Controller
                         }
 
                     } else {
-                        auth()->user()->wallet()->increment('current', Input::get('budget'));
+                        auth()->user()->wallet()->increment('current', $budget);
                         return response()->json([
                             'ok' => false,
                             'msg' => 'No cuentas con los fondos suficientes.'
