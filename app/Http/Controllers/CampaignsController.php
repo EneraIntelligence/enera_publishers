@@ -513,8 +513,12 @@ class CampaignsController extends Controller
 
     public function deposits()
     {
-
-        return view('campaigns.deposits');
+        $admin = auth()->user();
+        return view('campaigns.deposits', [
+            'admin' => $admin,
+            'movements' => $admin->movements,
+            'campaigns' => $admin->campaigns,
+        ]);
     }
 
 }
