@@ -444,6 +444,7 @@
 
 
         new_campaign.base_url = "{!! URL::to('/') !!}";
+        new_campaign.user_budget = parseFloat( "{{auth()->user()["balance"]["current"]}}" );
 
         $(function () {
             $("body").on("click", ".uk-button[data-message]", function () {
