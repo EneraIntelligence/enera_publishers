@@ -158,8 +158,8 @@ class CampaignsController extends Controller
             $budget = EneraTools::Getfloat(Input::get('budget'));
             if ($budget > 99) {
                 if (auth()->user()->wallet->current >= $budget) {
-                    $pre = auth()->user()->wallet->current;
-                    auth()->user()->wallet()->decrement('wallet.current', $budget);
+                    $pre = EneraTools::Getfloat(auth()->user()->wallet->current);
+                    auth()->user()->wallet->decrement('current', $budget);
                     if (($pre - $budget) == auth()->user()->wallet->current) {
                         $move = auth()->user()->movements()->create([
                             'client_id' => auth()->user()->client_id,
@@ -236,7 +236,7 @@ class CampaignsController extends Controller
                                 ]);
                             }
                         } else {
-                            auth()->user()->wallet()->increment('wallet.current', $budget);
+                            auth()->user()->wallet->increment('current', $budget);
                             return response()->json([
                                 'ok' => false,
                                 'msg' => 'No fue posible el registro de movimientos.'
@@ -244,17 +244,17 @@ class CampaignsController extends Controller
                         }
 
                     } else {
-                        auth()->user()->wallet()->increment('wallet.current', $budget);
+                        auth()->user()->wallet->increment('current', $budget);
                         return response()->json([
                             'ok' => false,
-                            'msg' => 'No cuentas con los fondos suficientes.'
+                            'msg' => 'No cuentas con los fondos suficientes. (A)'
                         ]);
                     }
 
                 } else {
                     return response()->json([
                         'ok' => false,
-                        'msg' => 'No cuentas con los fondos suficientes.'
+                        'msg' => 'No cuentas con los fondos suficientes. (B)'
                     ]);
                 }
             } else {
@@ -275,9 +275,9 @@ class CampaignsController extends Controller
     {
         $salida = [];
         foreach ($survey as $k => $v) {
-            $salida['q' . $k]['question'] = $v['question'];
+            $salida['q' . ($k + 1)]['question'] = $v['question'];
             foreach ($v['answers'] as $kk => $vv) {
-                $salida['q' . $k]['answers']['a' . $kk] = $vv;
+                $salida['q' . ($k + 1)]['answers']['a' . $kk] = $vv;
             }
         }
         return count($salida) > 0 ? $salida : null;
