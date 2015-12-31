@@ -147,7 +147,7 @@ class CampaignsController extends Controller
             $budget = EneraTools::Getfloat(Input::get('budget'));
             if ($budget > 99) {
                 if (auth()->user()->wallet->current >= $budget) {
-                    $pre = auth()->user()->wallet->current;
+                    $pre = EneraTools::Getfloat(auth()->user()->wallet->current);
                     auth()->user()->wallet()->decrement('wallet.current', $budget);
                     if (($pre - $budget) == auth()->user()->wallet->current) {
                         $move = auth()->user()->movements()->create([
