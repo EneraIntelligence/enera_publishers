@@ -29,21 +29,30 @@
                     <h4 class="heading_a uk-margin-bottom">Metodos de pago</h4>
                     <div class="uk-panel uk-panel-box">
                         <div class="col-md-4"></div>
-                        <div class="uk-width-medium-2-3 uk-width-small-2-3 uk-container-center">
+                        <div class="uk-width-medium-2-3 uk-width-small-2-3 uk-container-center" style="text-align: center;">
                             <form action="">
-                                <input type="radio" name="pay" value="conekta" checked style="display: inline-block;">
-                                <img src="{!! URL::asset('images/icons/iconos_forma_de_pago-03.png') !!}" >
-                                <input type="radio" name="pay" value="paypal" style="display: inline-block;">
-                                <img src="{!! URL::asset('images/icons/iconos_forma_de_pago-01.png') !!}">
-                                <input type="radio" name="pay" value="cupon" style="display: inline-block;">
-                                <img src="{!! URL::asset('images/icons/iconos_forma_de_pago-02.png') !!}" >
+                                <input type="radio" id="tc_radio" name="pay" value="conekta" checked
+                                       style="display: inline-block;">
+                                <label for="tc_radio" style="margin-right: 20px;">
+                                    <b>Tarjeta de Crédito</b>
+                                </label>
+                                {{--<img src="{!! URL::asset('images/icons/iconos_forma_de_pago-03.png') !!}" >--}}
+                                <input type="radio" id="pp_radio" name="pay" value="paypal"
+                                       style="display: inline-block;">
+                                <label for="pp_radio" style="margin-right: 20px;">
+                                    <img src="{!! URL::asset('images/icons/iconos_forma_de_pago-01.png') !!}">
+                                    <span><b>PayPal</b></span>
+                                </label>
+                                <input type="radio" id="enera_radio" name="pay" value="cupon"
+                                       style="display: inline-block;">
+                                <label for="enera_radio" style="margin-right: 20px;">
+                                    <img src="{!! URL::asset('images/icons/iconos_forma_de_pago-02.png') !!}">
+                                    <span><b>Gift Card</b></span>
+                                </label>
                             </form>
-                            <p style="display: inline-block;">T. Credito</p>
-                            <p style="display: inline-block; margin-left: 30px;">Paypal</p>
-                            <p style="display: inline-block; margin-left: 30px;">Cupon</p>
 
                         </div>
-                        <div class="col-md-4"  id="conekta">
+                        <div class="col-md-4" id="conekta">
                             {{--<h3 class="uk-panel-title">Conekta</h3>--}}
                             <div class="uk-width-medium-4-5 uk-container-center">
                                 <div class="uk-panel">
@@ -196,7 +205,8 @@
                                             <div class="uk-width-medium-1-2">
                                             </div>
                                             <div class="uk-width-medium-1-2">
-                                                <button type="button" class="md-btn md-btn-danger" onclick="window.location='{{ route("budget::index")}}'">Cancelar
+                                                <button type="button" class="md-btn md-btn-danger"
+                                                        onclick="window.location='{{ route("budget::index")}}'">Cancelar
                                                 </button>
                                                 <button type="submit" class="md-btn md-btn-primary">¡Pagar ahora!
                                                 </button>
@@ -227,7 +237,8 @@
                                                 </div>
                                             </div>
                                             <div class="uk-width-medium-1-2" style="margin: 10px 0;">
-                                                <button type="button" class="md-btn md-btn-danger" onclick="window.location='{{ route("budget::index")}}'">Cancelar
+                                                <button type="button" class="md-btn md-btn-danger"
+                                                        onclick="window.location='{{ route("budget::index")}}'">Cancelar
                                                 </button>
                                                 <button type="submit" class="md-btn md-btn-primary">Paypal
                                                 </button>
@@ -257,7 +268,8 @@
                                                 </div>
                                             </div>
                                             <div class="uk-width-medium-1-2" style="margin: 10px 0;">
-                                                <button type="button" class="md-btn md-btn-danger" onclick="window.location='{{ route("budget::index")}}'">Cancelar
+                                                <button type="button" class="md-btn md-btn-danger"
+                                                        onclick="window.location='{{ route("budget::index")}}'">Cancelar
                                                 </button>
                                                 <button type="submit" class="md-btn md-btn-primary">Canjear Cupón
                                                 </button>
@@ -281,11 +293,23 @@
                                 <span class=" uk-text-small">Fondos camapañas activas</span>
                                 <div class="uk-width-large-1 uk-width-medium-1 uk-grid-margin">
                                     <ul class="md-list md-list-addon">
-
+                                        <li>
+                                            <div class="md-list-addon-element">
+                                                <i class="md-list-addon-icon material-icons uk-text-primary">
+                                                    &#xE918;
+                                                </i>
+                                            </div>
+                                            <div class="md-list-content">
+                                                <span class="md-list-heading">Total Asignado</span>
+                                        <span class="uk-text-small uk-text-muted">
+                                        $ {{ number_format($campaigns->sum('balance.current'),2,'.',',') }}
+                                        </span>
+                                            </div>
+                                        </li>
                                         @foreach($campaigns as $campaign)
                                             <li>
                                                 <div class="md-list-addon-element">
-                                                    <i class="md-list-addon-icon material-icons uk-text-success"></i>
+                                                    {{--<i class="md-list-addon-icon material-icons uk-text-success"></i>--}}
                                                 </div>
                                                 <div class="md-list-content">
                                                     <span class="md-list-heading">{{ $campaign->name }}</span>
