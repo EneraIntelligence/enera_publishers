@@ -50,25 +50,25 @@ class CampaignsController extends Controller
         $subcampaigns = Auth::user()->subcampaigns()->latest()->get();
 
         /****  for each para sacar los datos de cada campaña   ****/
-        foreach($campaigns as $campaign){
+        foreach ($campaigns as $campaign) {
             /****  OBTENER PORCENTAJE DEL TIEMPO TRANSCURRIDO DE LA CAMPAÑA ****/
             $start = new DateTime(date('Y-m-d H:i:s', $campaign->filters['date']['start']->sec));
             $end = new DateTime(date('Y-m-d H:i:s', $campaign->filters['date']['end']->sec));
-            $start->setTime(00,00,00);
-            $end->setTime(00,00,00);
-            if($campaign->status=='active'){
+            $start->setTime(00, 00, 00);
+            $end->setTime(00, 00, 00);
+            if ($campaign->status == 'active') {
                 $today = new DateTime();
                 $total = $start->diff($end);  //total de dias que deveria estar activo inicio - fin
                 $diff = $start->diff($today); //total de dias hasta hoy  inicio - hoy
-                $dias['total'] = $total->format('%a') -  $diff->format('%a') ; //guardo el total de dias
+                $dias['total'] = $total->format('%a') - $diff->format('%a'); //guardo el total de dias
 //            echo $total->format('%a') -  $diff->format('%a') ;
-                $dias['porcentaje'] = round(($diff->format('%a') *100) / $total->format('%a'), 0 , PHP_ROUND_HALF_EVEN);
+                $dias['porcentaje'] = round(($diff->format('%a') * 100) / $total->format('%a'), 0, PHP_ROUND_HALF_EVEN);
 //            echo round($diff->format('%a') / $total->format('%a'), 0 , PHP_ROUND_HALF_EVEN);
-            }else{
+            } else {
                 $dias['porcentaje'] = 0;
                 $dias['total'] = 0;
             }
-            $campaign->dias=$dias;
+            $campaign->dias = $dias;
             /**************************   DATOS DE LA GRAFICA    ****************************/
             /*$rangoFechas = array();
             for($i=0;$i<6;$i++){
@@ -264,9 +264,9 @@ class CampaignsController extends Controller
     {
         $salida = [];
         foreach ($survey as $k => $v) {
-            $salida['q' . $k]['question'] = $v['question'];
+            $salida['q' . ($k + 1)]['question'] = $v['question'];
             foreach ($v['answers'] as $kk => $vv) {
-                $salida['q' . $k]['answers']['a' . $kk] = $vv;
+                $salida['q' . ($k + 1)]['answers']['a' . $kk] = $vv;
             }
         }
         return count($salida) > 0 ? $salida : null;
