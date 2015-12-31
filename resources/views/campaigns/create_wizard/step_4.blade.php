@@ -10,7 +10,7 @@
 
         <div class="uk-width-medium-1-1 parsley-row">
             <h3>Balance Actual:</h3>
-            <p>  ${{ number_format( (float) auth()->user()["balance"]["current"], 2, '.', '') }}   </p>
+            <p>  ${{ number_format( (float) auth()->user()->wallet->current, 2, '.', '') }}   </p>
             <br>
         </div>
 
