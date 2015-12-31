@@ -236,14 +236,14 @@ class CampaignsController extends Controller
                         auth()->user()->wallet()->increment('wallet.current', $budget);
                         return response()->json([
                             'ok' => false,
-                            'msg' => 'No cuentas con los fondos suficientes.'
+                            'msg' => 'No cuentas con los fondos suficientes. (A)'
                         ]);
                     }
 
                 } else {
                     return response()->json([
                         'ok' => false,
-                        'msg' => 'No cuentas con los fondos suficientes.'
+                        'msg' => 'No cuentas con los fondos suficientes. (B)'
                     ]);
                 }
             } else {
