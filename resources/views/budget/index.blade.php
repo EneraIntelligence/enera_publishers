@@ -83,31 +83,31 @@
                             <div class="md-card-content">
                                 <span class="uk-text-small">Balance actual</span>
                                 <h2 class="uk-text-center" id="myTargetElement2" style="margin: 10px;">23</h2>
-                                <span class="uk-text-small border-bottom">Agregar fondos</span>
+                                {{--<span class="uk-text-small border-bottom">Agregar fondos</span>--}}
                                 <div class="uk-width-medium-1 uk-text-center">
-                                    <a class="md-btn md-btn-primary" href="#" style="margin: 10px;">Agregar fondos</a>
+                                    <a class="md-btn md-btn-primary" href="{{ route("budget::deposits")}}" style="margin: 10px;" >Agregar fondos</a>
                                 </div>
                                 <span class=" uk-text-small">Fondos camapañas activas</span>
                                 <div class="uk-width-large-1 uk-width-medium-1 uk-grid-margin">
                                     <ul class="md-list md-list-addon">
-                                        {{--<li>--}}
-                                        {{--<div class="md-list-addon-element">--}}
-                                        {{--<i class="md-list-addon-icon material-icons uk-text-primary">--}}
-                                        {{--&#xE918;--}}
-                                        {{--</i>--}}
-                                        {{--</div>--}}
-                                        {{--<div class="md-list-content">--}}
-                                        {{--<span class="md-list-heading">Total Asignado</span>--}}
-                                        {{--<span class="uk-text-small uk-text-muted">--}}
-                                        {{--$ {{ number_format($campaigns->sum('balance.current'),2,'.',',') }}--}}
-                                        {{--</span>--}}
-                                        {{--</div>--}}
-                                        {{--</li>--}}
+                                        <li>
+                                        <div class="md-list-addon-element">
+                                        <i class="md-list-addon-icon material-icons uk-text-primary">
+                                        &#xE918;
+                                        </i>
+                                        </div>
+                                        <div class="md-list-content">
+                                        <span class="md-list-heading">Total Asignado</span>
+                                        <span class="uk-text-small uk-text-muted">
+                                        $ {{ number_format($campaigns->sum('balance.current'),2,'.',',') }}
+                                        </span>
+                                        </div>
+                                        </li>
                                         @foreach($campaigns as $campaign)
                                             <li>
-                                                <div class="md-list-addon-element">
-                                                    <i class="md-list-addon-icon material-icons uk-text-success"></i>
-                                                </div>
+                                                {{--<div class="md-list-addon-element">--}}
+                                                    {{--<i class="md-list-addon-icon material-icons uk-text-success"></i>--}}
+                                                {{--</div>--}}
                                                 <div class="md-list-content">
                                                     <span class="md-list-heading">{{ $campaign->name }}</span>
                                                     <span class="uk-text-small uk-text-muted">

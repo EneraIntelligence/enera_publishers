@@ -12,7 +12,7 @@
 
     <div id="page_content">
         <div id="page_content_inner">
-            <div class="uk-grid uk-grid-divider">
+            <div class="uk-grid">
                 <div class="uk-width-medium-1-3 uk-visible-small">
                     <div style="margin: 10px 0 20px 0;">
                         <h4 class="heading_a uk-margin-bottom">Información de presupuestos</h4>
@@ -38,7 +38,7 @@
                                 <input type="radio" name="pay" value="cupon" style="display: inline-block;">
                                 <img src="{!! URL::asset('images/icons/iconos_forma_de_pago-02.png') !!}" >
                             </form>
-                            <p style="display: inline-block;">Conekta</p>
+                            <p style="display: inline-block;">T. Credito</p>
                             <p style="display: inline-block; margin-left: 30px;">Paypal</p>
                             <p style="display: inline-block; margin-left: 30px;">Cupon</p>
 
@@ -196,7 +196,7 @@
                                             <div class="uk-width-medium-1-2">
                                             </div>
                                             <div class="uk-width-medium-1-2">
-                                                <button type="button" class="md-btn md-btn-danger">Cancelar
+                                                <button type="button" class="md-btn md-btn-danger" onclick="window.location='{{ route("budget::index")}}'">Cancelar
                                                 </button>
                                                 <button type="submit" class="md-btn md-btn-primary">¡Pagar ahora!
                                                 </button>
@@ -227,7 +227,7 @@
                                                 </div>
                                             </div>
                                             <div class="uk-width-medium-1-2" style="margin: 10px 0;">
-                                                <button type="button" class="md-btn md-btn-danger">Cancelar
+                                                <button type="button" class="md-btn md-btn-danger" onclick="window.location='{{ route("budget::index")}}'">Cancelar
                                                 </button>
                                                 <button type="submit" class="md-btn md-btn-primary">Paypal
                                                 </button>
@@ -257,7 +257,7 @@
                                                 </div>
                                             </div>
                                             <div class="uk-width-medium-1-2" style="margin: 10px 0;">
-                                                <button type="button" class="md-btn md-btn-danger">Cancelar
+                                                <button type="button" class="md-btn md-btn-danger" onclick="window.location='{{ route("budget::index")}}'">Cancelar
                                                 </button>
                                                 <button type="submit" class="md-btn md-btn-primary">Canjear Cupón
                                                 </button>
