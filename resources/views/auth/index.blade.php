@@ -315,7 +315,7 @@
         console.log('no hay nada');
     }
     var registro2 = '{{$registro}}';
-    if (registro2) {
+    if (registro2=='registrar') {
         console.log('fallo el registro regreso a registro');
         console.log(registro2);
         $("#registro").hide();
