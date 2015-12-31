@@ -205,32 +205,83 @@
 
                                                     <div class="uk-grid uk-grid-medium">
 
-                                                        <div class="uk-width-1-6 margin-10 top-bottom-20" style="">
+                                                        <div class="uk-width-1-6 margin-10 top-bottom-20" >
                                                             <i class="uk-icon-calendar"></i>
                                                         </div>
 
                                                         <div class="uk-width-5-6 margin-10 top-bottom-20" >
-                                                            <div class="uk-progress uk-progress-danger">
-                                                                <div class="uk-progress-bar" style="width: 90%;">2 días
-                                                                    restantes
+                                                            @if($campaign->dias['porcentaje']==0)
+                                                                <div class="uk-progress uk-progress-danger" style="z-index: -5">
+                                                                    <div class="uk-progress-bar" style="width: 100%;"> </div>
                                                                 </div>
-                                                            </div>
+                                                                <div id="porcentaje"  style="z-index:10; text-align:center; margin-top:-35px;">
+                                                                    <span style="margin:auto; color: #FFFFff; ">{{$campaign->dias['total']}}  día(s) restantes</span>
+                                                                </div>
+                                                            @elseif($campaign->dias['porcentaje']<=50)
+                                                                <div class="uk-progress uk-progress-success" style="z-index: -5">
+                                                                    <div class="uk-progress-bar" style="width: {{$campaign->dias['porcentaje']}}%;"> </div>
+                                                                </div>
+                                                                <div id="porcentaje"  style="z-index:10; text-align:center; margin-top:-35px;">
+                                                                    <span style="margin:auto; color: #000; ">{{$campaign->dias['total']}} día(s) restantes </span>
+                                                                </div>
+                                                            @elseif($campaign->dias['porcentaje']<=80)
+                                                                <div class="uk-progress uk-progress-warning" style="z-index: -5">
+                                                                    <div class="uk-progress-bar" style="width: {{$campaign->dias['porcentaje']}}%;"> </div>
+                                                                </div>
+                                                                <div id="porcentaje"  style="z-index:10; text-align:center; margin-top:-35px;">
+                                                                    <span style="margin:auto; color: #000; ">{{$campaign->dias['total']}}  día(s) restantes </span>
+                                                                </div>
+                                                            @elseif($campaign->dias['porcentaje']>=80)
+                                                                <div class="uk-progress uk-progress-danger" style="z-index: -5">
+                                                                    <div class="uk-progress-bar" style="width: {{$campaign->dias['porcentaje']}}%;"> </div>
+                                                                </div>
+                                                                <div id="porcentaje"  style="z-index:10; text-align:center; margin-top:-35px;">
+                                                                    <span style="margin:auto; color: #FFFFff; ">{{$campaign->dias['total']}}  día(s) restantes </span>
+                                                                </div>
+                                                            @endif
+
                                                         </div>
 
                                                         <div class="uk-width-1-6 margin-10 top-bottom-20" >
                                                             <i class="uk-icon-money"></i>
                                                         </div>
-
-                                                        <div class="uk-width-5-6 margin-10 top-bottom-20" >
-                                                            <div class="uk-progress uk-progress-warning" style="z-index: -5">
-                                                                <div class="uk-progress-bar" style="width: {{$campaign->balance['current']!=0 ?($campaign->balance['current']*100)/$campaign->balance['init']:'0' }}%;"> </div>
+                                                        @if($campaign->balance['init']==0)
+                                                            <div id="dinero" class="uk-width-5-6 margin-10 top-bottom-20" >
+                                                                <div class="uk-progress uk-progress-danger" style="z-index: -5">
+                                                                    <div class="uk-progress-bar" style="width: 100%;"> </div>
+                                                                </div>
+                                                                <div  style="z-index:10; text-align:center; margin-top:-35px;">
+                                                                    <span style="margin:auto; color: #FFFFff; ">$ 0</span>
+                                                                </div>
                                                             </div>
-                                                            <div style="z-index:10; text-align:center; margin-top:-35px;">
-                                                                <span style="margin:auto; color: #000; ">${{ $campaign->balance['current']!=0?$campaign->balance['current']:'0' }}</span>
+                                                        @elseif($campaign->balance['init']!=0 && ($campaign->balance['current']*100)/$campaign->balance['init']<=50 )
+                                                            <div id="dinero" class="uk-width-5-6 margin-10 top-bottom-20" >
+                                                                <div class="uk-progress uk-progress-success" style="z-index: -5">
+                                                                    <div class="uk-progress-bar" style="width: {{($campaign->balance['current']*100)/$campaign->balance['init'] }}%;"> </div>
+                                                                </div>
+                                                                <div  style="z-index:10; text-align:center; margin-top:-35px;">
+                                                                    <span style="margin:auto; color: #000; ">$ {{ $campaign->balance['current']!=0?$campaign->balance['current']:'0' }}</span>
+                                                                </div>
                                                             </div>
-                                                        </div>
-
-
+                                                        @elseif($campaign->balance['init']!=0 && ($campaign->balance['current']*100)/$campaign->balance['init']<=80)
+                                                            <div id="dinero" class="uk-width-5-6 margin-10 top-bottom-20" >
+                                                                <div class="uk-progress uk-progress-warning" style="z-index: -5">
+                                                                    <div class="uk-progress-bar" style="width: {{ ($campaign->balance['current']*100)/$campaign->balance['init'] }}%;"> </div>
+                                                                </div>
+                                                                <div  style="z-index:10; text-align:center; margin-top:-35px;">
+                                                                    <span style="margin:auto; color: #000; "> $ {{ $campaign->balance['current']!=0?$campaign->balance['current']:'0' }}</span>
+                                                                </div>
+                                                            </div>
+                                                        @elseif($campaign->balance['init']!=0 && ($campaign->balance['current']*100)/$campaign->balance['init']>=80)
+                                                            <div id="dinero" class="uk-width-5-6 margin-10 top-bottom-20" >
+                                                                <div class="uk-progress uk-progress-danger" style="z-index: -5">
+                                                                    <div class="uk-progress-bar" style="width: {{ ($campaign->balance['current']*100)/$campaign->balance['init'] }}%;"> </div>
+                                                                </div>
+                                                                <div  style="z-index:10; text-align:center; margin-top:-35px;">
+                                                                    <span style="margin:auto; color: #FFFFff; ">$ {{ $campaign->balance['current']!=0?$campaign->balance['current']:'0' }}</span>
+                                                                </div>
+                                                            </div>
+                                                        @endif
                                                     </div>
 
                                                 </div>
@@ -239,28 +290,6 @@
 
                                                 </div>
                                             </div>
-
-                                            <!--
-                                            <div class="md-card-overlay-content">
-                                                <div class="uk-clearfix md-card-overlay-header">
-                                                    <i class="md-icon md-icon material-icons md-card-overlay-toggler">&#xE5D4;</i>
-                                                    <h4 style="text-align: right">Demográficos</h4>
-                                                </div>
-
-                                                <div class="md-card-overlay-content-inner">
-                                                    <p class="uk-margin-bottom truncate-text" style="height: 88px">
-                                                        Hombres - Mujeres
-                                                        <br>
-                                                        Menores de 30 años
-                                                        <br>
-                                                        etc...
-                                                    </p>
-                                                    <p><span class="uk-badge uk-badge-active">Campaña Activa</span></p>
-                                                </div>
-                                            </div>
-
-                                            -->
-
                                         </div>
                                     </div>
 

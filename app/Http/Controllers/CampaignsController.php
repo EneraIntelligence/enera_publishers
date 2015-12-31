@@ -48,8 +48,38 @@ class CampaignsController extends Controller
 
         $campaigns = Auth::user()->campaigns()->latest()->get();
         $subcampaigns = Auth::user()->subcampaigns()->latest()->get();
-//        dd($subcampaigns);
+
+        /****  for each para sacar los datos de cada campaña   ****/
+        foreach($campaigns as $campaign){
+            /****  OBTENER PORCENTAJE DEL TIEMPO TRANSCURRIDO DE LA CAMPAÑA ****/
+            $start = new DateTime(date('Y-m-d H:i:s', $campaign->filters['date']['start']->sec));
+            $end = new DateTime(date('Y-m-d H:i:s', $campaign->filters['date']['end']->sec));
+            $start->setTime(00,00,00);
+            $end->setTime(00,00,00);
+            if($campaign->status=='active'){
+                $today = new DateTime();
+                $total = $start->diff($end);  //total de dias que deveria estar activo inicio - fin
+                $diff = $start->diff($today); //total de dias hasta hoy  inicio - hoy
+                $dias['total'] = $total->format('%a') -  $diff->format('%a') ; //guardo el total de dias
+//            echo $total->format('%a') -  $diff->format('%a') ;
+                $dias['porcentaje'] = round(($diff->format('%a') *100) / $total->format('%a'), 0 , PHP_ROUND_HALF_EVEN);
+//            echo round($diff->format('%a') / $total->format('%a'), 0 , PHP_ROUND_HALF_EVEN);
+            }else{
+                $dias['porcentaje'] = 0;
+                $dias['total'] = 0;
+            }
+            $campaign->dias=$dias;
+            /**************************   DATOS DE LA GRAFICA    ****************************/
+            /*$rangoFechas = array();
+            for($i=0;$i<6;$i++){
+                $a = new DateTime("-$i days");
+                $b = new  DateTime("-$i days");
+                $rangoFechas[$i]['inicio'] = $a->setTime(0,0,0) ;
+                $rangoFechas[$i]['fin'] = $b->setTime(23,59,59) ;
+            }*/
+        }//FIN DEL FOR
 //        dd($campaigns);
+
         return view('campaigns.index', ['campaigns' => $campaigns, 'subcampaigns' => $subcampaigns, 'user' => Auth::user()]);
     }
 
@@ -508,36 +538,6 @@ class CampaignsController extends Controller
             return view('campaigns.show', [$campaign, 'cam' => $campaign, 'user' => Auth::user()]);
         } else {
             return redirect()->route('campaigns::index')->with('data', 'errorCamp');
-        }
-    }
-
-    public function porcentaje($status)
-    {
-        switch ($status) {
-            case 'pending':
-                $porcentaje = 0.0;
-                break;
-            case 'rejected':
-                $porcentaje = 0.0;
-                break;
-            case 'ended':
-                $ended = new DateTime($campaign->history->where('status', 'ended')->first()->date);
-                $total = $start->diff($end);
-                $diff = $start->diff($ended);
-                $porcentaje = $diff->format('%a') / $total->format('%a');
-                break;
-            case 'active':
-                $today = new DateTime();
-                $total = $start->diff($end);
-                $diff = $start->diff($today);
-                $porcentaje = $diff->format('%a') / $total->format('%a');
-                break;
-            case 'canceled':
-                $canceled = new DateTime($campaign->history->where('status', 'canceled')->first()->date);
-                $total = $start->diff($end);
-                $diff = $start->diff($canceled);
-                $porcentaje = $diff->format('%a') / $total->format('%a');
-                break;
         }
     }
 
