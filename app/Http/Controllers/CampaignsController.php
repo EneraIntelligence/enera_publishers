@@ -148,7 +148,7 @@ class CampaignsController extends Controller
             if ($budget > 99) {
                 if (auth()->user()->wallet->current >= $budget) {
                     $pre = auth()->user()->wallet->current;
-                    auth()->user()->wallet()->decrement('current', $budget);
+                    auth()->user()->wallet()->decrement('wallet.current', $budget);
                     if (($pre - $budget) == auth()->user()->wallet->current) {
                         $move = auth()->user()->movements()->create([
                             'client_id' => auth()->user()->client_id,
@@ -225,7 +225,7 @@ class CampaignsController extends Controller
                                 ]);
                             }
                         } else {
-                            auth()->user()->wallet()->increment('current', $budget);
+                            auth()->user()->wallet()->increment('wallet.current', $budget);
                             return response()->json([
                                 'ok' => false,
                                 'msg' => 'No fue posible el registro de movimientos.'
@@ -233,7 +233,7 @@ class CampaignsController extends Controller
                         }
 
                     } else {
-                        auth()->user()->wallet()->increment('current', $budget);
+                        auth()->user()->wallet()->increment('wallet.current', $budget);
                         return response()->json([
                             'ok' => false,
                             'msg' => 'No cuentas con los fondos suficientes.'
