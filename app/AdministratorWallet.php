@@ -10,4 +10,6 @@ class AdministratorWallet extends Model
     protected $table = null;
     protected $collection = null;
     //
+
+    //
 }

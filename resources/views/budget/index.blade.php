@@ -91,17 +91,17 @@
                                 <div class="uk-width-large-1 uk-width-medium-1 uk-grid-margin">
                                     <ul class="md-list md-list-addon">
                                         {{--<li>--}}
-                                            {{--<div class="md-list-addon-element">--}}
-                                                {{--<i class="md-list-addon-icon material-icons uk-text-primary">--}}
-                                                    {{--&#xE918;--}}
-                                                {{--</i>--}}
-                                            {{--</div>--}}
-                                            {{--<div class="md-list-content">--}}
-                                                {{--<span class="md-list-heading">Total Asignado</span>--}}
-                                                {{--<span class="uk-text-small uk-text-muted">--}}
-                                                    {{--$ {{ number_format($campaigns->sum('balance.current'),2,'.',',') }}--}}
-                                                {{--</span>--}}
-                                            {{--</div>--}}
+                                        {{--<div class="md-list-addon-element">--}}
+                                        {{--<i class="md-list-addon-icon material-icons uk-text-primary">--}}
+                                        {{--&#xE918;--}}
+                                        {{--</i>--}}
+                                        {{--</div>--}}
+                                        {{--<div class="md-list-content">--}}
+                                        {{--<span class="md-list-heading">Total Asignado</span>--}}
+                                        {{--<span class="uk-text-small uk-text-muted">--}}
+                                        {{--$ {{ number_format($campaigns->sum('balance.current'),2,'.',',') }}--}}
+                                        {{--</span>--}}
+                                        {{--</div>--}}
                                         {{--</li>--}}
                                         @foreach($campaigns as $campaign)
                                             <li>
@@ -140,7 +140,7 @@
                 suffix: ' MXN'
             };
 
-            var balance = {{ $admin->balance['current'] }};
+            var balance = {!! $admin->wallet->current !!};
             var demo1 = new CountUp("myTargetElement1", 0, balance, 2, 3.0, option);
             var demo2 = new CountUp("myTargetElement2", 0, balance, 2, 3.0, option);
             demo1.start();

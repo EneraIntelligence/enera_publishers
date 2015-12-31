@@ -21,14 +21,14 @@ class DashboardController extends Controller
         $sitios = Branche::count();     //total de  branches en enera
 
 //        $osTotal['android']= Device::where('os','=','Android')->count();
-       /* $mac1= Device::whereRaw([
-            'so' => [
-                'Mac'
-            ],
-            'so' => [
-                'iOS'
-            ]
-        ])->count();*/
+        /* $mac1= Device::whereRaw([
+             'so' => [
+                 'Mac'
+             ],
+             'so' => [
+                 'iOS'
+             ]
+         ])->count();*/
 //        where('os','=','Mac OS X')->count();
 //        echo $mac1.'  ';
 //        $mac2= Device::where('os','=','iOS')->count();
@@ -43,21 +43,16 @@ class DashboardController extends Controller
         $osCount = array();
         $osTotal = 0;
 
-        foreach($logs as $log)
-        {
-            if(isset($log->device['os']))
-            {
+        foreach ($logs as $log) {
+            if (isset($log->device['os'])) {
                 $key = array_search($log->device['os'], $osLabels);
                 //echo $log->device['os'].": ".$key."<br>";
-                if($key!==false)
-                {
+                if ($key !== false) {
                     $osCount[$log->device['os']]++;
                     $osTotal++;
-                }
-                else
-                {
+                } else {
                     $osLabels[] = $log->device['os'];
-                    $osCount[$log->device['os']]=1;
+                    $osCount[$log->device['os']] = 1;
                     $osTotal++;
                 }
 
@@ -69,6 +64,13 @@ class DashboardController extends Controller
 //        echo '<br>';
 //        dd($osCount);
 
-        return view('dashboard.index', ['logs' => $logs, 'osStats'=>$osCount, 'total' => $osTotal,'devices'=>$devices,'campañas'=>$campañas,'sitios'=>$sitios]);
+        return view('dashboard.index', [
+            'logs' => $logs,
+            'osStats' => $osCount,
+            'total' => $osTotal,
+            'devices' => $devices,
+            'campañas' => $campañas,
+            'sitios' => $sitios
+        ]);
     }
 }
