@@ -24,6 +24,7 @@ class BudgetController extends Controller
         ]);
     }
 
+
     public function deposits()
     {
         $admin = auth()->user();

@@ -29,7 +29,7 @@
                     <h4 class="heading_a uk-margin-bottom">Metodos de pago</h4>
                     <div class="uk-panel uk-panel-box">
                         <div class="col-md-4"></div>
-                        <div class="uk-width-medium-2-5">
+                        <div class="uk-width-medium-2-3 uk-width-small-2-3 uk-container-center">
                             <form action="">
                                 <input type="radio" name="pay" value="conekta" checked style="display: inline-block;">
                                 <img src="{!! URL::asset('images/icons/iconos_forma_de_pago-03.png') !!}" >
@@ -38,9 +38,13 @@
                                 <input type="radio" name="pay" value="cupon" style="display: inline-block;">
                                 <img src="{!! URL::asset('images/icons/iconos_forma_de_pago-02.png') !!}" >
                             </form>
+                            <p style="display: inline-block;">Conekta</p>
+                            <p style="display: inline-block; margin-left: 30px;">Paypal</p>
+                            <p style="display: inline-block; margin-left: 30px;">Cupon</p>
+
                         </div>
                         <div class="col-md-4"  id="conekta">
-                            <h3 class="uk-panel-title">Conekta</h3>
+                            {{--<h3 class="uk-panel-title">Conekta</h3>--}}
                             <div class="uk-width-medium-4-5 uk-container-center">
                                 <div class="uk-panel">
                                     <form action="{!! route('budget::conekta') !!}" method="POST" id="card-form"
@@ -48,6 +52,7 @@
                                         <div class="uk-grid" data-uk-grid-margin="">
                                             <div class="uk-width-medium-1">
                                                 <span class="card-errors" style="color: red;"></span>
+                                                <br>
                                                 <hr>
                                                 <h2> Datos de Tarjeta</h2>
                                             </div>
@@ -191,6 +196,8 @@
                                             <div class="uk-width-medium-1-2">
                                             </div>
                                             <div class="uk-width-medium-1-2">
+                                                <button type="button" class="md-btn md-btn-danger">Cancelar
+                                                </button>
                                                 <button type="submit" class="md-btn md-btn-primary">¡Pagar ahora!
                                                 </button>
                                                 <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
@@ -201,13 +208,14 @@
                             </div>
                         </div>
                         <div class="col-md-4" style="display: none;" id="paypal">
-                            <h3 class="uk-panel-title">Paypal</h3>
+                            {{--<h3 class="uk-panel-title">Paypal</h3>--}}
                             <div class="uk-width-medium-4-5 uk-container-center">
                                 <div class="uk-panel">
                                     <form action="{!! route('budget::conekta') !!}" method="POST" id="card-form"
                                           data-parsley-validate>
                                         <div class="uk-grid" data-uk-grid-margin="">
                                             <div class="uk-width-medium-1">
+                                                <br>
                                                 <hr>
                                                 <div class="uk-form-row">
                                                     <div class="md-input-wrapper"><label>Monto</label>
@@ -219,6 +227,8 @@
                                                 </div>
                                             </div>
                                             <div class="uk-width-medium-1-2" style="margin: 10px 0;">
+                                                <button type="button" class="md-btn md-btn-danger">Cancelar
+                                                </button>
                                                 <button type="submit" class="md-btn md-btn-primary">Paypal
                                                 </button>
                                                 <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
@@ -230,14 +240,15 @@
                         </div>
 
                         <div class="col-md-4" style="display: none" id="cupon">
-                            <h3 class="uk-panel-title">Cupón</h3>
+                            {{--<h3 class="uk-panel-title">Cupón</h3>--}}
                             <div class="uk-width-medium-4-5 uk-container-center">
                                 <div class="uk-panel">
                                     <form action="{!! route('budget::conekta') !!}" method="POST" id="card-form"
                                           data-parsley-validate>
                                         <div class="uk-grid" data-uk-grid-margin="">
                                             <div class="uk-width-medium-1">
-                                                <hr>
+                                                <br>
+                                                <hr style="margin-top: 10px;">
                                                 <div class="uk-form-row">
                                                     <div class="md-input-wrapper"><label>Codigo</label>
                                                         <input class="md-input masked_input"
@@ -246,6 +257,8 @@
                                                 </div>
                                             </div>
                                             <div class="uk-width-medium-1-2" style="margin: 10px 0;">
+                                                <button type="button" class="md-btn md-btn-danger">Cancelar
+                                                </button>
                                                 <button type="submit" class="md-btn md-btn-primary">Canjear Cupón
                                                 </button>
                                                 <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">

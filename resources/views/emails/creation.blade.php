@@ -67,12 +67,15 @@
                     <div class="md-list-content">
                         <span class="md-list-heading">Encuesta: </span>
                         <br>
-                        @foreach($camp->content['survey'] as $content)
-                            <span class="md-list-heading">  - {{ $content}}</span>
+                        @foreach($cam->content['survey'] as $key => $con)
+                            <span>Pregunta {!! $key[1] !!}
+                                : &nbsp;{!! $con['question'] !!}</span>
                             <br>
-                            @foreach($content['answers'] as $a )
-                                <span class="md-list-heading">  - {{ $a}}</span>
-                                <br>
+                            @foreach($con['answers'] as $key => $a)
+                                <ul>
+                                    <li class="p"><p>Respuesta {!! $key[1] !!}
+                                            : {!! $a !!}</p>
+                                </ul>
                             @endforeach
                         @endforeach
                     </div>
