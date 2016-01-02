@@ -397,7 +397,7 @@
                                                     </svg>
                                                 </div>
                                                 {{--<span class="uk-text-muted uk-text-small">Interacciones</span>--}}
-                                                <h3 class="heading_a uk-margin-bottom">Interacciones 2</h3>
+                                                <h3 class="heading_a uk-margin-bottom">Interacciones </h3>
                                                 <h1 class="jumbo uk-text-center" id="myTargetElement">0</h1>
                                             </div>
                                         </div>
