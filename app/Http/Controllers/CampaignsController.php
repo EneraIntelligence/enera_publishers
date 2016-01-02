@@ -191,7 +191,7 @@ class CampaignsController extends Controller
                                 'filters' => [
                                     'age' => explode(';', Input::get('age')),
                                     'date' => [
-                                        'start' => new MongoDate(strtotime(Input::get('start_date'))),
+                                        'start' => new MongoDate(strtotime(Input::get(  'start_date'))),
                                         'end' => new MongoDate(strtotime(Input::get('end_date')))
                                     ],
                                     'gender' => Input::get('gender') == 'both' ? ['male', 'female'] : [Input::get('gender')],
@@ -503,9 +503,9 @@ class CampaignsController extends Controller
 
             /******     saca el color y el icono que se va a usar regresa un array  ********/
             //$sColor = new StatusColor();
-            $color = [];
+            /*$color = [];
             $color['icon'] = CampaignStyleHelper::getStatusIcon($campaign->status);
-            $color['color'] = CampaignStyleHelper::getStatusColor($campaign->status);
+            $color['color'] = CampaignStyleHelper::getStatusColor($campaign->status);*/
 //            dd($color);
 
             /****  OBTENER PORCENTAJE DEL TIEMPO TRANSCURRIDO ****/
@@ -541,7 +541,7 @@ class CampaignsController extends Controller
 //            dd($porcentaje);
             $campaign->porcentaje = $porcentaje;
 //            dd($campaign);
-            return view('campaigns.show', [$campaign, 'cam' => $campaign, 'user' => Auth::user()]);
+            return view('campaigns.show', [ 'cam' => $campaign, 'user' => Auth::user()]);
         } else {
             return redirect()->route('campaigns::index')->with('data', 'errorCamp');
         }
