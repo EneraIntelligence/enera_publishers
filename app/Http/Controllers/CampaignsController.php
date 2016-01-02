@@ -71,7 +71,7 @@ class CampaignsController extends Controller
             $id=$campaign->_id;
             /**************************   DATOS DE LA GRAFICA    ****************************/
             $rangoFechas = array();
-            for($i=0;$i<6;$i++){
+            for($i=0;$i<7;$i++){
                 $a = new DateTime("-$i days");
                 $b = new  DateTime("-$i days");
                 $rangoFechas[$i]['inicio'] = $a->setTime(0,0,0) ;
