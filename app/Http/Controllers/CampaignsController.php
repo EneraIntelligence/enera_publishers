@@ -85,8 +85,8 @@ class CampaignsController extends Controller
             $graficat['dia3']['num'] = CampaignLog::where('campaign_id',$id)->where('interaction.loaded','exists','true')->where('updated_at', '>', $rangoFechas[2]['inicio'])->where('updated_at', '<', $rangoFechas[2]['fin'])->count();
             $graficat['dia4']['num'] = CampaignLog::where('campaign_id',$id)->where('interaction.loaded','exists','true')->where('updated_at', '>', $rangoFechas[3]['inicio'])->where('updated_at', '<', $rangoFechas[3]['fin'])->count();
             $graficat['dia5']['num'] = CampaignLog::where('campaign_id',$id)->where('interaction.loaded','exists','true')->where('updated_at', '>', $rangoFechas[4]['inicio'])->where('updated_at', '<', $rangoFechas[4]['fin'])->count();
-            $graficat['dia6']['num'] = CampaignLog::where('campaign_id',$id)->where('interaction.loaded','exists','true')->where('updated_at', '>', $rangoFechas[5]['inicio'])->where('updated_at', '<', $rangoFechas[4]['fin'])->count();
-            $graficat['dia7']['num'] = CampaignLog::where('campaign_id',$id)->where('interaction.loaded','exists','true')->where('updated_at', '>', $rangoFechas[6]['inicio'])->where('updated_at', '<', $rangoFechas[4]['fin'])->count();
+            $graficat['dia6']['num'] = CampaignLog::where('campaign_id',$id)->where('interaction.loaded','exists','true')->where('updated_at', '>', $rangoFechas[5]['inicio'])->where('updated_at', '<', $rangoFechas[5]['fin'])->count();
+            $graficat['dia7']['num'] = CampaignLog::where('campaign_id',$id)->where('interaction.loaded','exists','true')->where('updated_at', '>', $rangoFechas[6]['inicio'])->where('updated_at', '<', $rangoFechas[6]['fin'])->count();
 //            $grafica['grafica']=$graficat;
             $campaign->grafica=$graficat;
 //            dd($graficat);
@@ -507,10 +507,6 @@ class CampaignsController extends Controller
             $color['icon'] = CampaignStyleHelper::getStatusIcon($campaign->status);
             $color['color'] = CampaignStyleHelper::getStatusColor($campaign->status);
 //            dd($color);
-
-            /****  conversion de fechas de segundos a formato Y-m-d  ****/
-//            $campaign['filters']['date']['start'] = date('Y-m-d', $campaign['filters']['date']['start']->sec);
-//            $campaign['filters']['date']['end'] = date('Y-m-d', $campaign['filters']['date']['end']->sec);
 
             /****  OBTENER PORCENTAJE DEL TIEMPO TRANSCURRIDO ****/
             $start = new DateTime(date('Y-m-d H:i:s', $campaign->filters['date']['start']->sec));
