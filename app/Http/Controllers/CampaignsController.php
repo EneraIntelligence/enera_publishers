@@ -538,12 +538,54 @@ class CampaignsController extends Controller
                     $porcentaje = $diff->format('%a') / $total->format('%a');
                     break;
             }
-
+//            dd($porcentaje);
             $campaign->porcentaje = $porcentaje;
-            return view('campaigns.show', [
-                'cam' => $campaign,
-                'user' => Auth::user()
-            ]);
+
+            $men['1'] = -$campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'male')
+                ->where('user.age', '>=', 0)->where('user.age', '<=', 17)->distinct('user_id')->count();
+            $men['2'] = -$campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'male')
+                ->where('user.age', '>=', 18)->where('user.age', '<=', 20)->distinct('user_id')->count();
+            $men['3'] = -$campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'male')
+                ->where('user.age', '>=', 21)->where('user.age', '<=', 30)->distinct('user_id')->count();
+            $men['4'] = -$campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'male')
+                ->where('user.age', '>=', 31)->where('user.age', '<=', 40)->distinct('user_id')->count();
+            $men['5'] = -$campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'male')
+                ->where('user.age', '>=', 41)->where('user.age', '<=', 50)->distinct('user_id')->count();
+            $men['6'] = -$campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'male')
+                ->where('user.age', '>=', 51)->where('user.age', '<=', 60)->distinct('user_id')->count();
+            $men['7'] = -$campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'male')
+                ->where('user.age', '>=', 61)->where('user.age', '<=', 70)->distinct('user_id')->count();
+            $men['8'] = -$campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'male')
+                ->where('user.age', '>=', 71)->where('user.age', '<=', 80)->distinct('user_id')->count();
+            $men['9'] = -$campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'male')
+                ->where('user.age', '>=', 81)->where('user.age', '<=', 90)->distinct('user_id')->count();
+            $men['10'] = -$campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'male')
+                ->where('user.age', '>=', 90)->distinct('user_id')->count();
+
+            $women['1'] = $campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'female')
+                ->where('user.age', '>=', 0)->where('user.age', '<=', 17)->distinct('user_id')->count();
+            $women['2'] = $campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'female')
+                ->where('user.age', '>=', 18)->where('user.age', '<=', 20)->distinct('user_id')->count();
+            $women['3'] = $campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'female')
+                ->where('user.age', '>=', 21)->where('user.age', '<=', 30)->distinct('user_id')->count();
+            $women['4'] = $campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'female')
+                ->where('user.age', '>=', 31)->where('user.age', '<=', 40)->distinct('user_id')->count();
+            $women['5'] = $campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'female')
+                ->where('user.age', '>=', 41)->where('user.age', '<=', 50)->distinct('user_id')->count();
+            $women['6'] = $campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'female')
+                ->where('user.age', '>=', 51)->where('user.age', '<=', 60)->distinct('user_id')->count();
+            $women['7'] = $campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'female')
+                ->where('user.age', '>=', 61)->where('user.age', '<=', 70)->distinct('user_id')->count();
+            $women['8'] = $campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'female')
+                ->where('user.age', '>=', 71)->where('user.age', '<=', 80)->distinct('user_id')->count();
+            $women['9'] = $campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'female')
+                ->where('user.age', '>=', 81)->where('user.age', '<=', 90)->distinct('user_id')->count();
+            $women['10'] = $campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'female')
+                ->where('user.age', '>=', 90)->distinct('user_id')->count();
+            $campaign->men=$men;
+            $campaign->women=$women;
+
+            return view('campaigns.show', ['cam' => $campaign, 'user' => Auth::user()]);
         } else {
             return redirect()->route('campaigns::index')->with('data', 'errorCamp');
         }
