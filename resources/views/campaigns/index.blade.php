@@ -387,9 +387,9 @@
                     data: {
                         x:'x',
                         columns: [
-                            ['x','{!! $campaign->grafica['dia1']['fecha'] !!}','{!! $campaign->grafica['dia2']['fecha'] !!}','{!! $campaign->grafica['dia3']['fecha'] !!}','{!! $campaign->grafica['dia4']['fecha'] !!}','{!!$campaign->grafica['dia5']['fecha']!!}','{!!$campaign->grafica['dia6']['fecha']!!}','{!!$campaign->grafica['dia7']['fecha']!!}'],
+                            {{--['x','{!! $campaign->grafica['dia1']['fecha'] !!}','{!! $campaign->grafica['dia2']['fecha'] !!}','{!! $campaign->grafica['dia3']['fecha'] !!}','{!! $campaign->grafica['dia4']['fecha'] !!}','{!!$campaign->grafica['dia5']['fecha']!!}','{!!$campaign->grafica['dia6']['fecha']!!}','{!!$campaign->grafica['dia7']['fecha']!!}'],--}}
 //                            ['interacciones por dia '],
-                            ['interacciones por dia', dia1, dia2,dia3, dia4,dia5,dia6,dia7]
+                            ['interacciones', dia1, dia2,dia3, dia4,dia5,dia6,dia7]
                         ],
                         type: 'bar'
                     },
@@ -407,14 +407,14 @@
                             }
                         },
                         x: {
-                            type: 'timeseries',
-                            tick: {
+                            type: 'timeseries'
+                            /*tick: {
                                 format: '%Y-%m-%d'
-                            }
+                            }*/
                         }
                     },
                     legend: {
-                        show: true
+                        show: false
                     }
 
                 });
