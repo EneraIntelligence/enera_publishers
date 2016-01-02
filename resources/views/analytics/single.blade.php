@@ -47,9 +47,6 @@
                                             <option value="genderAge">Generos y edades</option>
                                             <option value="so">sistemas operativos</option>
                                             <option value="a">Item A</option>
-                                            <option value="b">Item B</option>
-                                            <option value="c">Item C</option>
-                                            <option value="d">Item D</option>
                                         </optgroup>
                                     </select>
                                 </div>
@@ -98,8 +95,6 @@
                 Popup($('#reporte').html());
 //                print($('#reporte'));
             });
-
-
 
 //                       funcion nativa
                     function Popup(data)

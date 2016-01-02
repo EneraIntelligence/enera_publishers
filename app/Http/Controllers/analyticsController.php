@@ -31,6 +31,8 @@ class AnalyticsController extends Controller
     {
         $data=array();
         $data['type']=$type;
+        var_dump($type);
+        var_dump($id);
         $campaign = Campaign::find($id); //busca la campaña
 //        $campaign = Campaign::where('_id',$id)->Lists('name','administrator_id','interaction'); //busca la campaña
 //        $campaign = Campaign::where('_id',$id)->get(array('name','administrator_id','interaction')); //busca la campaña
@@ -42,7 +44,9 @@ class AnalyticsController extends Controller
 //        dd($data);
         //valida que la campaña le pertenezca al usuario
         if ($campaign && $campaign->administrator_id == auth()->user()->_id){
+            echo 'la campaña es mia <br>';
             if (method_exists($this, $type) && $type==!null) { //se verifica que el tipo sea valido y no nulo
+                var_dump($type);
                 $datosGrafica= $this->$type($campaign['_id']); //se llama el metodo correspondiente
             }else{
                 $data['type']='intPerDay';
@@ -87,7 +91,8 @@ class AnalyticsController extends Controller
 //            dd($data);
             return view('analytics.single', ['data' => $data,  'user' => Auth::user()]);
         }else {
-            return redirect()->route('campaigns::index')->with('data', 'errorCamp');
+            echo 'la campaña no es mia <br>';
+//            return redirect()->route('campaigns::index')->with('data', 'errorCamp');
 //            return redirect()->action('CampaignsController@index')->with('data', 'error');
         }
     }
@@ -118,7 +123,7 @@ class AnalyticsController extends Controller
     private function genderAge($id)
     {   //        $today =date( "Y-m-d",mktime(0, 0, 0, date("m"),date("d")-5, date("Y")));
         $Log['users'] =[];//se inicializa el arreglo
-//        dd($Log);
+        dd($Log);
         //se obtiene de los logs los usuarios de 5 dias atras
         $fecha = $this->fechaInicio(5); //el numero es entere positivo pero en la funcion se ase negativo para buscar asia atras
         if($Logs = CampaignLog::groupBy('user')->where('campaign_id',$id)->where('updated_at', '>', $fecha)->get(array('user')))

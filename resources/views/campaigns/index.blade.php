@@ -380,12 +380,14 @@
                 var dia3 = {!! $campaign->grafica['dia3']['num'] !!};
                 var dia4 = {!! $campaign->grafica['dia4']['num'] !!};
                 var dia5 = {!! $campaign->grafica['dia5']['num'] !!};
+                var dia6 = {!! $campaign->grafica['dia6']['num'] !!};
+                var dia7 = {!! $campaign->grafica['dia7']['num'] !!};
         var chart = c3.generate({
                     bindto: '#chart_{!! $campaign->_id !!}',
                     data: {
                         x:'x',
                         columns: [
-                            ['x','{!! $campaign->grafica['dia1']['fecha'] !!}','{!! $campaign->grafica['dia2']['fecha'] !!}','{!! $campaign->grafica['dia3']['fecha'] !!}','{!! $campaign->grafica['dia4']['fecha'] !!}','{!! $campaign->grafica['dia5']['fecha'] !!}'],
+                            ['x','{!! $campaign->grafica['dia1']['fecha'] !!}','{!! $campaign->grafica['dia2']['fecha'] !!}','{!! $campaign->grafica['dia3']['fecha'] !!}','{!! $campaign->grafica['dia4']['fecha'] !!}','{!!$campaign->grafica['dia5']['fecha']!!}','{!!$campaign->grafica['dia6']['fecha']!!}','{!!$campaign->grafica['dia7']['fecha']!!}'],
                             ['interacciones por dia '],
                             ['interacciones por dia', dia1, dia2,dia3, dia4,dia5]
                         ],
