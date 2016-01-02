@@ -405,13 +405,13 @@
                             tick: {
                                 count: 2
                             }
-                        },
-                        x: {
-                            type: 'timeseries'
-                            /*tick: {
-                                format: '%Y-%m-%d'
-                            }*/
                         }
+                        /*x: {
+                            type: 'timeseries'
+                            tick: {
+                                format: '%Y-%m-%d'
+                            }
+                        }*/
                     },
                     legend: {
                         show: false

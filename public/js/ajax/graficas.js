@@ -65,7 +65,7 @@ graficas = function () {
                     linkedTo: 0,
                     labels: {
                         step: 1 //es como decirle cuantos numeros de la categoria  aparescan en la grafica
-                    },
+                    }
                 }],
                 yAxis: {
                     title: {
@@ -77,13 +77,11 @@ graficas = function () {
                         }
                     }
                 },
-
                 plotOptions: {
                     series: {
                         stacking: 'normal'
                     }
                 },
-
                 tooltip: {
                     formatter: function () {//funcion para hacer operaciones para mostrar los datos
                         return '<b>' + this.series.name + ', age ' + this.point.category + '</b><br/>' +
