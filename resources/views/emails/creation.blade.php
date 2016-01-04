@@ -49,6 +49,16 @@
                     </div>
                 </li>
             @endif
+            @if(isset($camp->content['like_url']))
+                <li>
+                    <div class="md-list-content">
+                        <span class="md-list-heading">URL: </span>
+                        <br>
+                        <span class="md-list-heading"> - {{$camp->content['like_url']}} </span>
+
+                    </div>
+                </li>
+            @endif
             @if(isset($camp->content['images']))
                 <li>
                     <div class="md-list-content">
@@ -67,7 +77,7 @@
                     <div class="md-list-content">
                         <span class="md-list-heading">Encuesta: </span>
                         <br>
-                        @foreach($cam->content['survey'] as $key => $con)
+                        @foreach($camp->content['survey'] as $key => $con)
                             <span>Pregunta {!! $key[1] !!}
                                 : &nbsp;{!! $con['question'] !!}</span>
                             <br>
@@ -98,28 +108,18 @@
                     <div class="md-list-content">
                         <span class="md-list-heading">Captcha: </span>
                         <br>
-
-                        @foreach($camp->content['captcha'] as $content)
-                            <span class="md-list-heading">  - {{$content}}</span>
-                            <br>
-                        @endforeach
-
+                        <span class="md-list-heading"> - {{$camp->content['captcha']}} </span>
                     </div>
             @endif
-            @if(isset($camp->content['video']))
-                <li>
-                    <div class="md-list-content">
-                        <span class="md-list-heading">Video: </span>
-                        <br>
-
-                        @foreach($camp->content['video'] as $content)
-                            <span class="md-list-heading">  - {{$content}}</span>
-                            <br>
-                        @endforeach
-
-                    </div>
-                </li>
-            @endif
+            {{--@if(isset($camp->content['video']))--}}
+                {{--<li>--}}
+                    {{--<div class="md-list-content">--}}
+                        {{--<span class="md-list-heading">Video: </span>--}}
+                        {{--<br>--}}
+                        {{--<span class="md-list-heading"> - {{$camp->content['video']}} </span>--}}
+                    {{--</div>--}}
+                {{--</li>--}}
+            {{--@endif--}}
         </ul>
     </div>
 </div>

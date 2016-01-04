@@ -71,7 +71,9 @@
                                                         <input class="md-input masked_input" id="masked_currency"
                                                                name="money" type="text"
                                                                data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'autoGroup': true, 'digits': 2, 'digitsOptional': false, 'prefix': '$ ', 'placeholder': '0'"
-                                                               data-inputmask-showmaskonhover="false"/>
+                                                               data-inputmask-showmaskonhover="false"
+                                                               data-parsley-multipleof="3"
+                                                               data-parsley-required/>
                                                         <span class="md-input-bar"></span></div>
                                                 </div>
                                             </div>
@@ -411,6 +413,7 @@
                 document.getElementById('paypal').style.display = 'none';
                 document.getElementById('cupon').style.display = 'block';
             }
+
         });
     </script>
 @stop
