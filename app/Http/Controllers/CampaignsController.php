@@ -172,7 +172,7 @@ class CampaignsController extends Controller
                             'reference_id' => '',
                             'reference_type' => '',
                             'amount' => $budget,
-                            'balance' => $budget,
+                            'balance' => ($pre - $budget),
                         ]);
                         if ($move) {
                             if ($camp = Campaign::create([
@@ -205,10 +205,10 @@ class CampaignsController extends Controller
                                         'survey' => Input::has('images.survey') ? Item::find(Input::get('images.survey'))->filename : null,
                                     ],
                                     'mail' => [
-                                        'from_name' => Input::get('from'),
-                                        'from_mail' => Input::get('from_mail'),
-                                        'subject' => Input::get('subject'),
-                                        'content' => Input::get('mailing_content'),
+                                        'from_name' => Input::has('from') ? Input::get('from') : null,
+                                        'from_mail' => Input::has('from_mail') ? Input::get('from_mail') : null,
+                                        'subject' => Input::has('subject') ? Input::get('subject') : null,
+                                        'content' => Input::has('mailing_content') ? Input::get('mailing_content') : null,
                                     ],
                                     'survey' => Input::has('survey') ? $this->storeSurvey(Input::get('survey')) : null,
                                     'captcha' => Input::get('captcha'),
