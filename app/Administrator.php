@@ -65,5 +65,10 @@ class Administrator extends Model implements AuthenticatableContract, Authorizab
     {
         return $this->hasMany('Publishers\AdministratorMovement');
     }
+
+    public function history()
+    {
+        return $this->embedsMany('Publishers\AdministratorHistory');
+    }
     // end relations
 }

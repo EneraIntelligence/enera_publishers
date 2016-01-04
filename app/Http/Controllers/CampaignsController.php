@@ -131,8 +131,6 @@ class CampaignsController extends Controller
      */
     public function store()
     {
-//        sleep(30);
-//        dd(Input::all());
         $validator = Validator::make(Input::all(), [
             'title' => 'required',
             'start_date' => 'required',
