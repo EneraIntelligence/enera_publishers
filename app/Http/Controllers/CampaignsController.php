@@ -211,7 +211,7 @@ class CampaignsController extends Controller
                                         'subject' => Input::get('subject'),
                                         'content' => Input::get('mailing_content'),
                                     ],
-                                    'survey' => $this->storeSurvey(Input::get('survey')),
+                                    'survey' => Input::has('survey') ? $this->storeSurvey(Input::get('survey')) : null,
                                     'captcha' => Input::get('captcha'),
                                     'video' => Input::get('video'),
                                 ],
@@ -272,15 +272,13 @@ class CampaignsController extends Controller
         }
     }
 
-    private function storeSurvey($survey = null)
+    private function storeSurvey($survey)
     {
         $salida = [];
-        if ($survey != null) {
-            foreach ($survey as $k => $v) {
-                $salida['q' . ($k + 1)]['question'] = $v['question'];
-                foreach ($v['answers'] as $kk => $vv) {
-                    $salida['q' . ($k + 1)]['answers']['a' . $kk] = $vv;
-                }
+        foreach ($survey as $k => $v) {
+            $salida['q' . ($k + 1)]['question'] = $v['question'];
+            foreach ($v['answers'] as $kk => $vv) {
+                $salida['q' . ($k + 1)]['answers']['a' . $kk] = $vv;
             }
         }
         return count($salida) > 0 ? $salida : '';
@@ -584,8 +582,8 @@ class CampaignsController extends Controller
                 ->where('user.age', '>=', 81)->where('user.age', '<=', 90)->distinct('user_id')->count();
             $women['10'] = $campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'female')
                 ->where('user.age', '>=', 90)->distinct('user_id')->count();
-            $campaign->men=$men;
-            $campaign->women=$women;
+            $campaign->men = $men;
+            $campaign->women = $women;
 
             return view('campaigns.show', ['cam' => $campaign, 'user' => Auth::user()]);
         } else {
