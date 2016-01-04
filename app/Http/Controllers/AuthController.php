@@ -35,8 +35,15 @@ class AuthController extends Controller
             'password' => 'required|alpha_num|min:8|max:16',
         ]);
         if ($validator->passes()) {
-            if (auth()->attempt(['email' => Input::get('email'), 'password' => Input::get('password'), 'status' => 'active'], Input::get('login_page_stay_signed'))) {
-                return redirect()->route('home');
+            $admin = Administrator::where('email', Input::get('email'))->first();
+            if ($admin && $admin->status == 'active') {
+                if (auth()->attempt(['email' => Input::get('email'), 'password' => Input::get('password'), 'status' => 'active'], Input::get('login_page_stay_signed'))) {
+                    return redirect()->route('home');
+                } else {
+                    return redirect()->route('auth.index')->with('error', 'El correo y/o la contraseña son incorrectos.');
+                }
+            } elseif ($admin && $admin->status != 'active') {
+                return redirect()->route('auth.index')->with('error', 'Debe validar tu cuenta antes de ingresar.');
             } else {
                 return redirect()->route('auth.index')->with('error', 'El correo y/o la contraseña son incorrectos.');
             }

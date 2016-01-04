@@ -60,7 +60,7 @@
             </div>
             {!! Form::open(['route'=>'auth.login', 'class'=>'uk-form-stacked', 'id'=>'form_validation']) !!}
             @if( Session::has('error') )
-                <div style="text-align: center; color: red;">{!! session('error') !!}</div>
+                <div style="text-align: center; color: red; margin-bottom: 10px;">{!! session('error') !!}</div>
             @endif
 
             @foreach($errors->get('email') as $m)

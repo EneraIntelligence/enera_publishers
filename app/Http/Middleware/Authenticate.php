@@ -33,14 +33,19 @@ class Authenticate
      */
     public function handle($request, Closure $next)
     {
-        if ($this->auth->guest()) {
+        if (!$this->auth->check()) {
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);
             } else {
                 return redirect()->route('auth.index');
             }
+        } elseif ($this->auth->check()) {
+            if ($this->auth->user()->status == 'active') {
+                return $next($request);
+            } else {
+                $this->auth->logout();
+                return redirect()->route('auth.index');
+            }
         }
-
-        return $next($request);
     }
 }
