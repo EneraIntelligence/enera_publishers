@@ -19,7 +19,7 @@ class CampaignLog extends Model
         return $this->embedsOne('Publishers\CampaignLogInteraction');
     }
 
-    public function user()
+    public function user() // presenta inconsistencia
     {
         return $this->belongsTo('Publishers\User','user.id');
     }

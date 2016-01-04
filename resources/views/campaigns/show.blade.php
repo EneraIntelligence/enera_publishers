@@ -222,7 +222,8 @@
                                                 <div class="md-list-content uk-width-large-1-2"
                                                      style=" color: #1e88e5;">
                                                     Link a redireccionar :
-                                                    <a id="link" class="" href="http://{{ isset($cam->content['link'])? $cam->content['link']:'no definido' }}"
+                                                    <a id="link" class=""
+                                                       href="http://{{ isset($cam->content['link'])? $cam->content['link']:'no definido' }}"
                                                        target="_blank">{!! isset($cam->content['link'])? $cam->content['link']:'no hay una definida www.enera.com ' !!}</a>
                                                 </div>
                                             @endif
@@ -235,9 +236,11 @@
                                                         {!! isset($cam->content['cover_path'])?$cam->content['cover_path']:'imagen no definida' !!}</a>
                                                     <div class="uk-modal" id="captcha-image">
                                                         <div class="uk-modal-dialog uk-modal-dialog-lightbox">
-                                                            <button type="button" class="uk-modal-close uk-close uk-close-alt"></button>
+                                                            <button type="button"
+                                                                    class="uk-modal-close uk-close uk-close-alt"></button>
                                                             @if(isset($cam->content['cover_path']))
-                                                                <img src="{!! URL::asset('images/'.$cam->content['cover_path']) !!}" alt="{{$cam->content['cover_path']}}"/>
+                                                                <img src="{!! URL::asset('images/'.$cam->content['cover_path']) !!}"
+                                                                     alt="{{$cam->content['cover_path']}}"/>
                                                             @endif
                                                             <div class="uk-modal-caption">Lorem</div>
                                                         </div>
@@ -252,52 +255,14 @@
                                             @endif
                                             @if($cam->interaction['name'] == 'mailing_list')
                                                 @if(isset($cam->content['image']))
-                                                <div class="md-list-heading uk-width-large-1-2"
-                                                     style="color: #1e88e5;float: left">
-                                                    Imagen Maling List :
-                                                    <a id="link" class=""
-                                                       data-uk-modal="{target:'#mailing-image'}">
-                                                       {!! $cam->content['image'] !!}
-                                                    </a>
-                                                    <div class="uk-modal" id="mailing-image">
-                                                        <div class="uk-modal-dialog uk-modal-dialog-lightbox">
-                                                            <button type="button"
-                                                                    class="uk-modal-close uk-close uk-close-alt"></button>
-                                                            <img src="{!! URL::asset('images/'.$cam->content['image']) !!}"
-                                                                 alt="{{$cam->content['cover_path']}}"/>
-                                                            <div class="uk-modal-caption">Lorem</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                @else
-                                                <div class="md-list-heading uk-width-large-1-2" style="color: #1e88e5;float: left">
-                                                    no hay imagen definida
-                                                </div>
-                                                @endif
-
-                                                <!-- create mailing campaign button start -->
-                                                <div class="uk-grid uk-margin-medium-top" data="uk-grid-margin">
-                                                    <div class="uk-width-1-1">
-                                                        <div class="uk-width-medium-1-1">
-                                                            <a class="md-btn md-btn-primary"
-                                                               onclick="new_campaign.promptMailingCampaign('{{$cam->_id}}')"
-                                                            <span class="uk-display-block">Crear campaña de mailing</span>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- create mailing campaign button end -->
-
-                                            @endif
-                                            @if($cam->interaction['name'] == 'survey')
-                                                @if(isset($cam->content['image']))
-                                                    <div class="md-list-heading uk-width-large-1"
+                                                    <div class="md-list-heading uk-width-large-1-2"
                                                          style="color: #1e88e5;float: left">
-                                                        Imagen Encuesta :
+                                                        Imagen Maling List :
                                                         <a id="link" class=""
-                                                           data-uk-modal="{target:'#survey-image'}">
-                                                            {!! $cam->content['image'] !!}</a>
-                                                        <div class="uk-modal" id="survey-image">
+                                                           data-uk-modal="{target:'#mailing-image'}">
+                                                            {!! $cam->content['image'] !!}
+                                                        </a>
+                                                        <div class="uk-modal" id="mailing-image">
                                                             <div class="uk-modal-dialog uk-modal-dialog-lightbox">
                                                                 <button type="button"
                                                                         class="uk-modal-close uk-close uk-close-alt"></button>
@@ -308,59 +273,99 @@
                                                         </div>
                                                     </div>
                                                 @else
-                                                    <div>
-                                                        no hay imagen que mostrar
-                                                    </div>
-                                                @endif
-                                            <!------- informacion de survey  ---->
-                                                <div class="md-list-content uk-width-large-1"
-                                                     style=" color: #1e88e5;">
-                                                    @if(isset($cam->content['survey']))
-                                                        @foreach($cam->content['survey'] as $key => $con)
-                                                            <span>Pregunta {!! $key[1] !!}
-                                                                : &nbsp;{!! $con['question'] !!}</span>
-                                                            <br>
-                                                            @foreach($con['answers'] as $key => $a)
-                                                                <ul>
-                                                                    <li class="p"><p>Respuesta {!! $key[1] !!}
-                                                                            : {!! $a !!}</p>
-                                                                </ul>
-                                                            @endforeach
-                                                        @endforeach
-                                                    @else
-                                                    <div>
-                                                        no hay preguntas que mostrar
+                                                    <div class="md-list-heading uk-width-large-1-2"
+                                                         style="color: #1e88e5;float: left">
+                                                        no hay imagen definida
                                                     </div>
                                                     @endif
 
-                                                </div>
-                                            @endif
-                                            @if($cam->interaction['name'] == 'video')
-                                                <div class="md-list-heading uk-width-large-1-2" style="color: #1e88e5;float: left">
-                                                    @if(isset($cam->content['video']))
-                                                    Video :
-                                                    <a id="link" class=""
-                                                       data-uk-modal="{target:'#video'}">
-                                                        {!! $cam->content['video'] !!}</a>
-                                                    <div class="uk-modal" id="video">
-                                                        <div class="uk-modal-dialog uk-modal-dialog-lightbox">
-                                                            <button type="button"
-                                                                    class="uk-modal-close uk-close uk-close-alt"></button>
-                                                            <video width="600" height="300" controls>
-                                                                <source src="{!! URL::asset('videos/'.$cam->content['video']) !!}"
-                                                                        type="video/mp4">
-                                                                Your browser does not support HTML5 video.
-                                                            </video>
-                                                            {{--<div class="uk-modal-caption">Lorem</div>--}}
+                                                            <!-- create mailing campaign button start -->
+                                                    <div class="uk-grid uk-margin-medium-top" data="uk-grid-margin">
+                                                        <div class="uk-width-1-1">
+                                                            <div class="uk-width-medium-1-1">
+                                                                <a class="md-btn md-btn-primary"
+                                                                   onclick="new_campaign.promptMailingCampaign('{{$cam->_id}}')"
+                                                                <span class="uk-display-block">Crear campaña de mailing</span>
+                                                                </a>
+                                                            </div>
                                                         </div>
                                                     </div>
+                                                    <!-- create mailing campaign button end -->
+
+                                                @endif
+                                                @if($cam->interaction['name'] == 'survey')
+                                                    @if(isset($cam->content['image']))
+                                                        <div class="md-list-heading uk-width-large-1"
+                                                             style="color: #1e88e5;float: left">
+                                                            Imagen Encuesta :
+                                                            <a id="link" class=""
+                                                               data-uk-modal="{target:'#survey-image'}">
+                                                                {!! $cam->content['image'] !!}</a>
+                                                            <div class="uk-modal" id="survey-image">
+                                                                <div class="uk-modal-dialog uk-modal-dialog-lightbox">
+                                                                    <button type="button"
+                                                                            class="uk-modal-close uk-close uk-close-alt"></button>
+                                                                    <img src="{!! URL::asset('images/'.$cam->content['image']) !!}"
+                                                                         alt="{{$cam->content['cover_path']}}"/>
+                                                                    <div class="uk-modal-caption">Lorem</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     @else
-                                                    <span>
+                                                        <div>
+                                                            no hay imagen que mostrar
+                                                        </div>
+                                                        @endif
+                                                                <!------- informacion de survey  ---->
+                                                        <div class="md-list-content uk-width-large-1"
+                                                             style=" color: #1e88e5;">
+                                                            @if(isset($cam->content['survey']))
+                                                                @foreach($cam->content['survey'] as $key => $con)
+                                                                    <span>Pregunta {!! $key[1] !!}
+                                                                        : &nbsp;{!! $con['question'] !!}</span>
+                                                                    <br>
+                                                                    @foreach($con['answers'] as $key => $a)
+                                                                        <ul>
+                                                                            <li class="p"><p>Respuesta {!! $key[1] !!}
+                                                                                    : {!! $a !!}</p>
+                                                                        </ul>
+                                                                    @endforeach
+                                                                @endforeach
+                                                            @else
+                                                                <div>
+                                                                    no hay preguntas que mostrar
+                                                                </div>
+                                                            @endif
+
+                                                        </div>
+                                                    @endif
+                                                    @if($cam->interaction['name'] == 'video')
+                                                        <div class="md-list-heading uk-width-large-1-2"
+                                                             style="color: #1e88e5;float: left">
+                                                            @if(isset($cam->content['video']))
+                                                                Video :
+                                                                <a id="link" class=""
+                                                                   data-uk-modal="{target:'#video'}">
+                                                                    {!! $cam->content['video'] !!}</a>
+                                                                <div class="uk-modal" id="video">
+                                                                    <div class="uk-modal-dialog uk-modal-dialog-lightbox">
+                                                                        <button type="button"
+                                                                                class="uk-modal-close uk-close uk-close-alt"></button>
+                                                                        <video width="600" height="300" controls>
+                                                                            <source src="{!! URL::asset('videos/'.$cam->content['video']) !!}"
+                                                                                    type="video/mp4">
+                                                                            Your browser does not support HTML5 video.
+                                                                        </video>
+                                                                        {{--<div class="uk-modal-caption">Lorem</div>--}}
+                                                                    </div>
+                                                                </div>
+                                                            @else
+                                                                <span>
                                                         no hay video asignado
                                                     </span>
+                                                            @endif
+                                                        </div>
                                                     @endif
-                                                </div>
-                                            @endif
                                         </div>
                                     </div>
 
@@ -392,7 +397,7 @@
                                                     </svg>
                                                 </div>
                                                 {{--<span class="uk-text-muted uk-text-small">Interacciones</span>--}}
-                                                <h3 class="heading_a uk-margin-bottom">Interacciones</h3>
+                                                <h3 class="heading_a uk-margin-bottom">Interacciones </h3>
                                                 <h1 class="jumbo uk-text-center" id="myTargetElement">0</h1>
                                             </div>
                                         </div>
@@ -460,7 +465,7 @@
             prefix: '',
             suffix: ''
         };
-        var demo = new CountUp("myTargetElement", 0, {{$cam->logs->count()}}, 0, 5.0, options);
+        var demo = new CountUp("myTargetElement", 0, {!! $cam->logs()->where('interaction.loaded','exists',true)->count() !!}, 0, 5.0, options);
         demo.start();
 
         var chart = c3.generate({
@@ -482,9 +487,11 @@
         });
         //------------------------------------------Grafica---------------------------------------------
         var grafica = new graficas;
-                {{--var gra= grafica.genderAge({!! json_encode($data['grafica']) !!});--}}
+                var gra= grafica.genderAge({!! json_encode($cam->men) !!},{!! json_encode($cam->women) !!} );
         var gra = grafica.genderAge();
         //var gra2= grafica.gender();
+
+
 
     </script>
     <!-- enera custom scripts -->

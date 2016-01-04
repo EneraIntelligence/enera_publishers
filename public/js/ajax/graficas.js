@@ -34,13 +34,14 @@ graficas = function () {
         return chart4;
     }
 //------------------------grafica de barra para los años y edades
-    this.genderAge = function genderAge(array){
+    this.genderAge = function genderAge( men , women ){
 
         // Data gathered from http://populationpyramid.net/germany/2015/
         $(function () {
             // Age categories
             var categories = ['0-17','18-20','21-30', '31-40', '41-50','51-60',
                 '61-70', '71-80', '81-90', '91-100 +'];
+            //var categories = [''];
             var elemento;
             $('#genderAge').highcharts({
                 chart: {
@@ -53,7 +54,7 @@ graficas = function () {
                     text: ' DISTRIBUCION POR EDADES<a href="http://populationpyramid.net/germany/2015/"></a>'
                 },
                 xAxis: [{
-                    categories: categories,//se le pasa el arreglo de categorias
+                    categories: ['','','','','','','','','',''],//se le pasa el arreglo de categorias
                     reversed: false,// para decirle el orden en que van a parecer las categorias
                     labels: {
                         step: 1
@@ -61,11 +62,11 @@ graficas = function () {
                 }, { // mirror axis on right side
                     opposite: true, //para que en la grafica se muestren las barras encontradas o no en la misma direccion
                     reversed: false,
-                    categories: categories,
+                    categories: ['','','','','','','','','',''],
                     linkedTo: 0,
                     labels: {
                         step: 1 //es como decirle cuantos numeros de la categoria  aparescan en la grafica
-                    },
+                    }
                 }],
                 yAxis: {
                     title: {
@@ -77,28 +78,51 @@ graficas = function () {
                         }
                     }
                 },
-
                 plotOptions: {
                     series: {
                         stacking: 'normal'
                     }
                 },
-
                 tooltip: {
                     formatter: function () {//funcion para hacer operaciones para mostrar los datos
-                        return '<b>' + this.series.name + ', age ' + this.point.category + '</b><br/>' +
-                            'Population: ' + Highcharts.numberFormat(Math.abs(this.point.y), 0);
+                        return '<div  style="background-color: #FFF; padding-top: 0px; margin-top: 0px; top: 0px;"> <b>' + this.series.name + ', age ' + categories[this.point.index] + '</b><br/>' +
+                            'usuarios: ' + Highcharts.numberFormat(Math.abs(this.point.y), 0)+'</div>';
                     }
+                    /*contents: function (d, defaultTitleFormat, defaultValueFormat, color) {
+                        var $$ = this, config = $$.config,
+                            titleFormat = config.tooltip_format_title || defaultTitleFormat,
+                            nameFormat = config.tooltip_format_name || function (name) { return name; },
+                            valueFormat = config.tooltip_format_value || defaultValueFormat,
+                            text, i, title, value, name, bgcolor;
+                        for (i = 0; i < d.length; i++) {
+                            if (! (d[i] && (d[i].value || d[i].value === 0))) { continue; }
+
+                            if (! text) {
+                                title = titleFormat ? titleFormat(d[i].x) : d[i].x;
+                                text = "<table class='" + $$.CLASS.tooltip + "'>" + (title || title === 0 ? "<tr><th colspan='2'>" + title + "</th></tr>" : "");
+                            }
+
+                            name = nameFormat(d[i].name);
+                            value = valueFormat(d[i].value, d[i].ratio, d[i].id, d[i].index);
+                            bgcolor = $$.levelColor ? $$.levelColor(d[i].value) : color(d[i].id);
+
+                            text += "<tr class='" + $$.CLASS.tooltipName + "-" + d[i].id + "'>";
+                            text += "<td class='name'><span style='background-color:" + bgcolor + "'></span>" + name + "</td>";
+                            text += "<td class='value'>" + value + "</td>";
+                            text += "</tr>";
+                        }
+                        return text + "</table>";
+                    }*/
                 },
 
                 series: [{
                     name: 'Male',
                     color:'#5294C2',
-                    data: [-1,-2,-3,-4,-5,-6,-7,-8,-9,-10]
+                    data: [men[1],men[2],men[3],men[4],men[5],men[6],men[7],men[8],men[9],men[10] ]
                 }, {
                     name: 'Female',
                     color:'#fc92cc',
-                    data: [1,2,3,4,5,6,7,8,9,10]
+                    data: [women[1],women[2],women[3],women[4],women[5],women[6],women[7],women[8],women[9],women[10]]
                 }]
             });
             return elemento;
