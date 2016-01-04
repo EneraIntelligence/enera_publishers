@@ -35,20 +35,20 @@
                     <span class="md-list-heading"> - {{$camp->created_at}}</span>
                 </div>
             </li>
-            @if(isset($camp->content['items']))
-                <li>
-                    <div class="md-list-content">
-                        <span class="md-list-heading">Items: </span>
-                        <br>
+            {{--@if(isset($camp->content['items']))--}}
+                {{--<li>--}}
+                    {{--<div class="md-list-content">--}}
+                        {{--<span class="md-list-heading">Items: </span>--}}
+                        {{--<br>--}}
 
-                        @foreach($camp->content['items'] as $content)
-                            <span class="md-list-heading">  - {{$content}}</span>
-                            <br>
-                        @endforeach
+                        {{--@foreach($camp->content['items'] as $content)--}}
+                            {{--<span class="md-list-heading">  - {{$content}}</span>--}}
+                            {{--<br>--}}
+                        {{--@endforeach--}}
 
-                    </div>
-                </li>
-            @endif
+                    {{--</div>--}}
+                {{--</li>--}}
+            {{--@endif--}}
             @if(isset($camp->content['like_url']))
                 <li>
                     <div class="md-list-content">
