@@ -164,6 +164,9 @@
             {!! Form::open(['route'=>'auth.signUp', 'class'=>'uk-form-stacked', 'id'=>'form_validation2']) !!}
             @if( Session::has('errors') )
                 <div style="text-align: center; color: red;">hubo un {!! $registro = 'error'  !!} al registrarte verifica los campos</div>
+                @foreach($errors->get('registro') as $m)
+                    <div style="text-align: center; color: red;">{!! $m !!}</div>
+                @endforeach
             @endif
             {{--{{ dd($errors) }}--}}
             {{--{{ var_dump($errors)  }}--}}
@@ -290,7 +293,8 @@
     </div>
 </div>
 
-{{--{{ dd($errors) }}--}}
+{{--{!!  var_dump($registro) !!}--}}
+{{--{!!  var_dump($registro2) !!}--}}
 
 <!-- common functions -->
 {!! HTML::script('assets/js/common.min.js') !!}
@@ -314,8 +318,9 @@
     }else{
         console.log('no hay nada');
     }
-    var registro2 = '{{$registro}}';
-    if (registro2=='registrar') {
+    var registro2 = '{!!$registro  !!}';
+    console.log('valor de registro = '+registro2);
+    if (registro2=='registrar'|registro2=='error') {
         console.log('fallo el registro regreso a registro');
         console.log(registro2);
         $("#registro").hide();

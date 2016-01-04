@@ -7,6 +7,7 @@ use MongoDate;
 use Publishers\AdministratorMovement;
 use Publishers\CampaignLog;
 use Publishers\Jobs\EmailJob;
+use Publishers\Jobs\MailCreationJob;
 use Publishers\Jobs\mailingJob;
 use Publishers\Libraries\CampaignStyleHelper;
 use Publishers\Libraries\EneraTools;
@@ -221,9 +222,11 @@ class CampaignsController extends Controller
                                 $move->reference_id = $camp->_id;
                                 $move->reference_type = 'Campaign';
 
+                                $this->dispatch(new MailCreationJob($camp));
+
                                 Mail::send('emails.creation', ['camp' => $camp], function ($m) use ($camp) {
-                                    $m->from('notificacion@enera.mx', 'Enera Intelligence');
-                                    $m->to('darkdreke@gmail.com', 'Notificaciones')->subject('Camapaña creada');
+                                    $m->from('servers@enera.mx', 'Enera Publisher');
+                                    $m->to('contacto@enera.mx', 'Notificaciones')->subject('Campaña creada');
                                 });
 
                                 return response()->json([
