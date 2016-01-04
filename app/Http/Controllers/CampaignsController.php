@@ -146,6 +146,7 @@ class CampaignsController extends Controller
             'interactionId' => 'required',
             'budget' => 'required',
             /* condicionales */
+            'banner_link' => 'required_if:interactionId,like',
             'from' => 'required_if:interactionId,mailing-list',
             'from_mail' => 'required_if:interactionId,mailing-list',
             'subject' => 'required_if:interactionId,mailing-list',
@@ -214,6 +215,7 @@ class CampaignsController extends Controller
                                     'survey' => Input::has('survey') ? $this->storeSurvey(Input::get('survey')) : null,
                                     'captcha' => Input::get('captcha'),
                                     'video' => Input::get('video'),
+                                    'like_url' => Input::get('banner_link'),
                                 ],
                                 'status' => 'pending',
                             ])
