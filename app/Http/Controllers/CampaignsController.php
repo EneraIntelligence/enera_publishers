@@ -44,54 +44,54 @@ class CampaignsController extends Controller
         //$admin_id = Auth::user()->_id;
         //$campaigns = Campaign::where('status', 'active')->latest()->get();
         //CityBranchesScript::saveCityBranches();
-        $grafica=array();
+        $grafica = array();
         $campaigns = Auth::user()->campaigns()->latest()->get();
         $subcampaigns = Auth::user()->subcampaigns()->latest()->get();
 
         /****  for each para sacar los datos de cada campaña   ****/
-        foreach($campaigns as $campaign){
+        foreach ($campaigns as $campaign) {
             /****  OBTENER PORCENTAJE DEL TIEMPO TRANSCURRIDO DE LA CAMPAÑA ****/
             $start = new DateTime(date('Y-m-d H:i:s', $campaign->filters['date']['start']->sec));
             $end = new DateTime(date('Y-m-d H:i:s', $campaign->filters['date']['end']->sec));
-            $start->setTime(00,00,00);
-            $end->setTime(00,00,00);
-            if($campaign->status=='active'){
+            $start->setTime(00, 00, 00);
+            $end->setTime(00, 00, 00);
+            if ($campaign->status == 'active') {
                 $today = new DateTime();
                 $total = $start->diff($end);  //total de dias que deveria estar activo inicio - fin
                 $diff = $start->diff($today); //total de dias hasta hoy  inicio - hoy
-                $dias['total'] = $total->format('%a') -  $diff->format('%a') ; //guardo el total de dias
+                $dias['total'] = $total->format('%a') - $diff->format('%a'); //guardo el total de dias
 //            echo $total->format('%a') -  $diff->format('%a') ;
-                $dias['porcentaje'] = round(($diff->format('%a') *100) / $total->format('%a'), 0 , PHP_ROUND_HALF_EVEN);
+                $dias['porcentaje'] = round(($diff->format('%a') * 100) / $total->format('%a'), 0, PHP_ROUND_HALF_EVEN);
 //            echo round($diff->format('%a') / $total->format('%a'), 0 , PHP_ROUND_HALF_EVEN);
-            }else{
+            } else {
                 $dias['porcentaje'] = 0;
                 $dias['total'] = 0;
             }
-            $campaign->dias=$dias;
-            $id=$campaign->_id;
+            $campaign->dias = $dias;
+            $id = $campaign->_id;
             /**************************   DATOS DE LA GRAFICA    ****************************/
             $rangoFechas = array();
-            for($i=0;$i<6;$i++){
+            for ($i = 0; $i < 6; $i++) {
                 $a = new DateTime("-$i days");
                 $b = new  DateTime("-$i days");
-                $rangoFechas[$i]['inicio'] = $a->setTime(0,0,0) ;
-                $rangoFechas[$i]['fin'] = $b->setTime(23,59,59) ;
-                $graficat['dia'.($i+1)]['fecha']=$a->format('Y-m-d');
+                $rangoFechas[$i]['inicio'] = $a->setTime(0, 0, 0);
+                $rangoFechas[$i]['fin'] = $b->setTime(23, 59, 59);
+                $graficat['dia' . ($i + 1)]['fecha'] = $a->format('Y-m-d');
             }
 //            dd($grafica);
 //            dd($rangoFechas);
-            $graficat['dia1']['num'] = CampaignLog::where('campaign_id',$id)->where('interaction.loaded','exists','true')->where('updated_at', '>', $rangoFechas[0]['inicio'])->where('updated_at', '<', $rangoFechas[0]['fin'])->count();
-            $graficat['dia2']['num'] = CampaignLog::where('campaign_id',$id)->where('interaction.loaded','exists','true')->where('updated_at', '>', $rangoFechas[1]['inicio'])->where('updated_at', '<', $rangoFechas[1]['fin'])->count();
-            $graficat['dia3']['num'] = CampaignLog::where('campaign_id',$id)->where('interaction.loaded','exists','true')->where('updated_at', '>', $rangoFechas[2]['inicio'])->where('updated_at', '<', $rangoFechas[2]['fin'])->count();
-            $graficat['dia4']['num'] = CampaignLog::where('campaign_id',$id)->where('interaction.loaded','exists','true')->where('updated_at', '>', $rangoFechas[3]['inicio'])->where('updated_at', '<', $rangoFechas[3]['fin'])->count();
-            $graficat['dia5']['num'] = CampaignLog::where('campaign_id',$id)->where('interaction.loaded','exists','true')->where('updated_at', '>', $rangoFechas[4]['inicio'])->where('updated_at', '<', $rangoFechas[4]['fin'])->count();
+            $graficat['dia1']['num'] = CampaignLog::where('campaign_id', $id)->where('interaction.loaded', 'exists', 'true')->where('updated_at', '>', $rangoFechas[0]['inicio'])->where('updated_at', '<', $rangoFechas[0]['fin'])->count();
+            $graficat['dia2']['num'] = CampaignLog::where('campaign_id', $id)->where('interaction.loaded', 'exists', 'true')->where('updated_at', '>', $rangoFechas[1]['inicio'])->where('updated_at', '<', $rangoFechas[1]['fin'])->count();
+            $graficat['dia3']['num'] = CampaignLog::where('campaign_id', $id)->where('interaction.loaded', 'exists', 'true')->where('updated_at', '>', $rangoFechas[2]['inicio'])->where('updated_at', '<', $rangoFechas[2]['fin'])->count();
+            $graficat['dia4']['num'] = CampaignLog::where('campaign_id', $id)->where('interaction.loaded', 'exists', 'true')->where('updated_at', '>', $rangoFechas[3]['inicio'])->where('updated_at', '<', $rangoFechas[3]['fin'])->count();
+            $graficat['dia5']['num'] = CampaignLog::where('campaign_id', $id)->where('interaction.loaded', 'exists', 'true')->where('updated_at', '>', $rangoFechas[4]['inicio'])->where('updated_at', '<', $rangoFechas[4]['fin'])->count();
 //            $grafica['grafica']=$graficat;
-            $campaign->grafica=$graficat;
+            $campaign->grafica = $graficat;
 //            dd($graficat);
         }//FIN DEL FOR
 //        dd($campaigns);
 
-        return view('campaigns.index', ['campaigns' => $campaigns, 'subcampaigns' => $subcampaigns , 'user' => Auth::user()]);
+        return view('campaigns.index', ['campaigns' => $campaigns, 'subcampaigns' => $subcampaigns, 'user' => Auth::user()]);
     }
 
     /**
@@ -271,16 +271,18 @@ class CampaignsController extends Controller
         }
     }
 
-    private function storeSurvey($survey)
+    private function storeSurvey($survey = null)
     {
         $salida = [];
-        foreach ($survey as $k => $v) {
-            $salida['q' . ($k + 1)]['question'] = $v['question'];
-            foreach ($v['answers'] as $kk => $vv) {
-                $salida['q' . ($k + 1)]['answers']['a' . $kk] = $vv;
+        if ($survey != null) {
+            foreach ($survey as $k => $v) {
+                $salida['q' . ($k + 1)]['question'] = $v['question'];
+                foreach ($v['answers'] as $kk => $vv) {
+                    $salida['q' . ($k + 1)]['answers']['a' . $kk] = $vv;
+                }
             }
         }
-        return count($salida) > 0 ? $salida : null;
+        return count($salida) > 0 ? $salida : '';
     }
 
     public function mailing($id, Request $request)
