@@ -7,14 +7,11 @@
 
 
     <div id="page_content">
-
         <div class="uk-grid"  id="grid">
             <div class="uk-width-8-10 uk-container-center" >
                 {{--id="container-center">--}}
                 <h4 class="heading_a uk-align-left" style="display:inline-block;">Campañas</h4>
-
                 <div class="uk-grid uk-align-right">
-
                     @if(count($campaigns)<=0)
                         <div class="uk-button-dropdown"  id="dropdown" data-uk-dropdown>
                             @else
@@ -166,8 +163,6 @@
                         <div id="snippets">
                             <div class="uk-grid uk-grid-width-1-1 hierarchical_show"
                                  data-uk-grid="{ gutter: 16, controls: '#campaign-filter, #action-filter, #campaign-sort' }">
-
-
                                 @foreach($campaigns as $campaign)
 {{--                                    {{var_dump($campaign->grafica['dia1'])}}--}}
                                     <div data-uk-filter="campaign-{!! $campaign->status !!}, action-{!! $campaign->interaction['name'] !!}"
@@ -211,28 +206,28 @@
 
                                                         <div class="uk-width-5-6 margin-10 top-bottom-20" >
                                                             @if($campaign->dias['porcentaje']==0)
-                                                                <div class="uk-progress uk-progress-danger" style="z-index: -5">
-                                                                    <div class="uk-progress-bar" style="width: 100%;"> </div>
+                                                                <div class="uk-progress uk-progress uk-progress-striped " style="z-index: -5">
+                                                                    <div class="uk-progress-bar" style="width: {!! $campaign->status=='active'?'100%':'0%' !!};"> </div>
                                                                 </div>
                                                                 <div id="porcentaje"  style="z-index:10; text-align:center; margin-top:-35px;">
-                                                                    <span style="margin:auto; color: #FFFFff; ">{{$campaign->dias['total']}}  día(s) restantes </span>
+                                                                    <span style="margin:auto; color: #FFFFff; ">{!! $campaign->dias['total'] !!}  día(s) restantes </span>
                                                                 </div>
                                                             @elseif($campaign->dias['porcentaje']<=50)
-                                                                <div class="uk-progress uk-progress-success" style="z-index: -5">
+                                                                <div class="uk-progress uk-progress-success uk-progress-striped uk-active" style="z-index: -5">
                                                                     <div class="uk-progress-bar" style="width:{{$campaign->dias['porcentaje']}}%;"> </div>
                                                                 </div>
                                                                 <div id="porcentaje"  style="z-index:10; text-align:center; margin-top:-35px;">
                                                                     <span style="margin:auto; color: #000; ">{{$campaign->dias['total']}} día(s) restantes </span>
                                                                 </div>
                                                             @elseif($campaign->dias['porcentaje']<=80)
-                                                                <div class="uk-progress uk-progress-warning" style="z-index: -5">
+                                                                <div class="uk-progress uk-progress-warning uk-progress-striped uk-active" style="z-index: -5">
                                                                     <div class="uk-progress-bar" style="width:{{$campaign->dias['porcentaje']}}%;"> </div>
                                                                 </div>
                                                                 <div id="porcentaje"  style="z-index:10; text-align:center; margin-top:-35px;">
                                                                     <span style="margin:auto; color: #000; ">{{$campaign->dias['total']}}  día(s) restantes </span>
                                                                 </div>
                                                             @elseif($campaign->dias['porcentaje']>=80)
-                                                                <div class="uk-progress uk-progress-danger" style="z-index: -5">
+                                                                <div class="uk-progress uk-progress-danger uk-progress-striped uk-active    " style="z-index: -5">
                                                                     <div class="uk-progress-bar" style="width:{{$campaign->dias['porcentaje']}}%;"> </div>
                                                                 </div>
                                                                 <div id="porcentaje"  style="z-index:10; text-align:center; margin-top:-35px;">
@@ -251,16 +246,16 @@
                                                                     <div class="uk-progress-bar" style="width: 100%;"> </div>
                                                                 </div>
                                                                 <div  style="z-index:10; text-align:center; margin-top:-35px;">
-                                                                    <span style="margin:auto; color: #FFFFff; ">$ 0</span>
+                                                                    <span style="margin:auto; color: #FFFFff; ">$ 0.00</span>
                                                                 </div>
                                                             </div>
                                                         @elseif($campaign->balance['init']!=0 && ($campaign->balance['current']*100)/$campaign->balance['init']<=50 )
                                                             <div id="dinero" class="uk-width-5-6 margin-10 top-bottom-20" >
-                                                                <div class="uk-progress uk-progress-success" style="z-index: -5">
+                                                                <div class="uk-progress uk-progress-danger" style="z-index: -5">
                                                                     <div class="uk-progress-bar" style="width: {{($campaign->balance['current']*100)/$campaign->balance['init'] }}%;"> </div>
                                                                 </div>
                                                                 <div  style="z-index:10; text-align:center; margin-top:-35px;">
-                                                                    <span style="margin:auto; color: #000; ">$ {{ $campaign->balance['current']!=0?$campaign->balance['current']:'0' }}</span>
+                                                                    <span style="margin:auto; color: #000; ">$ {{ $campaign->balance['current']!=0? number_format($campaign->balance['current'],2):'0' }}</span>
                                                                 </div>
                                                             </div>
                                                         @elseif($campaign->balance['init']!=0 && ($campaign->balance['current']*100)/$campaign->balance['init']<=80)
@@ -269,16 +264,16 @@
                                                                     <div class="uk-progress-bar" style="width: {{ ($campaign->balance['current']*100)/$campaign->balance['init'] }}%;"> </div>
                                                                 </div>
                                                                 <div  style="z-index:10; text-align:center; margin-top:-35px;">
-                                                                    <span style="margin:auto; color: #000; "> $ {{ $campaign->balance['current']!=0?$campaign->balance['current']:'0' }}</span>
+                                                                    <span style="margin:auto; color: #000; "> $ {{ $campaign->balance['current']!=0?number_format($campaign->balance['current'],2):'0' }}</span>
                                                                 </div>
                                                             </div>
                                                         @elseif($campaign->balance['init']!=0 && ($campaign->balance['current']*100)/$campaign->balance['init']>=80)
                                                             <div id="dinero" class="uk-width-5-6 margin-10 top-bottom-20" >
-                                                                <div class="uk-progress uk-progress-danger" style="z-index: -5">
+                                                                <div class="uk-progress uk-progress-success" style="z-index: -5">
                                                                     <div class="uk-progress-bar" style="width: {{ ($campaign->balance['current']*100)/$campaign->balance['init'] }}%;"> </div>
                                                                 </div>
                                                                 <div  style="z-index:10; text-align:center; margin-top:-35px;">
-                                                                    <span style="margin:auto; color: #FFFFff; ">$ {{ $campaign->balance['current']!=0?$campaign->balance['current']:'0' }}</span>
+                                                                    <span style="margin:auto; color: #FFFFff; ">$ {{ $campaign->balance['current']!=0?number_format($campaign->balance['current'],2):'0' }}</span>
                                                                 </div>
                                                             </div>
                                                         @endif
@@ -376,6 +371,7 @@
                 status: 'success'
             });
         }
+
                 @foreach($campaigns as $campaign)
                 var dia1 = {!! $campaign->grafica['dia1']['num'] !!};
                 var dia2 = {!! $campaign->grafica['dia2']['num'] !!};
@@ -385,42 +381,41 @@
                 var dia6 = {!! $campaign->grafica['dia6']['num'] !!};
                 var dia7 = {!! $campaign->grafica['dia7']['num'] !!};
         var chart = c3.generate({
-                    bindto: '#chart_{!! $campaign->_id !!}',
-                    data: {
-                        x:'x',
-                        columns: [
-                            ['x','{!! $campaign->grafica['dia1']['fecha'] !!}','{!! $campaign->grafica['dia2']['fecha'] !!}','{!! $campaign->grafica['dia3']['fecha'] !!}','{!! $campaign->grafica['dia4']['fecha'] !!}','{!!$campaign->grafica['dia5']['fecha']!!}','{!!$campaign->grafica['dia6']['fecha']!!}','{!!$campaign->grafica['dia7']['fecha']!!}'],
-//                            ['interacciones por dia '],
-                            ['interacciones', dia1, dia2,dia3, dia4,dia5,dia6,dia7]
-                        ],
-                        type: 'bar'
-                    },
-                    bar: {
-                        width: {
-                            ratio: 0.5 // this makes bar width 50% of length between ticks
-                        }
-                        // or
-                        //width: 100 // this makes bar width 100px
-                    },
-                    axis: {
-                        y: {
-                            tick: {
-                                count: 2
-                            }
-                        },
-                        x: {
-                            type: 'timeseries',
-                            tick: {
-                                format: '%d'
-//                                format: '%Y-%m-%d'
-                            }
-                        }
-                    },
-                    legend: {
-                        show: false
+                bindto: '#chart_{!! $campaign->_id !!}',
+                data: {
+                    x:'x',
+                    columns: [
+                        ['x','{!! $campaign->grafica['dia1']['fecha'] !!}','{!! $campaign->grafica['dia2']['fecha'] !!}','{!! $campaign->grafica['dia3']['fecha'] !!}','{!! $campaign->grafica['dia4']['fecha'] !!}','{!!$campaign->grafica['dia5']['fecha']!!}','{!!$campaign->grafica['dia6']['fecha']!!}','{!!$campaign->grafica['dia7']['fecha']!!}'],
+    //                            ['interacciones por dia '],
+                        ['interacciones', dia1, dia2,dia3, dia4,dia5,dia6,dia7]
+                    ],
+                    type: 'bar'
+                },
+                bar: {
+                    width: {
+                        ratio: 0.5 // this makes bar width 50% of length between ticks
                     }
-
-                });
+                    // or
+                    //width: 100 // this makes bar width 100px
+                },
+                axis: {
+                    y: {
+                        tick: {
+                            count: 2
+                        }
+                    },
+                    x: {
+                        type: 'timeseries',
+                        tick: {
+                            format: '%d'
+    //                                format: '%Y-%m-%d'
+                        }
+                    }
+                },
+                legend: {
+                    show: false
+                }
+        });
 
         @endforeach
     </script>

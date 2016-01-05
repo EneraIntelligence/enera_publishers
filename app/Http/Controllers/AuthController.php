@@ -146,12 +146,15 @@ class AuthController extends Controller
         echo 'verificando <br>';
         $code = ValidationCode::where('administrator_id', '=', $id)->first();// busco el codigo en la base de datos
 //        dd($code);
-        if ($code!=null && $code->count() > 0) { //si se encuentra el usuario
-            if ($code->token == $token) {  //verifico si el token es el mismo
+        if ($code!=null && $code->count() > 0) //si se encuentra el usuario
+        {
+            if ($code->token == $token) //verifico si el token es el mismo
+            {
                 /*** se hace el cambio por activo  ***/
                 $admin = Administrator::find($id);
 
-                if ($admin && $admin->status != 'active') {
+                if ($admin && $admin->status != 'active')
+                {
                     $admin->status = 'active';   //cambio el status de pending a active
                     $admin->save();
                     /**    se agrega el historial de cuando se cambio a activo     **/
@@ -161,7 +164,8 @@ class AuthController extends Controller
                     $code->delete();
                     //  se regresa al login con mensaje de que se activo cuenta
                     return redirect()->route('auth.index')->with('data', 'active');
-                } else {
+                } else
+                {
 //                    echo "ups";
                     return redirect()->route('auth.index')->with('data', 'invalido');
                 }

@@ -9,7 +9,6 @@
 
         .p {
             list-style: none;
-
         }
     </style>
 @endsection
@@ -102,6 +101,12 @@
                                                         </div>
                                                         <div class="md-list-content azul">
                                                             <span class="md-list-heading">Lugares</span>
+                                                            @if($cam->branches!='global')
+{{--                                                                {!! var_dump($cam->branches) !!}--}}
+                                                                @foreach($cam->branches as $branches)
+                                                                    <span> {!! $branches !!}</span>
+                                                                @endforeach
+                                                            @endif
                                                             <span class="uk-text-small uk-text-muted">{{--{{$branches[0]}}--}}</span>
                                                         </div>
                                                     </li>
@@ -121,7 +126,7 @@
                                                         <div class="md-list-content">
                                                             <span class="md-list-heading azul">Rango de Edad</span>
                                                             {{--<span class="uk-text-small uk-text-muted">{{  $cam->filters['age'][0].' a '.$cam->filters['age'][1]}} </span>--}}
-                                                            <span class="uk-text-small uk-text-muted">{{ isset($cam->filters['age'][0])? $cam->filters['age'][0].' a '.$cam->filters['age'][1] :'no definido'   }} </span>
+                                                            <span class="uk-text-small uk-text-muted">{{ isset($cam->filters['age'][0])? $cam->filters['age'][0].' a '.$cam->filters['age'][1] :'no definido' }} </span>
                                                         </div>
                                                     </li>
                                                     <li>
@@ -129,8 +134,8 @@
                                                             <span class="md-list-heading azul">Generos</span>
                                                                     <span class="uk-text-small uk-text-muted">
                                                                         {{--{{ trans_choice('gender.'.$cam->filters['gender'][0],1) }}--}}
-                                                                        {{ isset($filters['gender'][1]) ? trans_choice('gender.'.$cam->filters['gender'][0],1):'no definido' }}
-                                                                        , {{ isset($filters['gender'][1]) ? trans_choice('gender.'.$cam->filters['gender'][1],1):'no definido' }}
+                                                                        {{ isset($filters['gender'][1]) ? trans_choice('gender.'.$cam->filters['gender'][0],1):'ambos' }}
+                                                                        , {{ isset($filters['gender'][2]) ? trans_choice('gender.'.$cam->filters['gender'][1],1):' ' }}
                                                                     </span>
                                                             {{--{{$filters['gender'][0].',  '.$filters['gender'][1]}}--}}
                                                         </div>
@@ -487,7 +492,7 @@
         });
         //------------------------------------------Grafica---------------------------------------------
         var grafica = new graficas;
-                var gra= grafica.genderAge({!! json_encode($cam->men) !!},{!! json_encode($cam->women) !!} );
+        var gra= grafica.genderAge({!! json_encode($cam->men) !!},{!! json_encode($cam->women) !!} );
         var gra = grafica.genderAge();
         //var gra2= grafica.gender();
 
