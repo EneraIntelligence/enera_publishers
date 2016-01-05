@@ -22,13 +22,14 @@ class PreviewMiddleware
         $route = $request->route()->getName();
         $user = Administrator::where('_id', Auth::user()->_id)->first();
         $test = isset($user->route) ? $user->route : [];
-        $diff = array_unique($test);
+
         if ($route != "home" && $route != "campaigns::show" && $route != "campaigns::sub" && $route != 'campaigns::store' && $route != 'campaigns::save_item' && $route != 'budget::conekta' && $route != 'auth.logout') {
-            array_unshift($diff, PreviewHelper::getNameRoute($route) . '/' . $route);
+            array_unshift($test, PreviewHelper::getNameRoute($route) . '/' . $route);
         }
-        if (count($diff) > 5) {
-            array_pop($diff);
+        if (count($test) > 5) {
+            array_pop($test);
         }
+        $diff = array_unique($test);
         $user->route = $diff;
         $user->save();
         return $next($request);
