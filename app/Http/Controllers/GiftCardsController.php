@@ -45,7 +45,7 @@ class GiftCardsController extends Controller
                     return redirect()->route('budget::deposits')->with('error', 'Tu GiftCard no pudo ser usada.');
                 }
             } else {
-                return redirect()->route('budget::deposits')->with('error', 'El codigo no es valido.');
+                return redirect()->route('budget::deposits')->with('error', 'El codigo GiftCard no es valido.');
             }
         } else {
             return redirect()->route('budget::deposits')->withErrors($validator);

@@ -51,7 +51,6 @@
                                 <span><b>Gift Card</b></span>
                             </label>
                             {{--</form>--}}
-
                         </div>
                         @if(Session::has('success'))
                             <div class="uk-alert uk-alert-success" style="padding-right:10px">
