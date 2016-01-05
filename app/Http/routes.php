@@ -64,6 +64,8 @@ Route::group(['middleware' => ['auth', 'preview']], function () {
         Route::get('/paypal/index', ['as' => 'paypal.index', 'uses' => 'PayPalPaymentController@index']);
 
         Route::get('/conekta', ['as' => 'conekta', 'uses' => 'ConektaController@conekta']);
+
+        Route::post('/giftcard', ['as' => 'giftcard.exchange', 'uses' => 'GiftCardsController@exchange']);
     });
 
     Route::match(['get', 'post'], 'logout', ['as' => 'auth.logout', 'uses' => 'AuthController@logout']);

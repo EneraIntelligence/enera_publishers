@@ -7,6 +7,7 @@ use MongoDate;
 use Publishers\AdministratorMovement;
 use Publishers\CampaignLog;
 use Publishers\Jobs\EmailJob;
+use Publishers\Jobs\MailCreationJob;
 use Publishers\Jobs\mailingJob;
 use Publishers\Libraries\CampaignStyleHelper;
 use Publishers\Libraries\EneraTools;
@@ -131,8 +132,6 @@ class CampaignsController extends Controller
      */
     public function store()
     {
-//        sleep(30);
-//        dd(Input::all());
         $validator = Validator::make(Input::all(), [
             'title' => 'required',
             'start_date' => 'required',
@@ -146,6 +145,7 @@ class CampaignsController extends Controller
             'interactionId' => 'required',
             'budget' => 'required',
             /* condicionales */
+            'banner_link' => 'required_if:interactionId,like',
             'from' => 'required_if:interactionId,mailing-list',
             'from_mail' => 'required_if:interactionId,mailing-list',
             'subject' => 'required_if:interactionId,mailing-list',
@@ -173,7 +173,7 @@ class CampaignsController extends Controller
                             'reference_id' => '',
                             'reference_type' => '',
                             'amount' => $budget,
-                            'balance' => $budget,
+                            'balance' => ($pre - $budget),
                         ]);
                         if ($move) {
                             if ($camp = Campaign::create([
@@ -206,14 +206,15 @@ class CampaignsController extends Controller
                                         'survey' => Input::has('images.survey') ? Item::find(Input::get('images.survey'))->filename : null,
                                     ],
                                     'mail' => [
-                                        'from_name' => Input::get('from'),
-                                        'from_mail' => Input::get('from_mail'),
-                                        'subject' => Input::get('subject'),
-                                        'content' => Input::get('mailing_content'),
+                                        'from_name' => Input::has('from') ? Input::get('from') : null,
+                                        'from_mail' => Input::has('from_mail') ? Input::get('from_mail') : null,
+                                        'subject' => Input::has('subject') ? Input::get('subject') : null,
+                                        'content' => Input::has('mailing_content') ? Input::get('mailing_content') : null,
                                     ],
                                     'survey' => Input::has('survey') ? $this->storeSurvey(Input::get('survey')) : null,
                                     'captcha' => Input::get('captcha'),
                                     'video' => Input::get('video'),
+                                    'like_url' => Input::get('banner_link'),
                                 ],
                                 'status' => 'pending',
                             ])
@@ -221,9 +222,11 @@ class CampaignsController extends Controller
                                 $move->reference_id = $camp->_id;
                                 $move->reference_type = 'Campaign';
 
+                                $this->dispatch(new MailCreationJob($camp));
+
                                 Mail::send('emails.creation', ['camp' => $camp], function ($m) use ($camp) {
-                                    $m->from('notificacion@enera.mx', 'Enera Intelligence');
-                                    $m->to('darkdreke@gmail.com', 'Notificaciones')->subject('Camapaña creada');
+                                    $m->from('servers@enera.mx', 'Enera Publisher');
+                                    $m->to('contacto@enera.mx', 'Notificaciones')->subject('Campaña creada');
                                 });
 
                                 return response()->json([

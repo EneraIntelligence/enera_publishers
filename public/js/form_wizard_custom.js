@@ -119,13 +119,15 @@ altair_wizard = {
                     if (create_campaign_helper.interaction != "captcha") {
                         delete formObj.captcha;
                     }
-                    if (create_campaign_helper.interaction != "banner-link") {
+                    if (create_campaign_helper.interaction != "banner-link" && create_campaign_helper.interaction != "like") {
                         delete formObj.banner_link;
                     }
 
                     formObj.branches = branchMap.getMarkersById();
 
                     // Ajax
+
+                    //UIkit.modal.alert('<p>Enera Publishers</p><pre>'+ JSON.stringify( formObj, null, 2) +'</pre>');
 
                     var modal = UIkit.modal.blockUI('<div class=\'uk-text-center\'>Creando campaña...<br/>' +
                         '<img class=\'uk-margin-top\' src=\'' + branchMap.base_url + '/assets/img/spinners/spinner.gif\' alt=\'\'>');
@@ -147,9 +149,6 @@ altair_wizard = {
                         modal.hide();
                         UIkit.modal.alert('<p>Enera Publishers</p><pre>Ocurrio un error al intentar enviar los datos.</pre>');
                     });
-
-                    //var form_serialized = JSON.stringify(formObj, null, 2);
-                    //UIkit.modal.alert('<p>Wizard data:</p><pre>' + form_serialized + '</pre>');
 
                 },
             })/*.steps("setStep", 2)*/;

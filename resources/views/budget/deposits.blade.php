@@ -29,29 +29,39 @@
                     <h4 class="heading_a uk-margin-bottom">Metodos de pago</h4>
                     <div class="uk-panel uk-panel-box">
                         <div class="col-md-4"></div>
-                        <div class="uk-width-medium-2-3 uk-width-small-2-3 uk-container-center" style="text-align: center;">
-                            <form action="">
-                                <input type="radio" id="tc_radio" name="pay" value="conekta" checked
-                                       style="display: inline-block;">
-                                <label for="tc_radio" style="margin-right: 20px;">
-                                    <b>Tarjeta de Crédito</b>
-                                </label>
-                                {{--<img src="{!! URL::asset('images/icons/iconos_forma_de_pago-03.png') !!}" >--}}
-                                <input type="radio" id="pp_radio" name="pay" value="paypal"
-                                       style="display: inline-block;">
-                                <label for="pp_radio" style="margin-right: 20px;">
-                                    <img src="{!! URL::asset('images/icons/iconos_forma_de_pago-01.png') !!}">
-                                    <span><b>PayPal</b></span>
-                                </label>
-                                <input type="radio" id="enera_radio" name="pay" value="cupon"
-                                       style="display: inline-block;">
-                                <label for="enera_radio" style="margin-right: 20px;">
-                                    <img src="{!! URL::asset('images/icons/iconos_forma_de_pago-02.png') !!}">
-                                    <span><b>Gift Card</b></span>
-                                </label>
-                            </form>
+                        <div class="uk-width-medium-2-3 uk-width-small-2-3 uk-container-center"
+                             style="text-align: center;">
+                            {{--<form action="">--}}
+                            <input type="radio" id="tc_radio" name="pay" value="conekta" checked
+                                   style="display: inline-block;">
+                            <label for="tc_radio" style="margin-right: 20px;">
+                                <b>Tarjeta de Crédito</b>
+                            </label>
+                            {{--<img src="{!! URL::asset('images/icons/iconos_forma_de_pago-03.png') !!}" >--}}
+                            <input type="radio" id="pp_radio" name="pay" value="paypal"
+                                   style="display: inline-block;">
+                            <label for="pp_radio" style="margin-right: 20px;">
+                                <img src="{!! URL::asset('images/icons/iconos_forma_de_pago-01.png') !!}">
+                                <span><b>PayPal</b></span>
+                            </label>
+                            <input type="radio" id="enera_radio" name="pay" value="cupon"
+                                   style="display: inline-block;">
+                            <label for="enera_radio" style="margin-right: 20px;">
+                                <img src="{!! URL::asset('images/icons/iconos_forma_de_pago-02.png') !!}">
+                                <span><b>Gift Card</b></span>
+                            </label>
+                            {{--</form>--}}
 
                         </div>
+                        @if(Session::has('success'))
+                            <div class="uk-alert uk-alert-success" style="padding-right:10px">
+                                {{ Session::get('success') }}
+                            </div>
+                        @elseif(Session::has('error'))
+                            <div class="uk-alert uk-alert-danger" style="padding-right:10px">
+                                {{ Session::get('error') }}
+                            </div>
+                        @endif
                         <div class="col-md-4" id="conekta">
                             {{--<h3 class="uk-panel-title">Conekta</h3>--}}
                             <div class="uk-width-medium-4-5 uk-container-center">
@@ -71,7 +81,9 @@
                                                         <input class="md-input masked_input" id="masked_currency"
                                                                name="money" type="text"
                                                                data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'autoGroup': true, 'digits': 2, 'digitsOptional': false, 'prefix': '$ ', 'placeholder': '0'"
-                                                               data-inputmask-showmaskonhover="false"/>
+                                                               data-inputmask-showmaskonhover="false"
+                                                               data-parsley-multipleof="3"
+                                                               data-parsley-required/>
                                                         <span class="md-input-bar"></span></div>
                                                 </div>
                                             </div>
@@ -124,84 +136,6 @@
                                                         <span class="md-input-bar"></span></div>
                                                 </div>
                                             </div>
-                                            <div class="uk-width-medium-1">
-                                                <hr>
-                                                <h2> Datos de Facturación</h2>
-                                            </div>
-                                            <div class="uk-width-medium-1">
-                                                <div class="uk-form-row">
-                                                    <div class="md-input-wrapper"><label>Nombre</label>
-                                                        <input type="text" name="name" class="md-input"
-                                                               data-parsley-required>
-                                                        <span class="md-input-bar"></span></div>
-                                                </div>
-                                            </div>
-                                            <div class="uk-width-medium-1">
-                                                <div class="uk-form-row">
-                                                    <div class="md-input-wrapper"><label>Dirección</label>
-                                                        <input type="text" name="address" class="md-input"
-                                                               required>
-                                                        <span class="md-input-bar"></span></div>
-                                                </div>
-                                            </div>
-                                            <div class="uk-width-medium-1-2">
-                                                <div class="uk-form-row">
-                                                    <div class="md-input-wrapper"><label>RFC</label>
-                                                        <input type="text" name="rfc" class="md-input"
-                                                               required>
-                                                        <span class="md-input-bar"></span></div>
-                                                </div>
-                                            </div>
-                                            <div class="uk-width-medium-1-2">
-                                                <div class="uk-form-row">
-                                                    <div class="md-input-wrapper"><label>Pais</label>
-                                                        <input type="text" name="country" class="md-input"
-                                                               value="México"
-                                                               required>
-                                                        <span class="md-input-bar"></span></div>
-                                                </div>
-                                            </div>
-                                            <div class="uk-width-medium-1-2">
-                                                <div class="uk-form-row">
-                                                    <div class="md-input-wrapper"><label>Estado</label>
-                                                        <input type="text" name="state" class="md-input"
-                                                               required>
-                                                        <span class="md-input-bar"></span></div>
-                                                </div>
-                                            </div>
-                                            <div class="uk-width-medium-1-2">
-                                                <div class="uk-form-row">
-                                                    <div class="md-input-wrapper"><label>Ciudad</label>
-                                                        <input type="text" name="city" class="md-input"
-                                                               required>
-                                                        <span class="md-input-bar"></span></div>
-                                                </div>
-                                            </div>
-                                            <div class="uk-width-medium-1-2">
-                                                <div class="uk-form-row">
-                                                    <div class="md-input-wrapper"><label>Codigo Postal</label>
-                                                        <input type="text" name="cp" class="md-input"
-                                                               required>
-                                                        <span class="md-input-bar"></span></div>
-                                                </div>
-                                            </div>
-                                            <div class="uk-width-medium-1-2">
-                                                <div class="uk-form-row">
-                                                    <div class="md-input-wrapper"><label>Telefono</label>
-                                                        <input type="text" name="phone" class="md-input"
-                                                               required>
-                                                        <span class="md-input-bar"></span></div>
-                                                </div>
-                                            </div>
-                                            <div class="uk-width-medium-1">
-                                                <div class="uk-form-row">
-                                                    <div class="md-input-wrapper"><label>Correo</label>
-                                                        <input type="text" name="email" class="md-input"
-                                                               required
-                                                               data-parsley-type="email">
-                                                        <span class="md-input-bar"></span></div>
-                                                </div>
-                                            </div>
                                             <div class="uk-width-medium-1-2">
                                             </div>
                                             <div class="uk-width-medium-1-2">
@@ -236,6 +170,8 @@
                                                         <span class="md-input-bar"></span></div>
                                                 </div>
                                             </div>
+                                            <div class="uk-width-medium-1-2">
+                                            </div>
                                             <div class="uk-width-medium-1-2" style="margin: 10px 0;">
                                                 <button type="button" class="md-btn md-btn-danger"
                                                         onclick="window.location='{{ route("budget::index")}}'">Cancelar
@@ -254,33 +190,130 @@
                             {{--<h3 class="uk-panel-title">Cupón</h3>--}}
                             <div class="uk-width-medium-4-5 uk-container-center">
                                 <div class="uk-panel">
-                                    <form action="{!! route('budget::conekta') !!}" method="POST" id="card-form"
-                                          data-parsley-validate>
-                                        <div class="uk-grid" data-uk-grid-margin="">
-                                            <div class="uk-width-medium-1">
-                                                <br>
-                                                <hr style="margin-top: 10px;">
-                                                <div class="uk-form-row">
-                                                    <div class="md-input-wrapper"><label>Codigo</label>
-                                                        <input class="md-input masked_input"
-                                                               name="money" type="text"/>
-                                                        <span class="md-input-bar"></span></div>
-                                                </div>
-                                            </div>
-                                            <div class="uk-width-medium-1-2" style="margin: 10px 0;">
-                                                <button type="button" class="md-btn md-btn-danger"
-                                                        onclick="window.location='{{ route("budget::index")}}'">Cancelar
-                                                </button>
-                                                <button type="submit" class="md-btn md-btn-primary">Canjear Cupón
-                                                </button>
-                                                <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+                                    {!! Form::open(['route'=>'budget::giftcard.exchange', 'method'=>'POST','data-parsley-validate']) !!}
+                                    <div class="uk-grid" data-uk-grid-margin="">
+                                        <div class="uk-width-medium-1">
+                                            <br>
+                                            <hr style="margin-top: 10px;">
+                                            <div class="uk-form-row">
+                                                <div class="md-input-wrapper"><label>Codigo</label>
+                                                    <input class="md-input masked_input"
+                                                           name="coupon" type="text"/>
+                                                    <span class="md-input-bar"></span></div>
                                             </div>
                                         </div>
-                                    </form>
+                                        <div class="uk-width-medium-1-2">
+                                        </div>
+                                        <div class="uk-width-medium-1-2" style="margin: 10px 0;">
+                                            <button type="button" class="md-btn md-btn-danger"
+                                                    onclick="window.location='{{ route("budget::index")}}'">Cancelar
+                                            </button>
+                                            <button type="submit" class="md-btn md-btn-primary">Canjear Cupón
+                                            </button>
+                                        </div>
+                                    </div>
+                                    {!! Form::close() !!}
                                 </div>
                             </div>
                         </div>
 
+                        <div class="col-md-4">
+                            <div class="uk-width-medium-4-5 uk-container-center">
+                                <div class="uk-panel">
+                                    {!! Form::open(['route'=>'budget::giftcard.exchange', 'method'=>'POST','data-parsley-validate']) !!}
+                                    <div class="uk-grid" data-uk-grid-margin="">
+                                        <div class="uk-width-medium-1">
+                                            <hr>
+                                            <h2> Datos de Facturación</h2>
+                                        </div>
+                                        <div class="uk-width-medium-1">
+                                            <div class="uk-form-row">
+                                                <div class="md-input-wrapper"><label>Nombre</label>
+                                                    <input type="text" name="name" class="md-input"
+                                                           data-parsley-required>
+                                                    <span class="md-input-bar"></span></div>
+                                            </div>
+                                        </div>
+                                        <div class="uk-width-medium-1">
+                                            <div class="uk-form-row">
+                                                <div class="md-input-wrapper"><label>Dirección</label>
+                                                    <input type="text" name="address" class="md-input"
+                                                           required>
+                                                    <span class="md-input-bar"></span></div>
+                                            </div>
+                                        </div>
+                                        <div class="uk-width-medium-1-2">
+                                            <div class="uk-form-row">
+                                                <div class="md-input-wrapper"><label>RFC</label>
+                                                    <input type="text" name="rfc" class="md-input"
+                                                           required>
+                                                    <span class="md-input-bar"></span></div>
+                                            </div>
+                                        </div>
+                                        <div class="uk-width-medium-1-2">
+                                            <div class="uk-form-row">
+                                                <div class="md-input-wrapper"><label>Pais</label>
+                                                    <input type="text" name="country" class="md-input"
+                                                           value="México"
+                                                           required>
+                                                    <span class="md-input-bar"></span></div>
+                                            </div>
+                                        </div>
+                                        <div class="uk-width-medium-1-2">
+                                            <div class="uk-form-row">
+                                                <div class="md-input-wrapper"><label>Estado</label>
+                                                    <input type="text" name="state" class="md-input"
+                                                           required>
+                                                    <span class="md-input-bar"></span></div>
+                                            </div>
+                                        </div>
+                                        <div class="uk-width-medium-1-2">
+                                            <div class="uk-form-row">
+                                                <div class="md-input-wrapper"><label>Ciudad</label>
+                                                    <input type="text" name="city" class="md-input"
+                                                           required>
+                                                    <span class="md-input-bar"></span></div>
+                                            </div>
+                                        </div>
+                                        <div class="uk-width-medium-1-2">
+                                            <div class="uk-form-row">
+                                                <div class="md-input-wrapper"><label>Codigo Postal</label>
+                                                    <input type="text" name="cp" class="md-input"
+                                                           required>
+                                                    <span class="md-input-bar"></span></div>
+                                            </div>
+                                        </div>
+                                        <div class="uk-width-medium-1-2">
+                                            <div class="uk-form-row">
+                                                <div class="md-input-wrapper"><label>Telefono</label>
+                                                    <input type="text" name="phone" class="md-input"
+                                                           required>
+                                                    <span class="md-input-bar"></span></div>
+                                            </div>
+                                        </div>
+                                        <div class="uk-width-medium-1">
+                                            <div class="uk-form-row">
+                                                <div class="md-input-wrapper"><label>Correo</label>
+                                                    <input type="text" name="email" class="md-input"
+                                                           required
+                                                           data-parsley-type="email">
+                                                    <span class="md-input-bar"></span></div>
+                                            </div>
+                                        </div>
+                                        <div class="uk-width-medium-1-2">
+                                        </div>
+                                        <div class="uk-width-medium-1-2" style="margin: 10px 0;">
+                                            <button type="button" class="md-btn md-btn-danger"
+                                                    onclick="window.location='{{ route("budget::index")}}'">Cancelar
+                                            </button>
+                                            <button type="submit" class="md-btn md-btn-primary">Actualizar
+                                            </button>
+                                        </div>
+                                    </div>
+                                    {!! Form::close() !!}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="uk-width-medium-1-3 uk-hidden-small" style="position: fixed;">
@@ -411,6 +444,7 @@
                 document.getElementById('paypal').style.display = 'none';
                 document.getElementById('cupon').style.display = 'block';
             }
+
         });
     </script>
 @stop

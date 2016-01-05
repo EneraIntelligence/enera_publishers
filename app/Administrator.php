@@ -26,7 +26,7 @@ class Administrator extends Model implements AuthenticatableContract, Authorizab
      *
      * @var array
      */
-    protected $fillable = ['name', 'email', 'password', 'rol_id', 'status', 'codigo', 'wallet'];
+    protected $fillable = ['name', 'email', 'password', 'rol_id','client_id', 'status', 'wallet','history'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -64,6 +64,11 @@ class Administrator extends Model implements AuthenticatableContract, Authorizab
     public function movements()
     {
         return $this->hasMany('Publishers\AdministratorMovement');
+    }
+
+    public function history()
+    {
+        return $this->embedsMany('Publishers\AdministratorHistory');
     }
     // end relations
 }

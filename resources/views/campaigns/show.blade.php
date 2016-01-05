@@ -294,19 +294,19 @@
 
                                                 @endif
                                                 @if($cam->interaction['name'] == 'survey')
-                                                    @if(isset($cam->content['image']))
+                                                    @if(isset($cam->content['survey']))
                                                         <div class="md-list-heading uk-width-large-1"
                                                              style="color: #1e88e5;float: left">
                                                             Imagen Encuesta :
                                                             <a id="link" class=""
                                                                data-uk-modal="{target:'#survey-image'}">
-                                                                {!! $cam->content['image'] !!}</a>
+                                                                {!! $cam->content['images']['survey'] !!}</a>
                                                             <div class="uk-modal" id="survey-image">
                                                                 <div class="uk-modal-dialog uk-modal-dialog-lightbox">
                                                                     <button type="button"
                                                                             class="uk-modal-close uk-close uk-close-alt"></button>
-                                                                    <img src="{!! URL::asset('images/'.$cam->content['image']) !!}"
-                                                                         alt="{{$cam->content['cover_path']}}"/>
+                                                                    <img src="{!! URL::asset('images/'.$cam->content['images']['survey']) !!}"
+                                                                         alt="{{$cam->content['images']['survey']}}"/>
                                                                     <div class="uk-modal-caption">Lorem</div>
                                                                 </div>
                                                             </div>

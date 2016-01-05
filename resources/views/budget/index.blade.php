@@ -85,7 +85,8 @@
                                 <h2 class="uk-text-center" id="myTargetElement2" style="margin: 10px;">23</h2>
                                 {{--<span class="uk-text-small border-bottom">Agregar fondos</span>--}}
                                 <div class="uk-width-medium-1 uk-text-center">
-                                    <a class="md-btn md-btn-primary" href="{{ route("budget::deposits")}}" style="margin: 10px;" >Agregar fondos</a>
+                                    <a class="md-btn md-btn-primary" href="{{ route("budget::deposits")}}"
+                                       style="margin: 10px;">Agregar fondos</a>
                                 </div>
                                 <span class=" uk-text-small">Fondos camapañas activas</span>
                                 <div class="uk-width-large-1 uk-width-medium-1 uk-grid-margin">
