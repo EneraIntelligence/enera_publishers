@@ -136,84 +136,6 @@
                                                         <span class="md-input-bar"></span></div>
                                                 </div>
                                             </div>
-                                            <div class="uk-width-medium-1">
-                                                <hr>
-                                                <h2> Datos de Facturación</h2>
-                                            </div>
-                                            <div class="uk-width-medium-1">
-                                                <div class="uk-form-row">
-                                                    <div class="md-input-wrapper"><label>Nombre</label>
-                                                        <input type="text" name="name" class="md-input"
-                                                               data-parsley-required>
-                                                        <span class="md-input-bar"></span></div>
-                                                </div>
-                                            </div>
-                                            <div class="uk-width-medium-1">
-                                                <div class="uk-form-row">
-                                                    <div class="md-input-wrapper"><label>Dirección</label>
-                                                        <input type="text" name="address" class="md-input"
-                                                               required>
-                                                        <span class="md-input-bar"></span></div>
-                                                </div>
-                                            </div>
-                                            <div class="uk-width-medium-1-2">
-                                                <div class="uk-form-row">
-                                                    <div class="md-input-wrapper"><label>RFC</label>
-                                                        <input type="text" name="rfc" class="md-input"
-                                                               required>
-                                                        <span class="md-input-bar"></span></div>
-                                                </div>
-                                            </div>
-                                            <div class="uk-width-medium-1-2">
-                                                <div class="uk-form-row">
-                                                    <div class="md-input-wrapper"><label>Pais</label>
-                                                        <input type="text" name="country" class="md-input"
-                                                               value="México"
-                                                               required>
-                                                        <span class="md-input-bar"></span></div>
-                                                </div>
-                                            </div>
-                                            <div class="uk-width-medium-1-2">
-                                                <div class="uk-form-row">
-                                                    <div class="md-input-wrapper"><label>Estado</label>
-                                                        <input type="text" name="state" class="md-input"
-                                                               required>
-                                                        <span class="md-input-bar"></span></div>
-                                                </div>
-                                            </div>
-                                            <div class="uk-width-medium-1-2">
-                                                <div class="uk-form-row">
-                                                    <div class="md-input-wrapper"><label>Ciudad</label>
-                                                        <input type="text" name="city" class="md-input"
-                                                               required>
-                                                        <span class="md-input-bar"></span></div>
-                                                </div>
-                                            </div>
-                                            <div class="uk-width-medium-1-2">
-                                                <div class="uk-form-row">
-                                                    <div class="md-input-wrapper"><label>Codigo Postal</label>
-                                                        <input type="text" name="cp" class="md-input"
-                                                               required>
-                                                        <span class="md-input-bar"></span></div>
-                                                </div>
-                                            </div>
-                                            <div class="uk-width-medium-1-2">
-                                                <div class="uk-form-row">
-                                                    <div class="md-input-wrapper"><label>Telefono</label>
-                                                        <input type="text" name="phone" class="md-input"
-                                                               required>
-                                                        <span class="md-input-bar"></span></div>
-                                                </div>
-                                            </div>
-                                            <div class="uk-width-medium-1">
-                                                <div class="uk-form-row">
-                                                    <div class="md-input-wrapper"><label>Correo</label>
-                                                        <input type="text" name="email" class="md-input"
-                                                               required
-                                                               data-parsley-type="email">
-                                                        <span class="md-input-bar"></span></div>
-                                                </div>
-                                            </div>
                                             <div class="uk-width-medium-1-2">
                                             </div>
                                             <div class="uk-width-medium-1-2">
@@ -248,6 +170,8 @@
                                                         <span class="md-input-bar"></span></div>
                                                 </div>
                                             </div>
+                                            <div class="uk-width-medium-1-2">
+                                            </div>
                                             <div class="uk-width-medium-1-2" style="margin: 10px 0;">
                                                 <button type="button" class="md-btn md-btn-danger"
                                                         onclick="window.location='{{ route("budget::index")}}'">Cancelar
@@ -278,6 +202,8 @@
                                                     <span class="md-input-bar"></span></div>
                                             </div>
                                         </div>
+                                        <div class="uk-width-medium-1-2">
+                                        </div>
                                         <div class="uk-width-medium-1-2" style="margin: 10px 0;">
                                             <button type="button" class="md-btn md-btn-danger"
                                                     onclick="window.location='{{ route("budget::index")}}'">Cancelar
@@ -291,6 +217,103 @@
                             </div>
                         </div>
 
+                        <div class="col-md-4">
+                            <div class="uk-width-medium-4-5 uk-container-center">
+                                <div class="uk-panel">
+                                    {!! Form::open(['route'=>'budget::giftcard.exchange', 'method'=>'POST','data-parsley-validate']) !!}
+                                    <div class="uk-grid" data-uk-grid-margin="">
+                                        <div class="uk-width-medium-1">
+                                            <hr>
+                                            <h2> Datos de Facturación</h2>
+                                        </div>
+                                        <div class="uk-width-medium-1">
+                                            <div class="uk-form-row">
+                                                <div class="md-input-wrapper"><label>Nombre</label>
+                                                    <input type="text" name="name" class="md-input"
+                                                           data-parsley-required>
+                                                    <span class="md-input-bar"></span></div>
+                                            </div>
+                                        </div>
+                                        <div class="uk-width-medium-1">
+                                            <div class="uk-form-row">
+                                                <div class="md-input-wrapper"><label>Dirección</label>
+                                                    <input type="text" name="address" class="md-input"
+                                                           required>
+                                                    <span class="md-input-bar"></span></div>
+                                            </div>
+                                        </div>
+                                        <div class="uk-width-medium-1-2">
+                                            <div class="uk-form-row">
+                                                <div class="md-input-wrapper"><label>RFC</label>
+                                                    <input type="text" name="rfc" class="md-input"
+                                                           required>
+                                                    <span class="md-input-bar"></span></div>
+                                            </div>
+                                        </div>
+                                        <div class="uk-width-medium-1-2">
+                                            <div class="uk-form-row">
+                                                <div class="md-input-wrapper"><label>Pais</label>
+                                                    <input type="text" name="country" class="md-input"
+                                                           value="México"
+                                                           required>
+                                                    <span class="md-input-bar"></span></div>
+                                            </div>
+                                        </div>
+                                        <div class="uk-width-medium-1-2">
+                                            <div class="uk-form-row">
+                                                <div class="md-input-wrapper"><label>Estado</label>
+                                                    <input type="text" name="state" class="md-input"
+                                                           required>
+                                                    <span class="md-input-bar"></span></div>
+                                            </div>
+                                        </div>
+                                        <div class="uk-width-medium-1-2">
+                                            <div class="uk-form-row">
+                                                <div class="md-input-wrapper"><label>Ciudad</label>
+                                                    <input type="text" name="city" class="md-input"
+                                                           required>
+                                                    <span class="md-input-bar"></span></div>
+                                            </div>
+                                        </div>
+                                        <div class="uk-width-medium-1-2">
+                                            <div class="uk-form-row">
+                                                <div class="md-input-wrapper"><label>Codigo Postal</label>
+                                                    <input type="text" name="cp" class="md-input"
+                                                           required>
+                                                    <span class="md-input-bar"></span></div>
+                                            </div>
+                                        </div>
+                                        <div class="uk-width-medium-1-2">
+                                            <div class="uk-form-row">
+                                                <div class="md-input-wrapper"><label>Telefono</label>
+                                                    <input type="text" name="phone" class="md-input"
+                                                           required>
+                                                    <span class="md-input-bar"></span></div>
+                                            </div>
+                                        </div>
+                                        <div class="uk-width-medium-1">
+                                            <div class="uk-form-row">
+                                                <div class="md-input-wrapper"><label>Correo</label>
+                                                    <input type="text" name="email" class="md-input"
+                                                           required
+                                                           data-parsley-type="email">
+                                                    <span class="md-input-bar"></span></div>
+                                            </div>
+                                        </div>
+                                        <div class="uk-width-medium-1-2">
+                                        </div>
+                                        <div class="uk-width-medium-1-2" style="margin: 10px 0;">
+                                            <button type="button" class="md-btn md-btn-danger"
+                                                    onclick="window.location='{{ route("budget::index")}}'">Cancelar
+                                            </button>
+                                            <button type="submit" class="md-btn md-btn-primary">Actualizar
+                                            </button>
+                                        </div>
+                                    </div>
+                                    {!! Form::close() !!}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="uk-width-medium-1-3 uk-hidden-small" style="position: fixed;">
