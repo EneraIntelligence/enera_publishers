@@ -123,7 +123,13 @@ class UserController extends Controller
             if ($file && $file->isValid()) {
                 $ext = $file->getClientOriginalExtension();
                 $filename = time() . '.' . $ext;
-                $file->move(public_path() . '/images/avatar', $filename);
+                $file->move(storage_path() . '/app', $filename);
+
+                $uploadedFile = Storage::get($filename);
+
+                Storage::disk('s3')->put("avatars/" . $filename, $uploadedFile, "public");
+                Storage::delete($filename);
+
 
                 //get uploaded file and copy it to cloud
 //            $uploadedFile = Storage::get($filename);

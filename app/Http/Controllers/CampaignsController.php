@@ -11,7 +11,7 @@ use Publishers\Jobs\mailingJob;
 use Publishers\Libraries\CampaignStyleHelper;
 use Publishers\Libraries\EneraTools;
 use Validator;
-use Illuminate\Support\Facades\Storage;
+use Storage;
 use League\Flysystem\Sftp\SftpAdapter;
 use League\Flysystem\Filesystem;
 use Input;
@@ -425,6 +425,7 @@ class CampaignsController extends Controller
         //transferring file to storage
         $file = storage_path() . '/app/' . $filename;
         $success = file_put_contents($file, $data);
+        $pngToDelete = $filename;
 
         //compress png to jpg
         $png = $file;
@@ -435,15 +436,24 @@ class CampaignsController extends Controller
         imagedestroy($image);
 
 
+
         if ($success) {
             //image copied to server successfully
+
+            /*
             $fc = new FileCloud();
 
             //get uploaded file and copy it to cloud
             $uploadedFile = Storage::get($filename);
-            $fileSaved = $fc->put(time() . ".jpg", $uploadedFile);
+            $fileSaved = $fc->put(time() . ".jpg", $uploadedFile);*/
+
+            //upload to S3
+            $uploadedFile = Storage::get($filename);
+            Storage::disk('s3')->put("items/" . time() . ".jpg", $uploadedFile,"public");
+
             //delete server file
             Storage::delete($filename);
+            Storage::delete($pngToDelete);
 
             //created item related to campaign
             $item = new Item();
