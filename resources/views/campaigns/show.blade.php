@@ -106,6 +106,8 @@
                                                                 @foreach($cam->branches as $branches)
                                                                     <span> {!! $branches !!}</span>
                                                                 @endforeach
+                                                            @else
+                                                                <span> Global</span>
                                                             @endif
                                                             <span class="uk-text-small uk-text-muted">{{--{{$branches[0]}}--}}</span>
                                                         </div>
