@@ -576,11 +576,14 @@
         });
         //------------------------------------------Grafica---------------------------------------------
         var grafica = new graficas;
-        var gra = grafica.genderAge({!! json_encode($cam->men) !!},{!! json_encode($cam->women) !!} );
+        var menJson = '{!! json_encode($cam->men) !!}';
+        var menObj = JSON.parse(menJson);
+        var womenJson = '{!! json_encode($cam->women) !!}';
+        var womenObj = JSON.parse(menJson);
+
+        var gra = grafica.genderAge( menObj , womenObj );
         //        var gra = grafica.genderAge();
         //var gra2= grafica.gender();
-
-
 
     </script>
     <!-- enera custom scripts -->
