@@ -615,8 +615,9 @@ class CampaignsController extends Controller
                     $BRA=Branche::where('_id',$valor)->get(['name']); //guardo el valor de la consulta
                     $lugares[$clave]=$BRA[0]['original']['name'];//saco solo el valor que me interesa para no tener un array dentro de un array
                 }
+                $campaign->branches= $lugares;
             }//FIN DEL ELSE PARA MANEJAR LOS BRANCHAS
-            $campaign->branches= $lugares;
+
 //            dd($campaign);
             return view('campaigns.show', ['cam' => $campaign, 'user' => Auth::user()]);
         } else {

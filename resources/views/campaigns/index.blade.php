@@ -363,6 +363,13 @@
                 status: 'danger'
             });
         }
+        var send = '{{session('data')}}';
+        if (error == 'errorCamp') {
+            UIkit.notify(" &nbsp;&nbsp;la campaña no existe o no es tuya <span style='float:right'><i class='material-icons uk-icon-large'> clear </i></span>", {
+                timeout: 0,
+                status: 'danger'
+            });
+        }
 
         var send = '{{session('data')}}';
         if (send == 'send') {
