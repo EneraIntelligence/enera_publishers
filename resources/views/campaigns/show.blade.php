@@ -9,6 +9,7 @@
 
         .p {
             list-style: none;
+
         }
     </style>
 @endsection
@@ -199,13 +200,14 @@
                                                      style="color: #1e88e5;float: left">
                                                     Imagen chica :
                                                     <a id="link" class=""
-                                                       data-uk-modal="{target:'#modal_lightbox-1'}">{!! isset($cam->content['image'])?$cam->content['image']:'no hay imagen' !!}</a>
+                                                       data-uk-modal="{target:'#modal_lightbox-1'}">{!! isset($cam->content['images']['small'])?$cam->content['images']['small']:'no hay imagen' !!}</a>
                                                     <div class="uk-modal" id="modal_lightbox-1">
                                                         <div class="uk-modal-dialog uk-modal-dialog-lightbox">
                                                             <button type="button"
                                                                     class="uk-modal-close uk-close uk-close-alt"></button>
-                                                            <img src="{!! URL::asset('images/600x602.jpg') !!}" alt=""/>
-                                                            <div class="uk-modal-caption">Lorem</div>
+                                                            <img src="{!! "https://s3-us-west-1.amazonaws.com/enera-publishers/items/". $cam->content['images']['small'] !!}"
+                                                                 alt=""/>
+                                                            <div class="uk-modal-caption">{!! $cam->content['images']['small'] !!}</div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -214,12 +216,13 @@
                                                     Imagen grande :
                                                     <a id="link" class=""
                                                        data-uk-modal="{target:'#modal_lightbox-2'}">
-                                                        {!! isset($cam->content['image'])?$cam->content['image']:'no hay imagen' !!}</a>
+                                                        {!! isset($cam->content['images']['large'])?$cam->content['images']['large']:'no hay imagen' !!}</a>
                                                     <div class="uk-modal" id="modal_lightbox-2">
                                                         <div class="uk-modal-dialog uk-modal-dialog-lightbox">
                                                             <button type="button"
                                                                     class="uk-modal-close uk-close uk-close-alt"></button>
-                                                            <img src="{!! URL::asset('images/600x602.jpg') !!}" alt=""/>
+                                                            <img src="{!! "https://s3-us-west-1.amazonaws.com/enera-publishers/items/". $cam->content['images']['large'] !!}"
+                                                                 alt=""/>
                                                             <div class="uk-modal-caption">Lorem</div>
                                                         </div>
                                                     </div>
@@ -230,26 +233,44 @@
                                                      style=" color: #1e88e5;">
                                                     Link a redireccionar :
                                                     <a id="link" class=""
-                                                       href="http://{{ isset($cam->content['link'])? $cam->content['link']:'no definido' }}"
+                                                       href="http://{{ isset($cam->content['link'])? str_replace("http://","",$cam->content['link']):'no definido' }}"
                                                        target="_blank">{!! isset($cam->content['link'])? $cam->content['link']:'no hay una definida www.enera.com ' !!}</a>
                                                 </div>
                                             @endif
                                             @if($cam->interaction['name'] == 'captcha')
                                                 <div class="md-list-heading uk-width-large-1-2"
                                                      style="color: #1e88e5;float: left">
-                                                    Imagen Captcha :
+                                                    Imagen Chica :
                                                     <a id="link" class=""
                                                        data-uk-modal="{target:'#captcha-image'}">
-                                                        {!! isset($cam->content['cover_path'])?$cam->content['cover_path']:'imagen no definida' !!}</a>
+                                                        {!! isset($cam->content['images']['small'])?$cam->content['images']['small']:'imagen no definida' !!}</a>
                                                     <div class="uk-modal" id="captcha-image">
                                                         <div class="uk-modal-dialog uk-modal-dialog-lightbox">
                                                             <button type="button"
                                                                     class="uk-modal-close uk-close uk-close-alt"></button>
-                                                            @if(isset($cam->content['cover_path']))
-                                                                <img src="{!! URL::asset('images/'.$cam->content['cover_path']) !!}"
-                                                                     alt="{{$cam->content['cover_path']}}"/>
+                                                            @if(isset($cam->content['images']['small']))
+                                                                <img src="{!! "https://s3-us-west-1.amazonaws.com/enera-publishers/items/". $cam->content['images']['small'] !!}"
+                                                                     alt=""/>
                                                             @endif
-                                                            <div class="uk-modal-caption">Lorem</div>
+                                                            <div class="uk-modal-caption">{{$cam->content['images']['small']}}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="md-list-heading uk-width-large-1-2"
+                                                     style="color: #1e88e5;float: left">
+                                                    Imagen Grande :
+                                                    <a id="link" class=""
+                                                       data-uk-modal="{target:'#captcha-image'}">
+                                                        {!! isset($cam->content['images']['large'])?$cam->content['images']['large']:'imagen no definida' !!}</a>
+                                                    <div class="uk-modal" id="captcha-image">
+                                                        <div class="uk-modal-dialog uk-modal-dialog-lightbox">
+                                                            <button type="button"
+                                                                    class="uk-modal-close uk-close uk-close-alt"></button>
+                                                            @if(isset($cam->content['images']['large']))
+                                                                <img src="{!! "https://s3-us-west-1.amazonaws.com/enera-publishers/items/". $cam->content['images']['large'] !!}"
+                                                                     alt=""/>
+                                                            @endif
+                                                            <div class="uk-modal-caption">{{$cam->content['images']['large']}}</div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -261,21 +282,40 @@
                                                 </div>
                                             @endif
                                             @if($cam->interaction['name'] == 'mailing_list')
-                                                @if(isset($cam->content['image']))
+                                                @if(isset($cam->content['images']))
                                                     <div class="md-list-heading uk-width-large-1-2"
                                                          style="color: #1e88e5;float: left">
-                                                        Imagen Maling List :
+                                                        Imagen Chica :
                                                         <a id="link" class=""
-                                                           data-uk-modal="{target:'#mailing-image'}">
-                                                            {!! $cam->content['image'] !!}
-                                                        </a>
-                                                        <div class="uk-modal" id="mailing-image">
+                                                           data-uk-modal="{target:'#captcha-image'}">
+                                                            {!! isset($cam->content['images']['small'])?$cam->content['images']['small']:'imagen no definida' !!}</a>
+                                                        <div class="uk-modal" id="captcha-image">
                                                             <div class="uk-modal-dialog uk-modal-dialog-lightbox">
                                                                 <button type="button"
                                                                         class="uk-modal-close uk-close uk-close-alt"></button>
-                                                                <img src="{!! URL::asset('images/'.$cam->content['image']) !!}"
-                                                                     alt="{{$cam->content['cover_path']}}"/>
-                                                                <div class="uk-modal-caption">Lorem</div>
+                                                                @if(isset($cam->content['images']['small']))
+                                                                    <img src="{!! "https://s3-us-west-1.amazonaws.com/enera-publishers/items/". $cam->content['images']['small'] !!}"
+                                                                         alt=""/>
+                                                                @endif
+                                                                <div class="uk-modal-caption">{{$cam->content['images']['small']}}</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="md-list-heading uk-width-large-1-2"
+                                                         style="color: #1e88e5;float: left">
+                                                        Imagen Grande :
+                                                        <a id="link" class=""
+                                                           data-uk-modal="{target:'#captcha-image'}">
+                                                            {!! isset($cam->content['images']['large'])?$cam->content['images']['large']:'imagen no definida' !!}</a>
+                                                        <div class="uk-modal" id="captcha-image">
+                                                            <div class="uk-modal-dialog uk-modal-dialog-lightbox">
+                                                                <button type="button"
+                                                                        class="uk-modal-close uk-close uk-close-alt"></button>
+                                                                @if(isset($cam->content['images']['large']))
+                                                                    <img src="{!! "https://s3-us-west-1.amazonaws.com/enera-publishers/items/". $cam->content['images']['large'] !!}"
+                                                                         alt=""/>
+                                                                @endif
+                                                                <div class="uk-modal-caption">{{$cam->content['images']['large']}}</div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -291,8 +331,8 @@
                                                         <div class="uk-width-1-1">
                                                             <div class="uk-width-medium-1-1">
                                                                 <a class="md-btn md-btn-primary"
-                                                                   onclick="new_campaign.promptMailingCampaign('{{$cam->_id}}')"
-                                                                <span class="uk-display-block">Crear campaña de mailing</span>
+                                                                   onclick="new_campaign.promptMailingCampaign('{{$cam->_id}}')">
+                                                                    <span class="uk-display-block">Crear campaña de mailing</span>
                                                                 </a>
                                                             </div>
                                                         </div>
@@ -371,6 +411,48 @@
                                                         no hay video asignado
                                                     </span>
                                                             @endif
+                                                        </div>
+                                                    @endif
+                                                    @if($cam->interaction['name'] == 'like')
+                                                        <div class="md-list-heading uk-width-large-1-2"
+                                                             style="color: #1e88e5;float: left">
+                                                            Imagen chica :
+                                                            <a id="link" class=""
+                                                               data-uk-modal="{target:'#modal_lightbox-1'}">{!! isset($cam->content['images']['small'])?$cam->content['images']['small']:'no hay imagen' !!}</a>
+                                                            <div class="uk-modal" id="modal_lightbox-1">
+                                                                <div class="uk-modal-dialog uk-modal-dialog-lightbox">
+                                                                    <button type="button"
+                                                                            class="uk-modal-close uk-close uk-close-alt"></button>
+                                                                    <img src="{!! "https://s3-us-west-1.amazonaws.com/enera-publishers/items/". $cam->content['images']['small'] !!}"
+                                                                         alt=""/>
+                                                                    <div class="uk-modal-caption">{!! $cam->content['images']['small'] !!}</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="md-list-content uk-width-large-1-2"
+                                                             style=" color: #1e88e5;float: right;">
+                                                            Imagen grande :
+                                                            <a id="link" class=""
+                                                               data-uk-modal="{target:'#modal_lightbox-2'}">
+                                                                {!! isset($cam->content['images']['large'])?$cam->content['images']['large']:'no hay imagen' !!}</a>
+                                                            <div class="uk-modal" id="modal_lightbox-2">
+                                                                <div class="uk-modal-dialog uk-modal-dialog-lightbox">
+                                                                    <button type="button"
+                                                                            class="uk-modal-close uk-close uk-close-alt"></button>
+                                                                    <img src="{!! "https://s3-us-west-1.amazonaws.com/enera-publishers/items/". $cam->content['images']['large'] !!}"
+                                                                         alt=""/>
+                                                                    <div class="uk-modal-caption">Lorem</div>
+                                                                </div>
+                                                            </div>
+                                                            {{--<span class="uk-text-small uk-text-muted"><img class="uk-width-large-2-6" src="{!! URL::asset('images/'.$content['imageng']) !!}" alt=""></span>--}}
+                                                        </div>
+                                                        <h3 class="md-hr" style="margin-bottom: 10px;"></h3>
+                                                        <div class="md-list-content uk-width-large-1-2"
+                                                             style=" color: #1e88e5;">
+                                                            Url:
+                                                            <a id="link" class=""
+                                                               href="http://{{ isset($cam->content['like_url'])? str_replace("http://","",$cam->content['like_url']):'no definido' }}"
+                                                               target="_blank">{!! isset($cam->content['like_url'])? $cam->content['like_url']:'Like url no definido www.enera.mx' !!}</a>
                                                         </div>
                                                     @endif
                                         </div>
@@ -494,8 +576,8 @@
         });
         //------------------------------------------Grafica---------------------------------------------
         var grafica = new graficas;
-        var gra= grafica.genderAge({!! json_encode($cam->men) !!},{!! json_encode($cam->women) !!} );
-        var gra = grafica.genderAge();
+        var gra = grafica.genderAge({!! json_encode($cam->men) !!},{!! json_encode($cam->women) !!} );
+        //        var gra = grafica.genderAge();
         //var gra2= grafica.gender();
 
 
