@@ -84,7 +84,7 @@
                                                         </div>
                                                         <div class="md-list-content azul">
                                                             <span class="md-list-heading">Balance</span>
-                                                            <span class="uk-text-small uk-text-muted">$ {{$cam->balance['current']}}</span>
+                                                            <span class="uk-text-small uk-text-muted">$ {{number_format($cam->balance['current'],2)}}</spa n>
                                                         </div>
                                                     </li>
                                                     <li>
@@ -576,11 +576,14 @@
         });
         //------------------------------------------Grafica---------------------------------------------
         var grafica = new graficas;
-        var gra = grafica.genderAge({!! json_encode($cam->men) !!},{!! json_encode($cam->women) !!} );
+        var menJson = '{!! json_encode($cam->men) !!}';
+        var menObj = JSON.parse(menJson);
+        var womenJson = '{!! json_encode($cam->women) !!}';
+        var womenObj = JSON.parse(menJson);
+
+        var gra = grafica.genderAge( menObj , womenObj );
         //        var gra = grafica.genderAge();
         //var gra2= grafica.gender();
-
-
 
     </script>
     <!-- enera custom scripts -->
