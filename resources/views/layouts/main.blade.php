@@ -89,7 +89,7 @@
 
             <a class="md-fab md-fab-small md-fab-primary" id="note_add" data-uk-tooltip="{pos:'left'}"
                title="Crear campaña"> <i class="material-icons">event</i> </a>
-            <a class="md-fab md-fab-small md-fab-success" id="funds-btn" href="{!! URL::route('budget::index') !!}"
+            <a class="md-fab md-fab-small md-fab-success" id="funds-btn" href="{!! URL::route('budget::deposits') !!}"
                data-uk-tooltip="{pos:'left'}" title="Agregar fondos">
                 <i class="uk-icon-usd"></i>
             </a>

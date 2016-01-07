@@ -272,21 +272,27 @@
     {{--TOUR--}}
     <script>
         var tour;
-        window.addEventListener('load', function () {
-            tour = $('#joyRideTipContent').joyride({
-                autoStart: true,
-                postStepCallback: function (index, tip) {
-                    if (index == 2) {
-                        $(this).joyride('set_li', false, 1);
-                    }
-                },
-                modal: true,
-                expose: true,
-                scroll: false,
-                cookieMonster: true,
-                cookieName: 'EneraPublishers_test'
-            });
-        }, false);
+        var tourTaken = "{!! auth()->user()->tour_taken !!}";
+
+        if(tourTaken!="1")
+        {
+            //start tour
+            window.addEventListener('load', function () {
+                tour = $('#joyRideTipContent').joyride({
+                    autoStart: true,
+                    postStepCallback: function (index, tip) {
+                        if (index == 2) {
+                            $(this).joyride('set_li', false, 1);
+                        }
+                    },
+                    modal: true,
+                    expose: true,
+                    scroll: false,
+                    cookieMonster: false,
+                    cookieName: 'EneraPublishers_test'
+                });
+            }, false);
+        }
 
     </script>
 @stop

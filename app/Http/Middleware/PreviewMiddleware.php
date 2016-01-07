@@ -30,6 +30,8 @@ class PreviewMiddleware
             array_pop($diff);
         }
         $user->route = $diff;
+
+        $user->tour_taken=true;
         $user->save();
         return $next($request);
     }
