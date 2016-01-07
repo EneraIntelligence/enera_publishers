@@ -40,7 +40,6 @@ class CampaignsController extends Controller
      */
     public function index()
     {
-
         //Obteniendo campañas del user loggeado
         //$admin_id = Auth::user()->_id;
         //$campaigns = Campaign::where('status', 'active')->latest()->get();
