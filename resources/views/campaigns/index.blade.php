@@ -196,9 +196,9 @@
                                                     <h4>{{$campaign->publishers_summary['client']}}</h4>
                                                 </div>
 
-                                                <div class="uk-grid-width-8-10">
+                                                <div class="uk-grid-width-8-10" style="max-width: 317px;">
 
-                                                    <div class="uk-grid uk-grid-medium">
+                                                    <div class="uk-grid uk-grid-medium" style="max-width: 317px;">
 
                                                         <div class="uk-width-1-6 margin-10 top-bottom-20" >
                                                             <i class="uk-icon-calendar"></i>
@@ -227,14 +227,13 @@
                                                                     <span style="margin:auto; color: #000; ">{{$campaign->dias['total']}}  día(s) restantes </span>
                                                                 </div>
                                                             @elseif($campaign->dias['porcentaje']>=80)
-                                                                <div class="uk-progress uk-progress-danger uk-progress-striped uk-active    " style="z-index: -5">
+                                                                <div class="uk-progress uk-progress-danger uk-progress-striped uk-active " style="z-index: -5">
                                                                     <div class="uk-progress-bar" style="width:{{$campaign->dias['porcentaje']}}%;"> </div>
                                                                 </div>
                                                                 <div id="porcentaje"  style="z-index:10; text-align:center; margin-top:-35px;">
                                                                     <span style="margin:auto; color: #FFFFff; ">{{$campaign->dias['total']}}  día(s) restantes </span>
                                                                 </div>
                                                             @endif
-
                                                         </div>
 
                                                         <div class="uk-width-1-6 margin-10 top-bottom-20" >
@@ -378,7 +377,7 @@
                 status: 'success'
             });
         }
-
+        <!--     codigo de la grafica   -->
                 @foreach($campaigns as $campaign)
                 var dia1 = {!! $campaign->grafica['dia1']['num'] !!};
                 var dia2 = {!! $campaign->grafica['dia2']['num'] !!};
