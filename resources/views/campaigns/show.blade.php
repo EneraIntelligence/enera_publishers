@@ -579,7 +579,7 @@
         var menJson = '{!! json_encode($cam->men) !!}';
         var menObj = JSON.parse(menJson);
         var womenJson = '{!! json_encode($cam->women) !!}';
-        var womenObj = JSON.parse(menJson);
+        var womenObj = JSON.parse(womenJson);
 
         var gra = grafica.genderAge( menObj , womenObj );
         //        var gra = grafica.genderAge();
