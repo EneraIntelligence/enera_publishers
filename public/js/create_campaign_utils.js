@@ -145,6 +145,8 @@ create_campaign_helper =
         $(create_campaign_helper.cropData.previewId).attr('src', resize_canvas.toDataURL("image/png"));
 
         //fill data to send to ajax
+        input.value = "";
+
         var form_data = new FormData($('#wizard_advanced_form')[0]);
         form_data.append("imgType", previewId);
         form_data.append("imgToSave", resize_canvas.toDataURL("image/png"));
@@ -168,7 +170,6 @@ create_campaign_helper =
             contentType: false,
             processData: false
         }).done(function (data) {
-            input.value = "";
             inputField.removeAttr("required");
 
             console.log(inputField);
@@ -185,7 +186,6 @@ create_campaign_helper =
             console.log(textStatus);
             console.log(errorThrown);
 
-            input.value = "";
             inputField.required = true;
 
             errorDiv.html('<span class="parsley-required uk-text-center md-input-danger">' +
