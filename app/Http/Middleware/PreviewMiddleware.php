@@ -21,7 +21,7 @@ class PreviewMiddleware
     {
         $route = $request->route()->getName();
         $user = Administrator::where('_id', Auth::user()->_id)->first();
-        $test = isset($user->route) ? $user->route : [];
+        $test = isset($user->routePublisher) ? $user->routePublisher : [];
 
         if ($route != "home" && $route != "campaigns::show" && $route != "campaigns::sub" && $route != 'campaigns::store'
             && $route != 'campaigns::save_item' && $route != 'budget::conekta' && $route != 'auth.logout'
@@ -32,7 +32,7 @@ class PreviewMiddleware
             array_pop($test);
         }
         $diff = array_unique($test);
-        $user->route = $diff;
+        $user->routePublisher = $diff;
         $user->save();
         return $next($request);
     }
