@@ -56,7 +56,8 @@ class CampaignStyleHelper
         'video' => 'video.svg',
         'mailing_list' => 'mailing.svg',
         'captcha' => 'captcha.svg',
-        'survey' => 'survey.svg'
+        'survey' => 'survey.svg',
+        'like' => 'like.svg'
     );
 
 

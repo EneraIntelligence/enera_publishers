@@ -29,7 +29,7 @@ class MailCreationJob extends Job implements SelfHandling
     {
         Mail::send('emails.creation', ['camp' => $this->camp], function ($m) {
             $m->from('servers@enera.mx', 'Enera Publisher');
-            $m->to('contacto@enera.mx', 'Notificaciones')->subject('Campaña creada');
+            $m->to('contacto@enera.mx', 'Notificaciones')->subject('Campaña Creada');
         });
     }
 }
