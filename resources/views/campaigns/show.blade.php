@@ -84,7 +84,7 @@
                                                         </div>
                                                         <div class="md-list-content azul">
                                                             <span class="md-list-heading">Balance</span>
-                                                            <span class="uk-text-small uk-text-muted">$ {{number_format($cam->balance['current'],2)}}</spa n>
+                                                            <span class="uk-text-small uk-text-muted">$ {{number_format($cam->balance['current'],2)}}</span>
                                                         </div>
                                                     </li>
                                                     <li>
