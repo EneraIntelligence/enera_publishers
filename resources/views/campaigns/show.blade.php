@@ -492,24 +492,24 @@
 
                                             <div class="uk-width-medium-1">
                                                 <div class="uk-grid">
-                                                    <div class="uk-width-medium-1-3 uk-width-small-1-3" data-uk-tooltip="{pos:'top'}"
-                                                         title="visto">
+                                                    <div class="uk-width-medium-1-3 uk-width-small-1-3">
                                                         <div class="uk-width-medium-1-2 uk-width-small-1-2 uk-container-center">
-                                                            <i class="uk-icon-eye uk-icon-medium" style="top: 25px; position: relative; left: 20px"></i>
+                                                            <i class="uk-icon-eye uk-icon-medium" style="top: 25px; position: relative; left: 20px" data-uk-tooltip="{pos:'top'}"
+                                                               title="visto"></i>
                                                             <h2 class="jumbo uk-float-left" id="vistos">0</h2>
                                                         </div>
                                                     </div>
-                                                    <div class="uk-width-medium-1-3 uk-width-small-1-3" data-uk-tooltip="{pos:'top'}"
-                                                         title="Completado">
+                                                    <div class="uk-width-medium-1-3 uk-width-small-1-3">
                                                         <div class="uk-width-medium-1-2 uk-width-small-1-2 uk-container-center">
-                                                            <i class="material-icons md-36" style="top: 25px; position: relative; left: 20px">done</i>
+                                                            <i class="material-icons md-36" style="top: 25px; position: relative; left: 20px" data-uk-tooltip="{pos:'top'}"
+                                                               title="Completado">done</i>
                                                             <h2 class="jumbo uk-float-left" id="completados">0</h2>
                                                         </div>
                                                     </div>
-                                                    <div class="uk-width-medium-1-3 uk-width-small-1-3" data-uk-tooltip="{pos:'top'}"
-                                                         title="Usuario">
+                                                    <div class="uk-width-medium-1-3 uk-width-small-1-3" >
                                                         <div class="uk-kit-medium-2-3 uk-width-small-1-2 uk-container-center">
-                                                            <i class="uk-icon-user uk-icon-medium " style="top: 25px; position: relative; left: 20px"></i>
+                                                            <i class="uk-icon-user uk-icon-medium " style="top: 25px; position: relative; left: 20px" data-uk-tooltip="{pos:'top'}"
+                                                               title="Usuario"></i>
                                                             <h2 class="jumbo uk-float-left" id="usuarios">0</h2>
                                                         </div>
                                                     </div>
