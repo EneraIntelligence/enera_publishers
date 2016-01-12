@@ -23,7 +23,7 @@
                             <div class="user_heading_avatar">
                                 <div>
                                     <img  id="img"
-                                         src="{!!URL::asset('images/avatar/'. $user->image )  !!}" alt="User avatar"/>
+                                         src="https://s3-us-west-1.amazonaws.com/enera-publishers/avatars/{!! $user->image !!}" alt="User avatar"/>
                                 </div>
                             </div>
                             <div class="user_heading_content">

@@ -21,16 +21,19 @@ class PreviewMiddleware
     {
         $route = $request->route()->getName();
         $user = Administrator::where('_id', Auth::user()->_id)->first();
-        $test = isset($user->route) ? $user->route : [];
+        $test = isset($user->routePublisher) ? $user->routePublisher : [];
 
-        if ($route != "home" && $route != "campaigns::show" && $route != "campaigns::sub" && $route != 'campaigns::store' && $route != 'campaigns::save_item' && $route != 'budget::conekta' && $route != 'auth.logout') {
+        if ($route != "home" && $route != "campaigns::show" && $route != "campaigns::sub" && $route != 'campaigns::store'
+            && $route != 'campaigns::save_item' && $route != 'budget::conekta' && $route != 'auth.logout'
+            && $route != 'edit.profile') {
             array_unshift($test, PreviewHelper::getNameRoute($route) . '/' . $route);
         }
         if (count($test) > 5) {
             array_pop($test);
         }
         $diff = array_unique($test);
-        $user->route = $diff;
+        $user->routePublisher = $diff;
+        $user->tour_taken=true;
         $user->save();
         return $next($request);
     }

@@ -100,13 +100,14 @@
             google.maps.event.addListener(dz, 'dragend', function(event) {
                 /*
                 console.log("drag end");
+                console.log(event);
                 console.log(event.O.O);
                 console.log(event.j.O);
                 console.log(event.O.j);
                 console.log(event.j.j);
                 */
 
-                thisMap.selectMarkersInArea(event.O.O, event.j.O, event.O.j, event.j.j);
+                thisMap.selectMarkersInArea(event.N.N, event.j.N, event.N.j, event.j.j);
 
             });
 

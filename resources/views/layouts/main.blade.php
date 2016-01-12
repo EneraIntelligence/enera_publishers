@@ -89,7 +89,7 @@
 
             <a class="md-fab md-fab-small md-fab-primary" id="note_add" data-uk-tooltip="{pos:'left'}"
                title="Crear campaña"> <i class="material-icons">event</i> </a>
-            <a class="md-fab md-fab-small md-fab-success" id="funds-btn" href="{!! URL::route('budget::index') !!}"
+            <a class="md-fab md-fab-small md-fab-success" id="funds-btn" href="{!! URL::route('budget::deposits') !!}"
                data-uk-tooltip="{pos:'left'}" title="Agregar fondos">
                 <i class="uk-icon-usd"></i>
             </a>
@@ -156,12 +156,12 @@
                                     <ul class="uk-nav uk-nav-dropdown uk-panel">
                                         <li class="uk-nav-header">Recientes</li>
                                         <?php
-                                        if (!isset(auth()->user()->route)) {
-                                            auth()->user()->route = [];
+                                        if (!isset(auth()->user()->routePublisher)) {
+                                            auth()->user()->routePublisher = [];
                                         }
 
                                         ?>
-                                        @foreach(auth()->user()->route as $preview)
+                                        @foreach(auth()->user()->routePublisher as $preview)
                                             <?php $last = explode('/', $preview) ?>
                                             <li><a href="{!! route($last[1]) !!}">{{$last[0]}}</a></li>
                                         @endforeach

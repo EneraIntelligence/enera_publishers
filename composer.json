@@ -12,11 +12,12 @@
         "barryvdh/laravel-ide-helper": "^2.1",
         "laravelcollective/html": "5.1.*",
         "league/flysystem-sftp": "^1.0",
-        "guzzlehttp/guzzle": "~4.0",
+        "guzzlehttp/guzzle": "~5.3",
         "barryvdh/laravel-dompdf": "0.6.*",
         "jenssegers/agent": "^2.3",
         "conekta/conekta-php": "dev-master",
-        "netshell/paypal": "dev-master"
+        "netshell/paypal": "dev-master",
+        "league/flysystem-aws-s3-v3": "^1.0"
 
     },
     "require-dev": {
