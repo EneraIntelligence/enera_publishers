@@ -47,8 +47,8 @@
                                             class="sub-heading">{{ (str_replace("_", " ",$cam->interaction['name'])) }}</span>
                                 </h2>
                             </div>
-                            <a class="md-fab md-fab-small md-fab-accent {!! Publishers\Libraries\CampaignStyleHelper::getStatusColor($cam->status) !!}"
-                               style="background: {!! Publishers\Libraries\CampaignStyleHelper::getStatusColor($cam->status) !!}">  {{-- href="page_user_edit.html" --}}
+                            <a data-uk-tooltip="{pos:'left'}" title="{!! $cam->status !!}" class="md-fab md-fab-small md-fab-accent {!! Publishers\Libraries\CampaignStyleHelper::getStatusColor($cam->status) !!} ">
+                               {{--style="background: {!! Publishers\Libraries\CampaignStyleHelper::getStatusColor($cam->status) !!}">  --}}{{-- href="page_user_edit.html" --}}
                                 <i class="material-icons">{!! Publishers\Libraries\CampaignStyleHelper::getStatusIcon($cam->status) !!}</i>
                             </a>
                         </div>
@@ -459,8 +459,8 @@
                                     </div>
 
                                     <div class="uk-width-large-1-2">
-                                        <div class="md-card">
-                                            <div class="md-card-content">
+                                        <div class="" style="padding-left:10px;">
+                                            {{--<div class="md-card-content uk-width-large-1-1">
                                                 <div class="uk-float-right uk-margin-top uk-margin-small-right"><span
                                                             class="peity_visitors peity_data" style="display: none;">5,3,9,6,5,9,7</span>
                                                     <svg class="peity" height="28" width="48">
@@ -485,9 +485,22 @@
                                                               height="21.77777777777778"></rect>
                                                     </svg>
                                                 </div>
-                                                {{--<span class="uk-text-muted uk-text-small">Interacciones</span>--}}
+                                                --}}{{--<span class="uk-text-muted uk-text-small">Interacciones</span>--}}{{--
                                                 <h3 class="heading_a uk-margin-bottom">Interacciones </h3>
-                                                <h1 class="jumbo uk-text-center" id="myTargetElement">0</h1>
+                                            </div>--}}
+                                            <div class="uk-width-large-1-1 " style="height:60px;text-align:left;padding:15px 5px; ">
+                                                <div class="uk-width-large-1-3 uk-float-left" data-uk-tooltip="{pos:'top'}" title="visto">
+                                                    <i class="uk-icon-eye uk-icon-medium" style="float:left;"></i>
+                                                    <h2 class="jumbo uk-float-left" style="margin: 0px 0px 0px 5px ;" id="vistos">0</h2>
+                                                </div>
+                                                <div class="uk-width-large-1-3 uk-float-left" data-uk-tooltip="{pos:'top'}" title="Completado">
+                                                    <i class="material-icons md-36" style="float:left;">done</i>
+                                                    <h2 class="jumbo uk-float-left" style="margin: 0px 0px 0px 5px;" id="completados">0</h2>
+                                                </div>
+                                                <div class="uk-width-large-1-3 uk-float-left" data-uk-tooltip="{pos:'top'}" title="Usuario">
+                                                    <i class="uk-icon-user uk-icon-medium" style="float:left;"></i>
+                                                    <h2 class="jumbo uk-float-left" style="margin: 0px 0px 0px 5px;" id="usuarios">0</h2>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="md-card">
@@ -545,7 +558,7 @@
             $(this).find('strong').html(parseInt(100 * progress) + '<i>%</i>');
         });
 
-
+        //-------------------------------------- animación de los numeros  ---------------------------------------------
         var options = {
             useEasing: true,
             useGrouping: true,
@@ -554,9 +567,13 @@
             prefix: '',
             suffix: ''
         };
-        var demo = new CountUp("myTargetElement", 0, {!! $cam->logs()->where('interaction.loaded','exists',true)->count() !!}, 0, 5.0, options);
-        demo.start();
-
+        var vistos = new CountUp("vistos", 0, {!! $cam->logs()->where('interaction.loaded','exists',true)->count() !!}, 0, 5.0, options);
+        vistos.start();
+        var completados = new CountUp("completados", 0, {!! $cam->logs()->where('interaction.completed','exists',true)->count() !!}, 0, 5.0, options);
+        completados.start();
+        var users = new CountUp("usuarios", 0, {!! $cam->logs()->where('user.id','exists',true)->distinct('user.id')->count() !!}, 0, 5.0, options);
+        users.start();
+        //-------------------------------------- grafica de muestra se espera confirmacion de quitar  ---------------------------------------------
         var chart = c3.generate({
             bindto: '#gender',
             data: {

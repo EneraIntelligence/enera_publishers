@@ -17,7 +17,7 @@ class DashboardController extends Controller
     {
         $logs = CampaignLog::all();
         $devices = Device::count();     //total de devices detectados en enera
-        $campañas = Campaign::count();  //total de campañas en todo enera
+        $campañas = Campaign::count();  //total de campañas en to-do enera
         $sitios = Branche::count();     //total de  branches en enera
 
 //        $osTotal['android']= Device::where('os','=','Android')->count();
