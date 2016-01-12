@@ -571,7 +571,7 @@
         vistos.start();
         var completados = new CountUp("completados", 0, {!! $cam->logs()->where('interaction.completed','exists',true)->count() !!}, 0, 5.0, options);
         completados.start();
-        var users = new CountUp("usuarios", 0, {!! $cam->logs()->where('user.id','exists',true)->distinct('user.id')->count() !!}, 0, 5.0, options);
+        var users = new CountUp("usuarios", 0, {!! count(DB::collection('campaign_logs')->distinct('user.id')->get()) !!}, 0, 5.0, options);
         users.start();
         //-------------------------------------- grafica de muestra se espera confirmacion de quitar  ---------------------------------------------
         var chart = c3.generate({

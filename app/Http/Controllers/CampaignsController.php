@@ -511,6 +511,8 @@ class CampaignsController extends Controller
 //        $this->genderAge($id);
         $campaign = Campaign::find($id); //busca la campaña
 
+//        dd($campaign->logs()->where('user.id','exists',true)->get());
+
         if ($campaign && $campaign->administrator_id == auth()->user()->_id) {
 //            dd($campaign);
             //este arreglo se usa para poder convertir los numeros de los dias a letras
@@ -624,7 +626,10 @@ class CampaignsController extends Controller
             }//FIN DEL ELSE PARA MANEJAR LOS BRANCHAS
 
 //            dd($campaign);
-            return view('campaigns.show', ['cam' => $campaign, 'user' => Auth::user()]);
+            return view('campaigns.show', [
+                'cam' => $campaign,
+                'user' => auth()->user(),
+            ]);
         } else {
             return redirect()->route('campaigns::index')->with('data', 'errorCamp');
         }
