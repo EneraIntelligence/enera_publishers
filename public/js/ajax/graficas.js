@@ -138,16 +138,16 @@ graficas = function () {
         return gender;
     }
 //------------------------grafica de barra para las interacciones por dia
-    this.intPerDay = function intPerDay (dia1,dia2,dia3,dia4,dia5) {
+    this.intPerDay = function intPerDay (dias) {
         //        Interacciones por modelos
         var chart3 = c3.generate({
             bindto: '#intPerDay',
             data: {
                 x:'x',
                 columns: [
-                    ['x', dia1, ],
+                    ['x', dia1['num'], ],
                     //                            ['interacciones por dia '],
-                    ['interacciones', dia1, dia2,dia3, dia4,dia5,dia6,dia7]
+                    ['interacciones', dias, dia2,dia3, dia4,dia5,dia6,dia7]
                 ],
                 type: 'bar'
             },

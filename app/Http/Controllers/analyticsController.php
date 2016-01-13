@@ -31,8 +31,8 @@ class AnalyticsController extends Controller
     {
         $data=array();
         $data['type']=$type;
-        var_dump($type);
-        var_dump($id);
+//        var_dump($type);
+//        var_dump($id);
         $campaign = Campaign::find($id); //busca la campaña
 //        $campaign = Campaign::where('_id',$id)->Lists('name','administrator_id','interaction'); //busca la campaña
 //        $campaign = Campaign::where('_id',$id)->get(array('name','administrator_id','interaction')); //busca la campaña
@@ -44,9 +44,9 @@ class AnalyticsController extends Controller
 //        dd($data);
         //valida que la campaña le pertenezca al usuario
         if ($campaign && $campaign->administrator_id == auth()->user()->_id){
-            echo 'la campaña es mia <br>';
+//            echo 'la campaña es mia <br>';
             if (method_exists($this, $type) && $type==!null) { //se verifica que el tipo sea valido y no nulo
-                var_dump($type);
+//                var_dump($type);
                 $datosGrafica= $this->$type($campaign['_id']); //se llama el metodo correspondiente
             }else{
                 $data['type']='intPerDay';
@@ -91,7 +91,7 @@ class AnalyticsController extends Controller
 //            dd($data);
             return view('analytics.single', ['data' => $data,  'user' => Auth::user()]);
         }else {
-            echo 'la campaña no es mia <br>';
+//            echo 'la campaña no es mia <br>';
 //            return redirect()->route('campaigns::index')->with('data', 'errorCamp');
 //            return redirect()->action('CampaignsController@index')->with('data', 'error');
         }

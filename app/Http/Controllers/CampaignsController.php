@@ -57,8 +57,7 @@ class CampaignsController extends Controller
             $end->setTime(00, 00, 00);
             if ($campaign->status == 'active') {
                 $today = new DateTime();
-                if($today<$start){
-//                    dd('hoy es menor a incio');
+                if($today<$start){// si a fecha de hoy es menor a la de inicio el porcentaje tambien es 0
                     $dias['porcentaje'] = 0;
                     $total =  $start->diff($end);
                     $dias['total'] = $total->format('%a');
@@ -66,12 +65,9 @@ class CampaignsController extends Controller
                     $total = $start->diff($end);  //total de dias que deveria estar activo inicio - fin
                     $diff = $start->diff($today); //total de dias hasta hoy  inicio - hoy
                     $dias['total'] = $total->format('%a') - $diff->format('%a'); //guardo el total de dias
-        //            echo $total->format('%a') -  $diff->format('%a') ;
                     $dias['porcentaje'] = round(($diff->format('%a') * 100) / $total->format('%a'), 0, PHP_ROUND_HALF_EVEN);
-        //            echo round($diff->format('%a') / $total->format('%a'), 0 , PHP_ROUND_HALF_EVEN);
-                }
-
-            } else {
+                }//fin del else que verifica si la fecha de inicio es menor a hoy
+            } else {//si la campaña no esta activa el porcentaje es 0
                 $dias['porcentaje'] = 0;
                 $dias['total'] = 0;
             }
@@ -515,6 +511,8 @@ class CampaignsController extends Controller
 //        $this->genderAge($id);
         $campaign = Campaign::find($id); //busca la campaña
 
+//        dd($campaign->logs()->where('user.id','exists',true)->get());
+
         if ($campaign && $campaign->administrator_id == auth()->user()->_id) {
 //            dd($campaign);
             //este arreglo se usa para poder convertir los numeros de los dias a letras
@@ -628,7 +626,10 @@ class CampaignsController extends Controller
             }//FIN DEL ELSE PARA MANEJAR LOS BRANCHAS
 
 //            dd($campaign);
-            return view('campaigns.show', ['cam' => $campaign, 'user' => Auth::user()]);
+            return view('campaigns.show', [
+                'cam' => $campaign,
+                'user' => auth()->user(),
+            ]);
         } else {
             return redirect()->route('campaigns::index')->with('data', 'errorCamp');
         }

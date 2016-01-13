@@ -17,10 +17,10 @@
     <link href='http://fonts.googleapis.com/css?family=Roboto:300,400,500' rel='stylesheet' type='text/css'>
 
     <!-- uikit -->
-    <link rel="stylesheet" href="bower_components/uikit/css/uikit.almost-flat.min.css"/>
+    <link rel="stylesheet" href="{!! URL::asset('bower_components/uikit/css/uikit.almost-flat.min.css') !!}"/>
 
     <!-- altair admin error page -->
-    <link rel="stylesheet" href="assets/css/error_page.min.css" />
+    <link rel="stylesheet" href="{!! URL::asset('assets/css/error_page.min.css') !!}" />
 
 </head>
 <body class="error_page">
