@@ -297,9 +297,7 @@
 {{--{!!  var_dump($registro2) !!}--}}
 
 <!-- common functions -->
-{!! HTML::script('assets/js/common.min.js') !!}
-        <!-- altair core functions -->
-{!! HTML::script('assets/js/altair_admin_common.min.js') !!}
+
         <!-- altair login page functions -->
 {!! HTML::script('assets/js/pages/login.min.js') !!}
 {!! HTML::script('bower_components/parsleyjs/dist/parsley.min.js') !!}
@@ -330,8 +328,7 @@
 //        $("#Rerror").show();
     }
 
-    //         load parsley config (altair_admin_common.js)
-    altair_forms.parsley_validation_config();
+
     //        llamada al parsley
             $('#form_validation2').parsley();
 </script>

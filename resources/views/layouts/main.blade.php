@@ -370,6 +370,11 @@
             <!-- altair common functions/helpers -->
     {!! HTML::script('assets/js/altair_admin_common.min.js') !!}
 
+    <script>
+        // load parsley config (altair_admin_common.js)
+        altair_forms.parsley_validation_config();
+    </script>
+
 
     {!! HTML::script('bower_components/d3/d3.min.js') !!}
     {!! HTML::script('bower_components/c3js-chart/c3.min.js') !!}
