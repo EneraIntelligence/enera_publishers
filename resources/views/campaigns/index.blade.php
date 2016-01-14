@@ -178,25 +178,23 @@
                                              data-snippet-title="{!! $campaign->name !!}">
                                             <div class="md-card-content uk-grid">
 
-                                                <div class="interaction-icon uk-width-large-1-10 uk-hidden-small uk-width-medium-1-4 uk-hidden-medium">
-                                                    <div class="uk-vertical-align"  id="name"
-                                                         data-uk-tooltip="{cls:'long-text'}"
-                                                         title="{{$campaign->interaction['name']}} - {!! $campaign->status !!}">
+                                                <div class="interaction-icon uk-width-large-1-10 uk-hidden-medium uk-hidden-small uk-flex uk-flex-middle"
+                                                     data-uk-tooltip="{cls:'long-text'}"
+                                                     title="{!!$campaign->interaction['name']!!} - {!! $campaign->status !!}">
+
                                                         <img src="{!! URL::asset('images/icons/'.
                                                                 CampaignStyle::getCampaignIcon( $campaign->interaction['name']
                                                              ) ) !!}" alt="">
 
-                                                    </div>
 
                                                 </div>
 
-                                                <div id="campaign-title"
-                                                     class="uk-width-large-2-10 uk-grid-width-small-2-3  uk-width-medium-1-4 uk-width-large-1">
+                                                <div id="campaign-title" class="uk-width-large-2-10 uk-width-medium-3-10 uk-width-small-1-1 uk-flex uk-flex-middle">
                                                     <h2>{{$campaign->name}}</h2>
                                                     <h4>{{$campaign->publishers_summary['client']}}</h4>
                                                 </div>
 
-                                                <div class="uk-grid-width-8-10" style="max-width: 317px;">
+                                                <div class="uk-width-medium-2-10 uk-width-small-1-1 uk-flex uk-flex-middle" >
 
                                                     <div class="uk-grid uk-grid-medium" style="max-width: 317px;">
 
@@ -280,8 +278,7 @@
 
                                                 </div>
 
-                                                <div style="max-height: 100px; position: relative; float: right; padding: 0px; width: 35%!important;"
-                                                     class="uk-hidden-small uk-grid-width-5-10 uk-width-medium-2-5 uk-width-small-1-4 uk-width-large-1-3 chart_id" id="chart_{!! $campaign->_id !!}">
+                                                <div class="uk-width-medium-5-10 uk-hidden-small uk-flex uk-flex-middle chart_id" id="chart_{!! $campaign->_id !!}">
 
                                                 </div>
                                             </div>
