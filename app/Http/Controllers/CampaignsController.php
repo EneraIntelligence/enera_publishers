@@ -454,19 +454,20 @@ class CampaignsController extends Controller
 
             //upload to S3
             $uploadedFile = Storage::get($filename);
-            Storage::disk('s3')->put("items/" . time() . ".jpg", $uploadedFile, "public");
+            Storage::disk('s3')->put("items/" . $filename, $uploadedFile, "public");
 
             //delete server file
             Storage::delete($filename);
             Storage::delete($pngToDelete);
 
             //created item related to campaign
-            $item = new Item();
-            $item->filename = $filename;
-            $item->administrator_id = Auth::user()->_id;
-            $item->type = 'image';
-            //$item->campaign_id = $campaign->_id;
-            $item->save();
+            $item =Item::create(
+                [
+                    "filename" => $filename,
+                    "administrator_id" => Auth::user()->_id,
+                    "type" => 'image',
+                ]
+            );
 
             $res = array('success' => true, 'filename' => $filename, 'item_id' => $item->_id, 'imageType' => $imageType);
 

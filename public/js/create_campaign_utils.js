@@ -189,7 +189,7 @@ create_campaign_helper =
             inputField.required = true;
 
             errorDiv.html('<span class="parsley-required uk-text-center md-input-danger">' +
-                'Hubo un problema al subir tu imagen.' +
+                'Hubo un problema al subir tu imagen. Por favor intenta de nuevo.' +
                 '</span>');
 
             setTimeout(function () {

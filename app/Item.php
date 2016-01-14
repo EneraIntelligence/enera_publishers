@@ -6,5 +6,5 @@ use Jenssegers\Mongodb\Model;
 
 class Item extends Model
 {
-    protected $fillable = ['campaign_id', 'filename', 'type'];
+    protected $fillable = ['campaign_id', 'filename', 'type', 'administrator_id'];
 }

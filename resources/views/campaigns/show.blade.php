@@ -590,7 +590,7 @@
             startAngle: -300, //de donde va a empezar la animacion
             reverse: true, //empieza la animacion al contrario
             thickness: 8,  //el grosor la linea
-            fill: {color: "{!! Publishers\Libraries\CampaignStyleHelper::getStatusColor($cam->status) !!}"} //el color de la linea
+            fill: {color: "{!! CampaignStyle::getStatusColor($cam->status) !!}"} //el color de la linea
         }).on('circle-animation-progress', function (event, progress) {
             $(this).find('strong').html(parseInt(100 * progress) + '<i>%</i>');
         });
