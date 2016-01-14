@@ -57,11 +57,11 @@ class CampaignsController extends Controller
             $end->setTime(00, 00, 00);
             if ($campaign->status == 'active') {
                 $today = new DateTime();
-                if($today<$start){// si a fecha de hoy es menor a la de inicio el porcentaje tambien es 0
+                if ($today < $start) {// si a fecha de hoy es menor a la de inicio el porcentaje tambien es 0
                     $dias['porcentaje'] = 0;
-                    $total =  $start->diff($end);
+                    $total = $start->diff($end);
                     $dias['total'] = $total->format('%a');
-                }else{
+                } else {
                     $total = $start->diff($end);  //total de dias que deveria estar activo inicio - fin
                     $diff = $start->diff($today); //total de dias hasta hoy  inicio - hoy
                     $dias['total'] = $total->format('%a') - $diff->format('%a'); //guardo el total de dias
@@ -442,7 +442,6 @@ class CampaignsController extends Controller
         imagedestroy($image);
 
 
-
         if ($success) {
             //image copied to server successfully
 
@@ -455,7 +454,7 @@ class CampaignsController extends Controller
 
             //upload to S3
             $uploadedFile = Storage::get($filename);
-            Storage::disk('s3')->put("items/" . time() . ".jpg", $uploadedFile,"public");
+            Storage::disk('s3')->put("items/" . time() . ".jpg", $uploadedFile, "public");
 
             //delete server file
             Storage::delete($filename);
@@ -527,7 +526,7 @@ class CampaignsController extends Controller
             $color['color'] = CampaignStyleHelper::getStatusColor($campaign->status);
 //            dd($color);
 
-    /****         OBTENER PORCENTAJE DEL TIEMPO TRANSCURRIDO       ***************/
+            /****         OBTENER PORCENTAJE DEL TIEMPO TRANSCURRIDO       ***************/
             $start = new DateTime(date('Y-m-d H:i:s', $campaign->filters['date']['start']->sec));
             $end = new DateTime(date('Y-m-d H:i:s', $campaign->filters['date']['end']->sec));
 
@@ -546,10 +545,10 @@ class CampaignsController extends Controller
                     break;
                 case 'active':
                     $today = new DateTime();
-                    if($today<$start){
+                    if ($today < $start) {
 //                    dd('hoy es menor a incio');
                         $porcentaje = 0;
-                    }else{
+                    } else {
                         $today = new DateTime();
                         $total = $start->diff($end);
                         $diff = $start->diff($today);
@@ -565,7 +564,7 @@ class CampaignsController extends Controller
             }
 //            dd($porcentaje);
             $campaign->porcentaje = $porcentaje;
-    /*******         OBTENER LAS INTERACCIONES POR DIAS       ***************/
+            /*******         OBTENER LAS INTERACCIONES POR DIAS       ***************/
             $men['1'] = -$campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'male')
                 ->where('user.age', '>=', 0)->where('user.age', '<=', 17)->distinct('user_id')->count();
             $men['2'] = -$campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'male')
@@ -609,20 +608,20 @@ class CampaignsController extends Controller
                 ->where('user.age', '>=', 90)->distinct('user_id')->count();
             $campaign->men = $men;
             $campaign->women = $women;
-    /****         SI EL BRANCH TIENE ALL SE MOSTRARA COMO GLOBAL       ***************/
+            /****         SI EL BRANCH TIENE ALL SE MOSTRARA COMO GLOBAL       ***************/
             $today = new DateTime();
-            if($campaign->branches=='all'){//SI TIENE ALL CAMBIO EL TEXTO POR GLOBAL
+            if ($campaign->branches == 'all') {//SI TIENE ALL CAMBIO EL TEXTO POR GLOBAL
 //                echo 'tiene globales';
-                $campaign->branches='global';
-            }else{//SI NO ES GLOBAL SACO EL NOMBRE DE LOS BRANCHES
+                $campaign->branches = 'global';
+            } else {//SI NO ES GLOBAL SACO EL NOMBRE DE LOS BRANCHES
 //                echo 'no tiene globales';
-                $branches=$campaign->branches;// saco los branches a otra bariable para que me sea mas facil manejar los datos
-                foreach($branches as $clave => $valor){ // recorro el arreglo para hacer una consulta de todos los id de branches
+                $branches = $campaign->branches;// saco los branches a otra bariable para que me sea mas facil manejar los datos
+                foreach ($branches as $clave => $valor) { // recorro el arreglo para hacer una consulta de todos los id de branches
 //                    echo '<br>'.$clave.'  '.$valor;
-                    $BRA=Branche::where('_id',$valor)->get(['name']); //guardo el valor de la consulta
-                    $lugares[$clave]=$BRA[0]['original']['name'];//saco solo el valor que me interesa para no tener un array dentro de un array
+                    $BRA = Branche::where('_id', $valor)->get(['name']); //guardo el valor de la consulta
+                    $lugares[$clave] = $BRA[0]['original']['name'];//saco solo el valor que me interesa para no tener un array dentro de un array
                 }
-                $campaign->branches= $lugares;
+                $campaign->branches = $lugares;
             }//FIN DEL ELSE PARA MANEJAR LOS BRANCHAS
 
 //            dd($campaign);
