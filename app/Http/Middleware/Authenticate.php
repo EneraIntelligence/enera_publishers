@@ -34,6 +34,7 @@ class Authenticate
     public function handle($request, Closure $next)
     {
         if (!$this->auth->check()) {
+            session(['url' => $request->route()->getName()]);
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);
             } else {
@@ -41,7 +42,13 @@ class Authenticate
             }
         } elseif ($this->auth->check()) {
             if ($this->auth->user()->status == 'active') {
-                return $next($request);
+                if ($request->session()->has('url')) {
+                    $url = $request->session()->pull('url', 'default');
+                    $request->session()->forget('url');
+                    return redirect()->route($url);
+                }else{
+                    return $next($request);
+                }
             } else {
                 $this->auth->logout();
                 return redirect()->route('auth.index');
