@@ -4,6 +4,13 @@ namespace Publishers;
 
 use Jenssegers\Mongodb\Model;
 
+/**
+ * Publishers\CampaignLog
+ *
+ * @property-read \Publishers\Campaign $campaign
+ * @property-read \Publishers\User $user
+ * @property-read mixed $id
+ */
 class CampaignLog extends Model
 {
     protected $fillable = ['user', 'device', 'interaction', 'cost'];

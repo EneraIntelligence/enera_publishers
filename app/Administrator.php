@@ -10,6 +10,17 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
+/**
+ * Publishers\Administrator
+ *
+ * @property-read \Publishers\Client $client
+ * @property-read \Publishers\Role $role
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Publishers\Campaign[] $campaigns
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Publishers\Subcampaign[] $subcampaigns
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Publishers\AdministratorMovement[] $movements
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Publishers\Payment[] $payments
+ * @property-read mixed $id
+ */
 class Administrator extends Model implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract
 {
     use Authenticatable, Authorizable, CanResetPassword;
@@ -26,7 +37,7 @@ class Administrator extends Model implements AuthenticatableContract, Authorizab
      *
      * @var array
      */
-    protected $fillable = ['name', 'email', 'password', 'rol_id','client_id', 'status', 'wallet','history'];
+    protected $fillable = ['name', 'email', 'password', 'rol_id', 'client_id', 'status', 'wallet', 'history', 'giftcards'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -69,6 +80,11 @@ class Administrator extends Model implements AuthenticatableContract, Authorizab
     public function history()
     {
         return $this->embedsMany('Publishers\AdministratorHistory');
+    }
+
+    public function payments()
+    {
+        return $this->hasMany('Publishers\Payment');
     }
     // end relations
 }

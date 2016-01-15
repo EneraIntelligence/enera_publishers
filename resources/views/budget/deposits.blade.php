@@ -31,15 +31,30 @@
                         <div class="md-card-content">
                             <div class="uk-tab-center">
                                 <ul class="uk-tab" data-uk-tab="{connect:'#tabs_5'}">
-                                    <li class="uk-active"><a href="#">Terjeta de Credito</a></li>
-                                    <li><a href="#">Paypal</a></li>
-                                    <li><a href="#">Cúpon</a></li>
+                                    {{--<li class="uk-active">
+                                        <a href="#">Terjeta de Credito</a>
+                                    </li>--}}
+                                    <li class="uk-active">
+                                        <a href="#">Paypal</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">GiftCard</a>
+                                    </li>
                                 </ul>
                             </div>
+                            @if(Session::has('success'))
+                                <div class="uk-alert uk-alert-success" style="padding-right:10px">
+                                    {{ Session::get('success') }}
+                                </div>
+                            @elseif(Session::has('error'))
+                                <div class="uk-alert uk-alert-danger" style="padding-right:10px">
+                                    {{ Session::get('error') }}
+                                </div>
+                            @endif
                             <ul id="tabs_5" class="uk-switcher uk-margin">
-                                <li>
+                                <!-- <li>
                                     <div class="col-md-4" id="conekta">
-                                        {{--<h3 class="uk-panel-title">Conekta</h3>--}}
+                                        <h3 class="uk-panel-title">Conekta</h3>
                                         <div class="uk-width-medium-4-5 uk-container-center">
                                             <div class="uk-panel">
                                                 <form action="{!! route('budget::conekta') !!}" method="POST"
@@ -48,9 +63,7 @@
                                                     <div class="uk-grid" data-uk-grid-margin="">
                                                         <div class="uk-width-medium-1">
                                                             <span class="card-errors" style="color: red;"></span>
-                                                            <br>
-                                                            <hr>
-                                                            <h2> Datos de Tarjeta</h2>
+                                                            <h2>Datos de Tarjeta</h2>
                                                         </div>
                                                         <div class="uk-width-medium-1-3">
                                                             <div class="uk-form-row">
@@ -67,33 +80,36 @@
                                                         </div>
                                                         <div class="uk-width-medium-2-3">
                                                             <div class="uk-form-row">
-                                                                <div class="md-input-wrapper"><label>Nombre del
-                                                                        tarjetahabiente</label>
+                                                                <div class="md-input-wrapper">
+                                                                    <label>Nombre del tarjetahabiente</label>
                                                                     <input type="text" class="md-input"
                                                                            data-conekta="card[name]"
                                                                            required>
-                                                                    <span class="md-input-bar"></span></div>
+                                                                    <span class="md-input-bar"></span>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div class="uk-width-medium-2-3">
                                                             <div class="uk-form-row">
-                                                                <div class="md-input-wrapper"><label>Número de tarjeta
-                                                                        de
-                                                                        crédito</label>
+                                                                <div class="md-input-wrapper">
+                                                                    <label>Número de tarjeta de crédito</label>
                                                                     <input type="text" class="md-input"
                                                                            data-conekta="card[number]"
                                                                            required>
-                                                                    <span class="md-input-bar"></span></div>
+                                                                    <span class="md-input-bar"></span>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div class="uk-width-medium-1-3">
                                                             <div class="uk-form-row">
-                                                                <div class="md-input-wrapper"><label>CVC</label>
+                                                                <div class="md-input-wrapper">
+                                                                    <label>CVC</label>
                                                                     <input type="text" class="md-input"
                                                                            data-conekta="card[cvc]"
                                                                            required
                                                                            data-parsley-maxlength="4">
-                                                                    <span class="md-input-bar"></span></div>
+                                                                    <span class="md-input-bar"></span>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div class="uk-width-medium-1-2">
@@ -173,7 +189,8 @@
                                                         </div>
                                                         <div class="uk-width-medium-1-2">
                                                             <div class="uk-form-row">
-                                                                <div class="md-input-wrapper"><label>Codigo Postal</label>
+                                                                <div class="md-input-wrapper"><label>Codigo
+                                                                        Postal</label>
                                                                     <input type="text" name="cp" class="md-input"
                                                                            required>
                                                                     <span class="md-input-bar"></span></div>
@@ -214,57 +231,256 @@
                                             </div>
                                         </div>
                                     </div>
-                                </li>
-                                <li><div class="uk-width-medium-4-5 uk-container-center">
+                                </li> -->
+                                <li>
+                                    <div class="uk-width-medium-4-5 uk-container-center">
                                         <div class="uk-panel">
-                                            <form action="{!! route('budget::conekta') !!}" method="POST" id="card-form"
-                                                  data-parsley-validate>
-                                                <div class="uk-grid" data-uk-grid-margin="">
-                                                    <div class="uk-width-medium-1">
-                                                        <br>
-                                                        <hr>
-                                                        <div class="uk-form-row">
-                                                            <div class="md-input-wrapper"><label>Monto</label>
-                                                                <input class="md-input masked_input" id="masked_currency"
-                                                                       name="money" type="text"
-                                                                       data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'autoGroup': true, 'digits': 2, 'digitsOptional': false, 'prefix': '$ ', 'placeholder': '0'"
-                                                                       data-inputmask-showmaskonhover="false"/>
-                                                                <span class="md-input-bar"></span></div>
+                                            {!! Form::open(['route' => 'budget::paypal.store','method'=>'post', 'data-parsley-validate']) !!}
+                                            <div class="uk-grid" data-uk-grid-margin="">
+                                                <div class="uk-width-medium-1">
+                                                    <br>
+                                                    <h2>Deposita mediante PayPal</h2>
+                                                    <div class="uk-form-row">
+                                                        <div class="md-input-wrapper md-input-filled">
+                                                            <label>Monto</label>
+                                                            <input class="md-input masked_input"
+                                                                   id="masked_currency" name="amount" type="text"
+                                                                   data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'autoGroup': true, 'digits': 2, 'digitsOptional': false, 'prefix': '$ ', 'placeholder': '0'"
+                                                                   data-inputmask-showmaskonhover="false"
+                                                                   value="1000" data-parsley-required>
+                                                            <span class="md-input-bar"></span>
                                                         </div>
                                                     </div>
-                                                    <div class="uk-width-medium-1-2">
-                                                    </div>
-                                                    <div class="uk-width-medium-1-2" style="margin: 10px 0;">
-                                                        <button type="button" class="md-btn md-btn-danger"
-                                                                onclick="window.location='{{ route("budget::index")}}'">Cancelar
-                                                        </button>
-                                                        <button type="submit" class="md-btn md-btn-primary">Paypal
-                                                        </button>
-                                                        <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+                                                </div>
+                                                <div class="uk-width-medium-1-2">
+                                                </div>
+
+                                                <div class="uk-width-medium-1">
+                                                    <h3> Datos de Facturación</h3>
+                                                </div>
+                                                <div class="uk-width-medium-1">
+                                                    <div class="uk-form-row">
+                                                        <div class="md-input-wrapper">
+                                                            <label>Nombre</label>
+                                                            <input type="text" name="name" class="md-input"
+                                                                   data-parsley-required>
+                                                            <span class="md-input-bar"></span>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </form>
+                                                <div class="uk-width-medium-1">
+                                                    <div class="uk-form-row">
+                                                        <div class="md-input-wrapper">
+                                                            <label>Dirección</label>
+                                                            <input type="text" name="address" class="md-input"
+                                                                   data-parsley-required>
+                                                            <span class="md-input-bar"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="uk-width-medium-1-2">
+                                                    <div class="uk-form-row">
+                                                        <div class="md-input-wrapper">
+                                                            <label>RFC</label>
+                                                            <input type="text" name="rfc" class="md-input"
+                                                                   data-parsley-required>
+                                                            <span class="md-input-bar"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="uk-width-medium-1-2">
+                                                    <div class="uk-form-row">
+                                                        <div class="md-input-wrapper md-input-filled">
+                                                            <label>Pais</label>
+                                                            <input type="text" name="country" class="md-input"
+                                                                   value="México" data-parsley-required>
+                                                            <span class="md-input-bar"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="uk-width-medium-1-2">
+                                                    <div class="uk-form-row">
+                                                        <div class="md-input-wrapper">
+                                                            <label>Estado</label>
+                                                            <input type="text" name="state" class="md-input"
+                                                                   data-parsley-required>
+                                                            <span class="md-input-bar"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="uk-width-medium-1-2">
+                                                    <div class="uk-form-row">
+                                                        <div class="md-input-wrapper">
+                                                            <label>Ciudad</label>
+                                                            <input type="text" name="city" class="md-input"
+                                                                   data-parsley-required>
+                                                            <span class="md-input-bar"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="uk-width-medium-1-2">
+                                                    <div class="uk-form-row">
+                                                        <div class="md-input-wrapper">
+                                                            <label>Codigo Postal</label>
+                                                            <input type="text" name="cp" class="md-input"
+                                                                   data-parsley-required>
+                                                            <span class="md-input-bar"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="uk-width-medium-1-2">
+                                                    <div class="uk-form-row">
+                                                        <div class="md-input-wrapper">
+                                                            <label>Telefono</label>
+                                                            <input type="text" name="phone" class="md-input"
+                                                                   data-parsley-required>
+                                                            <span class="md-input-bar"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="uk-width-medium-1">
+                                                    <div class="uk-form-row">
+                                                        <div class="md-input-wrapper">
+                                                            <label>Correo</label>
+                                                            <input type="text" name="email" class="md-input"
+                                                                   data-parsley-required
+                                                                   data-parsley-type="email">
+                                                            <span class="md-input-bar"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="uk-width-medium-1-2">
+                                                </div>
+                                                <div class="uk-width-medium-1" style="margin: 10px 0;">
+                                                    <button type="button" class="md-btn md-btn-danger"
+                                                            onclick="window.location='{!! route("budget::index") !!}'">
+                                                        Cancelar
+                                                    </button>
+                                                    <button type="submit" class="md-btn md-btn-primary">
+                                                        Paypal
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            {!! Form::close() !!}
                                         </div>
-                                    </div></li>
-                                <li><div class="uk-width-medium-4-5 uk-container-center">
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="uk-width-medium-4-5 uk-container-center">
                                         <div class="uk-panel">
                                             {!! Form::open(['route'=>'budget::giftcard.exchange', 'method'=>'POST','data-parsley-validate']) !!}
                                             <div class="uk-grid" data-uk-grid-margin="">
                                                 <div class="uk-width-medium-1">
                                                     <br>
-                                                    <hr style="margin-top: 10px;">
+                                                    <h2>GiftCard Code</h2>
                                                     <div class="uk-form-row">
-                                                        <div class="md-input-wrapper"><label>Codigo</label>
+                                                        <div class="md-input-wrapper">
+                                                            <label>Ingresa aquí tu GiftCard Code</label>
                                                             <input class="md-input masked_input"
                                                                    name="coupon" type="text"/>
                                                             <span class="md-input-bar"></span></div>
                                                     </div>
                                                 </div>
+                                                <div class="uk-width-medium-1">
+                                                    <h3> Datos de Facturación</h3>
+                                                </div>
+                                                <div class="uk-width-medium-1">
+                                                    <div class="uk-form-row">
+                                                        <div class="md-input-wrapper">
+                                                            <label>Nombre</label>
+                                                            <input type="text" name="name" class="md-input"
+                                                                   data-parsley-required>
+                                                            <span class="md-input-bar"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="uk-width-medium-1">
+                                                    <div class="uk-form-row">
+                                                        <div class="md-input-wrapper">
+                                                            <label>Dirección</label>
+                                                            <input type="text" name="address" class="md-input"
+                                                                   data-parsley-required>
+                                                            <span class="md-input-bar"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="uk-width-medium-1-2">
+                                                    <div class="uk-form-row">
+                                                        <div class="md-input-wrapper">
+                                                            <label>RFC</label>
+                                                            <input type="text" name="rfc" class="md-input"
+                                                                   data-parsley-required>
+                                                            <span class="md-input-bar"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="uk-width-medium-1-2">
+                                                    <div class="uk-form-row">
+                                                        <div class="md-input-wrapper md-input-filled">
+                                                            <label>Pais</label>
+                                                            <input type="text" name="country" class="md-input"
+                                                                   value="México" data-parsley-required>
+                                                            <span class="md-input-bar"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="uk-width-medium-1-2">
+                                                    <div class="uk-form-row">
+                                                        <div class="md-input-wrapper">
+                                                            <label>Estado</label>
+                                                            <input type="text" name="state" class="md-input"
+                                                                   data-parsley-required>
+                                                            <span class="md-input-bar"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="uk-width-medium-1-2">
+                                                    <div class="uk-form-row">
+                                                        <div class="md-input-wrapper">
+                                                            <label>Ciudad</label>
+                                                            <input type="text" name="city" class="md-input"
+                                                                   data-parsley-required>
+                                                            <span class="md-input-bar"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="uk-width-medium-1-2">
+                                                    <div class="uk-form-row">
+                                                        <div class="md-input-wrapper">
+                                                            <label>Codigo Postal</label>
+                                                            <input type="text" name="cp" class="md-input"
+                                                                   data-parsley-required>
+                                                            <span class="md-input-bar"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="uk-width-medium-1-2">
+                                                    <div class="uk-form-row">
+                                                        <div class="md-input-wrapper">
+                                                            <label>Telefono</label>
+                                                            <input type="text" name="phone" class="md-input"
+                                                                   data-parsley-required>
+                                                            <span class="md-input-bar"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="uk-width-medium-1">
+                                                    <div class="uk-form-row">
+                                                        <div class="md-input-wrapper">
+                                                            <label>Correo</label>
+                                                            <input type="text" name="email" class="md-input"
+                                                                   data-parsley-required
+                                                                   data-parsley-type="email">
+                                                            <span class="md-input-bar"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <div class="uk-width-medium-1-2">
                                                 </div>
-                                                <div class="uk-width-medium-1-2" style="margin: 10px 0;">
+                                                <div class="uk-width-medium-1" style="margin: 10px 0;">
                                                     <button type="button" class="md-btn md-btn-danger"
-                                                            onclick="window.location='{{ route("budget::index")}}'">Cancelar
+                                                            onclick="window.location='{{ route("budget::index")}}'">
+                                                        Cancelar
                                                     </button>
                                                     <button type="submit" class="md-btn md-btn-primary">Canjear Cupón
                                                     </button>
@@ -272,7 +488,8 @@
                                             </div>
                                             {!! Form::close() !!}
                                         </div>
-                                    </div></li>
+                                    </div>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -384,31 +601,12 @@
             suffix: ' MXN'
         };
 
-        var balance = 100;
-        var demo1 = new CountUp("myTargetElement1", 0, 100, 2, 3.0, option);
-        var demo2 = new CountUp("myTargetElement2", 0, 100, 2, 3.0, option);
+        var balance = {!! $admin->wallet->current !!};
+        var demo1 = new CountUp("myTargetElement1", 0, balance, 2, 3.0, option);
+        var demo2 = new CountUp("myTargetElement2", 0, balance, 2, 3.0, option);
         demo1.start();
         demo2.start();
 
-
-        $("input[name='pay']").change(function () {
-            var int = $('input[name="pay"]:checked').val();
-            if (int == 'conekta') {
-                document.getElementById('conekta').style.display = 'block';
-                document.getElementById('paypal').style.display = 'none';
-                document.getElementById('cupon').style.display = 'none';
-            } else if (int == 'paypal') {
-                document.getElementById('conekta').style.display = 'none';
-                document.getElementById('paypal').style.display = 'block';
-                document.getElementById('cupon').style.display = 'none';
-            }
-            else if (int == 'cupon') {
-                document.getElementById('conekta').style.display = 'none';
-                document.getElementById('paypal').style.display = 'none';
-                document.getElementById('cupon').style.display = 'block';
-            }
-
-        });
     </script>
 @stop
 
