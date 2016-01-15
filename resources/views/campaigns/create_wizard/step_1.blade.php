@@ -30,7 +30,7 @@
         </div>
 
         <div id="banner+link" class="uk-width-medium-1-3">
-            <div class="interaction-btn md-card md-btn" data-interaction="banner-link" style="width: 100%">
+            <div class="interaction-btn md-card md-btn" data-interaction="banner_link" style="width: 100%">
                 <div class="md-card-content">
 {{--                    <img src="{!! URL::asset('images/icons/banner_link.svg') !!}" alt="">--}}
                     <svg style="height:115px; fill: #737373; stroke: #737373" viewBox="35 30 125 140">
@@ -63,7 +63,7 @@
         </div>
 
         <div id="mailingList" class="uk-width-medium-1-3">
-            <div class="interaction-btn md-card md-btn" data-interaction="mailing-list" style="width: 100%">
+            <div class="interaction-btn md-card md-btn" data-interaction="mailing_list" style="width: 100%">
                 <div class="md-card-content">
 {{--                    <img src="{!! URL::asset('images/icons/mailing.svg') !!}" alt="">--}}
                     <svg style="height:115px; fill: #737373; stroke: #737373" viewBox="40 35 120 120">
