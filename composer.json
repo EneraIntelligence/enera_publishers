@@ -17,7 +17,8 @@
         "jenssegers/agent": "^2.3",
         "conekta/conekta-php": "dev-master",
         "netshell/paypal": "dev-master",
-        "league/flysystem-aws-s3-v3": "^1.0"
+        "league/flysystem-aws-s3-v3": "^1.0",
+        "doctrine/dbal": "~2.3"
 
     },
     "require-dev": {

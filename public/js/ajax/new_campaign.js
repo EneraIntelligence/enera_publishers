@@ -69,7 +69,7 @@ new_campaign =
     },
     goBudget:function()
     {
-        window.location=new_campaign.base_url+"/budget";
+        window.location=new_campaign.base_url+"/budget/deposits";
 
     },
     create:function(name)

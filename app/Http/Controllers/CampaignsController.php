@@ -22,7 +22,6 @@ use Publishers\Campaign;
 use Publishers\Branche;
 use Publishers\Item;
 use Publishers\Subcampaign;
-use Publishers\Libraries\FileCloud;
 use Mail;
 
 class CampaignsController extends Controller
@@ -30,7 +29,6 @@ class CampaignsController extends Controller
 
     public function __construct()
     {
-        $this->filecloud = new FileCloud();
     }
 
     /**
@@ -149,10 +147,10 @@ class CampaignsController extends Controller
             'budget' => 'required',
             /* condicionales */
             'banner_link' => 'required_if:interactionId,like',
-            'from' => 'required_if:interactionId,mailing-list',
-            'from_mail' => 'required_if:interactionId,mailing-list',
-            'subject' => 'required_if:interactionId,mailing-list',
-            'mailing_content' => 'required_if:interactionId,mailing-list',
+            'from' => 'required_if:interactionId,mailing_list',
+            'from_mail' => 'required_if:interactionId,mailing_list',
+            'subject' => 'required_if:interactionId,mailing_list',
+            'mailing_content' => 'required_if:interactionId,mailing_list',
             'survey' => 'required_if:interactionId,survey',
             'captcha' => 'required_if:interactionId,captcha',
             'video' => 'required_if:interactionId,video',
@@ -217,7 +215,8 @@ class CampaignsController extends Controller
                                     'survey' => Input::has('survey') ? $this->storeSurvey(Input::get('survey')) : null,
                                     'captcha' => Input::get('captcha'),
                                     'video' => Input::get('video'),
-                                    'like_url' => Input::get('banner_link'),
+                                    'like_url' => (Input::get('interactionId') == 'like') ? Input::get('banner_link') : null,
+                                    'banner_link' => (Input::get('interactionId') == 'banner_link') ? Input::get('banner_link') : null,
                                 ],
                                 'status' => 'pending',
                             ])
@@ -461,7 +460,7 @@ class CampaignsController extends Controller
             Storage::delete($pngToDelete);
 
             //created item related to campaign
-            $item =Item::create(
+            $item = Item::create(
                 [
                     "filename" => $filename,
                     "administrator_id" => Auth::user()->_id,
@@ -516,9 +515,7 @@ class CampaignsController extends Controller
         if ($campaign && $campaign->administrator_id == auth()->user()->_id) {
 //            dd($campaign);
             //este arreglo se usa para poder convertir los numeros de los dias a letras
-            $semana = array(0 => '', 1 => 'lunes', 2 => 'martes', 3 => 'miércoles', 4 => 'jueves', 5 => 'viernes', 6 => 'sabado', 7 => 'domingo');
 
-            $imagen = $this->filecloud->getImagen('image.png');
 
             /******     saca el color y el icono que se va a usar regresa un array  ********/
             //$sColor = new StatusColor();

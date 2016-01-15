@@ -195,6 +195,11 @@
                                         </div>
 
                                         <div class="md-list-content uk-width-large-1-1">
+
+                                            @if(view()->exists('campaigns.partials.preview_'.$cam->interaction['name']))
+                                                @include('campaigns.partials.preview_'.$cam->interaction['name'])
+                                            @endif
+
                                             <h3 class="heading_c uk-margin-small-bottom">Elementos de la campaña</h3>
                                             @if($cam->interaction['name'] == 'banner'|| $cam->interaction['name'] ==  'banner_link')
                                                 <div class="md-list-heading uk-width-large-1 azul">
@@ -491,6 +496,9 @@
                                                 @endif
 
                                         </div>
+
+
+
                                     </div>
 
                                     <div class="uk-width-large-1-2">
@@ -611,7 +619,10 @@
 
     @section('scripts')
 
+
             <!-- slider script -->
+    {!! HTML::script('js/preview_helper.js') !!}
+
     {!! HTML::script('bower_components/jquery.easy-pie-chart/dist/jquery.easypiechart.min.js') !!}
     {!! HTML::script('bower_components/ionrangeslider/js/ion.rangeSlider.min.js') !!}
     {!! HTML::script('bower_components/countUp.js/countUp.js') !!}
@@ -621,6 +632,9 @@
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     {!! HTML::script('js/ajax/graficas.js') !!}
+
+
+
     <script>
         //-------------------------------------- animacion del circulo  ---------------------------------------------
         $('#circle').circleProgress({
@@ -679,7 +693,5 @@
         //var gra2= grafica.gender();
 
     </script>
-    <!-- enera custom scripts -->
-    {{--{!! HTML::script('assets/js/enera/create_campaign_helper.js') !!}--}}
 
 @stop

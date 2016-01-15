@@ -5,16 +5,16 @@ namespace Publishers;
 use Jenssegers\Mongodb\Model;
 
 /**
- * Publishers\AdministratorWallet
+ * Publishers\PaymentHistory
  *
  * @property-read mixed $id
  */
-class AdministratorWallet extends Model
+class PaymentHistory extends Model
 {
-    protected $fillable = ['current'];
+    protected $fillable = ['status', 'error', 'msg'];
     protected $table = null;
     protected $collection = null;
-    //
+    // relations
 
-    //
+    // end relations
 }
