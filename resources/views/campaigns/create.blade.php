@@ -70,7 +70,7 @@
                                 </div>
 
                                 <!-- banner_link preview -->
-                                <div class="preview banner-link none">
+                                <div class="preview banner_link none">
                                     <img class="banner-1 banner-2 view" src="http://placehold.it/200x250?text=Tu+banner"
                                          alt="Tu banner">
                                     <div class="md-btn md-btn-primary boton">Navegar en internet</div>
@@ -81,7 +81,7 @@
                                 </div>
 
                                 <!-- mailing_list preview -->
-                                <div class="preview mailing-list none">
+                                <div class="preview mailing_list none">
                                     <img class="banner-1 banner-2 view" src="http://placehold.it/200x250?text=Tu+banner"
                                          alt="Tu banner">
                                     <div style="top: 455px;" class="md-btn md-btn-primary boton">Suscribirme</div>
@@ -98,7 +98,7 @@
                                 <div class="preview captcha none">
                                     <img class="banner-1 banner-2 view-c"
                                          src="http://placehold.it/200x250?text=Tu+captcha" alt="Tu banner">
-                                    <input class="uk-text-center boton" type="text" value="Mi producto">
+                                    <input style="margin-top: -22px;" class="uk-text-center boton" type="text" value="Mi producto">
                                     <div class="md-btn md-btn-primary boton">Navegar en internet</div>
 
                                     <div class="uk-text-center center-text">
