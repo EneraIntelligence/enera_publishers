@@ -198,7 +198,8 @@
                                             <h3 class="heading_c uk-margin-small-bottom">Elementos de la campaña</h3>
                                             @if($cam->interaction['name'] == 'banner'|| $cam->interaction['name'] ==  'banner_link')
                                                 <div class="md-list-heading uk-width-large-1 azul">
-                                                    <i class="uk-icon-file-picture-o " style="margin-right:10px;"></i>Imagen chica :
+                                                    <i class="uk-icon-file-picture-o " style="margin-right:10px;"></i>Imagen
+                                                    chica :
                                                     <a id="link" class=""
                                                        data-uk-modal="{target:'#modal_lightbox-1'}">{!! isset($cam->content['images']['small'])?$cam->content['images']['small']:'no hay imagen' !!}</a>
                                                     <div class="uk-modal" id="modal_lightbox-1">
@@ -212,7 +213,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="md-list-content uk-width-large-1 azul">
-                                                    <i class="uk-icon-file-picture-o " style="margin-right:10px;"></i>Imagen grande :
+                                                    <i class="uk-icon-file-picture-o " style="margin-right:10px;"></i>Imagen
+                                                    grande :
                                                     <a id="link" class=""
                                                        data-uk-modal="{target:'#modal_lightbox-2'}">
                                                         {!! isset($cam->content['images']['large'])?$cam->content['images']['large']:'no hay imagen' !!}</a>
@@ -230,16 +232,18 @@
                                                 <h3 class="md-hr" style="margin-bottom: 10px;"></h3>
                                                 @if(isset($cam->content['link']))
                                                     <div class="md-list-content uk-width-large-1 azul">
-                                                    <i class="uk-icon-link " style="margin-right:10px;"></i>Link a redireccionar :
-                                                    <a id="link" class=""
-                                                       href="http://{{ isset($cam->content['link'])? str_replace("http://","",$cam->content['link']):'no definido' }}"
-                                                       target="_blank">{!! isset($cam->content['link'])? $cam->content['link']:'no hay una definida www.enera.com ' !!}</a>
+                                                        <i class="uk-icon-link " style="margin-right:10px;"></i>Link a
+                                                        redireccionar :
+                                                        <a id="link" class=""
+                                                           href="http://{{ isset($cam->content['link'])? str_replace("http://","",$cam->content['link']):'no definido' }}"
+                                                           target="_blank">{!! isset($cam->content['link'])? $cam->content['link']:'no hay una definida www.enera.com ' !!}</a>
                                                     </div>
                                                 @endif
                                             @endif
                                             @if($cam->interaction['name'] == 'captcha')
                                                 <div class="md-list-heading uk-width-large-1 azul">
-                                                    <i class="uk-icon-file-picture-o " style="margin-right:10px;"></i>Imagen Chica :
+                                                    <i class="uk-icon-file-picture-o " style="margin-right:10px;"></i>Imagen
+                                                    Chica :
                                                     <a id="link" class=""
                                                        data-uk-modal="{target:'#captcha-image'}">
                                                         {!! isset($cam->content['images']['small'])?$cam->content['images']['small']:'imagen no definida' !!}</a>
@@ -256,7 +260,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="md-list-heading uk-width-large-1 azul">
-                                                    <i class="uk-icon-file-picture-o " style="margin-right:10px;"></i>Imagen Grande :
+                                                    <i class="uk-icon-file-picture-o " style="margin-right:10px;"></i>Imagen
+                                                    Grande :
                                                     <a id="link" class=""
                                                        data-uk-modal="{target:'#captcha-image'}">
                                                         {!! isset($cam->content['images']['large'])?$cam->content['images']['large']:'imagen no definida' !!}</a>
@@ -273,15 +278,17 @@
                                                     </div>
                                                 </div>
                                                 <div class="md-list-heading uk-width-large-1 azul">
-                                                    <i class="uk-icon-key " style="margin-right:10px;"></i>Texto Captcha :
+                                                    <i class="uk-icon-key " style="margin-right:10px;"></i>Texto Captcha
+                                                    :
                                                     <a id="link" class="">
-                                                          {!!isset($cam->content['captcha'])?  $cam->content['captcha']:'texto no definido' !!}</a>
+                                                        {!!isset($cam->content['captcha'])?  $cam->content['captcha']:'texto no definido' !!}</a>
                                                 </div>
                                             @endif
                                             @if($cam->interaction['name'] == 'mailing_list')
                                                 @if(isset($cam->content['images']))
                                                     <div class="md-list-heading uk-width-large-1 azul">
-                                                        <i class="uk-icon-file-picture-o " style="margin-right:10px;"></i> Imagen Chica :
+                                                        <i class="uk-icon-file-picture-o "
+                                                           style="margin-right:10px;"></i> Imagen Chica :
                                                         <a id="link" class=""
                                                            data-uk-modal="{target:'#captcha-image'}">
                                                             {!! isset($cam->content['images']['small'])?$cam->content['images']['small']:'imagen no definida' !!}</a>
@@ -298,7 +305,8 @@
                                                         </div>
                                                     </div>
                                                     <div class="md-list-heading uk-width-large-1 azul">
-                                                        <i class="uk-icon-file-picture-o " style="margin-right:10px;"></i> Imagen Grande :
+                                                        <i class="uk-icon-file-picture-o "
+                                                           style="margin-right:10px;"></i> Imagen Grande :
                                                         <a id="link" class=""
                                                            data-uk-modal="{target:'#captcha-image'}">
                                                             {!! isset($cam->content['images']['large'])?$cam->content['images']['large']:'imagen no definida' !!}</a>
@@ -316,10 +324,11 @@
                                                     </div>
                                                 @else
                                                     <div class="md-list-heading uk-width-large-1 azul">
-                                                        <i class="uk-icon-file-picture-o " style="margin-right:10px;"></i> no hay imagen definida
+                                                        <i class="uk-icon-file-picture-o "
+                                                           style="margin-right:10px;"></i> no hay imagen definida
                                                     </div>
                                                     @endif
-                                                    <!-- create mailing campaign button start -->
+                                                            <!-- create mailing campaign button start -->
                                                     <div class="uk-grid uk-margin-medium-top" data="uk-grid-margin">
                                                         <div class="uk-width-1-1">
                                                             <div class="uk-width-medium-1-1">
@@ -332,55 +341,30 @@
                                                     </div>
                                                     <!-- create mailing campaign button end -->
 
-                                            @endif
-                                            @if($cam->interaction['name'] == 'survey')
-                                                @if(isset($cam->content['survey']))
-                                                    <div class="md-list-heading uk-width-large-1 azul ">
-                                                        <i class="uk-icon-file-picture-o "
-                                                           style="margin-right:10px;"></i>Imagen Encuesta :
-                                                        <a id="link" class=""
-                                                           data-uk-modal="{target:'#survey-image'}">
-                                                            {!! $cam->content['images']['survey'] !!}</a>
-                                                        <div class="uk-modal" id="survey-image">
-                                                            <div class="uk-modal-dialog uk-modal-dialog-lightbox">
-                                                                <button type="button"
-                                                                        class="uk-modal-close uk-close uk-close-alt"></button>
-                                                                <img src="{!! URL::asset('images/'.$cam->content['images']['survey']) !!}"
-                                                                     alt="{{$cam->content['images']['survey']}}"/>
-                                                                <div class="uk-modal-caption">Lorem</div>
+                                                @endif
+                                                @if($cam->interaction['name'] == 'survey')
+                                                    @if(isset($cam->content['survey']))
+                                                        <div class="md-list-heading uk-width-large-1 azul ">
+                                                            <i class="uk-icon-file-picture-o "
+                                                               style="margin-right:10px;"></i>Imagen Encuesta :
+                                                            <a id="link" class=""
+                                                               data-uk-modal="{target:'#survey-image'}">
+                                                                {!! $cam->content['images']['survey'] !!}</a>
+                                                            <div class="uk-modal" id="survey-image">
+                                                                <div class="uk-modal-dialog uk-modal-dialog-lightbox">
+                                                                    <button type="button"
+                                                                            class="uk-modal-close uk-close uk-close-alt"></button>
+                                                                    <img src="{!! URL::asset('images/'.$cam->content['images']['survey']) !!}"
+                                                                         alt="{{$cam->content['images']['survey']}}"/>
+                                                                    <div class="uk-modal-caption">Lorem</div>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    @if(isset($cam->content['survey']))
-                                                        <div class="azul">
-                                                            <i class="uk-icon-th-list " style="margin-right:10px;"></i> Preguntas de la encuesta
-                                                        </div>
-                                                        @foreach($cam->content['survey'] as $key => $con)
-                                                            <span>Pregunta {!! $key[1] !!}
-                                                                : &nbsp;{!! $con['question'] !!}</span>
-                                                            <br>
-                                                            @foreach($con['answers'] as $key => $a)
-                                                                <ul>
-                                                                    <li class="p"><p>Respuesta {!! $key[1] !!}
-                                                                            : {!! $a !!}</p>
-                                                                </ul>
-                                                            @endforeach
-                                                        @endforeach
-                                                    @else <div class="">
-                                                        <i class="uk-icon-th-list "
-                                                           style="margin-right:10px;"></i> no hay preguntas que mostrar
-                                                    </div>
-                                                    @endif
-                                                @else
-                                                    <div>
-                                                        <i class="uk-icon-file-picture-o "
-                                                           style="margin-right:10px;"></i> no hay imagen que mostrar
-                                                    </div>
-                                                    <!------- informacion de survey  ---->
-                                                    <div class="md-list-content uk-width-large-1 ">
                                                         @if(isset($cam->content['survey']))
-                                                            <div>
-                                                                <i class="uk-icon-th-list " style="margin-right:10px;"></i> Preguntas de la encuesta
+                                                            <div class="azul">
+                                                                <i class="uk-icon-th-list "
+                                                                   style="margin-right:10px;"></i> Preguntas de la
+                                                                encuesta
                                                             </div>
                                                             @foreach($cam->content['survey'] as $key => $con)
                                                                 <span>Pregunta {!! $key[1] !!}
@@ -396,83 +380,115 @@
                                                         @else
                                                             <div class="">
                                                                 <i class="uk-icon-th-list "
-                                                                   style="margin-right:10px;"></i> no hay preguntas que mostrar
+                                                                   style="margin-right:10px;"></i> no hay preguntas que
+                                                                mostrar
                                                             </div>
                                                         @endif
-
-                                                    </div>
-                                                @endif
-                                            @endif
-                                            @if($cam->interaction['name'] == 'video')
-                                                <div class="md-list-heading uk-width-large-1 azul">
-                                                    @if(isset($cam->content['video']))
-                                                        <i class="uk-icon-youtube-play"
-                                                           style="margin-right:10px;"></i>Video :
-                                                        <a id="link" class=""
-                                                           data-uk-modal="{target:'#video'}">
-                                                            {!! $cam->content['video'] !!}</a>
-                                                        <div class="uk-modal" id="video">
-                                                            <div class="uk-modal-dialog uk-modal-dialog-lightbox">
-                                                                <button type="button"
-                                                                        class="uk-modal-close uk-close uk-close-alt"></button>
-                                                                <video width="600" height="300" controls>
-                                                                    <source src="{!! URL::asset('videos/'.$cam->content['video']) !!}"
-                                                                            type="video/mp4">
-                                                                    Your browser does not support HTML5 video.
-                                                                </video>
-                                                                {{--<div class="uk-modal-caption">Lorem</div>--}}
-                                                            </div>
-                                                        </div>
                                                     @else
-                                                        <span>
+                                                        <div>
+                                                            <i class="uk-icon-file-picture-o "
+                                                               style="margin-right:10px;"></i> no hay imagen que mostrar
+                                                        </div>
+                                                        <!------- informacion de survey  ---->
+                                                        <div class="md-list-content uk-width-large-1 ">
+                                                            @if(isset($cam->content['survey']))
+                                                                <div>
+                                                                    <i class="uk-icon-th-list "
+                                                                       style="margin-right:10px;"></i> Preguntas de la
+                                                                    encuesta
+                                                                </div>
+                                                                @foreach($cam->content['survey'] as $key => $con)
+                                                                    <span>Pregunta {!! $key[1] !!}
+                                                                        : &nbsp;{!! $con['question'] !!}</span>
+                                                                    <br>
+                                                                    @foreach($con['answers'] as $key => $a)
+                                                                        <ul>
+                                                                            <li class="p"><p>Respuesta {!! $key[1] !!}
+                                                                                    : {!! $a !!}</p>
+                                                                        </ul>
+                                                                    @endforeach
+                                                                @endforeach
+                                                            @else
+                                                                <div class="">
+                                                                    <i class="uk-icon-th-list "
+                                                                       style="margin-right:10px;"></i> no hay preguntas
+                                                                    que mostrar
+                                                                </div>
+                                                            @endif
+
+                                                        </div>
+                                                    @endif
+                                                @endif
+                                                @if($cam->interaction['name'] == 'video')
+                                                    <div class="md-list-heading uk-width-large-1 azul">
+                                                        @if(isset($cam->content['video']))
+                                                            <i class="uk-icon-youtube-play"
+                                                               style="margin-right:10px;"></i>Video :
+                                                            <a id="link" class=""
+                                                               data-uk-modal="{target:'#video'}">
+                                                                {!! $cam->content['video'] !!}</a>
+                                                            <div class="uk-modal" id="video">
+                                                                <div class="uk-modal-dialog uk-modal-dialog-lightbox">
+                                                                    <button type="button"
+                                                                            class="uk-modal-close uk-close uk-close-alt"></button>
+                                                                    <video width="600" height="300" controls>
+                                                                        <source src="{!! URL::asset('videos/'.$cam->content['video']) !!}"
+                                                                                type="video/mp4">
+                                                                        Your browser does not support HTML5 video.
+                                                                    </video>
+                                                                    {{--<div class="uk-modal-caption">Lorem</div>--}}
+                                                                </div>
+                                                            </div>
+                                                        @else
+                                                            <span>
                                                         <i class="uk-icon-youtube-play" style="margin-right:10px;"> no
                                                             hay video asignado </i>
                                                     </span>
-                                                    @endif
-                                                </div>
-                                            @endif
-                                            @if($cam->interaction['name'] == 'like')
-                                                <div class="md-list-heading uk-width-large-1 azul">
-                                                    <i class="uk-icon-file-picture-o "
-                                                       style="margin-right:10px;"></i>Imagen chica :
-                                                    <a id="link" class=""
-                                                       data-uk-modal="{target:'#modal_lightbox-1'}">{!! isset($cam->content['images']['small'])?$cam->content['images']['small']:'no hay imagen' !!}</a>
-                                                    <div class="uk-modal" id="modal_lightbox-1">
-                                                        <div class="uk-modal-dialog uk-modal-dialog-lightbox">
-                                                            <button type="button"
-                                                                    class="uk-modal-close uk-close uk-close-alt"></button>
-                                                            <img src="{!! "https://s3-us-west-1.amazonaws.com/enera-publishers/items/". $cam->content['images']['small'] !!}"
-                                                                 alt=""/>
-                                                            <div class="uk-modal-caption">{!! $cam->content['images']['small'] !!}</div>
+                                                        @endif
+                                                    </div>
+                                                @endif
+                                                @if($cam->interaction['name'] == 'like')
+                                                    <div class="md-list-heading uk-width-large-1 azul">
+                                                        <i class="uk-icon-file-picture-o "
+                                                           style="margin-right:10px;"></i>Imagen chica :
+                                                        <a id="link" class=""
+                                                           data-uk-modal="{target:'#modal_lightbox-1'}">{!! isset($cam->content['images']['small'])?$cam->content['images']['small']:'no hay imagen' !!}</a>
+                                                        <div class="uk-modal" id="modal_lightbox-1">
+                                                            <div class="uk-modal-dialog uk-modal-dialog-lightbox">
+                                                                <button type="button"
+                                                                        class="uk-modal-close uk-close uk-close-alt"></button>
+                                                                <img src="{!! "https://s3-us-west-1.amazonaws.com/enera-publishers/items/". $cam->content['images']['small'] !!}"
+                                                                     alt=""/>
+                                                                <div class="uk-modal-caption">{!! $cam->content['images']['small'] !!}</div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="md-list-content uk-width-large-1 azul">
-                                                    <i class="uk-icon-file-picture-o "
-                                                       style="margin-right:10px;"></i>Imagen grande :
-                                                    <a id="link" class=""
-                                                       data-uk-modal="{target:'#modal_lightbox-2'}">
-                                                        {!! isset($cam->content['images']['large'])?$cam->content['images']['large']:'no hay imagen' !!}</a>
-                                                    <div class="uk-modal" id="modal_lightbox-2">
-                                                        <div class="uk-modal-dialog uk-modal-dialog-lightbox">
-                                                            <button type="button"
-                                                                    class="uk-modal-close uk-close uk-close-alt"></button>
-                                                            <img src="{!! "https://s3-us-west-1.amazonaws.com/enera-publishers/items/". $cam->content['images']['large'] !!}"
-                                                                 alt=""/>
-                                                            <div class="uk-modal-caption">Lorem</div>
+                                                    <div class="md-list-content uk-width-large-1 azul">
+                                                        <i class="uk-icon-file-picture-o "
+                                                           style="margin-right:10px;"></i>Imagen grande :
+                                                        <a id="link" class=""
+                                                           data-uk-modal="{target:'#modal_lightbox-2'}">
+                                                            {!! isset($cam->content['images']['large'])?$cam->content['images']['large']:'no hay imagen' !!}</a>
+                                                        <div class="uk-modal" id="modal_lightbox-2">
+                                                            <div class="uk-modal-dialog uk-modal-dialog-lightbox">
+                                                                <button type="button"
+                                                                        class="uk-modal-close uk-close uk-close-alt"></button>
+                                                                <img src="{!! "https://s3-us-west-1.amazonaws.com/enera-publishers/items/". $cam->content['images']['large'] !!}"
+                                                                     alt=""/>
+                                                                <div class="uk-modal-caption">Lorem</div>
+                                                            </div>
                                                         </div>
+                                                        {{--<span class="uk-text-small uk-text-muted"><img class="uk-width-large-2-6" src="{!! URL::asset('images/'.$content['imageng']) !!}" alt=""></span>--}}
                                                     </div>
-                                                    {{--<span class="uk-text-small uk-text-muted"><img class="uk-width-large-2-6" src="{!! URL::asset('images/'.$content['imageng']) !!}" alt=""></span>--}}
-                                                </div>
-                                                <h3 class="md-hr" style="margin-bottom: 10px;"></h3>
-                                                <div class="md-list-content uk-width-large-1-2"
-                                                     style=" color: #1e88e5;">
-                                                    Url:
-                                                    <a id="link" class=""
-                                                       href="http://{{ isset($cam->content['like_url'])? str_replace("http://","",$cam->content['like_url']):'no definido' }}"
-                                                       target="_blank">{!! isset($cam->content['like_url'])? $cam->content['like_url']:'Like url no definido www.enera.mx' !!}</a>
-                                                </div>
-                                            @endif
+                                                    <h3 class="md-hr" style="margin-bottom: 10px;"></h3>
+                                                    <div class="md-list-content uk-width-large-1-2"
+                                                         style=" color: #1e88e5;">
+                                                        Url:
+                                                        <a id="link" class=""
+                                                           href="http://{{ isset($cam->content['like_url'])? str_replace("http://","",$cam->content['like_url']):'no definido' }}"
+                                                           target="_blank">{!! isset($cam->content['like_url'])? $cam->content['like_url']:'Like url no definido www.enera.mx' !!}</a>
+                                                    </div>
+                                                @endif
 
                                         </div>
                                     </div>
@@ -507,40 +523,69 @@
                                                 --}}{{--<span class="uk-text-muted uk-text-small">Interacciones</span>--}}{{--
                                                 <h3 class="heading_a uk-margin-bottom">Interacciones </h3>
                                             </div>--}}
-
-                                            <div class="uk-width-medium-1">
-                                                <div class="uk-grid">
-                                                    <div class="uk-width-medium-1-3 uk-width-small-1-2">
-                                                        <div class="uk-width-medium-1-2 uk-width-small-1-2 uk-container-center">
-                                                            <i class="uk-icon-eye uk-icon-medium" style="top: 25px; position: relative; left: 20px" data-uk-tooltip="{pos:'top'}"
-                                                               title="visto"></i>
-                                                            <h2 class="jumbo uk-float-left" id="vistos">0</h2>
-                                                        </div>
-                                                    </div>
-                                                    <div class="uk-width-medium-1-3 uk-width-small-1-2">
-                                                        <div class="uk-width-medium-1-2 uk-width-small-1-2 uk-container-center">
-                                                            <i class="material-icons md-36" style="top: 25px; position: relative; left: 20px" data-uk-tooltip="{pos:'top'}"
-                                                               title="Completado">done</i>
-                                                            <h2 class="jumbo uk-float-left" id="completados">0</h2>
-                                                        </div>
-                                                    </div>
-                                                    <div class="uk-width-medium-1-3 uk-width-small-1" >
-                                                        <div class="uk-kit-medium-2-3 uk-width-small-1-2 uk-container-center">
-                                                            <i class="uk-icon-user uk-icon-medium " style="top: 25px; position: relative; left: 20px" data-uk-tooltip="{pos:'top'}"
-                                                               title="Usuario"></i>
-                                                            <h2 class="jumbo uk-float-left" id="usuarios">0</h2>
+                                            <div class="uk-grid uk-margin-medium-top">
+                                                <div class="uk-width-medium-1">
+                                                    <div class="md-card-content ">
+                                                        <div class="uk-grid">
+                                                            <div class="uk-width-1-3 uk-padding-remove">
+                                                                <div class="uk-grid">
+                                                                    <div class="uk-width-2-3 ">
+                                                                        <h2 class="jumbo uk-text-center" id="vistos"
+                                                                            style="width: 100%">
+                                                                            0</h2>
+                                                                    </div>
+                                                                    <div class="uk-width-1-3 uk-padding-remove">
+                                                                        <i class="uk-icon-eye uk-icon-medium uk-text-center"
+                                                                           data-uk-tooltip="{pos:'top'}"
+                                                                           title="visto"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="uk-width-1-3 uk-padding-remove">
+                                                                <div class="uk-grid">
+                                                                    <div class="uk-width-2-3 ">
+                                                                        <h2 class="jumbo uk-text-center"
+                                                                            style="width: 100%"
+                                                                            id="completados">0</h2>
+                                                                    </div>
+                                                                    <div class="uk-width-1-3 uk-padding-remove">
+                                                                        <i class="material-icons md-36 "
+                                                                           data-uk-tooltip="{pos:'top'}"
+                                                                           title="Completado" >done</i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="uk-width-1-3 uk-padding-remove">
+                                                                <div class="uk-grid">
+                                                                    <div class="uk-width-2-3 ">
+                                                                        <h2 class="jumbo uk-text-center" id="usuarios"
+                                                                            style="width: 100%">
+                                                                            0</h2>
+                                                                    </div>
+                                                                    <div class="uk-width-1-3">
+                                                                        <i class="uk-icon-user uk-icon-medium "
+                                                                           data-uk-tooltip="{pos:'top'}"
+                                                                           title="Usuario"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="md-card">
-                                            <div id="graficas" class="md-card-content">
-                                                <h3 class="heading_a uk-margin-bottom">Analiticos</h3>
-                                                <div id='genderAge' class="uk-width-large-1-1 uk-panel-teaser"
-                                                     style="height: 350px"></div>
-                                                <h3 class="md-hr" style="margin: 10px;"></h3>
-                                                <div id='gender' class="uk-width-large-1-1 uk-margin-right"></div>
+                                        <div class="uk-grid uk-margin-medium-top">
+                                            <div class="uk-width-medium-1">
+                                                <div class="md-card">
+                                                    <div id="graficas" class="md-card-content">
+                                                        <h3 class="heading_a uk-margin-bottom">Analiticos</h3>
+                                                        <div id='genderAge' class="uk-width-large-1-1 uk-panel-teaser"
+                                                             style="height: 350px"></div>
+                                                        <h3 class="md-hr" style="margin: 10px;"></h3>
+                                                        <div id='gender'
+                                                             class="uk-width-large-1-1 uk-margin-right"></div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="uk-grid uk-margin-medium-top" data="uk-grid-margin">
