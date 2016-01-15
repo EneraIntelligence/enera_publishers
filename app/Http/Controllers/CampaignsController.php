@@ -22,7 +22,6 @@ use Publishers\Campaign;
 use Publishers\Branche;
 use Publishers\Item;
 use Publishers\Subcampaign;
-use Publishers\Libraries\FileCloud;
 use Mail;
 
 class CampaignsController extends Controller
@@ -30,7 +29,6 @@ class CampaignsController extends Controller
 
     public function __construct()
     {
-        $this->filecloud = new FileCloud();
     }
 
     /**
@@ -516,9 +514,7 @@ class CampaignsController extends Controller
         if ($campaign && $campaign->administrator_id == auth()->user()->_id) {
 //            dd($campaign);
             //este arreglo se usa para poder convertir los numeros de los dias a letras
-            $semana = array(0 => '', 1 => 'lunes', 2 => 'martes', 3 => 'miércoles', 4 => 'jueves', 5 => 'viernes', 6 => 'sabado', 7 => 'domingo');
 
-            $imagen = $this->filecloud->getImagen('image.png');
 
             /******     saca el color y el icono que se va a usar regresa un array  ********/
             //$sColor = new StatusColor();
