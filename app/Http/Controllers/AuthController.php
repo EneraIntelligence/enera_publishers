@@ -68,7 +68,9 @@ class AuthController extends Controller
      */
     public function signUp()
     {
+        // TODO: Encontrar la forma de seleccionar idioma en global
         App::setLocale('es');
+
         $validator = Validator::make(Input::all(), [
 //            'nombre' => array('regex:[^[a-zA-Z]+$|\s*[a-zA-Z]$]'),
             'nombre' => array('regex:[^([a-zA-Z ñáéíóú]{2,60})$]'),
@@ -101,7 +103,8 @@ class AuthController extends Controller
                     'password' => $password,
                     'rol_id' => Role::where('name', 'Usuario Externo')->first()->_id,
                     'client_id' => 0,
-                    'status' => 'pending'
+                    'status' => 'pending',
+                    'giftcards' => [],
                 ));
                 //se agrega el wallet
                 $newAdmin->wallet()->create(['current' => 0]);

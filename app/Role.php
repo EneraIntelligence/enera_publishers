@@ -4,6 +4,12 @@ namespace Publishers;
 
 use Jenssegers\Mongodb\Model;
 
+/**
+ * Publishers\Role
+ *
+ * @property-read \Publishers\Client $client
+ * @property-read mixed $id
+ */
 class Role extends Model
 {
     protected $fillable = ['name', 'platform', 'permissions', 'client_id'];

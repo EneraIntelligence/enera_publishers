@@ -57,11 +57,14 @@ Route::group(['middleware' => ['auth', 'preview']], function () {
 
         Route::get('/invoices/{id}', ['as' => 'invoices', 'uses' => 'BudgetController@invoices']);
 
-        Route::get('/paypal', ['as' => 'paypal', 'uses' => 'PayPalPaymentController@index']);
-        Route::get('/paypal/store', ['as' => 'paypal.store', 'uses' => 'PayPalPaymentController@getCheckout']);
-        Route::get('/paypal/done', ['as' => 'paypal.done', 'uses' => 'PayPalPaymentController@getDone']);
-        Route::get('/paypal/cancel', ['as' => 'paypal.cancel', 'uses' => 'PayPalPaymentController@getCancel']);
-        Route::get('/paypal/index', ['as' => 'paypal.index', 'uses' => 'PayPalPaymentController@index']);
+
+        // PayPal Payment
+        Route::post('/paypal/store', ['as' => 'paypal.store', 'uses' => 'PayPalPaymentController@getCheckout']);
+        Route::get('/paypal/done/{payment_id}', ['as' => 'paypal.done', 'uses' => 'PayPalPaymentController@getDone']);
+        Route::get('/paypal/cancel/{payment_id}', ['as' => 'paypal.cancel', 'uses' => 'PayPalPaymentController@getCancel']);
+        //Route::get('/paypal', ['as' => 'paypal', 'uses' => 'PayPalPaymentController@index']);
+        //Route::get('/paypal/index', ['as' => 'paypal.index', 'uses' => 'PayPalPaymentController@index']);
+
 
         Route::get('/conekta', ['as' => 'conekta', 'uses' => 'ConektaController@conekta']);
 
@@ -83,8 +86,4 @@ Route::group(['middleware' => 'auth.ready'], function () {
     Route::get('register', ['as' => 'auth.register', 'uses' => 'AuthController@register']);
     Route::get('register/verify/{id}/{token}', ['as' => 'auth.verify', 'uses' => 'AuthController@verify']);
 });
-
-
-
-
 

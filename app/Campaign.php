@@ -4,6 +4,14 @@ namespace Publishers;
 
 use Jenssegers\Mongodb\Model;
 
+/**
+ * Publishers\Campaign
+ *
+ * @property-read \Publishers\Administrator $administrator
+ * @property-read \Publishers\Interaction $interaction
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Publishers\CampaignLog[] $logs
+ * @property-read mixed $id
+ */
 class Campaign extends Model
 {
     protected $fillable = ['client_id', 'administrator_id', 'name', 'branches', 'interaction', 'filters', 'content', 'balance', 'status'];

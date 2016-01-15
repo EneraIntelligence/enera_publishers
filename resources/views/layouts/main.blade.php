@@ -473,5 +473,16 @@
 
     @yield('scripts')
 
+    <script>
+        var notification = '{!! session('n_type') !!}';
+        if (notification) {
+            //<i class="material-icons uk-icon-large">' + msg_session.status == 'danger' ? "&#xE002;" : "&#xE877;" + '</i>
+            UIkit.notify('&nbsp;&nbsp;{{ session('n_msg') }}<span style="float:right"><i class="material-icons uk-icon-large">clear</i></span>', {
+                timeout: {!! Session::has('n_timeout')?session('n_timeout'):0 !!},
+                status: '{!! session('n_type') !!}'
+            });
+        }
+    </script>
+
 </body>
 </html>
