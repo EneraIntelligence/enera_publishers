@@ -430,7 +430,7 @@
                                                                     <button type="button"
                                                                             class="uk-modal-close uk-close uk-close-alt"></button>
                                                                     <video width="600" height="300" controls>
-                                                                        <source src="{!! URL::asset('videos/'.$cam->content['video']) !!}"
+                                                                        <source src="{!! URL::asset('https://s3-us-west-1.amazonaws.com/enera-publishers/items/'.$cam->content['video']) !!}"
                                                                                 type="video/mp4">
                                                                         Your browser does not support HTML5 video.
                                                                     </video>
