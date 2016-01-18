@@ -4,12 +4,12 @@
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="200px" height="200px" viewBox="0 0 200 200" enable-background="new 0 0 200 200" xml:space="preserve">
 <g>
-	<circle fill="none" stroke="#FFFFFF" stroke-width="4" stroke-miterlimit="10" cx="100" cy="100" r="47.233"/>
+	<circle fill="none" stroke="#737373" stroke-width="4" stroke-miterlimit="10" cx="100" cy="100" r="47.233"/>
 	
-		<polygon fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+		<polygon fill="none" stroke="#737373" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
 		89.434,81.185 89.434,120.111 123.657,100.648 	"/>
 	
-		<polygon fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+		<polygon fill="none" stroke="#737373" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
 		89.434,81.185 89.434,120.111 123.657,100.648 	"/>
 </g>
 </svg>

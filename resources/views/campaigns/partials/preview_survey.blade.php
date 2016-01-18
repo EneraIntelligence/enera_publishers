@@ -20,3 +20,76 @@
 </div>
 
 <!-- end preview -->
+
+<!-- campaign elements -->
+
+<h3 class="heading_c uk-margin-small-bottom">Elementos de la campaña</h3>
+
+@if(isset($cam->content['survey']))
+    <div class="md-list-heading uk-width-large-1 azul ">
+        <i class="uk-icon-file-picture-o "
+           style="margin-right:10px;"></i>Imagen Encuesta :
+        <a id="link" class=""
+           data-uk-modal="{target:'#survey-image'}">
+            {!! $cam->content['images']['survey'] !!}</a>
+        <div class="uk-modal" id="survey-image">
+            <div class="uk-modal-dialog uk-modal-dialog-lightbox">
+                <button type="button"
+                        class="uk-modal-close uk-close uk-close-alt"></button>
+                <img src="{!! URL::asset('https://s3-us-west-1.amazonaws.com/enera-publishers/items/'.$cam->content['images']['survey']) !!}"
+                     alt="{{$cam->content['images']['survey']}}"/>
+                <div class="uk-modal-caption">{{$cam->content['images']['survey']}}</div>
+            </div>
+        </div>
+    </div>
+    @if(isset($cam->content['survey']))
+        <div class="azul">
+            <i class="uk-icon-th-list " style="margin-right:10px;"></i> Preguntas de la encuesta
+        </div>
+        @foreach($cam->content['survey'] as $key => $con)
+            <span>Pregunta {!! $key[1] !!}
+                : &nbsp;{!! $con['question'] !!}</span>
+            <br>
+            @foreach($con['answers'] as $key => $a)
+                <ul>
+                    <li class="p"><p>Respuesta {!! $key[1] !!}
+                            : {!! $a !!}</p>
+                </ul>
+            @endforeach
+        @endforeach
+    @else <div class="">
+        <i class="uk-icon-th-list "
+           style="margin-right:10px;"></i> no hay preguntas que mostrar
+    </div>
+    @endif
+@else
+    <div>
+        <i class="uk-icon-file-picture-o "
+           style="margin-right:10px;"></i> no hay imagen que mostrar
+    </div>
+    <!------- informacion de survey  ---->
+    <div class="md-list-content uk-width-large-1 ">
+        @if(isset($cam->content['survey']))
+            <div>
+                <i class="uk-icon-th-list " style="margin-right:10px;"></i> Preguntas de la encuesta
+            </div>
+            @foreach($cam->content['survey'] as $key => $con)
+                <span>Pregunta {!! $key[1] !!}
+                    : &nbsp;{!! $con['question'] !!}</span>
+                <br>
+                @foreach($con['answers'] as $key => $a)
+                    <ul>
+                        <li class="p"><p>Respuesta {!! $key[1] !!}
+                                : {!! $a !!}</p>
+                    </ul>
+                @endforeach
+            @endforeach
+        @else
+            <div class="">
+                <i class="uk-icon-th-list "
+                   style="margin-right:10px;"></i> no hay preguntas que mostrar
+            </div>
+        @endif
+
+    </div>
+@endif
