@@ -10,8 +10,11 @@
 
         <div id="file_upload-drop" class="uk-file-upload parsley-row">
             <p class="uk-text">Video</p>
-            <a class="uk-form-file md-btn">elige un archivo
-                <input id="video" name="video" type="file" required accept='video/*'>
+
+            <div class="parsley-errors-list filled video-errors"></div>
+
+            <a class="uk-form-file md-btn">elige un archivo (10mb max)
+                <input id="video-input" name="video" type="file" required accept='video/mp4'>
             </a>
 
         </div>

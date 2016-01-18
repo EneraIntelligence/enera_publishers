@@ -15,6 +15,7 @@ Route::group(['middleware' => ['auth', 'preview']], function () {
         Route::get('/mailing/{id}', ['as' => 'mailing', 'uses' => 'CampaignsController@mailing']);
         Route::get('/new', ['as' => 'create', 'uses' => 'CampaignsController@create']);
         Route::post('/save_item', ['as' => 'save_item', 'uses' => 'CampaignsController@saveItem']);
+        Route::post('/save_item_video', ['as' => 'save_item_video', 'uses' => 'CampaignsController@saveItemVideo']);
         Route::post('/send_mailing', ['as' => 'send_mailing', 'uses' => 'CampaignsController@sendMailing']);
         Route::get('/deposits', ['as' => 'deposits', 'uses' => 'CampaignsController@deposits']);
 

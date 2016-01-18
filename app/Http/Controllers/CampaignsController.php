@@ -480,6 +480,74 @@ class CampaignsController extends Controller
 
     }
 
+    /**
+     * @param Request $request
+     */
+    public function saveItemVideo(Request $request)
+    {
+        if(!$request->hasFile('video'))
+        {
+            $res = array('success' => false, 'msg' => 'no file selected');
+            echo json_encode($res);
+        }
+
+        if(!$request->file('video')->isValid())
+        {
+            $res = array('success' => false, 'msg' => 'file is not valid');
+            echo json_encode($res);
+        }
+
+        $video = $request->file('video');
+
+        $v = Validator::make(
+            $request->all(),
+            ['video' => 'required|max:10240']//10mb max
+        );
+
+        if($v->fails())
+        {
+            $res = array('success' => false, 'msg' => $v->errors() );
+            echo json_encode($res);
+        }
+
+        $filename = "v_".time()."_".$video->getClientOriginalName();
+
+        //transferring file to storage
+        $path = storage_path() . '/app/';
+        $success = $video->move($path, $filename);
+        $videoToDelete = $filename;
+
+        if ($success) {
+            //image copied to server successfully
+
+            //upload to S3
+            $uploadedFile = Storage::get($filename);
+            Storage::disk('s3')->put("items/" . $filename, $uploadedFile, "public");
+
+            //delete server file
+            Storage::delete($videoToDelete);
+
+            //created item related to campaign
+            $item = Item::create(
+                [
+                    "filename" => $filename,
+                    "administrator_id" => Auth::user()->_id,
+                    "type" => 'video',
+                ]
+            );
+
+            $res = array('success' => true, 'filename' => $filename, 'item_id' => $item->_id);
+
+            echo json_encode($res);
+
+        } else {
+            $res = array('success' => false, 'msg' => 'error saving cropped image on storage');
+            echo json_encode($res);
+        }
+
+
+    }
+
     private function correct_size($photo)
     {
         $maxHeight = 100;

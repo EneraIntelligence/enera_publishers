@@ -70,6 +70,7 @@ create_campaign_helper =
         //console.log("setup validator");
     },
     interaction: null,
+    video:null,
     images: {},
     init: function () {
         var cropBtn = $("#crop-btn");
@@ -81,6 +82,10 @@ create_campaign_helper =
         btnNext.attr("aria-disabled", "true");
 
         console.log("create_campaign_helper.init");
+
+        $("#video-input").change(function () {
+            create_campaign_helper.uploadVideo();
+        });
 
         //set preview when uploading a banner
         $("#banner-1").change(function () {
@@ -116,6 +121,62 @@ create_campaign_helper =
         var btnNext = $(".button_next");
         btnNext.removeClass("disabled");
         btnNext.attr("aria-disabled", "false");
+    },
+    uploadVideo: function()
+    {
+        var modal = UIkit.modal.blockUI('<div class=\'uk-text-center\'>Cargando imagen...<br/>' +
+            '<img class=\'uk-margin-top\' src=\'' + branchMap.base_url + '/assets/img/spinners/spinner.gif\' alt=\'\'>');
+
+        var form_data = new FormData($('#wizard_advanced_form')[0]);
+
+        //div to receive any possible error
+        var errorDiv = $(".video-errors");
+        errorDiv.html('');
+
+        var inputId = "#video";
+        var inputField = $(inputId);
+
+
+        //upload item via ajax
+        $.ajax({
+            url: '/campaigns/save_item_video',
+            type: 'POST',
+            dataType: 'JSON',
+            data: form_data,
+            cache: false,
+            contentType: false,
+            processData: false
+        }).done(function (data) {
+            inputField.removeAttr("required");
+
+            console.log(inputField);
+            console.log("success");
+            console.log(data);
+
+            create_campaign_helper.video = data.item_id;
+            console.log(create_campaign_helper);
+            modal.hide();
+
+            inputField.value = "";
+
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR);
+            console.log(textStatus);
+            console.log(errorThrown);
+
+            inputField.required = true;
+
+            errorDiv.html('<span class="parsley-required uk-text-center md-input-danger">' +
+                'Hubo un problema al subir tu video. Verifica que el peso del archivo sea menor a 10mb.' +
+                '</span>');
+
+            setTimeout(function () {
+                modal.hide();
+            }, 200);
+
+            inputField.value = "";
+
+        });
     },
     cropData: null,
     cropImage: function () {
