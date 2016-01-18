@@ -46,9 +46,9 @@
     <i class="uk-icon-file-picture-o " style="margin-right:10px;"></i>Imagen
     Grande :
     <a id="link" class=""
-       data-uk-modal="{target:'#captcha-image'}">
+       data-uk-modal="{target:'#captcha-image-2'}">
         {!! isset($cam->content['images']['large'])?$cam->content['images']['large']:'imagen no definida' !!}</a>
-    <div class="uk-modal" id="captcha-image">
+    <div class="uk-modal" id="captcha-image-2">
         <div class="uk-modal-dialog uk-modal-dialog-lightbox">
             <button type="button"
                     class="uk-modal-close uk-close uk-close-alt"></button>
