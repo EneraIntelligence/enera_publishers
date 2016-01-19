@@ -61,8 +61,7 @@
     </div>
 </div>
 <div class="md-list-heading uk-width-large-1 azul">
-    <i class="uk-icon-key " style="margin-right:10px;"></i>Texto Captcha
-    :
+    <i class="uk-icon-key " style="margin-right:10px;"></i>Texto Captcha :
     <a id="link" class="">
         {!!isset($cam->content['captcha'])?  $cam->content['captcha']:'texto no definido' !!}</a>
 </div>

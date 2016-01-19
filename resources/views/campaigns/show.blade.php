@@ -161,14 +161,14 @@
                                                     <li>
                                                         <div class="md-list-content">
                                                             <span class="md-list-heading azul">Horario</span>
-                                                                    <span class="uk-text-small uk-text-muted">
-                                                                        @if(isset($cam->filters['day_hours']))
-                                                                            {{ $cam->filters['day_hours'][0].':00' }}
-                                                                            a {{ $cam->filters['day_hours'][count($cam->filters['day_hours'])-1].':00' }}
-                                                                        @else
-                                                                            no se definio horario
-                                                                        @endif
-                                                                    </span>
+                                                            <span class="uk-text-small uk-text-muted">
+                                                                @if(isset($cam->filters['day_hours']))
+                                                                    {{ $cam->filters['day_hours'][0].':00' }}
+                                                                    a {{ $cam->filters['day_hours'][count($cam->filters['day_hours'])-1].':00' }}
+                                                                @else
+                                                                    no se definio horario
+                                                                @endif
+                                                            </span>
                                                         </div>
                                                     </li>
                                                     {{-- esta parte usao if para saber que es lo que se va a mostrar --}}
@@ -200,16 +200,12 @@
                                                 @include('campaigns.partials.preview_'.$cam->interaction['name'])
                                             @endif
 
-
                                         </div>
-
-
 
                                     </div>
 
                                     <div class="uk-width-large-1-2">
                                         <div class="">
-
                                             {{--<div class="md-card-content uk-width-large-1-1">
                                                 <div class="uk-float-right uk-margin-top uk-margin-small-right"><span
                                                             class="peity_visitors peity_data" style="display: none;">5,3,9,6,5,9,7</span>
@@ -252,7 +248,7 @@
                                                                     <div class="uk-width-1-3 uk-padding-remove">
                                                                         <i class="uk-icon-eye uk-icon-medium uk-text-center"
                                                                            data-uk-tooltip="{pos:'top'}"
-                                                                           title="visto"></i>
+                                                                           title="Visto"></i>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -370,7 +366,7 @@
         completados.start();
         var users = new CountUp("usuarios", 0, {!! count(DB::collection('campaign_logs')->distinct('user.id')->get()) !!}, 0, 5.0, options);
         users.start();
-        //-------------------------------------- grafica de muestra se espera confirmacion de quitar  ---------------------------------------------
+        //-------------------------------------- todo: grafica de muestra se espera confirmacion de quitar  ---------------------------------------------
         var chart = c3.generate({
             bindto: '#gender',
             data: {

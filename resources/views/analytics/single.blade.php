@@ -1,4 +1,3 @@
-
 @extends('layouts.main')
 
 @section('content')
@@ -32,43 +31,48 @@
                                     <span class="sub-heading">{{ $data['interaction']['name'] }}</span>
                                 </h2>
                             </div>
-                            <a class="md-fab md-fab-small md-fab-accent {!! Publishers\Libraries\CampaignStyleHelper::getStatusColor('active') !!}"  {{-- $status--}}
+                            <a class="md-fab md-fab-small md-fab-accent {!! Publishers\Libraries\CampaignStyleHelper::getStatusColor('active') !!}"
+                               {{-- $status--}}
                                style="background: {!! Publishers\Libraries\CampaignStyleHelper::getStatusColor('active') !!}">  {{-- href="page_user_edit.html" --}}
                                 <i class="material-icons">{!! Publishers\Libraries\CampaignStyleHelper::getStatusIcon('active') !!}</i>
                             </a>
                         </div>
 
-                            <div class="uk-width-large-1-1 uk-margin-medium-top" style="display: inline-flex;" >
-                                <div class="uk-width-large-1-2 uk-margin-left ">
-                                    <select id="select-grafico" data-md-selectize>
-                                        <option value="default">Seleciona un tipo de gráfica</option>
-                                        <optgroup label="tipo">
-                                            <option value="intPerDay">Interacciones por dia</option>
-                                            <option value="genderAge">Generos y edades</option>
-                                            <option value="so">sistemas operativos</option>
-                                            <option value="a">Item A</option>
-                                        </optgroup>
-                                    </select>
-                                </div>
-                                <div id="print" class="uk-width-large-1-2 uk-margin-right">
+                        <div class="uk-width-large-1-1 uk-margin-medium-top" style="display: inline-flex;">
+                            <div class="uk-width-large-1-2 uk-margin-left ">
+                                <select id="select-grafico" data-md-selectize>
+                                    <option value="default">Seleciona un tipo de gráfica</option>
+                                    <optgroup label="tipo">
+                                        <option value="intPerDay">Interacciones por dia</option>
+                                        <option value="genderAge">Generos y edades</option>
+                                        <option value="so">sistemas operativos</option>
+                                        <option value="a">Item A</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+                            <div id="wraper-print" class="uk-width-large-1-2 uk-margin-right">
+                                <div id="print" class="uk-float-right" style="width: 50px;" data-uk-tooltip="{pos:'left'}" title="imprimir grafica">
                                     <i class="md-icon material-icons md-36 uk-float-right uk-margin-right" href="">print</i>
                                 </div>
                             </div>
+                        </div>
 
                         {{-- graficas --}}
-                        <div id="grafica" class="uk-width-large-1-1 uk-margin-top ">
-                            <div class="uk-margin-large-left">Grafica de {!! $data['type'] !!}</div>
-                            <div id="{!! $data['type'] !!}" class="uk-width-large-1-1 uk-margin-right">
+                        <div  class="uk-width-large-1-1 uk-margin-top " style="height: 500px;">
+                            <div id="grafica" style="width: 80%; margin: auto">
+                                <div class="uk-margin-large-left">Grafica de {!! $data['type'] !!}</div>
+                                <div id="{!! $data['type'] !!}" class="uk-width-large-1-1 uk-margin-right">
 
-                            </div>
-                            <div class="uk-width-large-1-2 uk-margin-left">
+                                </div>
+                                <div class="uk-width-large-1-2 uk-margin-left">
 
-                            </div>
-                            <div class="uk-width-1-1 uk-padding">
-                                <span class="uk-margin-large-left "> {{ $data['name'].'  2015/nov/18' }} </span>
+                                </div>
+                                <div class="uk-width-1-1 uk-padding">
+                                    <span class="uk-margin-large-left "> {{ $data['name'].'  2015/nov/18' }} </span>
+                                </div>
                             </div>
                         </div>
-                            <div id="container" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
+                        {{--<div id="container" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>--}}
                     </div>
                 </div>
             </div>
@@ -88,33 +92,32 @@
     {!! HTML::script('js/ajax/graficas.js') !!}
     {!! HTML::script('js/printThis.js') !!}
     <script>
-        $( document ).ready(function() {
-            console.log( "ready!" );
+        $(document).ready(function () {
+            console.log("ready!");
 //-----------------------------------------Imprimir reporte------------------------aclaracion---------------------
-            $('#print').click(function() {
+            $('#print').click(function () {
                 Popup($('#reporte').html());
 //                print($('#reporte'));
             });
 
 //                       funcion nativa
-                    function Popup(data)
-                    {
-                        var mywindow = window.open('', 'my div', 'height=600,width=800');
-                        mywindow.document.write('<html><head><title>my div</title>');
-                        /*optional stylesheet*/
-                        mywindow.document.write('<link rel="stylesheet" href="public/bower_components/kendo-ui-core/styles/kendo.common-material.min.css" type="text/css" />');
-                        mywindow.document.write('</head><body >');
-                        mywindow.document.write(data);
-                        mywindow.document.write('</body></html>');
+            function Popup(data) {
+                var mywindow = window.open('', 'my div', 'height=600,width=800');
+                mywindow.document.write('<html><head><title>my div</title>');
+                /*optional stylesheet*/
+                mywindow.document.write('<link rel="stylesheet" href="public/bower_components/kendo-ui-core/styles/kendo.common-material.min.css" type="text/css" />');
+                mywindow.document.write('</head><body >');
+                mywindow.document.write(data);
+                mywindow.document.write('</body></html>');
 
-                        mywindow.document.close(); // necessary for IE >= 10
-                        mywindow.focus(); // necessary for IE >= 10
+                mywindow.document.close(); // necessary for IE >= 10
+                mywindow.focus(); // necessary for IE >= 10
 
-                        mywindow.print();
-                        mywindow.close();
+                mywindow.print();
+                mywindow.close();
 
-                        return true;
-                    }
+                return true;
+            }
 
 //----------------------------Codigo para la animación del circulo---------------------------------------------
             $('#circle').circleProgress({ //se pasa como parametro el id o elemento que se va animar
@@ -129,30 +132,41 @@
             }); //fin del codigo de animacion de circulo
 
             //-------------------------------- TIPO de grafica --------------------------------------
-            var select= $( "#select-grafico" );
-            $(select).change(function() {
+            var select = $("#select-grafico");
+            $(select).change(function () {
                 var tipo = select.val();
-                console.log( "Handler for .change() called. "+tipo );
-                window.location.href = 'http://localhost:8000/analytics/5638f436a8268b300d479642/'+tipo;
+//                console.log("Handler for .change() called. " + tipo);
+                var ruta = '{!! URL::route('analytics::single').'/'.$data['_id'] !!}/'+tipo;
+                console.log(ruta);
+                window.location.href = ruta;
             });
 //------------------------------------------Grafica---------------------------------------------
             var grafica = new graficas;
             var tipo = '{{$data['type']}}';
-
-            switch ( tipo ) {
+            var gra = '';
+            switch (tipo) {
                 case 'intPerDay':
-                    var gra= grafica.intPerDay(5,4,5,1,2);
+                    var diasJson = '{!! isset($data['dias']) ? json_encode($data['dias']) : json_encode([0,0,0,0,0,0]) !!}';
+                    var diasObj = JSON.parse(diasJson);
+                    var cntJson = '{!! isset($data['cnt']) ? json_encode($data['cnt']) : json_encode([0,0,0,0,0,0]) !!}';
+                    var cntObj = JSON.parse(cntJson);
+                    console.log(diasJson);
+                    gra = grafica.intPerDay(diasObj,cntObj);
                     break;
                 case 'genderAge':
-                    var gra= grafica.genderAge({!! json_encode($data['grafica']) !!});
+                    var menJson = '{!! isset($data['men']) ? json_encode($data['men']) : json_encode([0,0,0,0,0,0]) !!}';
+                    var menObj = JSON.parse(menJson);
+                    var womenJson = '{!! isset($data['women']) ? json_encode($data['women']) : json_encode([0,0,0,0,0,0]) !!}';
+                    var womenObj = JSON.parse(womenJson);
+                    gra = grafica.genderAge(menObj, womenObj);
                     break;
                 case 'so':
-                    var gra= grafica.so({!! json_encode($data['grafica']) !!});
+                    gra = grafica.so({!! json_encode($data['grafica']) !!});
                     break;
             }
         }); // ----------------------------- termina document ready -----------------
 
-//         ----------------------------- alertas  -----------------
+        //         ----------------------------- alertas  -----------------
         var active = '{{session('data')}}';
         if (active == 'active') {
             UIkit.notify("<i class='uk-icon-check'></i>  Tu perfil ha sido modificado con exito", {status: 'success'}, {timeout: 5});

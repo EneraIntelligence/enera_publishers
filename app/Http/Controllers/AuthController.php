@@ -82,15 +82,11 @@ class AuthController extends Controller
         ]);
         /**     despues de las validaciones    **/
         if ($validator->passes()) {
-//            $confirmation_code = str_random(30);
-//            $confirmation_code = Hash::make(Input::get('email'));
             $confirmation_code = md5(Input::get('email'));
             $password = Hash::make(Input::get('password')); //encrypta la contraseña
             /***+*****   verifico si el correo esta registrado     *************/
             if (Administrator::where('email', Input::get('email'))->count() > 0) {
-//                dd('el usuario exite');
                 $validator->errors()->add('registro', 'este correo ya esta registrado');
-//                dd($validator);
                 return redirect()->route('auth.index')->withErrors($validator);
             } else {
                 /***+*****  consulta que guarda el documento en mongo *************/
@@ -110,24 +106,21 @@ class AuthController extends Controller
                 $newAdmin->wallet()->create(['current' => 0]);
                 /**********      si el usuario se creo se llama el job para mandarle el correo de confirmacion        ***************/
                 if ($newAdmin) {
-//                    echo 'se guardo el usuario';
                     $Token = validationCode::create(array(
                         'administrator_id' => $newAdmin->_id, 'type' => 'validationEmail', 'token' => $confirmation_code
                     ));
                     if ($Token->count() > 0) {
                         echo 'se guardo la tabla de token';
                     }
-                    //se  crea un array con los datos que se ocupan para formar el correo
-                    $data['nombre'] = Input::get('nombre');
-                    $data['apellido'] = Input::get('apellido');
-                    $data['email'] = Input::get('email');
-                    $data['id_usuario'] = $newAdmin->_id;  //usuario
-                    $data['confirmation_code'] = $confirmation_code;  //codigo generado para validar el correo
-                    //                dd($data);
+
                     //se llama el job mandar correo confirmacion
                     $this->dispatch(new newAdminJob([
                         'session' => session('_token'),
-                        $data
+                        'nombre' => Input::get('nombre'),
+                        'apellido' => Input::get('apellido'),
+                        'email' => Input::get('email'),
+                        'id_usuario' => $newAdmin->_id,
+                        'confirmation_code' => $confirmation_code
                     ]));
                     return redirect()->route('auth.index')->with('success', 'registro-success');
                 }//fin del if que valida si se creo el usuario para mandar el correo
@@ -146,9 +139,8 @@ class AuthController extends Controller
 
     public function verify($id, $token)
     {
-        echo 'verificando <br>';
+//        echo 'verificando <br>';
         $code = ValidationCode::where('administrator_id', '=', $id)->first();// busco el codigo en la base de datos
-//        dd($code);
         if ($code!=null && $code->count() > 0) //si se encuentra el usuario
         {
             if ($code->token == $token) //verifico si el token es el mismo
@@ -162,7 +154,6 @@ class AuthController extends Controller
                     $admin->save();
                     /**    se agrega el historial de cuando se cambio a activo     **/
                     $admin->history()->create(array('previous_status' => 'pending'));
-//                dd($admin);
                     /**    se borra el validation code     **/
                     $code->delete();
                     //  se regresa al login con mensaje de que se activo cuenta

@@ -75,9 +75,9 @@
 </div>
 @endif
 
-
+@if(isset($cam->content['mail']))
 <div class="md-list-heading uk-width-large-1 azul">
-    <i class="material-icons">mail</i>
+    <i class="uk-icon-envelope " style="margin-right:8px;"></i>
     <span style="cursor: pointer;"
           onclick="viewMailingDetails('{!! $cam->content['mail']['from_name']!!}',
                   '{!! $cam->content['mail']['from_mail']!!}',
@@ -86,7 +86,18 @@
          <!-- htmlspecialchars($cam->content['mail']['content']) -->
         Ver detalles de mailing</span>
 </div>
-
+@else
+    <div class="md-list-heading uk-width-large-1 azul">
+        <i class="uk-icon-envelope " style="margin-right:8px;"></i>
+    <span style="cursor: pointer;"
+          onclick="viewMailingDetails('no definido',
+                  'no definido',
+                  'no definido',
+          'no definido')">
+         <!-- htmlspecialchars($cam->content['mail']['content']) -->
+        Ver detalles de mailing</span>
+    </div>
+@endif
 <!-- create mailing campaign button start -->
 <div class="uk-grid uk-margin-medium-top" data="uk-grid-margin">
     <div class="uk-width-1-1">

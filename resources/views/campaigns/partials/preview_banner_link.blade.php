@@ -61,9 +61,8 @@
 
 </div>
 
-<div class="md-list-content uk-width-large-1-2"
-     style=" color: #1e88e5;">
-    <i class="material-icons">&#xE157;</i>
+<div class="md-list-content uk-width-large-1 azul">
+    <i class="uk-icon-link"  style="margin-right:6px;"></i>
     link:
     <a id="link" class=""
        href="http://{{ isset($cam->content['link'])? str_replace("http://","",$cam->content['link']):'no definido' }}"

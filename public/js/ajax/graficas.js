@@ -138,7 +138,57 @@ graficas = function () {
         return gender;
     }
 //------------------------grafica de barra para las interacciones por dia
-    this.intPerDay = function intPerDay (dias) {
+    this.intPerDay = function intPerDay(dias,cnt) {
+        var graphDates = ['x'];
+        var graphInt = ['interacciones'];
+        for (i = 0; i < dias.length; i++) {
+            graphDates[i+1] = dias[i];
+        }
+        for (i = 0; i < cnt.length; i++) {
+            graphInt[i+1] = cnt[i];
+        }
+        //console.log(graphDates);
+        //console.log(graphInt);
+        var chart = c3.generate({
+            bindto: '#intPerDay',
+            data: {
+                x:'x',
+                columns: [
+                    //['x',dias[0], dias[1],dias[2],dias[3],dias[4]],
+                    graphDates,
+                    //                            ['interacciones por dia '],
+                    //['interacciones', ['interacciones', dia1, dia2,dia3, dia4,dia5,dia6,dia7]]
+                    graphInt
+                ],
+                type: 'bar'
+            },
+            bar: {
+                width: {
+                    ratio: 0.5 // this makes bar width 50% of length between ticks
+                }
+                // or
+                //width: 100 // this makes bar width 100px
+            },
+            axis: {
+                y: {
+                    tick: {
+                        count: 2
+                    }
+                },
+                x: {
+                    type: 'timeseries',
+                    tick: {
+                        format: '%d'
+                        //                                format: '%Y-%m-%d'
+                    }
+                }
+            },
+            legend: {
+                show: false
+            }
+        });
+    }
+    this.intPerDay2 = function intPerDay2 (dias) {
         //        Interacciones por modelos
         var chart3 = c3.generate({
             bindto: '#intPerDay',
@@ -179,23 +229,6 @@ graficas = function () {
         return chart3;
     }
 
-    /*function ajax(json_data, paso) {
-        $.ajax({
-            url: '/interaction/logs/' + paso,
-            type: 'POST',
-            dataType: 'JSON',
-            data: json_data
-        }).done(function (data) {
-            console.log("success");
-            console.log(data);
-        }).fail(function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR);
-            console.log(textStatus);
-            console.log(errorThrown);
-        }).always(function () {
-            console.log("complete-");
-        });
-    }*/
 };
 
 //------------------------------------------------------------------

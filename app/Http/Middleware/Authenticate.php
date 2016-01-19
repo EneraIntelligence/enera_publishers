@@ -47,7 +47,7 @@ class Authenticate
                     $url = $request->session()->pull('url', 'default');
                     $request->session()->forget('url');
                     return redirect()->route($url);
-                }else{
+                } else {
                     return $next($request);
                 }
             } else {
