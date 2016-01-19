@@ -135,11 +135,13 @@ class PayPalPaymentController extends Controller
             $admin_balance = auth()->user()->wallet->current;
 
             $admin_payment->paypal = $this->object_to_array($executePayment);
+            $admin_payment->status = 'done';
             $admin_payment->save();
 
             $admin_payment->history()->create([
                 'status' => 'done'
             ]);
+
             $admin_movement = auth()->user()->movements()->create([
                 'client_id' => auth()->user()->client_id,
                 'movement' => [

@@ -17,7 +17,7 @@ class GiftCardsController extends Controller
     public function exchange()
     {
         $validator = Validator::make(Input::all(), [
-            "coupon" => "required|alpha_num",
+            "coupon" => "required|alpha_dash",
             "name" => "required",
             "address" => "required",
             "rfc" => "required|alpha_num",
@@ -29,7 +29,7 @@ class GiftCardsController extends Controller
             "email" => "required|email",
         ]);
         if ($validator->passes()) {
-            $card = GiftCard::where('code', Input::get('coupon'))->first();
+            $card = GiftCard::where('code', str_replace('-', '', Input::get('coupon')))->first();
             if ($card && $card->status == 'active') {
                 if ($card->getDeadline() >= date('Y-m-d')) {
                     $user_cards = isset(auth()->user()->giftcards) ? auth()->user()->giftcards : [];

@@ -2,6 +2,7 @@
 
 namespace Publishers\Http\Middleware;
 
+use App;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 

@@ -69,7 +69,7 @@ class AuthController extends Controller
     public function signUp()
     {
         // TODO: Encontrar la forma de seleccionar idioma en global
-        App::setLocale('es');
+        // App::setLocale('es');
 
         $validator = Validator::make(Input::all(), [
 //            'nombre' => array('regex:[^[a-zA-Z]+$|\s*[a-zA-Z]$]'),
