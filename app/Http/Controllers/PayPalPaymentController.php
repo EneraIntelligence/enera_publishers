@@ -25,7 +25,7 @@ class PayPalPaymentController extends Controller
 
         $this->_apiContext->setConfig(array(
             'mode' => 'sandbox',
-            'service.EndPoint' => (env('APP_ENV') == 'local') ? 'https://api.paypal.com' : 'https://api.sandbox.paypal.com',
+            'service.EndPoint' => env('APP_ENV') == 'local' ? 'https://api.sandbox.paypal.com' : 'https://api.paypal.com',
             'http.ConnectionTimeOut' => 30,
             'log.LogEnabled' => true,
             'log.FileName' => storage_path('logs/paypal.log'),
