@@ -53,20 +53,19 @@ class Handler extends ExceptionHandler
                 return $this->renderHttpException($e);
             } else if ($e instanceof NotFoundHttpException) {
                 return response()->view('error.404', [], 40);
-            }else
-            if ($e instanceof FatalErrorException) {
-                dd('error fatal');
-                return response()->view('errors.503', [], 500);
-            }else
-            if ($e instanceof Exception) {
+            } else
+                if ($e instanceof FatalErrorException) {
+                    dd('error fatal');
+                    return response()->view('errors.503', [], 500);
+                } else
+                    if ($e instanceof Exception) {
 //                dd('exeption');
-                return response()->view('errors.500', [], 500);
-            }
-            else {
-                dd('ninguno');
-                return response()->view('errors.503', [], 500);
+                        return response()->view('errors.500', [], 500);
+                    } else {
+                        dd('ninguno');
+                        return response()->view('errors.503', [], 500);
 //                return parent::render($request, $e);
-            }
+                    }
         } elseif ($debug == 1) {
             if ($e instanceof ModelNotFoundException) {
                 $e = new NotFoundHttpException($e->getMessage(), $e);
