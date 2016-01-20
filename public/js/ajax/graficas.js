@@ -233,6 +233,33 @@ graficas = function () {
 
 //------------------------------------------------------------------
 
+var c3chart_area_stacked_id = '#DistribuciónXHoras';
+
+if ( $(c3chart_area_stacked_id).length ) {
+
+    var c3chart_area_stacked = c3.generate({
+        bindto: c3chart_area_stacked_id,
+        data: {
+            columns: [
+                ['data1', 300, 350, 300, 0, 0, 120],
+                ['data2', 130, 100, 140, 200, 150, 50]
+            ],
+            types: {
+                data1: 'area-spline',
+                data2: 'area-spline'
+            },
+            groups: [['data1', 'data2']]
+        },
+        color: {
+            pattern: ['#1565C0', '#727272']
+        }
+    });
+
+    $window.on('debouncedresize', function () {
+        c3chart_area_stacked.resize();
+    });
+
+}
 
 var chart2 = c3.generate({
     bindto: '#genderAge',

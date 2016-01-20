@@ -2,7 +2,9 @@
 
 namespace Publishers\Http\Controllers;
 
+use Carbon\Carbon;
 use DateTime;
+use DB;
 use MongoDate;
 use Publishers\AdministratorMovement;
 use Publishers\CampaignLog;
@@ -485,14 +487,12 @@ class CampaignsController extends Controller
      */
     public function saveItemVideo(Request $request)
     {
-        if(!$request->hasFile('video'))
-        {
+        if (!$request->hasFile('video')) {
             $res = array('success' => false, 'msg' => 'no file selected');
             echo json_encode($res);
         }
 
-        if(!$request->file('video')->isValid())
-        {
+        if (!$request->file('video')->isValid()) {
             $res = array('success' => false, 'msg' => 'file is not valid');
             echo json_encode($res);
         }
@@ -504,13 +504,12 @@ class CampaignsController extends Controller
             ['video' => 'required|max:10240']//10mb max
         );
 
-        if($v->fails())
-        {
-            $res = array('success' => false, 'msg' => $v->errors() );
+        if ($v->fails()) {
+            $res = array('success' => false, 'msg' => $v->errors());
             echo json_encode($res);
         }
 
-        $filename = "v_".time()."_".$video->getClientOriginalName();
+        $filename = "v_" . time() . "_" . $video->getClientOriginalName();
 
         //transferring file to storage
         $path = storage_path() . '/app/';
@@ -575,22 +574,12 @@ class CampaignsController extends Controller
      */
     public function show($id)
     {
-//        $this->genderAge($id);
         $campaign = Campaign::find($id); //busca la campaña
-
-//        dd($campaign->logs()->where('user.id','exists',true)->get());
-
         if ($campaign && $campaign->administrator_id == auth()->user()->_id) {
-//            dd($campaign);
-            //este arreglo se usa para poder convertir los numeros de los dias a letras
-
-
             /******     saca el color y el icono que se va a usar regresa un array  ********/
-            //$sColor = new StatusColor();
             $color = [];
             $color['icon'] = CampaignStyleHelper::getStatusIcon($campaign->status);
             $color['color'] = CampaignStyleHelper::getStatusColor($campaign->status);
-//            dd($color);
 
             /****         OBTENER PORCENTAJE DEL TIEMPO TRANSCURRIDO       ***************/
             $start = new DateTime(date('Y-m-d H:i:s', $campaign->filters['date']['start']->sec));
@@ -674,6 +663,49 @@ class CampaignsController extends Controller
                 ->where('user.age', '>=', 90)->distinct('user_id')->count();
             $campaign->men = $men;
             $campaign->women = $women;
+            /*******         OBTENER LAS INTERACCIONES POR DIAS       ***************/
+            $start = $campaign->filters['date']['start']->sec;
+            $end = $campaign->filters['date']['end']->sec;
+
+            $collection = DB::getMongoDB()->selectCollection('campaign_logs');
+            $results = $collection->aggregate([
+                [
+                    '$match' => [
+//                        'campaign_id'=> $id,
+                        'interaction.loaded' => [
+                            '$gte' => new MongoDate(strtotime(Carbon::today()->subDays(30)->format('Y-m-d'))),
+                            '$lte' => new MongoDate(strtotime(Carbon::today()->subDays(0)->format('Y-m-d'))),
+                        ]
+                    ]
+                ],
+                [
+                    '$group' => [
+                        '_id' => [
+                            '$dateToString' => [
+                                'format' => '%H:00:00', 'date' => ['$subtract' => ['$created_at', 18000000]]
+                            ]
+                        ],
+                        /*'loaded' => [
+                            'count' => 'interaction.loaded'
+                        ],
+                        'completed' => [
+                            'count' => 'interaction.completed'
+                        ],*/
+                        'cnt' => [
+                            '$sum' => 1
+                        ]
+                    ],
+                ],
+                [
+                    '$sort' => [
+                        '_id' => 1
+                    ]
+                ]
+            ]);
+
+
+//            var_dump($results);
+            dd($results);
             /****         SI EL BRANCH TIENE ALL SE MOSTRARA COMO GLOBAL       ***************/
             $today = new DateTime();
             if ($campaign->branches == 'all') {//SI TIENE ALL CAMBIO EL TEXTO POR GLOBAL
@@ -688,7 +720,7 @@ class CampaignsController extends Controller
                     $lugares[$clave] = $BRA[0]['original']['name'];//saco solo el valor que me interesa para no tener un array dentro de un array
                 }
                 $campaign->branches = $lugares;
-            }//FIN DEL ELSE PARA MANEJAR LOS BRANCHAS
+            }//FIN DEL ELSE PARA MANEJAR LOS BRANCHES
 
 //            dd($campaign);
             return view('campaigns.show', [
