@@ -17,27 +17,8 @@ class DashboardController extends Controller
     {
         $logs = CampaignLog::all();
         $devices = Device::count();     //total de devices detectados en enera
-        $campañas = Campaign::count();  //total de campañas en to-do enera
+        $campañas = Campaign::where('status','active')->count();  //total de campañas en to-do enera
         $sitios = Branche::count();     //total de  branches en enera
-
-//        $osTotal['android']= Device::where('os','=','Android')->count();
-        /* $mac1= Device::whereRaw([
-             'so' => [
-                 'Mac'
-             ],
-             'so' => [
-                 'iOS'
-             ]
-         ])->count();*/
-//        where('os','=','Mac OS X')->count();
-//        echo $mac1.'  ';
-//        $mac2= Device::where('os','=','iOS')->count();
-//        echo $mac2;
-//        $osTotal['mac']=$mac1+$mac2;
-//        $w1= Device::where('os','=',array('Windows 7/Vista','Windows 8'))->count();
-//        $osTotal['windows']=$w1;
-
-//        dd();
 
         $osLabels = array();
         $osCount = array();
@@ -58,11 +39,6 @@ class DashboardController extends Controller
 
             }
         }
-//        var_dump($osCount);
-//        echo '<br>';
-//        var_dump($osLabels);
-//        echo '<br>';
-//        dd($osCount);
 
         return view('dashboard.index', [
             'logs' => $logs,

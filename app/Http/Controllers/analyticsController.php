@@ -127,6 +127,7 @@ class AnalyticsController extends Controller
 //        dd($collection);
         $results = $collection->aggregate([
             [
+                'campaign_id'=> $this->campaign->id,
                 '$match' => [
                     'interaction.loaded' => [
                         '$gte' => new MongoDate(strtotime(Carbon::today()->subDays(30)->format('Y-m-d'))),
