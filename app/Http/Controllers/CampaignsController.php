@@ -705,7 +705,7 @@ class CampaignsController extends Controller
 
 
 //            var_dump($results);
-            dd($results);
+//            dd($results);
             /****         SI EL BRANCH TIENE ALL SE MOSTRARA COMO GLOBAL       ***************/
             $today = new DateTime();
             if ($campaign->branches == 'all') {//SI TIENE ALL CAMBIO EL TEXTO POR GLOBAL
