@@ -89,5 +89,5 @@ Route::group(['middleware' => 'auth.ready'], function () {
 });
 
 Route::get('/choose',function(){
-   //return
+    return view('choose');
 });
