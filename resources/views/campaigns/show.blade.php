@@ -1,5 +1,8 @@
 @extends('layouts.main')
 @section('head_scripts')
+        <!-- c3.js (charts) -->
+    {!! HTML::style('bower_components/c3js-chart/c3.min.css') !!}
+
     <style>
         li p {
             font: 400 14px/18px Roboto, sans-serif;
@@ -206,34 +209,6 @@
 
                                     <div class="uk-width-large-1-2">
                                         <div class="">
-                                            {{--<div class="md-card-content uk-width-large-1-1">
-                                                <div class="uk-float-right uk-margin-top uk-margin-small-right"><span
-                                                            class="peity_visitors peity_data" style="display: none;">5,3,9,6,5,9,7</span>
-                                                    <svg class="peity" height="28" width="48">
-                                                        <rect fill="#d84315" x="1.3714285714285717"
-                                                              y="12.444444444444443" width="4.114285714285715"
-                                                              height="15.555555555555557"></rect>
-                                                        <rect fill="#d84315" x="8.228571428571428"
-                                                              y="18.666666666666668" width="4.114285714285716"
-                                                              height="9.333333333333332"></rect>
-                                                        <rect fill="#d84315" x="15.085714285714287" y="0"
-                                                              width="4.1142857142857086" height="28"></rect>
-                                                        <rect fill="#d84315" x="21.942857142857147"
-                                                              y="9.333333333333336" width="4.114285714285707"
-                                                              height="18.666666666666664"></rect>
-                                                        <rect fill="#d84315" x="28.800000000000004"
-                                                              y="12.444444444444443" width="4.114285714285707"
-                                                              height="15.555555555555557"></rect>
-                                                        <rect fill="#d84315" x="35.65714285714286" y="0"
-                                                              width="4.114285714285707" height="28"></rect>
-                                                        <rect fill="#d84315" x="42.51428571428572" y="6.222222222222221"
-                                                              width="4.114285714285707"
-                                                              height="21.77777777777778"></rect>
-                                                    </svg>
-                                                </div>
-                                                --}}{{--<span class="uk-text-muted uk-text-small">Interacciones</span>--}}{{--
-                                                <h3 class="heading_a uk-margin-bottom">Interacciones </h3>
-                                            </div>--}}
                                             <div class="uk-grid uk-margin-medium-top">
                                                 <div class="uk-width-medium-1">
                                                     <div class="md-card-content ">
@@ -293,7 +268,7 @@
                                                         <div id='genderAge' class="uk-width-large-1-1 uk-panel-teaser"
                                                              style="height: 350px"></div>
                                                         <h3 class="md-hr" style="margin: 10px;"></h3>
-                                                        <div id='gender'
+                                                        <div id='DistribuciónXHoras'
                                                              class="uk-width-large-1-1 uk-margin-right"></div>
                                                     </div>
                                                 </div>
@@ -334,9 +309,21 @@
             <!-- links para que funcione la grafica demografica  -->
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <!-- page specific plugins -->
+    <!-- d3 -->
+    {{--<script src="bower_components/d3/d3.min.js"></script>--}}
+    {!! HTML::script('bower_components/d3/d3.min.js') !!}
+    <!-- metrics graphics (charts) -->
+    {{--<script src="bower_components/metrics-graphics/dist/metricsgraphics.min.js"></script>--}}
+    <!-- c3.js (charts) -->
+    {!! HTML::script('bower_components/c3js-chart/c3.min.js') !!}
+    <!-- chartist -->
+    {{--<script src="bower_components/chartist/dist/chartist.min.js"></script>--}}
+
+    <!--  charts functions -->
+    {{--<script src="assets/js/pages/plugins_charts.min.js"></script>--}}
+
     {!! HTML::script('js/ajax/graficas.js') !!}
-
-
 
     <script>
         //-------------------------------------- animacion del circulo  ---------------------------------------------
@@ -364,26 +351,8 @@
         vistos.start();
         var completados = new CountUp("completados", 0, {!! $cam->logs()->where('interaction.completed','exists',true)->count() !!}, 0, 5.0, options);
         completados.start();
-        var users = new CountUp("usuarios", 0, {!! count(DB::collection('campaign_logs')->distinct('user.id')->get()) !!}, 0, 5.0, options);
+        var users = new CountUp("usuarios", 0, {!! count(DB::collection('campaign_logs')->where('campaign_id',$cam->id)->distinct('user.id')->get()) !!}, 0, 5.0, options);
         users.start();
-        //-------------------------------------- todo: grafica de muestra se espera confirmacion de quitar  ---------------------------------------------
-        var chart = c3.generate({
-            bindto: '#gender',
-            data: {
-                columns: [
-                    ['Mujeres', 15],
-                    ['Hombres', 25]
-                ],
-                type: 'bar'
-            },
-            bar: {
-                width: {
-                    ratio: 0.5 // this makes bar width 50% of length between ticks
-                }
-                // or
-                //width: 100 // this makes bar width 100px
-            }
-        });
         //------------------------------------------Grafica---------------------------------------------
         var grafica = new graficas;
         var menJson = '{!! json_encode($cam->men) !!}';

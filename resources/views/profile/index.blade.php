@@ -23,7 +23,7 @@
                             <div class="user_heading_avatar">
                                 <div>
                                     <img  id="img"
-                                         src="https://s3-us-west-1.amazonaws.com/enera-publishers/avatars/{!! $user->image !!}" alt="User avatar"/>
+                                         src="https://s3-us-west-1.amazonaws.com/enera-publishers/avatars/{!! isset($user->image) ? $user->image : 'user.png'!!}" alt="User avatar"/>
                                 </div>
                             </div>
                             <div class="user_heading_content">
@@ -174,9 +174,6 @@
             </div>
         </div>
     </div>
-
-
-
 @stop
 
 @section('scripts')
