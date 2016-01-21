@@ -42,10 +42,10 @@
     @endif
 
 
-    <div class="uk-grid" id="login_card">
-        <div class="uk-width-1-4" id="">
+    <div class="uk-grid uk-container-center" id="login_card">
+        <div class="uk-width-2-10" id="">
         </div>
-        <div class="md-card uk-width-large-1-4 uk-width-medium-2-4 uk-padding-remove" id="">
+        <div class="md-card uk-width-large-3-10 uk-width-medium-6-10 uk-padding-remove" id="">
             <div class="md-card-content large-padding" id="login_form">
                 <div class="login_heading">
                     <div style=display:inline-block;text-align:center;">
@@ -273,7 +273,7 @@
             </div>
         </div>
 
-        <div class="md-card uk-width-1-4 uk-visible-large img_login_right uk-margin-remove uk-padding-remove uk-vertical-align">
+        <div class="md-card uk-width-4-10 uk-visible-large login_right_card uk-margin-remove uk-padding-remove uk-vertical-align">
             <div class="uk-vertical-align-bottom">
                 <img class="img_login_right" src="images/publisher_img.png" alt="">
             </div>

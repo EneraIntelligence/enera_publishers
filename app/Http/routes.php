@@ -88,3 +88,6 @@ Route::group(['middleware' => 'auth.ready'], function () {
     Route::get('register/verify/{id}/{token}', ['as' => 'auth.verify', 'uses' => 'AuthController@verify']);
 });
 
+Route::get('/choose',function(){
+   //return
+});

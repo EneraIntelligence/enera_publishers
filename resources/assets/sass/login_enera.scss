@@ -11,10 +11,14 @@
   color : white;
 }
 
-.img_login_right
-{
+.img_login_right {
   position: absolute;
   bottom: 0;
+}
+.login_right_card
+{
+  max-width: 397px;
+  background-color: #cfcfcf !important;
 }
 
 #login_card
