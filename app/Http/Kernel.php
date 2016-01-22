@@ -32,5 +32,6 @@ class Kernel extends HttpKernel
         'guest' => \Publishers\Http\Middleware\RedirectIfAuthenticated::class,
         'ajax' => \Publishers\Http\Middleware\AjaxMiddlaware::class,
         'preview' => \Publishers\Http\Middleware\PreviewMiddleware::class,
+        'guardian' => \Publishers\Http\Middleware\Guardian::class,
     ];
 }

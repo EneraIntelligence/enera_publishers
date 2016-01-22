@@ -45,8 +45,8 @@ class CampaignsController extends Controller
         //$campaigns = Campaign::where('status', 'active')->latest()->get();
         //CityBranchesScript::saveCityBranches();
         $grafica = array();
-        $campaigns = Auth::user()->campaigns()->latest()->get();
-        $subcampaigns = Auth::user()->subcampaigns()->latest()->get();
+        $campaigns = Auth::user()->campaigns()->where('status', '<>', 'archived')->latest()->get();
+        $subcampaigns = Auth::user()->subcampaigns()->where('status', '<>', 'archived')->latest()->get();
 
         /****  for each para sacar los datos de cada campaña   ****/
         foreach ($campaigns as $campaign) {
@@ -97,7 +97,11 @@ class CampaignsController extends Controller
         }//FIN DEL FOR
 //        dd($campaigns);
 
-        return view('campaigns.index', ['campaigns' => $campaigns, 'subcampaigns' => $subcampaigns, 'user' => Auth::user()]);
+        return view('campaigns.index', [
+            'campaigns' => $campaigns,
+            'subcampaigns' => $subcampaigns,
+            'user' => Auth::user()
+        ]);
     }
 
     /**
