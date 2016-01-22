@@ -38,20 +38,20 @@
 
 <div class="uk-grid">
 
-        <div class="uk-width-1-3">
+        <div class="uk-width-medium-1-3 uk-width-small-1-1">
             <a href="http://publishers.enera-intelligence.mx">
                 <img class="uk-align-center" src="{!! URL::asset('images/publisher.png') !!}" alt="">
             </a>
         </div>
 
-        <div class="uk-width-1-3">
+        <div class="uk-width-medium-1-3 uk-width-small-1-1">
             <a href="http://networks.enera-intelligence.mx">
                 <img class="uk-align-center" src="{!! URL::asset('images/logo-networks.png') !!}" alt="">
             </a>
 
         </div>
 
-        <div class="uk-width-1-3">
+        <div class="uk-width-medium-1-3 uk-width-small-1-1">
             <a href="http://admins.enera-intelligence.mx">
                 <img class="uk-align-center" src="{!! URL::asset('images/admins.png') !!}" alt="">
             </a>
