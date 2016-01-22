@@ -41,13 +41,13 @@ class Guardian
                 if (count($admin->role->platform) > 1) {
                     return redirect()->route('choose.platform', ['platform' => $admin->role->platform]);
                 } elseif (count($admin->role->platform) == 1) {
-                    return redirect()->to('http://' . strtolower($app) . '.enera-intelligence.mx')->with([
+                    return redirect()->away('http://' . strtolower($app) . '.enera-intelligence.mx')->with([
                         'n_type' => 'info',
                         'n_timeout' => 5000,
                         'n_msg' => 'Tu cuenta solo permite acceso a esta plataforma.'
                     ]);
                 } else {
-                    return redirect()->to('http://enera.mx');
+                    return redirect()->away('http://enera.mx');
                 }
             }
         }
