@@ -28,8 +28,9 @@ class Guardian
             $app = $this->detector->getAppNamespace();
             $route = $request->route()->getName();
             $admin = auth()->user();
+            $platforms = isset($admin) ? $admin->role->platform : [];
 
-            if (in_array($app, isset($admin) ? $admin->role->platform : [])) {
+            if (in_array($app, $platforms)) {
                 if (in_array($route, $admin->role->permissions[$app])) {
                     return redirect()->route('home')->with([
                         'n_type' => 'danger',
@@ -38,10 +39,10 @@ class Guardian
                     ]);
                 }
             } else {
-                if (count($admin->role->platform) > 1) {
-                    return redirect()->route('choose.platform', ['platform' => $admin->role->platform]);
-                } elseif (count($admin->role->platform) == 1) {
-                    return redirect()->away('http://' . strtolower($app) . '.enera-intelligence.mx')->with([
+                if (count($platforms) > 1) {
+                    return redirect()->route('chouse.platform', ['platform' => $platforms]);
+                } elseif (count($platforms) == 1) {
+                    return redirect()->away('http://' . strtolower($platforms[0]) . '.enera-intelligence.mx')->with([
                         'n_type' => 'info',
                         'n_timeout' => 5000,
                         'n_msg' => 'Tu cuenta solo permite acceso a esta plataforma.'
