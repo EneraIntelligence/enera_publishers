@@ -55,14 +55,14 @@ class Handler extends ExceptionHandler
                 return response()->view('error.404', [], 40);
             } else
                 if ($e instanceof FatalErrorException) {
-                    dd('error fatal');
+                    //dd('error fatal');
                     return response()->view('errors.503', [], 500);
                 } else
                     if ($e instanceof Exception) {
 //                dd('exeption');
                         return response()->view('errors.500', [], 500);
                     } else {
-                        dd('ninguno');
+                        //dd('ninguno');
                         return response()->view('errors.503', [], 500);
 //                return parent::render($request, $e);
                     }
