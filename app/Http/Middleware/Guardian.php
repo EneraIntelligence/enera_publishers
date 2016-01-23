@@ -40,7 +40,7 @@ class Guardian
                 }
             } else {
                 if (count($platforms) > 1) {
-                    return redirect()->route('chouse.platform', ['platform' => $platforms]);
+                    return redirect()->route('choose.platform', ['platform' => $platforms]);
                 } elseif (count($platforms) == 1) {
                     return redirect()->away('http://' . strtolower($platforms[0]) . '.enera-intelligence.mx')->with([
                         'n_type' => 'info',
