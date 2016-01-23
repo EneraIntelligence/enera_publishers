@@ -8,7 +8,6 @@ use DB;
 use MongoDate;
 use Publishers\AdministratorMovement;
 use Publishers\CampaignLog;
-use Publishers\Jobs\EmailJob;
 use Publishers\Jobs\MailCreationJob;
 use Publishers\Jobs\mailingJob;
 use Publishers\Libraries\CampaignStyleHelper;
@@ -232,10 +231,10 @@ class CampaignsController extends Controller
 
                                 $this->dispatch(new MailCreationJob($camp));
 
-                                Mail::send('emails.creation', ['camp' => $camp], function ($m) use ($camp) {
-                                    $m->from('servers@enera.mx', 'Enera Publisher');
-                                    $m->to('contacto@enera.mx', 'Notificaciones')->subject('Campaña creada');
-                                });
+//                                Mail::send('emails.creation', ['camp' => $camp], function ($m) use ($camp) {
+//                                    $m->from('servers@enera.mx', 'Enera Publisher');
+//                                    $m->to('contacto@enera.mx', 'Notificaciones')->subject('Campaña creada');
+//                                });
 
                                 return response()->json([
                                     'ok' => true,
@@ -390,7 +389,7 @@ class CampaignsController extends Controller
 //                });
 
                 //TODO mostrar vista de subcampaña
-                return redirect()->route('campaigns::index')->with('data', 'send');; //view('campaigns.create', compact('branches', 'noCreateBtn', 'campaignName'));
+                return redirect()->route('campaigns::index')->with('data', 'send'); //view('campaigns.create', compact('branches', 'noCreateBtn', 'campaignName'));
 
             } else {
                 //not the user's campaign

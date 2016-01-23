@@ -67,7 +67,7 @@ class TimeEndEmail extends Command
                 $cam->save();
                 $cam->history()->create(array('administrator_id' => '0', 'status' => 'ended', 'date' => $today, 'note' => 'Campaña finalizada por fecha de terminación'));
                 $camBalance = $cam->balance['current'];
-                Administrator::where($cam->administrator_id)->increment('balance.current' , $camBalance);
+                Administrator::where($cam->administrator_id)->increment('wallet.current' , $camBalance);
                 $cam->history()->create(array('administrator_id' => '0', 'status' => 'returned', 'date' => $today, 'note' => 'Balance restante se regreso a los fondos del cliente por la cantidad de $'. number_format($camBalance, 2, '.', ',')));
 
                 $user = Administrator::find($cam->administrator_id);
