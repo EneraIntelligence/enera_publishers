@@ -44,7 +44,7 @@ class CampaignsController extends Controller
         //$campaigns = Campaign::where('status', 'active')->latest()->get();
         //CityBranchesScript::saveCityBranches();
         $grafica = array();
-        $campaigns = Auth::user()->campaigns()->where('status', '<>', 'filed')->latest()->get();
+        $campaigns = Auth::user()->campaigns()->where('status', '<>', 'filed')->where('status', '<>', 'rejected')->latest()->get();
         $subcampaigns = Auth::user()->subcampaigns()->where('status', '<>', 'filed')->latest()->get();
 
         /****  for each para sacar los datos de cada campaña   ****/
