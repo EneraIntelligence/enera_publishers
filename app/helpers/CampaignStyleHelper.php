@@ -51,13 +51,13 @@ class CampaignStyleHelper
         'survey' => 'assignment'
         */
 
-        'banner' => 'banner.svg',
-        'banner_link' => 'banner_link.svg',
-        'video' => 'video.svg',
-        'mailing_list' => 'mailing.svg',
-        'captcha' => 'captcha.svg',
-        'survey' => 'survey.svg',
-        'like' => 'like.svg'
+        'banner' => 'banner',
+        'banner_link' => 'banner_link',
+        'video' => 'video',
+        'mailing_list' => 'mailing',
+        'captcha' => 'captcha',
+        'survey' => 'survey',
+        'like' => 'like'
     );
 
 

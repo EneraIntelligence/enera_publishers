@@ -181,14 +181,10 @@
                                                 <div class="interaction-icon uk-width-large-1-10 uk-hidden-medium uk-hidden-small uk-flex uk-flex-middle"
                                                      data-uk-tooltip="{cls:'long-text'}"
                                                      title="{!!$campaign->interaction['name']!!} - {!! $campaign->status !!}">
-
                                                         <img src="{!! URL::asset('images/icons/'.
                                                                 CampaignStyle::getCampaignIcon( $campaign->interaction['name']
-                                                             ) ) !!}" alt="">
-
-
+                                                             ) ) !!}.svg" alt="">
                                                 </div>
-
                                                 <div id="campaign-title" class="uk-width-large-2-10 uk-width-medium-3-10 uk-width-small-1-1 uk-flex uk-flex-middle">
                                                     <h2>{{$campaign->name}}</h2>
                                                     <h4>{{$campaign->publishers_summary['client']}}</h4>
@@ -275,20 +271,15 @@
                                                             </div>
                                                         @endif
                                                     </div>
-
                                                 </div>
-
                                                 <div class="uk-width-medium-5-10 uk-hidden-small uk-flex uk-flex-middle chart_id" id="chart_{!! $campaign->_id !!}">
-
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
                                     @foreach($subcampaigns as $sub)
-
                                         @if($sub->campaign_id==$campaign->_id)
-
                                             <div data-uk-filter="campaign-{!! $sub->status !!}, action-mailing"
                                                  data-name="{!! $sub->name !!}"
                                                  data-action="mailing"
@@ -296,47 +287,26 @@
                                                  data-status="{!! CampaignStyle::getStatusValue( $sub->status )  !!}"
                                                  data-date="{!! $sub->created_at !!}"
                                                  style="cursor: pointer;">
-
                                                 <div onclick="window.location.href='{!! route('campaigns::sub',['id'=>$sub->_id]) !!}'"
                                                      class="scrum_task {!! CampaignStyle::getStatusColorClass( $sub->status ) !!}"
                                                      data-snippet-title="{!! $sub->name !!}" style="margin-left:20px;">
                                                     <div class="md-card-content uk-grid">
-
                                                         <div class="interaction-icon uk-width-large-1-10 uk-hidden-small uk-width-medium-1-4 uk-hidden-medium">
-                                                            <div class="uk-vertical-align"  id="name"
-                                                                 data-uk-tooltip="{cls:'long-text'}"
-                                                                 title="{{$sub->interaction['name']}} - {!! $sub->status !!}"
-                                                            >
-
+                                                            <div class="uk-vertical-align"  id="name" data-uk-tooltip="{cls:'long-text'}" title="{{$sub->interaction['name']}} - {!! $sub->status !!}">
                                                                 <img src="{!! URL::asset('images/icons/mailing.svg') !!}" alt="">
-
                                                             </div>
-
                                                         </div>
-
                                                         <div id="campaign-title"
                                                              class="uk-width-large-5-10 uk-grid-width-small-2-3  uk-width-medium-1-4 uk-width-large-1">
                                                             <h4>Subcampaña de mailing</h4>
                                                             <h2>{{$sub->name}}</h2>
-
                                                         </div>
-
-
-
                                                     </div>
-
-
                                                 </div>
                                             </div>
-
                                         @endif
-
                                     @endforeach
-
-
                                 @endforeach
-
-
                             </div>
                         </div>
                     </div>
@@ -375,20 +345,20 @@
             });
         }
         <!--     codigo de la grafica   -->
-                @foreach($campaigns as $campaign)
-                var dia1 = {!! $campaign->grafica['dia1']['num'] !!};
-                var dia2 = {!! $campaign->grafica['dia2']['num'] !!};
-                var dia3 = {!! $campaign->grafica['dia3']['num'] !!};
-                var dia4 = {!! $campaign->grafica['dia4']['num'] !!};
-                var dia5 = {!! $campaign->grafica['dia5']['num'] !!};
-                var dia6 = {!! $campaign->grafica['dia6']['num'] !!};
-                var dia7 = {!! $campaign->grafica['dia7']['num'] !!};
+                @foreach($campaigns as $campaign => $valor)
+                var dia1 = {!! $dias[$campaign]['dia1']['num'] !!};
+                var dia2 = {!! $dias[$campaign]['dia2']['num'] !!};
+                var dia3 = {!! $dias[$campaign]['dia3']['num'] !!};
+                var dia4 = {!! $dias[$campaign]['dia4']['num'] !!};
+                var dia5 = {!! $dias[$campaign]['dia5']['num'] !!};
+                var dia6 = {!! $dias[$campaign]['dia6']['num'] !!};
+                var dia7 = {!! $dias[$campaign]['dia7']['num'] !!};
         var chart = c3.generate({
-                bindto: '#chart_{!! $campaign->_id !!}',
+                bindto: '#chart_{!! $valor->_id !!}',
                 data: {
                     x:'x',
                     columns: [
-                        ['x','{!! $campaign->grafica['dia1']['fecha'] !!}','{!! $campaign->grafica['dia2']['fecha'] !!}','{!! $campaign->grafica['dia3']['fecha'] !!}','{!! $campaign->grafica['dia4']['fecha'] !!}','{!!$campaign->grafica['dia5']['fecha']!!}','{!!$campaign->grafica['dia6']['fecha']!!}','{!!$campaign->grafica['dia7']['fecha']!!}'],
+                        ['x','{!! $dias[$campaign]['dia1']['fecha'] !!}','{!! $dias[$campaign]['dia2']['fecha'] !!}','{!!$dias[$campaign]['dia3']['fecha'] !!}','{!! $dias[$campaign]['dia4']['fecha'] !!}','{!!$dias[$campaign]['dia5']['fecha']!!}','{!!$dias[$campaign]['dia6']['fecha']!!}','{!!$dias[$campaign]['dia7']['fecha']!!}'],
     //                            ['interacciones por dia '],
                         ['interacciones', dia1, dia2,dia3, dia4,dia5,dia6,dia7]
                     ],
