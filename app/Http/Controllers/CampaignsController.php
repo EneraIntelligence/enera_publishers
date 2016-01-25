@@ -48,13 +48,14 @@ class CampaignsController extends Controller
         $subcampaigns = Auth::user()->subcampaigns()->where('status', '<>', 'filed')->latest()->get();
 
         /****  for each para sacar los datos de cada campaña   ****/
-        foreach ($campaigns as $campaign) {
+        foreach ($campaigns as $campaign => $valor) {
+//            dd($valor) ;
             /****  OBTENER PORCENTAJE DEL TIEMPO TRANSCURRIDO DE LA CAMPAÑA ****/
-            $start = new DateTime(date('Y-m-d H:i:s', $campaign->filters['date']['start']->sec));
-            $end = new DateTime(date('Y-m-d H:i:s', $campaign->filters['date']['end']->sec));
+            $start = new DateTime(date('Y-m-d H:i:s', $valor->filters['date']['start']->sec));
+            $end = new DateTime(date('Y-m-d H:i:s', $valor->filters['date']['end']->sec));
             $start->setTime(00, 00, 00);
             $end->setTime(00, 00, 00);
-            if ($campaign->status == 'active') {
+            if ($valor->status == 'active') {
                 $today = new DateTime();
                 if ($today < $start) {// si a fecha de hoy es menor a la de inicio el porcentaje tambien es 0
                     $dias['porcentaje'] = 0;
@@ -70,19 +71,18 @@ class CampaignsController extends Controller
                 $dias['porcentaje'] = 0;
                 $dias['total'] = 0;
             }
-            $campaign->dias = $dias;
-            $id = $campaign->_id;
+
+            $id = $valor->_id;
             /**************************   DATOS DE LA GRAFICA    ****************************/
-            $rangoFechas = array();
+            $rangoFechas = array();//inicialiso el arreglo de las fechas
             for ($i = 0; $i < 7; $i++) {
                 $a = new DateTime("-$i days");
                 $b = new  DateTime("-$i days");
                 $rangoFechas[$i]['inicio'] = $a->setTime(0, 0, 0);
                 $rangoFechas[$i]['fin'] = $b->setTime(23, 59, 59);
-                $graficat['dia' . ($i + 1)]['fecha'] = $a->format('Y-m-d');
+                $graficat['dia' . ($i + 1)]['fecha'] = $a->format('Y-m-d');//guardo la fecha de los dias que se sacan para mostrarlos en la grafica
             }
-//            dd($grafica);
-//            dd($rangoFechas);
+
             $graficat['dia1']['num'] = CampaignLog::where('campaign_id', $id)->where('interaction.loaded', 'exists', 'true')->where('updated_at', '>', $rangoFechas[0]['inicio'])->where('updated_at', '<', $rangoFechas[0]['fin'])->count();
             $graficat['dia2']['num'] = CampaignLog::where('campaign_id', $id)->where('interaction.loaded', 'exists', 'true')->where('updated_at', '>', $rangoFechas[1]['inicio'])->where('updated_at', '<', $rangoFechas[1]['fin'])->count();
             $graficat['dia3']['num'] = CampaignLog::where('campaign_id', $id)->where('interaction.loaded', 'exists', 'true')->where('updated_at', '>', $rangoFechas[2]['inicio'])->where('updated_at', '<', $rangoFechas[2]['fin'])->count();
@@ -90,17 +90,11 @@ class CampaignsController extends Controller
             $graficat['dia5']['num'] = CampaignLog::where('campaign_id', $id)->where('interaction.loaded', 'exists', 'true')->where('updated_at', '>', $rangoFechas[4]['inicio'])->where('updated_at', '<', $rangoFechas[4]['fin'])->count();
             $graficat['dia6']['num'] = CampaignLog::where('campaign_id', $id)->where('interaction.loaded', 'exists', 'true')->where('updated_at', '>', $rangoFechas[5]['inicio'])->where('updated_at', '<', $rangoFechas[5]['fin'])->count();
             $graficat['dia7']['num'] = CampaignLog::where('campaign_id', $id)->where('interaction.loaded', 'exists', 'true')->where('updated_at', '>', $rangoFechas[6]['inicio'])->where('updated_at', '<', $rangoFechas[6]['fin'])->count();
-//            $grafica['grafica']=$graficat;
-            $campaign->grafica = $graficat;
-//            dd($graficat);
-        }//FIN DEL FOR
-//        dd($campaigns);
 
-        return view('campaigns.index', [
-            'campaigns' => $campaigns,
-            'subcampaigns' => $subcampaigns,
-            'user' => Auth::user()
-        ]);
+            $grafica[$campaign]=$graficat;
+        }//FIN DEL FOR
+
+        return view('campaigns.index', ['campaigns' => $campaigns,'dias'=>$grafica, 'subcampaigns' => $subcampaigns, 'user' => Auth::user()]);
     }
 
     /**
@@ -577,6 +571,7 @@ class CampaignsController extends Controller
      */
     public function show($id)
     {
+        $porcentaje = 0.0;
         $campaign = Campaign::find($id); //busca la campaña
         if ($campaign && $campaign->administrator_id == auth()->user()->_id) {
             /******     saca el color y el icono que se va a usar regresa un array  ********/
@@ -621,7 +616,7 @@ class CampaignsController extends Controller
                     break;
             }
 //            dd($porcentaje);
-            $campaign->porcentaje = $porcentaje;
+
             /*******         OBTENER LAS INTERACCIONES POR DIAS       ***************/
             $men['1'] = -$campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'male')
                 ->where('user.age', '>=', 0)->where('user.age', '<=', 17)->distinct('user_id')->count();
@@ -664,12 +659,8 @@ class CampaignsController extends Controller
                 ->where('user.age', '>=', 81)->where('user.age', '<=', 90)->distinct('user_id')->count();
             $women['10'] = $campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'female')
                 ->where('user.age', '>=', 90)->distinct('user_id')->count();
-            $campaign->men = $men;
-            $campaign->women = $women;
-            /*******         OBTENER LAS INTERACCIONES POR DIAS       ***************/
-            $start = $campaign->filters['date']['start']->sec;
-            $end = $campaign->filters['date']['end']->sec;
 
+            /*******         OBTENER LAS INTERACCIONES POR hora       ***************/
             $collection = DB::getMongoDB()->selectCollection('campaign_logs');
             $results = $collection->aggregate([
                 [
@@ -688,12 +679,34 @@ class CampaignsController extends Controller
                                 'format' => '%H:00:00', 'date' => ['$subtract' => ['$created_at', 18000000]]
                             ]
                         ],
-                        /*'loaded' => [
-                            'count' => 'interaction.loaded'
+                        'cnt' => [
+                            '$sum' => 1
+                        ]
+                    ],
+                ],
+                [
+                    '$sort' => [
+                        '_id' => 1
+                    ]
+                ]
+            ]);
+            $results2 = $collection->aggregate([
+                [
+                    '$match' => [
+//                        'campaign_id'=> $id,
+                        'interaction.completed' => [
+                            '$gte' => new MongoDate(strtotime(Carbon::today()->subDays(30)->format('Y-m-d'))),
+                            '$lte' => new MongoDate(strtotime(Carbon::today()->subDays(0)->format('Y-m-d'))),
+                        ]
+                    ]
+                ],
+                [
+                    '$group' => [
+                        '_id' => [
+                            '$dateToString' => [
+                                'format' => '%H:00:00', 'date' => ['$subtract' => ['$created_at', 18000000]]
+                            ]
                         ],
-                        'completed' => [
-                            'count' => 'interaction.completed'
-                        ],*/
                         'cnt' => [
                             '$sum' => 1
                         ]
@@ -706,14 +719,28 @@ class CampaignsController extends Controller
                 ]
             ]);
 
+            foreach ($results['result'] as $result => $valor) {
+//                dd($result);
+//                echo $result .'--' .$valor['_id'].' -- '.$valor['cnt'].'<br>';
+                $intC[$result] = $valor['cnt'];
+                $horasC[$result] = $valor['_id'];
+            }
+            foreach ($results2['result'] as $result => $valor) {
+                $intL[$result] = $valor['cnt'];
+                $horasL[$result] = $valor['_id'];
+            }
 
-//            var_dump($results);
-//            dd($results);
+            $IntXDias['loaded'] = $intC;
+            $IntXDias['complet'] = $intL;
+//            $IntXDias['horas'] = $horas;
+//            dd($IntXDias);
+
+//            dd($horas);
             /****         SI EL BRANCH TIENE ALL SE MOSTRARA COMO GLOBAL       ***************/
             $today = new DateTime();
             if ($campaign->branches == 'all') {//SI TIENE ALL CAMBIO EL TEXTO POR GLOBAL
 //                echo 'tiene globales';
-                $campaign->branches = 'global';
+                $branches = 'global';
             } else {//SI NO ES GLOBAL SACO EL NOMBRE DE LOS BRANCHES
 //                echo 'no tiene globales';
                 $branches = $campaign->branches;// saco los branches a otra bariable para que me sea mas facil manejar los datos
@@ -722,13 +749,16 @@ class CampaignsController extends Controller
                     $BRA = Branche::where('_id', $valor)->get(['name']); //guardo el valor de la consulta
                     $lugares[$clave] = $BRA[0]['original']['name'];//saco solo el valor que me interesa para no tener un array dentro de un array
                 }
-                $campaign->branches = $lugares;
             }//FIN DEL ELSE PARA MANEJAR LOS BRANCHES
+//            dd($BRA);
+//            dd($lugares);
 
 //            dd($campaign);
             return view('campaigns.show', [
                 'cam' => $campaign,
+                'lugares'=>$lugares,
                 'user' => auth()->user(),
+                'porcentaje'=>$porcentaje
             ]);
         } else {
             return redirect()->route('campaigns::index')->with('data', 'errorCamp');

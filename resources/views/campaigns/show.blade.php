@@ -36,10 +36,10 @@
                             <div class="user_heading_avatar">
                                 <div>
                                     <div id="circle" style="max-width:98px;max-height:98px;margin:auto;">
-                                        <img style="background-image:none!important;margin:-96px 9px;"
+                                        <img style="background-image:none!important;margin:-96px 9px;background:transparent;border:none;"
                                              src="{!! URL::asset('images/icons/'.
                                                                 CampaignStyle::getCampaignIcon( $cam->interaction['name']
-                                                             ) ) !!}"
+                                                             ) ) !!}2.svg"
                                              alt="producto"/>
                                     </div>
                                 </div>
@@ -106,10 +106,10 @@
                                                         </div>
                                                         <div class="md-list-content ">
                                                             <span class="md-list-heading azul">Lugares</span>
-                                                            @if($cam->branches!='global')
+                                                            @if($lugares!='global')
                                                                 {{--                                                                {!! var_dump($cam->branches) !!}--}}
-                                                                @foreach($cam->branches as $branches)
-                                                                    <span> {!! $branches !!} , </span>
+                                                                @foreach($lugares as $lugar)
+                                                                    <span> {!! $lugar !!} , </span>
                                                                 @endforeach
                                                             @else
                                                                 <span> Global</span>
@@ -265,11 +265,11 @@
                                                 <div class="md-card">
                                                     <div id="graficas" class="md-card-content">
                                                         <h3 class="heading_a uk-margin-bottom">Analiticos</h3>
-                                                        <div id='genderAge' class="uk-width-large-1-1 uk-panel-teaser"
-                                                             style="height: 350px"></div>
-                                                        <h3 class="md-hr" style="margin: 10px;"></h3>
                                                         <div id='DistribuciónXHoras'
                                                              class="uk-width-large-1-1 uk-margin-right"></div>
+                                                        <h3 class="md-hr" style="margin: 10px;"></h3>
+                                                        <div id='genderAge' class="uk-width-large-1-1 uk-panel-teaser"
+                                                             style="height: 350px"></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -328,7 +328,7 @@
     <script>
         //-------------------------------------- animacion del circulo  ---------------------------------------------
         $('#circle').circleProgress({
-            value: {{$cam->porcentaje}}, //lo que se va a llenar con el color
+            value: {{$porcentaje}}, //lo que se va a llenar con el color
             size: 98,   //tamaño del circulo
             startAngle: -300, //de donde va a empezar la animacion
             reverse: true, //empieza la animacion al contrario
@@ -354,13 +354,24 @@
         var users = new CountUp("usuarios", 0, {!! count(DB::collection('campaign_logs')->where('campaign_id',$cam->id)->distinct('user.id')->get()) !!}, 0, 5.0, options);
         users.start();
         //------------------------------------------Grafica---------------------------------------------
+
         var grafica = new graficas;
         var menJson = '{!! json_encode($cam->men) !!}';
         var menObj = JSON.parse(menJson);
         var womenJson = '{!! json_encode($cam->women) !!}';
         var womenObj = JSON.parse(womenJson);
 
+        var intLJson = '{!! json_encode($cam->intL) !!}';
+        var intLObj = JSON.parse(intLJson);
+        var intCJson = '{!! json_encode($cam->intC) !!}';
+        var intCObj = JSON.parse(intCJson);
+        var horasJson = '{!! json_encode($cam->horas) !!}';
+        var horasObj = JSON.parse(horasJson);
+        console.log(intLObj);
+        console.log(intCObj);
+
         var gra = grafica.genderAge(menObj, womenObj);
+        var graf = grafica.intPerHour(intLObj,intCObj);
         //        var gra = grafica.genderAge();
         //var gra2= grafica.gender();
 

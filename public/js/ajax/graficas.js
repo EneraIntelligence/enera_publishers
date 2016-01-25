@@ -228,38 +228,55 @@ graficas = function () {
         });
         return chart3;
     }
+    this.intPerHour = function intPerHour(Load,complet,horas){
+        var c3chart_area_stacked_id = '#DistribuciónXHoras';
 
+        var graphHoras = ['x'];
+        var graphIntL = ['Visto'];
+        var graphIntC = ['Completado'];
+        for (i = 0; i < 13; i++) {
+            graphIntL[i+1] = Load[i];
+        }
+        for (i = 0; i < 13; i++) {
+            graphIntC[i+1] = complet[i];
+        }
+        /*for (i = 0; i < horas.length; i++) {
+            graphHoras[i+1] = horasObj[i];
+        }*/
+        console.log(graphIntL);
+        console.log(graphIntC);
+        if ( $(c3chart_area_stacked_id).length ) {
+
+            var c3chart_area_stacked = c3.generate({
+                bindto: c3chart_area_stacked_id,
+                data: {
+                    x: 'x',
+                    columns: [
+                        ['x', '0','1','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','24'],
+                        graphIntL,
+                        graphIntC
+                    ],
+                    types: {
+                        Visto: 'area-spline',
+                        Completado: 'area-spline'
+                    },
+                    groups: [['Visto', 'Completado']]
+                },
+                color: {
+                    pattern: ['#1565C0', '#727272']
+                }
+            });
+
+            $window.on('debouncedresize', function () {
+                c3chart_area_stacked.resize();
+            });
+
+        }
+    }
 };
 
 //------------------------------------------------------------------
 
-var c3chart_area_stacked_id = '#DistribuciónXHoras';
-
-if ( $(c3chart_area_stacked_id).length ) {
-
-    var c3chart_area_stacked = c3.generate({
-        bindto: c3chart_area_stacked_id,
-        data: {
-            columns: [
-                ['data1', 300, 350, 300, 0, 0, 120],
-                ['data2', 130, 100, 140, 200, 150, 50]
-            ],
-            types: {
-                data1: 'area-spline',
-                data2: 'area-spline'
-            },
-            groups: [['data1', 'data2']]
-        },
-        color: {
-            pattern: ['#1565C0', '#727272']
-        }
-    });
-
-    $window.on('debouncedresize', function () {
-        c3chart_area_stacked.resize();
-    });
-
-}
 
 var chart2 = c3.generate({
     bindto: '#genderAge',
