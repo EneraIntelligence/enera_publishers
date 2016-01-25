@@ -147,66 +147,66 @@
                         </div>
                     </div>
                 </div>
-                <div class="uk-width-medium-6-6">
-                    <div class="md-card" style="">
-                        <div class="md-card-content">
-                            <div class="uk-grid uk-grid-divider">
-                                <div class="uk-width-2-3">
-                                    <div id="chart"></div>
-                                </div>
-                                <div class="uk-width-1-3 ">
-                                    <h2>Porcentajes de dispositivos</h2>
-                                    <ul class="md-list md-list-addon">
-                                        <li>
-                                            <div class="md-list-addon-element">
-                                                <img class="md-user-image md-list-addon-avatar dense-image dense-loading"
-                                                     src="{{asset('images/icons/preview_01.jpg')}}" alt="">
-                                            </div>
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading">Android</span>
-                                                <span class="uk-text-small uk-text-muted">{{ isset($osStats['android'])?$osStats['android']:0 }}
-                                                    Android vistos en la Red Enera</span>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="md-list-addon-element">
-                                                <img class="md-user-image md-list-addon-avatar dense-image dense-loading"
-                                                     src="{{asset('images/icons/preview_04.jpg')}}" alt="">
-                                            </div>
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading">Iphone</span>
-                                                <span class="uk-text-small uk-text-muted">{{ isset($osStats['mac'])?$osStats['mac']:0 }}
-                                                    Iphones vistos en la Red Enera</span>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="md-list-addon-element">
-                                                <img class="md-user-image md-list-addon-avatar dense-image dense-loading"
-                                                     src="{{asset('images/icons/preview_03.jpg')}}" alt="">
-                                            </div>
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading">Windows Phone</span>
-                                                <span class="uk-text-small uk-text-muted">{{ isset($osStats['windows'])?$osStats['windows']:0 }}
-                                                    Windows Phones  vistos en la Red Enera</span>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="md-list-addon-element">
-                                                <img class="md-user-image md-list-addon-avatar dense-image dense-loading"
-                                                     src="{{asset('images/icons/preview_02.jpg')}}" alt="">
-                                            </div>
-                                            <div class="md-list-content">
-                                                <span class="md-list-heading">Otros</span>
-                                                <span class="uk-text-small uk-text-muted">{{ isset($osStats['otro'])?$osStats['otro']:0 }}
-                                                    Dipositivos vistos de otras marcas </span>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {{--<div class="uk-width-medium-6-6">--}}
+                    {{--<div class="md-card" style="">--}}
+                        {{--<div class="md-card-content">--}}
+                            {{--<div class="uk-grid uk-grid-divider">--}}
+                                {{--<div class="uk-width-2-3">--}}
+                                    {{--<div id="chart"></div>--}}
+                                {{--</div>--}}
+                                {{--<div class="uk-width-1-3 ">--}}
+                                    {{--<h2>Porcentajes de dispositivos</h2>--}}
+                                    {{--<ul class="md-list md-list-addon">--}}
+                                        {{--<li>--}}
+                                            {{--<div class="md-list-addon-element">--}}
+                                                {{--<img class="md-user-image md-list-addon-avatar dense-image dense-loading"--}}
+                                                     {{--src="{{asset('images/icons/preview_01.jpg')}}" alt="">--}}
+                                            {{--</div>--}}
+                                            {{--<div class="md-list-content">--}}
+                                                {{--<span class="md-list-heading">Android</span>--}}
+                                                {{--<span class="uk-text-small uk-text-muted">{{ isset($osStats['android'])?$osStats['android']:0 }}--}}
+                                                    {{--Android vistos en la Red Enera</span>--}}
+                                            {{--</div>--}}
+                                        {{--</li>--}}
+                                        {{--<li>--}}
+                                            {{--<div class="md-list-addon-element">--}}
+                                                {{--<img class="md-user-image md-list-addon-avatar dense-image dense-loading"--}}
+                                                     {{--src="{{asset('images/icons/preview_04.jpg')}}" alt="">--}}
+                                            {{--</div>--}}
+                                            {{--<div class="md-list-content">--}}
+                                                {{--<span class="md-list-heading">Iphone</span>--}}
+                                                {{--<span class="uk-text-small uk-text-muted">{{ isset($osStats['mac'])?$osStats['mac']:0 }}--}}
+                                                    {{--Iphones vistos en la Red Enera</span>--}}
+                                            {{--</div>--}}
+                                        {{--</li>--}}
+                                        {{--<li>--}}
+                                            {{--<div class="md-list-addon-element">--}}
+                                                {{--<img class="md-user-image md-list-addon-avatar dense-image dense-loading"--}}
+                                                     {{--src="{{asset('images/icons/preview_03.jpg')}}" alt="">--}}
+                                            {{--</div>--}}
+                                            {{--<div class="md-list-content">--}}
+                                                {{--<span class="md-list-heading">Windows Phone</span>--}}
+                                                {{--<span class="uk-text-small uk-text-muted">{{ isset($osStats['windows'])?$osStats['windows']:0 }}--}}
+                                                    {{--Windows Phones  vistos en la Red Enera</span>--}}
+                                            {{--</div>--}}
+                                        {{--</li>--}}
+                                        {{--<li>--}}
+                                            {{--<div class="md-list-addon-element">--}}
+                                                {{--<img class="md-user-image md-list-addon-avatar dense-image dense-loading"--}}
+                                                     {{--src="{{asset('images/icons/preview_02.jpg')}}" alt="">--}}
+                                            {{--</div>--}}
+                                            {{--<div class="md-list-content">--}}
+                                                {{--<span class="md-list-heading">Otros</span>--}}
+                                                {{--<span class="uk-text-small uk-text-muted">{{ isset($osStats['otro'])?$osStats['otro']:0 }}--}}
+                                                    {{--Dipositivos vistos de otras marcas </span>--}}
+                                            {{--</div>--}}
+                                        {{--</li>--}}
+                                    {{--</ul>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
             </div>
 
         </div>
@@ -255,17 +255,17 @@
         var demo = new CountUp("myTargetElement3", 0, {{ $campañas }}, 0, 2.5, options);
         demo.start();
 
-        var chart = c3.generate({
-            data: {
-                // iris data from R
-                columns: [
-                    @foreach($osStats as $k=>$os)
-                    {!! '["'.$k.'",'.$os.' ],'  !!}
-                    @endforeach
-                ],
-                type: 'pie'
-            }
-        });
+        {{--var chart = c3.generate({--}}
+            {{--data: {--}}
+                {{--// iris data from R--}}
+                {{--columns: [--}}
+                    {{--@foreach($osStats as $k=>$os)--}}
+                    {{--{!! '["'.$k.'",'.$os.' ],'  !!}--}}
+                    {{--@endforeach--}}
+                {{--],--}}
+                {{--type: 'pie'--}}
+            {{--}--}}
+//        });
 
     </script>
 

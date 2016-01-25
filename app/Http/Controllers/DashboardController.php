@@ -23,7 +23,6 @@ class DashboardController extends Controller
         $sitios = Branche::count();     //total de  branches en enera
 
         $osLabels = array();
-        $osCount = array();
         $osTotal = 0;
 
 //        foreach ($logs as $log) {
@@ -43,7 +42,7 @@ class DashboardController extends Controller
 //        }
 
         $collection = DB::getMongoDB()->selectCollection('devices');
-        $results = $collection->aggregate([
+        $osCount = $collection->aggregate([
             [
                 '$match' => [
                     'os' => [
