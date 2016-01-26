@@ -758,7 +758,7 @@ class CampaignsController extends Controller
             $today = new DateTime();
             if ($campaign->branches == 'all') {//SI TIENE ALL CAMBIO EL TEXTO POR GLOBAL
 //                echo 'tiene globales';
-                $branches = 'global';
+                $lugares = 'global';
             } else {//SI NO ES GLOBAL SACO EL NOMBRE DE LOS BRANCHES
 //                echo 'no tiene globales';
                 $branches = $campaign->branches;// saco los branches a otra bariable para que me sea mas facil manejar los datos
