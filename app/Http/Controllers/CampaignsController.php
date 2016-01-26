@@ -93,7 +93,7 @@ class CampaignsController extends Controller
             $graficat['dia6']['num'] = CampaignLog::where('campaign_id', $id)->where('interaction.loaded', 'exists', 'true')->where('updated_at', '>', $rangoFechas[5]['inicio'])->where('updated_at', '<', $rangoFechas[5]['fin'])->count();
             $graficat['dia7']['num'] = CampaignLog::where('campaign_id', $id)->where('interaction.loaded', 'exists', 'true')->where('updated_at', '>', $rangoFechas[6]['inicio'])->where('updated_at', '<', $rangoFechas[6]['fin'])->count();
 
-            $grafica = $graficat;
+            $grafica[$campaign] = $graficat;
         }//FIN DEL FOR
 //dd($grafica);
         return view('campaigns.index', ['campaigns' => $campaigns, 'grafica' => $grafica,'dias'=>$dias ,'subcampaigns' => $subcampaigns, 'user' => Auth::user()]);

@@ -346,19 +346,19 @@
         }
         <!--     codigo de la grafica   -->
                 @foreach($campaigns as $campaign => $valor)
-                var dia1 = {!! $grafica['dia1']['num'] !!};
-                var dia2 = {!! $grafica['dia2']['num'] !!};
-                var dia3 = {!! $grafica['dia3']['num'] !!};
-                var dia4 = {!! $grafica['dia4']['num'] !!};
-                var dia5 = {!! $grafica['dia5']['num'] !!};
-                var dia6 = {!! $grafica['dia6']['num'] !!};
-                var dia7 = {!! $grafica['dia7']['num'] !!};
+                var dia1 = {!! $grafica[$campaign]['dia1']['num'] !!};
+                var dia2 = {!! $grafica[$campaign]['dia2']['num'] !!};
+                var dia3 = {!! $grafica[$campaign]['dia3']['num'] !!};
+                var dia4 = {!! $grafica[$campaign]['dia4']['num'] !!};
+                var dia5 = {!! $grafica[$campaign]['dia5']['num'] !!};
+                var dia6 = {!! $grafica[$campaign]['dia6']['num'] !!};
+                var dia7 = {!! $grafica[$campaign]['dia7']['num'] !!};
         var chart = c3.generate({
                 bindto: '#chart_{!! $valor->_id !!}',
                 data: {
                     x:'x',
                     columns: [
-                        ['x','{!! $grafica['dia1']['fecha'] !!}','{!! $grafica['dia2']['fecha'] !!}','{!!$grafica['dia3']['fecha'] !!}','{!! $grafica['dia4']['fecha'] !!}','{!!$grafica['dia5']['fecha']!!}','{!!$grafica['dia6']['fecha']!!}','{!!$grafica['dia7']['fecha']!!}'],
+                        ['x','{!! $grafica[$campaign]['dia1']['fecha'] !!}','{!! $grafica[$campaign]['dia2']['fecha'] !!}','{!!$grafica[$campaign]['dia3']['fecha'] !!}','{!! $grafica[$campaign]['dia4']['fecha'] !!}','{!!$grafica[$campaign]['dia5']['fecha']!!}','{!!$grafica[$campaign]['dia6']['fecha']!!}','{!!$grafica[$campaign]['dia7']['fecha']!!}'],
     //                            ['interacciones por dia '],
                         ['interacciones', dia1, dia2,dia3, dia4,dia5,dia6,dia7]
                     ],
