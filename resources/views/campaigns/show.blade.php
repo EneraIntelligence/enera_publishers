@@ -12,9 +12,6 @@
         .p {
             list-style: none;
         }
-        .svg {
-            fill: #ffffff;
-        }
     </style>
 @endsection
 
@@ -357,22 +354,22 @@
         //------------------------------------------Grafica---------------------------------------------
 
         var grafica = new graficas;
-        var menJson = '{!! json_encode($cam->men) !!}';
+        var menJson = '{!! json_encode($men) !!}';
         var menObj = JSON.parse(menJson);
-        var womenJson = '{!! json_encode($cam->women) !!}';
+        var womenJson = '{!! json_encode($women) !!}';
         var womenObj = JSON.parse(womenJson);
 
-        var intLJson = '{!! json_encode($cam->intL) !!}';
+        var intLJson = '{!! json_encode($IntXDias) !!}';
         var intLObj = JSON.parse(intLJson);
-        var intCJson = '{!! json_encode($cam->intC) !!}';
-        var intCObj = JSON.parse(intCJson);
-        var horasJson = '{!! json_encode($cam->horas) !!}';
-        var horasObj = JSON.parse(horasJson);
+{{--        var intCJson = '{!! json_encode($cam->intC) !!}';--}}
+//        var intCObj = JSON.parse(intCJson);
+{{--        var horasJson = '{!! json_encode($cam->horas) !!}';--}}
+//        var horasObj = JSON.parse(horasJson);
         console.log(intLObj);
-        console.log(intCObj);
+//        console.log(intCObj);
 
         var gra = grafica.genderAge(menObj, womenObj);
-        var graf = grafica.intPerHour(intLObj,intCObj);
+        var graf = grafica.intPerHour(intLObj);
         //        var gra = grafica.genderAge();
         //var gra2= grafica.gender();
 
