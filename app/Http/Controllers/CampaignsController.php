@@ -678,7 +678,7 @@ class CampaignsController extends Controller
             $results = $collection->aggregate([
                 [
                     '$match' => [
-//                        'campaign_id'=> $id,
+                        'campaign_id'=> $id,
                         'interaction.loaded' => [
                             '$gte' => new MongoDate(strtotime(Carbon::today()->subDays(30)->format('Y-m-d'))),
                             '$lte' => new MongoDate(strtotime(Carbon::today()->subDays(0)->format('Y-m-d'))),
