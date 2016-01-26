@@ -20,7 +20,7 @@ class DashboardController extends Controller
         $logs = CampaignLog::count();
         $devices = Device::count();     //total de devices detectados en enera
         $campañas = Campaign::where('status', 'active')->count();  //total de campañas en to-do enera
-        $sitios = Branche::count();     //total de  branches en enera
+        $sitios = Branche::where('status', 'active')->count();     //total de  branches en enera
 
         $osLabels = array();
         $osTotal = 0;
