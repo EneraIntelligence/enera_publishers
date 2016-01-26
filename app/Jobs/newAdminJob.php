@@ -28,7 +28,6 @@ class newAdminJob extends Job implements SelfHandling
      */
     public function handle()
     {
-        $this->data=$this->data[0];
         $correo=$this->data['email'];
         $nombre=$this->data['nombre'].' '.$this->data['apellido'];
 

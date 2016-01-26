@@ -231,7 +231,7 @@ graficas = function () {
     this.intPerHour = function intPerHour(Load,complet,horas){
         var c3chart_area_stacked_id = '#DistribuciónXHoras';
 
-        var graphHoras = ['x'];
+        //var graphHoras = ['x'];
         var graphIntL = ['Visto'];
         var graphIntC = ['Completado'];
         for (i = 0; i < 13; i++) {
