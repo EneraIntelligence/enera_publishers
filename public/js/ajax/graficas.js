@@ -252,16 +252,16 @@ graficas = function () {
                 data: {
                     x: 'x',
                     columns: [
-                        ['x', '00','01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','24'],
+                        ['x', '00','01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23'],
                         ['Visto',IntXDias['00']['cntL'],IntXDias['01']['cntL'],IntXDias['02']['cntL'],IntXDias['03']['cntL'],IntXDias['04']['cntL'],IntXDias['05']['cntL'],IntXDias['06']['cntL'],
                             IntXDias['07']['cntL'],IntXDias['08']['cntL'],IntXDias['09']['cntL'],IntXDias['10']['cntL'],IntXDias['11']['cntL'],IntXDias['12']['cntL'],IntXDias['13']['cntL'],
                             IntXDias['14']['cntL'],IntXDias['15']['cntL'],IntXDias['16']['cntL'],IntXDias['17']['cntL'],IntXDias['18']['cntL'],IntXDias['19']['cntL'],IntXDias['20']['cntL'],
-                            IntXDias['21']['cntL'],IntXDias['22']['cntL'],IntXDias['23']['cntL'],IntXDias['24']['cntL']
+                            IntXDias['21']['cntL'],IntXDias['22']['cntL'],IntXDias['23']['cntL']
                         ],
                         ['Completado',IntXDias['00']['cntC'],IntXDias['01']['cntC'],IntXDias['02']['cntC'],IntXDias['03']['cntC'],IntXDias['04']['cntC'],IntXDias['05']['cntC'],IntXDias['06']['cntC'],
                             IntXDias['07']['cntC'],IntXDias['08']['cntC'],IntXDias['09']['cntC'],IntXDias['10']['cntC'],IntXDias['11']['cntC'],IntXDias['12']['cntC'],IntXDias['13']['cntC'],
                             IntXDias['14']['cntC'],IntXDias['15']['cntC'],IntXDias['16']['cntC'],IntXDias['17']['cntC'],IntXDias['18']['cntC'],IntXDias['19']['cntC'],IntXDias['20']['cntC'],
-                            IntXDias['21']['cntC'],IntXDias['22']['cntC'],IntXDias['23']['cntC'],IntXDias['24']['cntC']
+                            IntXDias['21']['cntC'],IntXDias['22']['cntC'],IntXDias['23']['cntC']
                         ]
                     ],
                     types: {

@@ -582,7 +582,6 @@ class CampaignsController extends Controller
             '12'=>['hora'=>'12','cntC'=>0,'cntL'=>0], '13'=>['hora'=>'13','cntC'=>0,'cntL'=>0], '14'=>['hora'=>'14','cntC'=>0,'cntL'=>0], '15'=>['hora'=>'15','cntC'=>0,'cntL'=>0],
             '16'=>['hora'=>'16','cntC'=>0,'cntL'=>0], '17'=>['hora'=>'17','cntC'=>0,'cntL'=>0], '18'=>['hora'=>'18','cntC'=>0,'cntL'=>0], '19'=>['hora'=>'19','cntC'=>0,'cntL'=>0],
             '20'=>['hora'=>'20','cntC'=>0,'cntL'=>0], '21'=>['hora'=>'21','cntC'=>0,'cntL'=>0], '22'=>['hora'=>'22','cntC'=>0,'cntL'=>0], '23'=>['hora'=>'23','cntC'=>0,'cntL'=>0],
-            '24'=>['hora'=>'24','cntC'=>0,'cntL'=>0]
         ];
 //        dd($IntXDias);
         $campaign = Campaign::find($id); //busca la campaña
