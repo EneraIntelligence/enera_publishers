@@ -4,10 +4,10 @@
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="200px" height="200px" viewBox="0 0 200 200" enable-background="new 0 0 200 200" xml:space="preserve">
 <g>
-	<path fill="none" stroke="#737373" stroke-width="4" stroke-miterlimit="10" d="M149.26,94.208h30.807
+	<path fill="none" stroke="#ffffff" stroke-width="4" stroke-miterlimit="10" d="M149.26,94.208h30.807
 		c4.976,0,7.922,3.325,7.922,9.806v20.233c0,4.376-3.547,7.924-7.922,7.924H88.91c-6.291,0-8.426-3.69-8.426-9.17
 		c0-0.733-0.018-1.897-0.018-1.897"/>
-	<circle fill="none" stroke="#737373" stroke-width="4" stroke-miterlimit="10" cx="30.879" cy="98.427" r="7.549"/>
+	<circle fill="none" stroke="#ffffff" stroke-width="4" stroke-miterlimit="10" cx="30.879" cy="98.427" r="7.549"/>
 	<g>
 		<g>
 			<path fill="#ffffff" d="M42.607,67.829c13.203,0,24.453,8.362,28.742,20.08h33.766v-8.881c0-2.453,1.988-4.441,4.441-4.441
@@ -21,18 +21,18 @@
 		</g>
 	</g>
 	<g>
-		<path fill="none" stroke="#737373" stroke-width="4" stroke-miterlimit="10" d="M145.547,109.15"/>
+		<path fill="none" stroke="#ffffff" stroke-width="4" stroke-miterlimit="10" d="M145.547,109.15"/>
 		
-			<line fill="none" stroke="#737373" stroke-width="4" stroke-miterlimit="10" x1="145.547" y1="120.777" x2="157.172" y2="109.15"/>
+			<line fill="none" stroke="#ffffff" stroke-width="4" stroke-miterlimit="10" x1="145.547" y1="120.777" x2="157.172" y2="109.15"/>
 		
-			<line fill="none" stroke="#737373" stroke-width="4" stroke-miterlimit="10" x1="145.547" y1="109.15" x2="157.172" y2="120.777"/>
+			<line fill="none" stroke="#ffffff" stroke-width="4" stroke-miterlimit="10" x1="145.547" y1="109.15" x2="157.172" y2="120.777"/>
 	</g>
 	<g>
-		<path fill="none" stroke="#737373" stroke-width="4" stroke-miterlimit="10" d="M167.699,109.15"/>
+		<path fill="none" stroke="#ffffff" stroke-width="4" stroke-miterlimit="10" d="M167.699,109.15"/>
 		
-			<line fill="none" stroke="#737373" stroke-width="4" stroke-miterlimit="10" x1="167.699" y1="120.777" x2="179.324" y2="109.15"/>
+			<line fill="none" stroke="#ffffff" stroke-width="4" stroke-miterlimit="10" x1="167.699" y1="120.777" x2="179.324" y2="109.15"/>
 		
-			<line fill="none" stroke="#737373" stroke-width="4" stroke-miterlimit="10" x1="167.697" y1="109.15" x2="179.324" y2="120.777"/>
+			<line fill="none" stroke="#ffffff" stroke-width="4" stroke-miterlimit="10" x1="167.697" y1="109.15" x2="179.324" y2="120.777"/>
 	</g>
 </g>
 </svg>

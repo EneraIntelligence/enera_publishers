@@ -17,21 +17,21 @@
 		<path fill="none" stroke="#737373" stroke-width="4" stroke-miterlimit="10" d="M82.843,52.108v-3.894
 			c0-2.91-2.357-5.269-5.268-5.269c-2.911,0-5.269,2.358-5.269,5.269v3.894"/>
 	</g>
-	<line fill="none" stroke="#737373" stroke-width="2.2" stroke-miterlimit="10" x1="84.594" y1="80.688" x2="128.665" y2="80.688"/>
-	<line fill="none" stroke="#737373" stroke-width="2.2" stroke-miterlimit="10" x1="71.646" y1="80.688" x2="76.495" y2="80.688"/>
-	<line fill="none" stroke="#737373" stroke-width="2.2" stroke-miterlimit="10" x1="84.594" y1="93.887" x2="128.665" y2="93.887"/>
-	<line fill="none" stroke="#737373" stroke-width="2.2" stroke-miterlimit="10" x1="71.646" y1="93.887" x2="76.495" y2="93.887"/>
+	<line fill="none" stroke="#ffffff" stroke-width="2.2" stroke-miterlimit="10" x1="84.594" y1="80.688" x2="128.665" y2="80.688"/>
+	<line fill="none" stroke="#ffffff" stroke-width="2.2" stroke-miterlimit="10" x1="71.646" y1="80.688" x2="76.495" y2="80.688"/>
+	<line fill="none" stroke="#ffffff" stroke-width="2.2" stroke-miterlimit="10" x1="84.594" y1="93.887" x2="128.665" y2="93.887"/>
+	<line fill="none" stroke="#ffffff" stroke-width="2.2" stroke-miterlimit="10" x1="71.646" y1="93.887" x2="76.495" y2="93.887"/>
 	
-		<line fill="none" stroke="#737373" stroke-width="2.2" stroke-miterlimit="10" x1="84.594" y1="107.085" x2="128.665" y2="107.085"/>
+		<line fill="none" stroke="#ffffff" stroke-width="2.2" stroke-miterlimit="10" x1="84.594" y1="107.085" x2="128.665" y2="107.085"/>
 	
-		<line fill="none" stroke="#737373" stroke-width="2.2" stroke-miterlimit="10" x1="71.646" y1="107.085" x2="76.495" y2="107.085"/>
+		<line fill="none" stroke="#ffffff" stroke-width="2.2" stroke-miterlimit="10" x1="71.646" y1="107.085" x2="76.495" y2="107.085"/>
 	
-		<line fill="none" stroke="#737373" stroke-width="2.2" stroke-miterlimit="10" x1="84.594" y1="120.284" x2="128.665" y2="120.284"/>
+		<line fill="none" stroke="#ffffff" stroke-width="2.2" stroke-miterlimit="10" x1="84.594" y1="120.284" x2="128.665" y2="120.284"/>
 	
-		<line fill="none" stroke="#737373" stroke-width="2.2" stroke-miterlimit="10" x1="71.646" y1="120.284" x2="76.495" y2="120.284"/>
+		<line fill="none" stroke="#ffffff" stroke-width="2.2" stroke-miterlimit="10" x1="71.646" y1="120.284" x2="76.495" y2="120.284"/>
 	
-		<line fill="none" stroke="#737373" stroke-width="2.2" stroke-miterlimit="10" x1="84.594" y1="133.482" x2="128.665" y2="133.482"/>
+		<line fill="none" stroke="#ffffff" stroke-width="2.2" stroke-miterlimit="10" x1="84.594" y1="133.482" x2="128.665" y2="133.482"/>
 	
-		<line fill="none" stroke="#737373" stroke-width="2.2" stroke-miterlimit="10" x1="71.646" y1="133.482" x2="76.495" y2="133.482"/>
+		<line fill="none" stroke="#ffffff" stroke-width="2.2" stroke-miterlimit="10" x1="71.646" y1="133.482" x2="76.495" y2="133.482"/>
 </g>
 </svg>
