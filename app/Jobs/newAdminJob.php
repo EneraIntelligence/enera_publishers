@@ -4,10 +4,16 @@ namespace Publishers\Jobs;
 
 use Mail;
 use Publishers\Jobs\Job;
+use Publishers\Administrator;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Bus\SelfHandling;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
-class newAdminJob extends Job implements SelfHandling
+class newAdminJob extends Job implements SelfHandling, ShouldQueue
 {
+    use InteractsWithQueue, SerializesModels;
+
     protected $data = array();
     protected $correo;
     protected $nombre;
