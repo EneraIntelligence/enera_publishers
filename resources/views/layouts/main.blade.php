@@ -135,20 +135,20 @@
                                     <div class="uk-grid uk-grid-width-medium-1-3 uk-margin-top uk-margin-bottom uk-text-center"
                                          data-uk-grid-margin>
                                         <a href="{!! route('campaigns::index') !!}">
-                                            {{--<i class="material-icons md-36">&#xE158;</i>--}}
                                             <i class="material-icons md-36 md-color-light-blue-A700">event</i>
                                             <span class="uk-text-muted uk-display-block">Campañas</span>
                                         </a>
-                                        {{--<a href="{!! route('reports::index') !!}">--}}
                                         <a href="#">
-                                            {{--<i class="material-icons md-36 md-color-red-600">&#xE0B9;</i>--}}
                                             <i class="material-icons md-36 md-color-light-blue-A700">assessment</i>
                                             <span class="uk-text-muted uk-display-block">Reportes</span>
                                         </a>
                                         <a href="{!! route('budget::index') !!}">
-                                            {{--<i class="material-icons md-36">&#xE53E;</i>--}}
                                             <i class="material-icons md-36 md-color-light-blue-A700">attach_money</i>
                                             <span class="uk-text-muted uk-display-block">Presupuesto</span>
+                                        </a>
+                                        <a href="{!! route('choose.platform') !!}">
+                                            <i class="material-icons md-36">&#xE8D4;</i>
+                                            <span class="uk-text-muted uk-display-block">Plataformas</span>
                                         </a>
                                     </div>
                                 </div>

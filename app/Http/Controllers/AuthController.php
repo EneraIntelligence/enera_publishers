@@ -106,7 +106,7 @@ class AuthController extends Controller
                 $newAdmin->wallet()->create(['current' => 0]);
                 /**********      si el usuario se creo se llama el job para mandarle el correo de confirmacion        ***************/
                 if ($newAdmin) {
-                    $Token = validationCode::create(array(
+                    $Token = ValidationCode::create(array(
                         'administrator_id' => $newAdmin->_id, 'type' => 'validationEmail', 'token' => $confirmation_code
                     ));
                     if ($Token->count() > 0) {
