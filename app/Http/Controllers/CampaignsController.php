@@ -44,6 +44,8 @@ class CampaignsController extends Controller
         //$campaigns = Campaign::where('status', 'active')->latest()->get();
         //CityBranchesScript::saveCityBranches();
         $grafica = array();
+        $dias['porcentaje'] = 0;
+        $dias['total'] = 0;
         $campaigns = Auth::user()->campaigns()->where('status', '<>', 'filed')->where('status', '<>', 'rejected')->latest()->get();
         $subcampaigns = Auth::user()->subcampaigns()->where('status', '<>', 'filed')->latest()->get();
 
@@ -91,10 +93,10 @@ class CampaignsController extends Controller
             $graficat['dia6']['num'] = CampaignLog::where('campaign_id', $id)->where('interaction.loaded', 'exists', 'true')->where('updated_at', '>', $rangoFechas[5]['inicio'])->where('updated_at', '<', $rangoFechas[5]['fin'])->count();
             $graficat['dia7']['num'] = CampaignLog::where('campaign_id', $id)->where('interaction.loaded', 'exists', 'true')->where('updated_at', '>', $rangoFechas[6]['inicio'])->where('updated_at', '<', $rangoFechas[6]['fin'])->count();
 
-            $grafica[$campaign]=$graficat;
+            $grafica[$campaign] = $graficat;
         }//FIN DEL FOR
-
-        return view('campaigns.index', ['campaigns' => $campaigns,'dias'=>$grafica, 'subcampaigns' => $subcampaigns, 'user' => Auth::user()]);
+//dd($grafica);
+        return view('campaigns.index', ['campaigns' => $campaigns, 'grafica' => $grafica,'dias'=>$dias ,'subcampaigns' => $subcampaigns, 'user' => Auth::user()]);
     }
 
     /**
@@ -572,6 +574,16 @@ class CampaignsController extends Controller
     public function show($id)
     {
         $porcentaje = 0.0;
+        /**     ARREGLO PARA GUARDAR LAS HORAS **/
+        $IntXDias = [
+            '00'=>['hora'=>'00','cntC'=>0,'cntL'=>0], '01'=>['hora'=>'01','cntC'=>0,'cntL'=>0], '02'=>['hora'=>'02','cntC'=>0,'cntL'=>0], '03'=>['hora'=>'03','cntC'=>0,'cntL'=>0],
+            '04'=>['hora'=>'04','cntC'=>0,'cntL'=>0], '05'=>['hora'=>'05','cntC'=>0,'cntL'=>0], '06'=>['hora'=>'06','cntC'=>0,'cntL'=>0], '07'=>['hora'=>'07','cntC'=>0,'cntL'=>0],
+            '08'=>['hora'=>'08','cntC'=>0,'cntL'=>0], '09'=>['hora'=>'09','cntC'=>0,'cntL'=>0], '10'=>['hora'=>'10','cntC'=>0,'cntL'=>0], '11'=>['hora'=>'11','cntC'=>0,'cntL'=>0],
+            '12'=>['hora'=>'12','cntC'=>0,'cntL'=>0], '13'=>['hora'=>'13','cntC'=>0,'cntL'=>0], '14'=>['hora'=>'14','cntC'=>0,'cntL'=>0], '15'=>['hora'=>'15','cntC'=>0,'cntL'=>0],
+            '16'=>['hora'=>'16','cntC'=>0,'cntL'=>0], '17'=>['hora'=>'17','cntC'=>0,'cntL'=>0], '18'=>['hora'=>'18','cntC'=>0,'cntL'=>0], '19'=>['hora'=>'19','cntC'=>0,'cntL'=>0],
+            '20'=>['hora'=>'20','cntC'=>0,'cntL'=>0], '21'=>['hora'=>'21','cntC'=>0,'cntL'=>0], '22'=>['hora'=>'22','cntC'=>0,'cntL'=>0], '23'=>['hora'=>'23','cntC'=>0,'cntL'=>0],
+        ];
+//        dd($IntXDias);
         $campaign = Campaign::find($id); //busca la campaña
         if ($campaign && $campaign->administrator_id == auth()->user()->_id) {
             /******     saca el color y el icono que se va a usar regresa un array  ********/
@@ -665,7 +677,7 @@ class CampaignsController extends Controller
             $results = $collection->aggregate([
                 [
                     '$match' => [
-//                        'campaign_id'=> $id,
+                        'campaign_id'=> $id,
                         'interaction.loaded' => [
                             '$gte' => new MongoDate(strtotime(Carbon::today()->subDays(30)->format('Y-m-d'))),
                             '$lte' => new MongoDate(strtotime(Carbon::today()->subDays(0)->format('Y-m-d'))),
@@ -693,7 +705,7 @@ class CampaignsController extends Controller
             $results2 = $collection->aggregate([
                 [
                     '$match' => [
-//                        'campaign_id'=> $id,
+                        'campaign_id'=> $id,
                         'interaction.completed' => [
                             '$gte' => new MongoDate(strtotime(Carbon::today()->subDays(30)->format('Y-m-d'))),
                             '$lte' => new MongoDate(strtotime(Carbon::today()->subDays(0)->format('Y-m-d'))),
@@ -720,27 +732,32 @@ class CampaignsController extends Controller
             ]);
 
             foreach ($results['result'] as $result => $valor) {
-//                dd($result);
-//                echo $result .'--' .$valor['_id'].' -- '.$valor['cnt'].'<br>';
-                $intC[$result] = $valor['cnt'];
-                $horasC[$result] = $valor['_id'];
+//                dd($valor);
+//                echo $result . '--' . $valor['_id'] . ' -- ' . $valor['cnt'] . '<br>';
+                $time = explode(":", $valor['_id']);
+                if (array_key_exists($time[0], $IntXDias)) {
+//                    echo '<br>si esta<br>';
+                    $IntXDias[$time[0]]['cntL'] = $valor['cnt'];
+                } else {
+//                    echo '<br>no esta<br>';
+                    $IntXDias[$result][$time[0]] = 0;
+                }
             }
             foreach ($results2['result'] as $result => $valor) {
-                $intL[$result] = $valor['cnt'];
-                $horasL[$result] = $valor['_id'];
+                $time = explode(":", $valor['_id']);
+                if (array_key_exists($time[0], $IntXDias)) {
+                    $IntXDias[$time[0]]['cntC'] = $valor['cnt'];
+                } else {
+                    $IntXDias[$result][$time[0]] = 0;
+                }
             }
-
-            $IntXDias['loaded'] = $intC;
-            $IntXDias['complet'] = $intL;
-//            $IntXDias['horas'] = $horas;
 //            dd($IntXDias);
 
-//            dd($horas);
             /****         SI EL BRANCH TIENE ALL SE MOSTRARA COMO GLOBAL       ***************/
             $today = new DateTime();
             if ($campaign->branches == 'all') {//SI TIENE ALL CAMBIO EL TEXTO POR GLOBAL
 //                echo 'tiene globales';
-                $branches = 'global';
+                $lugares = 'global';
             } else {//SI NO ES GLOBAL SACO EL NOMBRE DE LOS BRANCHES
 //                echo 'no tiene globales';
                 $branches = $campaign->branches;// saco los branches a otra bariable para que me sea mas facil manejar los datos
@@ -756,9 +773,12 @@ class CampaignsController extends Controller
 //            dd($campaign);
             return view('campaigns.show', [
                 'cam' => $campaign,
-                'lugares'=>$lugares,
+                'lugares' => $lugares,
+                'men'=>$men,
+                'women'=>$women,
                 'user' => auth()->user(),
-                'porcentaje'=>$porcentaje
+                'porcentaje' => $porcentaje,
+                'IntXDias'=>$IntXDias
             ]);
         } else {
             return redirect()->route('campaigns::index')->with('data', 'errorCamp');

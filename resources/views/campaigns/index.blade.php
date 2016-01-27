@@ -199,33 +199,33 @@
                                                         </div>
 
                                                         <div class="uk-width-5-6 margin-10 top-bottom-20" >
-                                                            @if($campaign->dias['porcentaje']==0)
+                                                            @if($dias['porcentaje']==0)
                                                                 <div class="uk-progress uk-progress uk-progress-striped " style="z-index: -5">
                                                                     <div class="uk-progress-bar" style="width: {!! $campaign->status=='active'?'100%':'0%' !!};"> </div>
                                                                 </div>
                                                                 <div id="porcentaje"  style="z-index:10; text-align:center; margin-top:-35px;">
-                                                                    <span style="margin:auto; color: #FFFFff; ">{!! $campaign->dias['total'] !!}  día(s) restantes </span>
+                                                                    <span style="margin:auto; color: #000; ">{!!$dias['total'] !!}  día(s) restantes </span>
                                                                 </div>
-                                                            @elseif($campaign->dias['porcentaje']<=50)
+                                                            @elseif($dias['porcentaje']<=50)
                                                                 <div class="uk-progress uk-progress-success uk-progress-striped uk-active" style="z-index: -5">
-                                                                    <div class="uk-progress-bar" style="width:{{$campaign->dias['porcentaje']}}%;"> </div>
+                                                                    <div class="uk-progress-bar" style="width:{{$dias['porcentaje']}}%;"> </div>
                                                                 </div>
                                                                 <div id="porcentaje"  style="z-index:10; text-align:center; margin-top:-35px;">
-                                                                    <span style="margin:auto; color: #000; ">{{$campaign->dias['total']}} día(s) restantes </span>
+                                                                    <span style="margin:auto; color: #000; ">{!!$dias['total'] !!} día(s) restantes </span>
                                                                 </div>
-                                                            @elseif($campaign->dias['porcentaje']<=80)
+                                                            @elseif($dias['porcentaje']<=80)
                                                                 <div class="uk-progress uk-progress-warning uk-progress-striped uk-active" style="z-index: -5">
-                                                                    <div class="uk-progress-bar" style="width:{{$campaign->dias['porcentaje']}}%;"> </div>
+                                                                    <div class="uk-progress-bar" style="width:{{$dias['porcentaje']}}%;"> </div>
                                                                 </div>
                                                                 <div id="porcentaje"  style="z-index:10; text-align:center; margin-top:-35px;">
-                                                                    <span style="margin:auto; color: #000; ">{{$campaign->dias['total']}}  día(s) restantes </span>
+                                                                    <span style="margin:auto; color: #000; ">{{$dias['total']}}  día(s) restantes </span>
                                                                 </div>
-                                                            @elseif($campaign->dias['porcentaje']>=80)
+                                                            @elseif($dias['porcentaje']>=80)
                                                                 <div class="uk-progress uk-progress-danger uk-progress-striped uk-active " style="z-index: -5">
-                                                                    <div class="uk-progress-bar" style="width:{{$campaign->dias['porcentaje']}}%;"> </div>
+                                                                    <div class="uk-progress-bar" style="width:{{$dias['porcentaje']}}%;"> </div>
                                                                 </div>
                                                                 <div id="porcentaje"  style="z-index:10; text-align:center; margin-top:-35px;">
-                                                                    <span style="margin:auto; color: #FFFFff; ">{{$campaign->dias['total']}}  día(s) restantes </span>
+                                                                    <span style="margin:auto; color: #000; ">{{$dias['total']}}  día(s) restantes </span>
                                                                 </div>
                                                             @endif
                                                         </div>
@@ -346,19 +346,19 @@
         }
         <!--     codigo de la grafica   -->
                 @foreach($campaigns as $campaign => $valor)
-                var dia1 = {!! $dias[$campaign]['dia1']['num'] !!};
-                var dia2 = {!! $dias[$campaign]['dia2']['num'] !!};
-                var dia3 = {!! $dias[$campaign]['dia3']['num'] !!};
-                var dia4 = {!! $dias[$campaign]['dia4']['num'] !!};
-                var dia5 = {!! $dias[$campaign]['dia5']['num'] !!};
-                var dia6 = {!! $dias[$campaign]['dia6']['num'] !!};
-                var dia7 = {!! $dias[$campaign]['dia7']['num'] !!};
+                var dia1 = {!! $grafica[$campaign]['dia1']['num'] !!};
+                var dia2 = {!! $grafica[$campaign]['dia2']['num'] !!};
+                var dia3 = {!! $grafica[$campaign]['dia3']['num'] !!};
+                var dia4 = {!! $grafica[$campaign]['dia4']['num'] !!};
+                var dia5 = {!! $grafica[$campaign]['dia5']['num'] !!};
+                var dia6 = {!! $grafica[$campaign]['dia6']['num'] !!};
+                var dia7 = {!! $grafica[$campaign]['dia7']['num'] !!};
         var chart = c3.generate({
                 bindto: '#chart_{!! $valor->_id !!}',
                 data: {
                     x:'x',
                     columns: [
-                        ['x','{!! $dias[$campaign]['dia1']['fecha'] !!}','{!! $dias[$campaign]['dia2']['fecha'] !!}','{!!$dias[$campaign]['dia3']['fecha'] !!}','{!! $dias[$campaign]['dia4']['fecha'] !!}','{!!$dias[$campaign]['dia5']['fecha']!!}','{!!$dias[$campaign]['dia6']['fecha']!!}','{!!$dias[$campaign]['dia7']['fecha']!!}'],
+                        ['x','{!! $grafica[$campaign]['dia1']['fecha'] !!}','{!! $grafica[$campaign]['dia2']['fecha'] !!}','{!!$grafica[$campaign]['dia3']['fecha'] !!}','{!! $grafica[$campaign]['dia4']['fecha'] !!}','{!!$grafica[$campaign]['dia5']['fecha']!!}','{!!$grafica[$campaign]['dia6']['fecha']!!}','{!!$grafica[$campaign]['dia7']['fecha']!!}'],
     //                            ['interacciones por dia '],
                         ['interacciones', dia1, dia2,dia3, dia4,dia5,dia6,dia7]
                     ],
