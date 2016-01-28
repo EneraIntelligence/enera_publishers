@@ -264,7 +264,7 @@ create_campaign_helper =
     showPreview: function (event, previewId, width, height) {
         console.log("create_campaign_helper.showPreview");
 
-        create_campaign_helper.modal = UIkit.modal("#modal_image");
+        create_campaign_helper.modal = UIkit.modal("#modal_image",{keyboard:false,bgclose:false});
 
         $('#modal_image').on({
 
