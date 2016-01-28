@@ -12,7 +12,7 @@
     {{--<link rel="icon" type="image/png" href="assets/img/favicon-32x32.png" sizes="32x32">--}}
     <link rel="icon" type="image/png" href="{!! URL::asset('images/favicon.png') !!}" sizes="32x32">
 
-    <title>Enera - Permiso denegado</title>
+    <title>Enera - Choose</title>
 
     <link href='http://fonts.googleapis.com/css?family=Roboto:300,400,500' rel='stylesheet' type='text/css'>
 
@@ -27,36 +27,36 @@
 </head>
 <body class="error_page">
 
-<div class="error_page_header">
+<div class="error_page_header" style="background-color: {!! $color !!} !important;">
     <div class="uk-text-center">
-        No tienes permiso para acceder a esta plataforma
+        {{ $msg }}
     </div>
 </div>
 
-<p class="heading_b uk-text-center">Selecciona una plataforma:</p>
+<p class="heading_b uk-text-center">{{--Selecciona una plataforma:--}}</p>
 
 
 <div class="uk-grid">
 
-        <div class="uk-width-medium-1-3 uk-width-small-1-1">
-            <a href="http://publishers.enera-intelligence.mx">
-                <img class="uk-align-center" src="{!! URL::asset('images/publisher.png') !!}" alt="">
-            </a>
-        </div>
+    <div class="uk-width-1-3">
+        <a href="http://publishers.enera-intelligence.mx">
+            <img class="uk-align-center" src="{!! URL::asset('images/publisher.png') !!}" alt="">
+        </a>
+    </div>
 
-        <div class="uk-width-medium-1-3 uk-width-small-1-1">
-            <a href="http://networks.enera-intelligence.mx">
-                <img class="uk-align-center" src="{!! URL::asset('images/logo-networks.png') !!}" alt="">
-            </a>
+    <div class="uk-width-1-3">
+        <a href="http://networks.enera-intelligence.mx">
+            <img class="uk-align-center" src="{!! URL::asset('images/logo-networks.png') !!}" alt="">
+        </a>
 
-        </div>
+    </div>
 
-        <div class="uk-width-medium-1-3 uk-width-small-1-1">
-            <a href="http://admins.enera-intelligence.mx">
-                <img class="uk-align-center" src="{!! URL::asset('images/admins.png') !!}" alt="">
-            </a>
+    <div class="uk-width-1-3">
+        <a href="http://admins.enera-intelligence.mx">
+            <img class="uk-align-center" src="{!! URL::asset('images/admins.png') !!}" alt="">
+        </a>
 
-        </div>
+    </div>
 
 </div>
 

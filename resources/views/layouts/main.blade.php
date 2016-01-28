@@ -129,27 +129,29 @@
                                                                                         style="top: 2px; position: relative;">Publishers</span>
                         </a>
 
-                        <div class="uk-dropdown uk-dropdown-width-3" style="top: -20px;">
+                        <div class="uk-dropdown uk-dropdown-width-3" style="margin-top: 15px;">
                             <div class="uk-grid uk-dropdown-grid" data-uk-grid-margin>
                                 <div class="uk-width-2-3">
                                     <div class="uk-grid uk-grid-width-medium-1-3 uk-margin-top uk-margin-bottom uk-text-center"
                                          data-uk-grid-margin>
                                         <a href="{!! route('campaigns::index') !!}">
-                                            {{--<i class="material-icons md-36">&#xE158;</i>--}}
                                             <i class="material-icons md-36 md-color-light-blue-A700">event</i>
                                             <span class="uk-text-muted uk-display-block">Campañas</span>
                                         </a>
-                                        {{--<a href="{!! route('reports::index') !!}">--}}
                                         <a href="#">
-                                            {{--<i class="material-icons md-36 md-color-red-600">&#xE0B9;</i>--}}
                                             <i class="material-icons md-36 md-color-light-blue-A700">assessment</i>
                                             <span class="uk-text-muted uk-display-block">Reportes</span>
                                         </a>
                                         <a href="{!! route('budget::index') !!}">
-                                            {{--<i class="material-icons md-36">&#xE53E;</i>--}}
                                             <i class="material-icons md-36 md-color-light-blue-A700">attach_money</i>
                                             <span class="uk-text-muted uk-display-block">Presupuesto</span>
                                         </a>
+                                        @if(count(auth()->user()->role->platform) > 1)
+                                            <a href="{!! route('choose.platform') !!}" class="uk-margin-top">
+                                                <i class="material-icons md-36 md-color-light-blue-A700">swap_horiz</i>
+                                                <span class="uk-text-muted uk-display-block">Plataformas</span>
+                                            </a>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="uk-width-1-3 uk-hidden-small">

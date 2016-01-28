@@ -167,20 +167,6 @@
                         <div style="text-align: center; color: red;">{!! $m !!}</div>
                     @endforeach
                 @endif
-                {{--{{ dd($errors) }}--}}
-                {{--{{ var_dump($errors)  }}--}}
-
-                {{--@foreach($errors->get('estado') as $m)
-                    <div style="text-align: center; color: red;">{{ $m }}</div>
-                @endforeach
-
-                @foreach($errors->get('municipio') as $m)
-                    <div style="text-align: center; color: red;">{{ $m }}</div>
-                @endforeach--}}
-                {{--@if($errors->get('registro'))
-                    {{ $registro = 'error' }}
-                @endif--}}
-                {{--{{ var_dump($errors)  }}--}}
 
                 <div class="uk-form-row {!!  $errors->get('nombre')? 'md-input-wrapper-danger md-input-focus':' ' !!}">
                     <label for="register_name">Nombre </label>

@@ -5,10 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title></title>
     <link rel="stylesheet" href="">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <style>
+        body
+        {
+            font-family: "Roboto", serif, sans-serif;
+            color: #000000;
+        }
+    </style>
 </head>
 <body>
-
-</body>
 <div style="text-align: center;">
     <img src="http://publishers.enera-intelligence.mx/images/publisher.png" alt="">
 </div>
@@ -17,10 +24,9 @@
     <div>
         <p>Estimado: {{$data['nombre'] . ' ' . $data['apellido']}}  gracias por registrarse en Enera-Publisher.<br>
         Para poder acceder a la plataforma de Publisher solo necesitas confirmar tu cuenta haciendo click en el siguiente link:<br>
-            <a href="{{ URL::to('register/verify/'.$data['id_usuario'].'/'. $data['confirmation_code'] )}}"> confirmar registro</a>
-            {{--<br>o copia pega la siguiente url:
-            {{ URL::to('register/verify/' . $data['confirmation_code'] )}}--}}
-            {{--<a href="">aqui</a>--}}
+            <a href="http://publishers.enera-intelligence.mx/register/verify/{{$data['id_usuario'].'/'. $data['confirmation_code'}} "> confirmar registro</a>
+            <br>o copia pega la siguiente url:
+            http://publishers.enera-intelligence.mx/register/verify/{{$data['id_usuario'].'/'.$data['confirmation_code']}}
         </p>
         <p>Atentamente:</p>
         <p>Enera Intelligence</p>
@@ -31,6 +37,7 @@
 <div style="text-align: center;">
     <img src="http://enera.mx/images/logo-dark.png" alt="">
 </div>
+</body>
 </html>
 
 {{--{{dd($data)}}--}}

@@ -5,10 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title></title>
     <link rel="stylesheet" href="">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <style>
+        body
+        {
+            font-family: "Roboto", serif, sans-serif;
+            color: #000000;
+        }
+    </style>
+
 </head>
 <body>
-
-</body>
 <div style="text-align: center;">
     <img src="http://enera.mx/images/logo-dark.png" alt="">
 </div>
@@ -123,4 +131,5 @@
         </ul>
     </div>
 </div>
+</body>
 </html>
