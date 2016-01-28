@@ -106,24 +106,27 @@ class AuthController extends Controller
                 $newAdmin->wallet()->create(['current' => 0]);
                 /**********      si el usuario se creo se llama el job para mandarle el correo de confirmacion        ***************/
                 if ($newAdmin) {
-                    $Token = validationCode::create(array(
+                    $Token = ValidationCode::create(array(
                         'administrator_id' => $newAdmin->_id, 'type' => 'validationEmail', 'token' => $confirmation_code
                     ));
                     if ($Token->count() > 0) {
-                        echo 'se guardo la tabla de token';
+//                        echo 'se guardo la tabla de token';
+                        //se llama el job mandar correo confirmacion
+                        $this->dispatch(new newAdminJob([
+                            'session' => session('_token'),
+                            'nombre' => Input::get('nombre'),
+                            'apellido' => Input::get('apellido'),
+                            'email' => Input::get('email'),
+                            'id_usuario' => $newAdmin->_id,
+                            'confirmation_code' => $confirmation_code
+                        ]));
+                        return redirect()->route('auth.index')->with('success', 'registro-success');
+                    }else{
+                        return redirect()->route('auth.index')->withErrors($validator);
                     }
-
-                    //se llama el job mandar correo confirmacion
-                    $this->dispatch(new newAdminJob([
-                        'session' => session('_token'),
-                        'nombre' => Input::get('nombre'),
-                        'apellido' => Input::get('apellido'),
-                        'email' => Input::get('email'),
-                        'id_usuario' => $newAdmin->_id,
-                        'confirmation_code' => $confirmation_code
-                    ]));
-                    return redirect()->route('auth.index')->with('success', 'registro-success');
-                }//fin del if que valida si se creo el usuario para mandar el correo
+                }else{  //fin del if que valida si se creo el usuario para mandar el correo
+                    return redirect()->route('auth.index')->withErrors($validator);
+                }
             }//fin del else que valida si el correo ya esta registrado
         } else {
 //            $registro='error';
