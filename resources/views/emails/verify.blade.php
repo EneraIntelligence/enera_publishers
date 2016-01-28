@@ -7,25 +7,13 @@
     <link rel="stylesheet" href="">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    <script>
-        WebFontConfig = {
-            google: {
-                families: [
-                    'Source+Code+Pro:400,700:latin',
-                    'Roboto:400,300,500,700,400italic:latin'
-                ]
-            }
-        };
-        (function () {
-            var wf = document.createElement('script');
-            wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
-                    '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
-            wf.type = 'text/javascript';
-            wf.async = 'true';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(wf, s);
-        })();
-    </script>
+    <style>
+        body
+        {
+            font-family: "Roboto", serif, sans-serif;
+            color: #000000;
+        }
+    </style>
 </head>
 <body>
 <div style="text-align: center;">
@@ -36,10 +24,9 @@
     <div>
         <p>Estimado: {{$data['nombre'] . ' ' . $data['apellido']}}  gracias por registrarse en Enera-Publisher.<br>
         Para poder acceder a la plataforma de Publisher solo necesitas confirmar tu cuenta haciendo click en el siguiente link:<br>
-            <a href="{{ URL::to('register/verify/'.$data['id_usuario'].'/'. $data['confirmation_code'] )}}"> confirmar registro</a>
-            {{--<br>o copia pega la siguiente url:
-            {{ URL::to('register/verify/' . $data['confirmation_code'] )}}--}}
-            {{--<a href="">aqui</a>--}}
+            <a href="http://publishers.enera-intelligence.mx/register/verify/{{$data['id_usuario'].'/'. $data['confirmation_code'}} "> confirmar registro</a>
+            <br>o copia pega la siguiente url:
+            http://publishers.enera-intelligence.mx/register/verify/{{$data['id_usuario'].'/'.$data['confirmation_code']}}
         </p>
         <p>Atentamente:</p>
         <p>Enera Intelligence</p>
