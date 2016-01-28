@@ -129,7 +129,7 @@
                                                                                         style="top: 2px; position: relative;">Publishers</span>
                         </a>
 
-                        <div class="uk-dropdown uk-dropdown-width-3" style="top: -20px;">
+                        <div class="uk-dropdown uk-dropdown-width-3" style="margin-top: 15px;">
                             <div class="uk-grid uk-dropdown-grid" data-uk-grid-margin>
                                 <div class="uk-width-2-3">
                                     <div class="uk-grid uk-grid-width-medium-1-3 uk-margin-top uk-margin-bottom uk-text-center"
@@ -146,10 +146,12 @@
                                             <i class="material-icons md-36 md-color-light-blue-A700">attach_money</i>
                                             <span class="uk-text-muted uk-display-block">Presupuesto</span>
                                         </a>
-                                        <a href="{!! route('choose.platform') !!}">
-                                            <i class="material-icons md-36">&#xE8D4;</i>
-                                            <span class="uk-text-muted uk-display-block">Plataformas</span>
-                                        </a>
+                                        @if(count(auth()->user()->role->platform) > 1)
+                                            <a href="{!! route('choose.platform') !!}">
+                                                <i class="material-icons md-36 md-color-light-blue-A700">&#xE8D4;</i>
+                                                <span class="uk-text-muted uk-display-block">Plataformas</span>
+                                            </a>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="uk-width-1-3 uk-hidden-small">
