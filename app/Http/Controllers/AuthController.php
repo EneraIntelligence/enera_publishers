@@ -86,7 +86,7 @@ class AuthController extends Controller
             $password = Hash::make(Input::get('password')); //encrypta la contraseña
             /***+*****   verifico si el correo esta registrado     *************/
             if (Administrator::where('email', Input::get('email'))->count() > 0) {
-                $validator->errors()->add('registro', 'este correo ya esta registrado');
+                $validator->errors()->add('email', 'este correo ya esta registrado');
                 return redirect()->route('auth.index')->withErrors($validator);
             } else {
                 /***+*****  consulta que guarda el documento en mongo *************/
@@ -107,7 +107,7 @@ class AuthController extends Controller
                 /**********      si el usuario se creo se llama el job para mandarle el correo de confirmacion        ***************/
                 if ($newAdmin) {
                     $Token = ValidationCode::create(array(
-                        'administrator_id' => $newAdmin->_id, 'type' => 'validationEmail', 'token' => $confirmation_code
+                        'administrator_id' => $newAdmin->id, 'type' => 'validationEmail', 'token' => $confirmation_code
                     ));
                     if ($Token->count() > 0) {
 //                        echo 'se guardo la tabla de token';
@@ -117,14 +117,16 @@ class AuthController extends Controller
                             'nombre' => Input::get('nombre'),
                             'apellido' => Input::get('apellido'),
                             'email' => Input::get('email'),
-                            'id_usuario' => $newAdmin->_id,
+                            'id_usuario' => $newAdmin->id,
                             'confirmation_code' => $confirmation_code
                         ]));
                         return redirect()->route('auth.index')->with('success', 'registro-success');
-                    }else{
+                    }else{  //valida si se guardo el token
+                        $validator->errors()->add('registro', 'no se pudo enviar correo de confirmacion');
                         return redirect()->route('auth.index')->withErrors($validator);
                     }
                 }else{  //fin del if que valida si se creo el usuario para mandar el correo
+                    $validator->errors()->add('registro', 'no se pudo completar el registro intenta mas tarde');
                     return redirect()->route('auth.index')->withErrors($validator);
                 }
             }//fin del else que valida si el correo ya esta registrado

@@ -81,11 +81,11 @@ Route::group(['middleware' => ['auth', 'guardian', 'preview']], function () {
 });
 
 Route::group(['middleware' => ['auth.ready']], function () {
-    Route::get('login', ['as' => 'auth.index', 'uses' => 'AuthController@index']);
-    Route::post('login', ['as' => 'auth.login', 'uses' => 'AuthController@login']);
-    Route::post('signUp', ['as' => 'auth.signUp', 'uses' => 'AuthController@signUp']);
-    Route::get('register', ['as' => 'auth.register', 'uses' => 'AuthController@register']);
-    Route::get('register/verify/{id}/{token}', ['as' => 'auth.verify', 'uses' => 'AuthController@verify']);
+    Route::get('/login', ['as' => 'auth.index', 'uses' => 'AuthController@index']);
+    Route::post('/login', ['as' => 'auth.login', 'uses' => 'AuthController@login']);
+    Route::post('/signUp', ['as' => 'auth.signUp', 'uses' => 'AuthController@signUp']);
+    Route::get('/register', ['as' => 'auth.register', 'uses' => 'AuthController@register']);
+    Route::get('/register/verify/{id}/{token}', ['as' => 'auth.verify', 'uses' => 'AuthController@verify']);
 });
 
 Route::get('/choose', ['as' => 'choose.platform', function () {
