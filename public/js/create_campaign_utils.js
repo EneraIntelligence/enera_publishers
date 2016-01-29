@@ -566,6 +566,7 @@ branchMap =
 
         var globalRadioBtn = $('#wizard_location_all');
         globalRadioBtn.on('ifChecked', function (event) {
+            branchMap.validateMakerSelection();
             //branchMap.disableMap();
         });
 
