@@ -96,7 +96,7 @@ class CampaignsController extends Controller
             $grafica[$campaign] = $graficat;
         }//FIN DEL FOR
 //dd($grafica);
-        return view('campaigns.index', ['campaigns' => $campaigns, 'grafica' => $grafica,'dias'=>$dias ,'subcampaigns' => $subcampaigns, 'user' => Auth::user()]);
+        return view('campaigns.index', ['campaigns' => $campaigns, 'grafica' => $grafica, 'dias' => $dias, 'subcampaigns' => $subcampaigns, 'user' => Auth::user()]);
     }
 
     /**
@@ -191,13 +191,13 @@ class CampaignsController extends Controller
                                     'name' => Input::get('interactionId'),
                                 ],
                                 'filters' => [
-                                    'age' => explode(';', Input::get('age')),
+                                    'age' => array_map('intval', explode(';', Input::get('age'))),
                                     'date' => [
                                         'start' => new MongoDate(strtotime(Input::get('start_date'))),
                                         'end' => new MongoDate(strtotime(Input::get('end_date')))
                                     ],
                                     'gender' => Input::get('gender') == 'both' ? ['male', 'female'] : [Input::get('gender')],
-                                    'week_days' => Input::get('days'),
+                                    'week_days' => array_map('intval', Input::get('days')),
                                     'day_hours' => range(explode(';', Input::get('time'))[0], explode(';', Input::get('time'))[1]),
                                 ],
                                 'content' => [
@@ -576,12 +576,12 @@ class CampaignsController extends Controller
         $porcentaje = 0.0;
         /**     ARREGLO PARA GUARDAR LAS HORAS **/
         $IntXDias = [
-            '00'=>['hora'=>'00','cntC'=>0,'cntL'=>0], '01'=>['hora'=>'01','cntC'=>0,'cntL'=>0], '02'=>['hora'=>'02','cntC'=>0,'cntL'=>0], '03'=>['hora'=>'03','cntC'=>0,'cntL'=>0],
-            '04'=>['hora'=>'04','cntC'=>0,'cntL'=>0], '05'=>['hora'=>'05','cntC'=>0,'cntL'=>0], '06'=>['hora'=>'06','cntC'=>0,'cntL'=>0], '07'=>['hora'=>'07','cntC'=>0,'cntL'=>0],
-            '08'=>['hora'=>'08','cntC'=>0,'cntL'=>0], '09'=>['hora'=>'09','cntC'=>0,'cntL'=>0], '10'=>['hora'=>'10','cntC'=>0,'cntL'=>0], '11'=>['hora'=>'11','cntC'=>0,'cntL'=>0],
-            '12'=>['hora'=>'12','cntC'=>0,'cntL'=>0], '13'=>['hora'=>'13','cntC'=>0,'cntL'=>0], '14'=>['hora'=>'14','cntC'=>0,'cntL'=>0], '15'=>['hora'=>'15','cntC'=>0,'cntL'=>0],
-            '16'=>['hora'=>'16','cntC'=>0,'cntL'=>0], '17'=>['hora'=>'17','cntC'=>0,'cntL'=>0], '18'=>['hora'=>'18','cntC'=>0,'cntL'=>0], '19'=>['hora'=>'19','cntC'=>0,'cntL'=>0],
-            '20'=>['hora'=>'20','cntC'=>0,'cntL'=>0], '21'=>['hora'=>'21','cntC'=>0,'cntL'=>0], '22'=>['hora'=>'22','cntC'=>0,'cntL'=>0], '23'=>['hora'=>'23','cntC'=>0,'cntL'=>0],
+            '00' => ['hora' => '00', 'cntC' => 0, 'cntL' => 0], '01' => ['hora' => '01', 'cntC' => 0, 'cntL' => 0], '02' => ['hora' => '02', 'cntC' => 0, 'cntL' => 0], '03' => ['hora' => '03', 'cntC' => 0, 'cntL' => 0],
+            '04' => ['hora' => '04', 'cntC' => 0, 'cntL' => 0], '05' => ['hora' => '05', 'cntC' => 0, 'cntL' => 0], '06' => ['hora' => '06', 'cntC' => 0, 'cntL' => 0], '07' => ['hora' => '07', 'cntC' => 0, 'cntL' => 0],
+            '08' => ['hora' => '08', 'cntC' => 0, 'cntL' => 0], '09' => ['hora' => '09', 'cntC' => 0, 'cntL' => 0], '10' => ['hora' => '10', 'cntC' => 0, 'cntL' => 0], '11' => ['hora' => '11', 'cntC' => 0, 'cntL' => 0],
+            '12' => ['hora' => '12', 'cntC' => 0, 'cntL' => 0], '13' => ['hora' => '13', 'cntC' => 0, 'cntL' => 0], '14' => ['hora' => '14', 'cntC' => 0, 'cntL' => 0], '15' => ['hora' => '15', 'cntC' => 0, 'cntL' => 0],
+            '16' => ['hora' => '16', 'cntC' => 0, 'cntL' => 0], '17' => ['hora' => '17', 'cntC' => 0, 'cntL' => 0], '18' => ['hora' => '18', 'cntC' => 0, 'cntL' => 0], '19' => ['hora' => '19', 'cntC' => 0, 'cntL' => 0],
+            '20' => ['hora' => '20', 'cntC' => 0, 'cntL' => 0], '21' => ['hora' => '21', 'cntC' => 0, 'cntL' => 0], '22' => ['hora' => '22', 'cntC' => 0, 'cntL' => 0], '23' => ['hora' => '23', 'cntC' => 0, 'cntL' => 0],
         ];
 //        dd($IntXDias);
         $campaign = Campaign::find($id); //busca la campaña
@@ -677,7 +677,7 @@ class CampaignsController extends Controller
             $results = $collection->aggregate([
                 [
                     '$match' => [
-                        'campaign_id'=> $id,
+                        'campaign_id' => $id,
                         'interaction.loaded' => [
                             '$gte' => new MongoDate(strtotime(Carbon::today()->subDays(30)->format('Y-m-d'))),
                             '$lte' => new MongoDate(strtotime(Carbon::today()->subDays(0)->format('Y-m-d'))),
@@ -705,7 +705,7 @@ class CampaignsController extends Controller
             $results2 = $collection->aggregate([
                 [
                     '$match' => [
-                        'campaign_id'=> $id,
+                        'campaign_id' => $id,
                         'interaction.completed' => [
                             '$gte' => new MongoDate(strtotime(Carbon::today()->subDays(30)->format('Y-m-d'))),
                             '$lte' => new MongoDate(strtotime(Carbon::today()->subDays(0)->format('Y-m-d'))),
@@ -774,11 +774,11 @@ class CampaignsController extends Controller
             return view('campaigns.show', [
                 'cam' => $campaign,
                 'lugares' => $lugares,
-                'men'=>$men,
-                'women'=>$women,
+                'men' => $men,
+                'women' => $women,
                 'user' => auth()->user(),
                 'porcentaje' => $porcentaje,
-                'IntXDias'=>$IntXDias
+                'IntXDias' => $IntXDias
             ]);
         } else {
             return redirect()->route('campaigns::index')->with('data', 'errorCamp');
