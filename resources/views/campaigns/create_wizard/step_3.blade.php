@@ -241,7 +241,7 @@
         </div>
     </div>
 
-    <div class="uk-modal" style="pointer-events:none;" id="modal_map" data-uk-modal="{target:'#modal_map',bgclose:false}">
+    <div class="uk-modal" id="modal_map" data-uk-modal="{target:'#modal_map',bgclose:false}">
         <div class="uk-modal-dialog uk-modal-dialog-large" style="pointer-events:all;">
 
 
@@ -302,6 +302,7 @@
                 </div>
             </div>
             <div class="uk-modal-footer uk-text-right">
+                <button onclick="branchMap.disableMap()" id="modal-cancel-btn" type="button" class="md-btn md-btn-flat ">Cancelar</button>
                 <button onclick="branchMap.selectMarkers()" id="modal-select-btn" type="button" class="md-btn md-btn-flat md-btn-flat-primary">Seleccionar</button>
             </div>
         </div>
