@@ -28,7 +28,7 @@ class Guardian
             $app = $this->detector->getAppNamespace();
             $route = $request->route()->getName();
             $admin = auth()->user();
-                $platforms = isset($admin) ? $admin->role->platform : [];
+            $platforms = isset($admin) ? $admin->role->platform : [];
 
             if (in_array($app, $platforms)) {
                 if (in_array($route, $admin->role->permissions[$app])) {
