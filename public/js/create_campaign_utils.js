@@ -264,7 +264,7 @@ create_campaign_helper =
     showPreview: function (event, previewId, width, height) {
         console.log("create_campaign_helper.showPreview");
 
-        create_campaign_helper.modal = UIkit.modal("#modal_image");
+        create_campaign_helper.modal = UIkit.modal("#modal_image",{keyboard:false,bgclose:false});
 
         $('#modal_image').on({
 
@@ -556,7 +556,7 @@ branchMap =
         //radio button actions
         var selectRadioBtn = $('#wizard_location_select');
         selectRadioBtn.on('ifClicked', function (event) {
-            var modal = UIkit.modal("#modal_map");
+            var modal = UIkit.modal("#modal_map",{keyboard:false, bgclose:false});
             modal.show();
             setTimeout(branchMap.refresh, 100);
             //branchMap.enableMap();
@@ -566,6 +566,7 @@ branchMap =
 
         var globalRadioBtn = $('#wizard_location_all');
         globalRadioBtn.on('ifChecked', function (event) {
+            branchMap.validateMakerSelection();
             //branchMap.disableMap();
         });
 
@@ -595,18 +596,29 @@ branchMap =
         }
     },
 
+    /*
     enableMap: function () {
         TweenLite.to(".branchMap", .5, {alpha: 1});
         $(".branchMap").css("pointer-events", "auto");
 
         branchMap.validateMakerSelection(branchMap.map.activeMarkers);
     },
+    */
 
     disableMap: function () {
+        /*
         TweenLite.to(".branchMap", .5, {alpha: .4});
         $(".branchMap").css("pointer-events", "none");
 
-        branchMap.validateMakerSelection(branchMap.map.activeMarkers);
+        branchMap.validateMakerSelection(branchMap.map.activeMarkers);*/
+
+        var modal = UIkit.modal("#modal_map",{keyboard:false, bgclose:false});
+        modal.hide();
+
+        /*
+        $("#wizard_location_select").prop("checked", false);
+        $("#wizard_location_all").prop("checked", true);
+        */
     },
 
     validateMakerSelection: function (activeBranchesCount) {

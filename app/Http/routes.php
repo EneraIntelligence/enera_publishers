@@ -89,5 +89,8 @@ Route::group(['middleware' => ['auth.ready']], function () {
 });
 
 Route::get('/choose', ['as' => 'choose.platform', function () {
-    return view('choose');
+    return view('choose', [
+        'color' => '#1565c0',
+        'msg' => Input::has('msg') ? Input::get('msg') : 'Selecciona alguna de las plataformas.'
+    ]);
 }]);
