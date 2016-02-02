@@ -583,7 +583,6 @@ class CampaignsController extends Controller
             '16'=>['hora'=>'16','cntC'=>0,'cntL'=>0], '17'=>['hora'=>'17','cntC'=>0,'cntL'=>0], '18'=>['hora'=>'18','cntC'=>0,'cntL'=>0], '19'=>['hora'=>'19','cntC'=>0,'cntL'=>0],
             '20'=>['hora'=>'20','cntC'=>0,'cntL'=>0], '21'=>['hora'=>'21','cntC'=>0,'cntL'=>0], '22'=>['hora'=>'22','cntC'=>0,'cntL'=>0], '23'=>['hora'=>'23','cntC'=>0,'cntL'=>0],
         ];
-//        dd($IntXDias);
         $campaign = Campaign::find($id); //busca la campaña
         if ($campaign && $campaign->administrator_id == auth()->user()->_id) {
             /******     saca el color y el icono que se va a usar regresa un array  ********/
@@ -611,7 +610,6 @@ class CampaignsController extends Controller
                 case 'active':
                     $today = new DateTime();
                     if ($today < $start) {
-//                    dd('hoy es menor a incio');
                         $porcentaje = 0;
                     } else {
                         $today = new DateTime();
@@ -627,7 +625,7 @@ class CampaignsController extends Controller
                     $porcentaje = $diff->format('%a') / $total->format('%a');
                     break;
             }
-//            dd($porcentaje);
+
 
             /*******         OBTENER LAS INTERACCIONES POR DIAS       ***************/
             $men['1'] = -$campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'male')
@@ -732,8 +730,7 @@ class CampaignsController extends Controller
             ]);
 
             foreach ($results['result'] as $result => $valor) {
-//                dd($valor);
-//                echo $result . '--' . $valor['_id'] . ' -- ' . $valor['cnt'] . '<br>';
+
                 $time = explode(":", $valor['_id']);
                 if (array_key_exists($time[0], $IntXDias)) {
 //                    echo '<br>si esta<br>';
@@ -751,7 +748,6 @@ class CampaignsController extends Controller
                     $IntXDias[$result][$time[0]] = 0;
                 }
             }
-//            dd($IntXDias);
 
             /****         SI EL BRANCH TIENE ALL SE MOSTRARA COMO GLOBAL       ***************/
             $today = new DateTime();
@@ -767,10 +763,7 @@ class CampaignsController extends Controller
                     $lugares[$clave] = $BRA[0]['original']['name'];//saco solo el valor que me interesa para no tener un array dentro de un array
                 }
             }//FIN DEL ELSE PARA MANEJAR LOS BRANCHES
-//            dd($BRA);
-//            dd($lugares);
 
-//            dd($campaign);
             return view('campaigns.show', [
                 'cam' => $campaign,
                 'lugares' => $lugares,
@@ -805,7 +798,6 @@ class CampaignsController extends Controller
         } else {
             echo 'encontro algo';
             $Logs = $logs->toArray();
-            dd($logs);
             foreach ($Logs as $clave => $valor) {
                 $log['users'][$clave]['age'] = $valor['user']['age'];
 //                var_dump($log['users'][$clave]['age']);
@@ -813,7 +805,6 @@ class CampaignsController extends Controller
 //                var_dump($log['users'][$clave]['gender']);
             }
         }
-        dd($log);
         return $log;
     }
 

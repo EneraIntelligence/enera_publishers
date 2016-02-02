@@ -70,7 +70,6 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * //     * @param  int $id
      * @return Response
      */
     public function edit()
@@ -114,7 +113,6 @@ class UserController extends Controller
     public function editProfile()
     {
 
-//        dd(Input::all());
         $user = Administrator::where('_id', Auth::user()->_id)->first();
         if (Input::hasFile('user_edit_avatar_control')) {
 //        para la foto del usuario
