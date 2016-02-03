@@ -294,8 +294,6 @@
     @stop
 
     @section('scripts')
-
-
             <!-- slider script -->
     {!! HTML::script('js/preview_helper.js') !!}
 
