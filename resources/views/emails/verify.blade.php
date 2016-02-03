@@ -24,7 +24,7 @@
     <div>
         <p>Estimado: {{$data['nombre'] . ' ' . $data['apellido']}}  gracias por registrarse en Enera-Publisher.<br>
         Para poder acceder a la plataforma de Publisher solo necesitas confirmar tu cuenta haciendo click en el siguiente link:<br>
-            <a href="http://publishers.enera-intelligence.mx/register/verify/{{$data['id_usuario'].'/'. $data['confirmation_code'}} "> confirmar registro</a>
+            <a href="http://publishers.enera-intelligence.mx/register/verify/{{$data['id_usuario'].'/'. $data['confirmation_code']}} "> confirmar registro</a>
             <br>o copia pega la siguiente url:
             http://publishers.enera-intelligence.mx/register/verify/{{$data['id_usuario'].'/'.$data['confirmation_code']}}
         </p>
