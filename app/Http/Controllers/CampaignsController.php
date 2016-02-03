@@ -629,46 +629,46 @@ class CampaignsController extends Controller
 
             /*******         OBTENER LAS INTERACCIONES POR DIAS       ***************/
             $men['1'] = -$campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'male')
-                ->where('user.age', '>=', 0)->where('user.age', '<=', 17)->distinct('user_id')->count();
+                ->where('user.age', '>=', 0)->where('user.age', '<=', 17)->distinct('user.id')->count();
             $men['2'] = -$campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'male')
-                ->where('user.age', '>=', 18)->where('user.age', '<=', 20)->distinct('user_id')->count();
+                ->where('user.age', '>=', 18)->where('user.age', '<=', 20)->distinct('user.id')->count();
             $men['3'] = -$campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'male')
-                ->where('user.age', '>=', 21)->where('user.age', '<=', 30)->distinct('user_id')->count();
+                ->where('user.age', '>=', 21)->where('user.age', '<=', 30)->distinct('user.id')->count();
             $men['4'] = -$campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'male')
-                ->where('user.age', '>=', 31)->where('user.age', '<=', 40)->distinct('user_id')->count();
+                ->where('user.age', '>=', 31)->where('user.age', '<=', 40)->distinct('user.id')->count();
             $men['5'] = -$campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'male')
-                ->where('user.age', '>=', 41)->where('user.age', '<=', 50)->distinct('user_id')->count();
+                ->where('user.age', '>=', 41)->where('user.age', '<=', 50)->distinct('user.id')->count();
             $men['6'] = -$campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'male')
-                ->where('user.age', '>=', 51)->where('user.age', '<=', 60)->distinct('user_id')->count();
+                ->where('user.age', '>=', 51)->where('user.age', '<=', 60)->distinct('user.id')->count();
             $men['7'] = -$campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'male')
-                ->where('user.age', '>=', 61)->where('user.age', '<=', 70)->distinct('user_id')->count();
+                ->where('user.age', '>=', 61)->where('user.age', '<=', 70)->distinct('user.id')->count();
             $men['8'] = -$campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'male')
-                ->where('user.age', '>=', 71)->where('user.age', '<=', 80)->distinct('user_id')->count();
+                ->where('user.age', '>=', 71)->where('user.age', '<=', 80)->distinct('user.id')->count();
             $men['9'] = -$campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'male')
-                ->where('user.age', '>=', 81)->where('user.age', '<=', 90)->distinct('user_id')->count();
+                ->where('user.age', '>=', 81)->where('user.age', '<=', 90)->distinct('user.id')->count();
             $men['10'] = -$campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'male')
                 ->where('user.age', '>=', 90)->distinct('user_id')->count();
 
             $women['1'] = $campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'female')
-                ->where('user.age', '>=', 0)->where('user.age', '<=', 17)->distinct('user_id')->count();
+                ->where('user.age', '>=', 0)->where('user.age', '<=', 17)->distinct('user.id')->count();
             $women['2'] = $campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'female')
-                ->where('user.age', '>=', 18)->where('user.age', '<=', 20)->distinct('user_id')->count();
+                ->where('user.age', '>=', 18)->where('user.age', '<=', 20)->distinct('user.id')->count();
             $women['3'] = $campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'female')
-                ->where('user.age', '>=', 21)->where('user.age', '<=', 30)->distinct('user_id')->count();
+                ->where('user.age', '>=', 21)->where('user.age', '<=', 30)->distinct('user.id')->count();
             $women['4'] = $campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'female')
-                ->where('user.age', '>=', 31)->where('user.age', '<=', 40)->distinct('user_id')->count();
+                ->where('user.age', '>=', 31)->where('user.age', '<=', 40)->distinct('user.id')->count();
             $women['5'] = $campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'female')
-                ->where('user.age', '>=', 41)->where('user.age', '<=', 50)->distinct('user_id')->count();
+                ->where('user.age', '>=', 41)->where('user.age', '<=', 50)->distinct('user.id')->count();
             $women['6'] = $campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'female')
-                ->where('user.age', '>=', 51)->where('user.age', '<=', 60)->distinct('user_id')->count();
+                ->where('user.age', '>=', 51)->where('user.age', '<=', 60)->distinct('user.id')->count();
             $women['7'] = $campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'female')
-                ->where('user.age', '>=', 61)->where('user.age', '<=', 70)->distinct('user_id')->count();
+                ->where('user.age', '>=', 61)->where('user.age', '<=', 70)->distinct('user.id')->count();
             $women['8'] = $campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'female')
-                ->where('user.age', '>=', 71)->where('user.age', '<=', 80)->distinct('user_id')->count();
+                ->where('user.age', '>=', 71)->where('user.age', '<=', 80)->distinct('user.id')->count();
             $women['9'] = $campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'female')
-                ->where('user.age', '>=', 81)->where('user.age', '<=', 90)->distinct('user_id')->count();
+                ->where('user.age', '>=', 81)->where('user.age', '<=', 90)->distinct('user.id')->count();
             $women['10'] = $campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'female')
-                ->where('user.age', '>=', 90)->distinct('user_id')->count();
+                ->where('user.age', '>=', 90)->distinct('user.id')->count();
 
             /*******         OBTENER LAS INTERACCIONES POR hora       ***************/
             $collection = DB::getMongoDB()->selectCollection('campaign_logs');
