@@ -359,12 +359,7 @@
 
         var intLJson = '{!! json_encode($IntXDias) !!}';
         var intLObj = JSON.parse(intLJson);
-{{--        var intCJson = '{!! json_encode($cam->intC) !!}';--}}
-//        var intCObj = JSON.parse(intCJson);
-{{--        var horasJson = '{!! json_encode($cam->horas) !!}';--}}
-//        var horasObj = JSON.parse(horasJson);
-        console.log(intLObj);
-//        console.log(intCObj);
+//        console.log(intLObj);
 
         var gra = grafica.genderAge(menObj, womenObj);
         var graf = grafica.intPerHour(intLObj);
