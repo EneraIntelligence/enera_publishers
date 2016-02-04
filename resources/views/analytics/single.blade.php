@@ -170,6 +170,7 @@
                     console.log('intXHour');
                     var intLJson = '{!! json_encode($grafica) !!}';
                     var intLObj = JSON.parse(intLJson);
+                        console.log(intLObj);
                     gra = grafica.intPerHour(intLObj);
                     break;
             }
