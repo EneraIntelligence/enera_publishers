@@ -157,9 +157,9 @@
                     gra = grafica.intPerDay(diasObj,cntObj);
                     break;
                 case 'genderAge':
-                    var menJson = '{!! isset($data['men']) ? json_encode($grafica['men']) : json_encode([0,0,0,0,0,0,0]) !!}';
+                    var menJson = '{!! isset($grafica['men']) ? json_encode($grafica['men']) : json_encode([0,0,0,0,0,0,0]) !!}';
                     var menObj = JSON.parse(menJson);
-                    var womenJson = '{!! isset($data['women']) ? json_encode($grafica['women']) : json_encode([0,0,0,0,0,0,0]) !!}';
+                    var womenJson = '{!! isset($grafica['women']) ? json_encode($grafica['women']) : json_encode([0,0,0,0,0,0,0]) !!}';
                     var womenObj = JSON.parse(womenJson);
                     gra = grafica.genderAge(menObj, womenObj);
                     break;
