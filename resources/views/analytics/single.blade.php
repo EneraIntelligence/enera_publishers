@@ -62,9 +62,8 @@
                         <div  class="uk-width-large-1-1 uk-margin-top " style="height: 500px;">
                             <div id="grafica" style="width: 80%; margin: auto">
                                 <div class="uk-margin-large-left">Grafica de {!! $data['type'] !!}</div>
-                                <div id="{!! $data['type'] !!}" class="uk-width-large-1-1 uk-margin-right">
-
-                                </div>
+                                <div id="{!! $data['type'] !!}" class="uk-width-large-1-1 uk-margin-right"></div>
+                                {{--<div id="intPerHour" class="uk-width-large-1-1 uk-margin-right"></div>--}}
                                 <div class="uk-width-large-1-2 uk-margin-left">
 
                                 </div>
@@ -170,7 +169,7 @@
                     console.log('intXHour');
                     var intLJson = '{!! json_encode($grafica) !!}';
                     var intLObj = JSON.parse(intLJson);
-                        console.log(intLObj);
+//                        console.log(intLObj);
                     gra = grafica.intPerHour(intLObj);
                     break;
             }

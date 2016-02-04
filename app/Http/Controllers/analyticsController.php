@@ -305,7 +305,6 @@ class AnalyticsController extends Controller
                 $ed['users'][$clave]['gender'] = $valor['user']['gender'];
                 $ed['users'][$clave]['age'] = $valor['user']['age'];
             }
-
         } else {//si regresa null regreso 0
             $ed[0] = 0;
         }

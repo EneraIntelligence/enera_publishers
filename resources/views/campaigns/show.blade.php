@@ -263,7 +263,7 @@
                                                 <div class="md-card">
                                                     <div id="graficas" class="md-card-content">
                                                         <h3 class="heading_a uk-margin-bottom">Analiticos</h3>
-                                                        <div id='DistribuciónXHoras'
+                                                        <div id='intXHour'
                                                              class="uk-width-large-1-1 uk-margin-right"></div>
                                                         <h3 class="md-hr" style="margin: 10px;"></h3>
                                                         <div id='genderAge' class="uk-width-large-1-1 uk-panel-teaser"
