@@ -19,16 +19,16 @@
                             <div class="user_heading_avatar">
                                 <div>
                                     <div id="circle" style="max-width:98px;max-height:98px;margin:auto;">
-                                        <img style="background-image:none!important;margin:-96px 9px;"
-                                             src="{!! URL::asset('images/icons/'. $data['interaction']['name'].'2.svg') !!}"
+                                        <img style="background-image:none!important;margin:-96px 9px;background:transparent;border:none;"
+                                             src="{!! URL::asset('images/icons/'. $cam['interaction']['name'].'2.svg') !!}"
                                              alt="producto"/>
                                     </div>
                                 </div>
                             </div>
                             <div class="user_heading_content">
                                 <h2 class="heading_b uk-margin-bottom">
-                                    <span class="uk-text-truncate">{{ $data['name'] }} </span>
-                                    <span class="sub-heading">{{ $data['interaction']['name'] }}</span>
+                                    {{--<span class="uk-text-truncate">{{ $data['name'] }} </span>--}}
+                                    {{--<span class="sub-heading">{{ $data['interaction']['name'] }}</span>--}}
                                 </h2>
                             </div>
                             <a data-uk-tooltip="{pos:'left'}" title="{!! $cam->status !!}"
