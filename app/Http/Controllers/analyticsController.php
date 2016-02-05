@@ -22,7 +22,7 @@ use MongoClient;
 class AnalyticsController extends Controller
 {
     private $campaign;
-
+    private $data;
     public function index()
     {
         return view('analytics.index');
@@ -35,14 +35,15 @@ class AnalyticsController extends Controller
      */
     public function single($id, $type = 'intPerDay')
     {
-        $data = array();    $porcentaje=0;
-        $data['type'] = $type; //guardo el tipo en data por que tambien lo regreso a la vista
+        $this->data = array();    $porcentaje=0;
+        $this->data['type'] = $type; //guardo el tipo en data por que tambien lo regreso a la vista
         $this->campaign = Campaign::find($id); //busca la campaña
 
         //valida que la campaña le pertenezca al usuario
         if ($this->campaign && $this->campaign->administrator_id == auth()->user()->_id) {
-            $data['name'] = $this->campaign->name;
-            $data['interaction'] = $this->campaign->interaction;
+            $this->data['name'] = $this->campaign->name;
+            $this->data['interaction'] = $this->campaign->interaction['name'];
+
             /****  OBTENER PORCENTAJE DEL TIEMPO TRANSCURRIDO ****/
             $start = new DateTime(date('Y-m-d H:i:s', $this->campaign->filters['date']['start']->sec));
             $end = new DateTime(date('Y-m-d H:i:s', $this->campaign->filters['date']['end']->sec));
@@ -50,7 +51,7 @@ class AnalyticsController extends Controller
             if (method_exists($this, $type) && $type == !null) { //se verifica que el tipo sea valido y no nulo
                 $datosGrafica = $this->$type(); //se llama el metodo correspondiente
             } else {
-                $data['type'] = 'intPerDay';
+                $this->data['type'] = 'intPerDay';
 //                $data['type'] = 'genderAge';
                 $datosGrafica = $this->intPerDay();//default, si es un tipo diferente o no existe
             }
@@ -81,9 +82,10 @@ class AnalyticsController extends Controller
                     $porcentaje = $diff->format('%a') / $total->format('%a');
                     break;
             }
-            $data['porcentaje'] = $porcentaje;
+            $this->data['porcentaje'] = $porcentaje;
+//            dd($this->data);
             return view('analytics.single', [
-                'data' => $data,
+                'data' => $this->data,
                 'cam'=> $this->campaign,
                 'user' => Auth::user(),
                 'grafica'=>$datosGrafica
@@ -98,6 +100,7 @@ class AnalyticsController extends Controller
      */
     private function intPerDay() //interacciones por dia
     {//sacar un conteo de cuantas interaccion se hacen por dia 5 dias atras
+        $this->data['graficname']='interaciones por dia';
         /**************************   DATOS DE LA GRAFICA    ****************************/
         $rangoFechas = array();//inicialiso el arreglo de las fechas
         for ($i = 0; $i < 7; $i++) {
@@ -122,6 +125,7 @@ class AnalyticsController extends Controller
 
     private function genderAge()
     {
+        $this->data['graficname']='Grafica Demografica ';
         /*******         OBTENER LAS INTERACCIONES POR DIAS       ***************/
         $men['1'] = -$this->campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'male')
             ->where('user.age', '>=', 0)->where('user.age', '<=', 17)->distinct('user_id')->count();
@@ -177,6 +181,7 @@ class AnalyticsController extends Controller
      */
     private function intXHour()
     {   //        $today =date( "Y-m-d",mktime(0, 0, 0, date("m"),date("d")-5, date("Y")));
+        $this->data['graficname']='interaciones por hora';
         $IntXDias = [
             '00' => ['hora' => '00', 'cntC' => 0, 'cntL' => 0], '01' => ['hora' => '01', 'cntC' => 0, 'cntL' => 0], '02' => ['hora' => '02', 'cntC' => 0, 'cntL' => 0], '03' => ['hora' => '03', 'cntC' => 0, 'cntL' => 0],
             '04' => ['hora' => '04', 'cntC' => 0, 'cntL' => 0], '05' => ['hora' => '05', 'cntC' => 0, 'cntL' => 0], '06' => ['hora' => '06', 'cntC' => 0, 'cntL' => 0], '07' => ['hora' => '07', 'cntC' => 0, 'cntL' => 0],
@@ -280,6 +285,7 @@ class AnalyticsController extends Controller
      */
     public function so()
     {
+        $this->data['graficname']='Grafica de los dispositivos';
         //se obtiene de los logs los usuarios de 5 dias atras
         $fecha = $this->fechaInicio(5); //el numero es entere positivo pero en la funcion se ase negativo para buscar asia atras
         $so['android'] = CampaignLog::where('campaign_id', $this->campaign->id)->where('device.os', 'android')->where('updated_at', '>', $fecha)->count();

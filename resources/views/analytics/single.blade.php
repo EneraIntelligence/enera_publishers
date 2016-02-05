@@ -27,13 +27,12 @@
                             </div>
                             <div class="user_heading_content">
                                 <h2 class="heading_b uk-margin-bottom">
-                                    {{--<span class="uk-text-truncate">{{ $data['name'] }} </span>--}}
-                                    {{--<span class="sub-heading">{{ $data['interaction']['name'] }}</span>--}}
+                                    <span class="uk-text-truncate">{{ $data['name'] }} </span>
+                                    <span class="sub-heading">{{ $data['interaction'] }}</span>
                                 </h2>
                             </div>
                             <a data-uk-tooltip="{pos:'left'}" title="{!! $cam->status !!}"
                                class="md-fab md-fab-small md-fab-accent {!! Publishers\Libraries\CampaignStyleHelper::getStatusColor($cam->status) !!} ">
-                                {{--style="background: {!! Publishers\Libraries\CampaignStyleHelper::getStatusColor($cam->status) !!}">  --}}{{-- href="page_user_edit.html" --}}
                                 <i class="material-icons">{!! Publishers\Libraries\CampaignStyleHelper::getStatusIcon($cam->status) !!}</i>
                             </a>
                         </div>
@@ -61,7 +60,7 @@
                         {{-- graficas --}}
                         <div  class="uk-width-large-1-1 uk-margin-top " style="height: 500px;">
                             <div id="grafica" style="width: 80%; margin: auto">
-                                <div class="uk-margin-large-left">Grafica de {!! $data['type'] !!}</div>
+                                <div class="uk-margin-large-left">Grafica de {!! $data['graficname'] !!}</div>
                                 <div id="{!! $data['type'] !!}" class="uk-width-large-1-1 uk-margin-right"></div>
                                 {{--<div id="intPerHour" class="uk-width-large-1-1 uk-margin-right"></div>--}}
                                 <div class="uk-width-large-1-2 uk-margin-left">
@@ -72,7 +71,7 @@
                                 </div>
                             </div>
                         </div>
-                        {{--<div id="container" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>--}}
+                        <div id="container" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
                     </div>
                 </div>
             </div>
