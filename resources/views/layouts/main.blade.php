@@ -183,9 +183,9 @@
                                         class="material-icons md-20 md-light">&#xE8B6;</i></a></li>
                         <li data-uk-dropdown="{mode:'click'}">
                             <a href="#" class="user_action_icon"><i class="material-icons md-20 md-light">
-                                    &#xE7F4;</i><span
-                                        class="uk-badge">99</span></a>
-
+                                    &#xE7F4;</i>
+                                <span class="uk-badge">0</span></a>
+<!--
                             <div class="uk-dropdown uk-dropdown-xlarge uk-dropdown-flip">
                                 <div class="md-card-content">
                                     <ul class="uk-tab uk-tab-grid"
@@ -306,6 +306,7 @@
                                     </ul>
                                 </div>
                             </div>
+                            -->
                         </li>
                         <li data-uk-dropdown="{mode:'click'}">
                             <a href="#" class="user_action_image">
