@@ -12,14 +12,14 @@
 
     {{--<link rel="icon" type="image/png" href="assets/img/favicon-16x16.png" sizes="16x16">
     <link rel="icon" type="image/png" href="assets/img/favicon-32x32.png" sizes="32x32">--}}
-    <link rel="icon" type="image/png" href="{!! URL::asset('images/favicon.png') !!}" sizes="32x32">
-    <title>Enera Publishers @yield('title')</title>
+    <link rel="icon" type="image/png" href="{!! URL::asset('img/favicon.png') !!}" sizes="32x32">
+    <title>Enera Admins @yield('title')</title>
     @yield('head_scripts')
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- uikit -->
-    {!! HTML::style('bower_components/kendo-ui-core/styles/kendo.common-material.min.css') !!}
-    {!! HTML::style('bower_components/kendo-ui-core/styles/kendo.material.min.css') !!}
+    {!! HTML::style('bower_components/kendo-ui/styles/kendo.common-material.min.css') !!}
+    {!! HTML::style('bower_components/kendo-ui/styles/kendo.material.min.css') !!}
     {!! HTML::style('bower_components/uikit/css/uikit.almost-flat.min.css') !!}
 
             <!-- flag icons -->
@@ -341,8 +341,6 @@
 
 
     @yield('content')
-
-
             <!-- google web fonts -->
     <script>
         WebFontConfig = {
@@ -452,8 +450,6 @@
     </script>
 
     <script>
-
-
         new_campaign.base_url = "{!! URL::to('/') !!}";
         new_campaign.user_budget = parseFloat("{!! auth()->user()->wallet->current !!}");
 
@@ -462,7 +458,6 @@
                 UIkit.notify($(this).data());
             });
         });
-
 
         window.onload = function () {
             //remove loader

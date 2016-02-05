@@ -22,6 +22,7 @@ use MongoClient;
 class AnalyticsController extends Controller
 {
     private $campaign;
+    private $data;
     public function index()
     {
         return view('analytics.index');
@@ -34,33 +35,26 @@ class AnalyticsController extends Controller
      */
     public function single($id, $type = 'intPerDay')
     {
-        $data = array();    $porcentaje=0;
-        $data['type'] = $type;
-//        var_dump($type);
-//        var_dump($id);
-//        dd($campaign);
+        $this->data = array();    $porcentaje=0;
+        $this->data['type'] = $type; //guardo el tipo en data por que tambien lo regreso a la vista
         $this->campaign = Campaign::find($id); //busca la campaña
 
-//        dd($data);
         //valida que la campaña le pertenezca al usuario
         if ($this->campaign && $this->campaign->administrator_id == auth()->user()->_id) {
-            $data['name'] = $this->campaign->name;
-            $data['interaction'] = $this->campaign->interaction;
+            $this->data['name'] = $this->campaign->name;
+            $this->data['interaction'] = $this->campaign->interaction['name'];
+
             /****  OBTENER PORCENTAJE DEL TIEMPO TRANSCURRIDO ****/
             $start = new DateTime(date('Y-m-d H:i:s', $this->campaign->filters['date']['start']->sec));
             $end = new DateTime(date('Y-m-d H:i:s', $this->campaign->filters['date']['end']->sec));
 
-//            echo 'la campaña es mia <br>';
             if (method_exists($this, $type) && $type == !null) { //se verifica que el tipo sea valido y no nulo
-//                var_dump($type);
                 $datosGrafica = $this->$type(); //se llama el metodo correspondiente
             } else {
-                $data['type'] = 'intPerDay';
+                $this->data['type'] = 'intPerDay';
 //                $data['type'] = 'genderAge';
                 $datosGrafica = $this->intPerDay();//default, si es un tipo diferente o no existe
             }
-
-            $this->campaign->grafica = $datosGrafica;
 
             switch ($this->campaign->status) {
                 case 'pending':
@@ -88,16 +82,16 @@ class AnalyticsController extends Controller
                     $porcentaje = $diff->format('%a') / $total->format('%a');
                     break;
             }
-            $this->campaign->porcentaje = $porcentaje;
-//            $this->campaign->grafica = $datosGrafica;
-            $this->campaign->user = 'PRUEBA_ER';
-            $data = array_merge($this->campaign->toArray(), $data);
-//            dd($data);
-            return view('analytics.single', ['data' => $data, 'user' => Auth::user()]);
+            $this->data['porcentaje'] = $porcentaje;
+//            dd($this->data);
+            return view('analytics.single', [
+                'data' => $this->data,
+                'cam'=> $this->campaign,
+                'user' => Auth::user(),
+                'grafica'=>$datosGrafica
+            ]);
         } else {
-//            echo 'la campaña no es mia <br>';
             return redirect()->route('campaigns::index')->with('data', 'errorCamp');
-//            return redirect()->action('CampaignsController@index')->with('data', 'error');
         }
     }
 
@@ -106,64 +100,32 @@ class AnalyticsController extends Controller
      */
     private function intPerDay() //interacciones por dia
     {//sacar un conteo de cuantas interaccion se hacen por dia 5 dias atras
-        $dias=[];
-        $cnt=[];
-
-//        dd($start);
-//        $rangoFechas = $this->getRangoLast5Days();//obtengo las fechas de los ultimos 5 dias con la hora correcta para sacar los logs del dia especific
-//        $interacciones['0']= CampaignLog::where('campaign_id',$id)->where('interaction.loaded','exists','true')->where('updated_at', '>', $rangoFechas[2]['inicio'])->where('updated_at', '<', $rangoFechas[2]['fin'])->get(array('interaction'));
-//        $grafica['dia1'] = CampaignLog::where('campaign_id', $id)->where('interaction.loaded', 'exists', 'true')->where('updated_at', '>', $rangoFechas[0]['inicio'])->where('updated_at', '<', $rangoFechas[0]['fin'])->count();
-//        $grafica['dia2'] = CampaignLog::where('campaign_id', $id)->where('interaction.loaded', 'exists', 'true')->where('updated_at', '>', $rangoFechas[1]['inicio'])->where('updated_at', '<', $rangoFechas[1]['fin'])->count();
-//        $grafica['dia3'] = CampaignLog::where('campaign_id', $id)->where('interaction.loaded', 'exists', 'true')->where('updated_at', '>', $rangoFechas[2]['inicio'])->where('updated_at', '<', $rangoFechas[2]['fin'])->count();
-//        $grafica['dia4'] = CampaignLog::where('campaign_id', $id)->where('interaction.loaded', 'exists', 'true')->where('updated_at', '>', $rangoFechas[3]['inicio'])->where('updated_at', '<', $rangoFechas[3]['fin'])->count();
-//        $grafica['dia5'] = CampaignLog::where('campaign_id', $id)->where('interaction.loaded', 'exists', 'true')->where('updated_at', '>', $rangoFechas[4]['inicio'])->where('updated_at', '<', $rangoFechas[4]['fin'])->count();
-//        $grafica['grafica'] = $grafica;
-
-        /****  fechas para hacer la busqueda ****/
-        $start = $this->campaign->filters['date']['start']->sec;
-        $end = $this->campaign->filters['date']['end']->sec;
-
-        $collection = DB::getMongoDB()->selectCollection('campaign_logs');
-//        dd($collection);
-        $results = $collection->aggregate([
-            [
-                'campaign_id'=> $this->campaign->id,
-                '$match' => [
-                    'interaction.loaded' => [
-                        '$gte' => new MongoDate(strtotime(Carbon::today()->subDays(30)->format('Y-m-d'))),
-                        '$lte' => new MongoDate(strtotime(Carbon::today()->subDays(0)->format('Y-m-d'))),
-                    ]
-                ]
-            ],
-            [
-                '$group' => [
-                    '_id' => [
-                        '$dateToString' => [
-                            'format' => '%Y-%m-%d', 'date' => ['$subtract' => ['$created_at', 18000000]]
-                        ]
-                    ],
-                    'cnt' => [
-                        '$sum' => 1
-                    ]
-                ]
-            ],
-        ]);
-//        dd($results);
-        foreach($results['result'] as $result => $valor){
-//            echo '<br> for <br>';
-//            echo '<br> '.$result.'- '.$valor['_id'] .' <br>';
-            $dias[$result]=$valor['_id'];
-            $cnt[$result]=$valor['cnt'];
+        $this->data['graficname']='interaciones por dia';
+        /**************************   DATOS DE LA GRAFICA    ****************************/
+        $rangoFechas = array();//inicialiso el arreglo de las fechas
+        for ($i = 0; $i < 7; $i++) {
+            $a = new DateTime("-$i days");
+            $b = new  DateTime("-$i days");
+            $rangoFechas[$i]['inicio'] = $a->setTime(0, 0, 0);
+            $rangoFechas[$i]['fin'] = $b->setTime(23, 59, 59);
+            $grafica['fecha'][$i] = $a->format('Y-m-d');//guardo la fecha de los dias que se sacan para mostrarlos en la grafica
         }
-        $this->campaign->dias=$dias;
-        $this->campaign->cnt=$cnt;
-//        return $results['result'];
-        //creo la grafica para mandarla como un string e imprimirla
 
+        $grafica['cnt'][0] = CampaignLog::where('campaign_id', $this->campaign->id)->where('interaction.loaded', 'exists', 'true')->where('updated_at', '>', $rangoFechas[0]['inicio'])->where('updated_at', '<', $rangoFechas[0]['fin'])->count();
+        $grafica['cnt'][1] = CampaignLog::where('campaign_id', $this->campaign->id)->where('interaction.loaded', 'exists', 'true')->where('updated_at', '>', $rangoFechas[1]['inicio'])->where('updated_at', '<', $rangoFechas[1]['fin'])->count();
+        $grafica['cnt'][2] = CampaignLog::where('campaign_id', $this->campaign->id)->where('interaction.loaded', 'exists', 'true')->where('updated_at', '>', $rangoFechas[2]['inicio'])->where('updated_at', '<', $rangoFechas[2]['fin'])->count();
+        $grafica['cnt'][3] = CampaignLog::where('campaign_id', $this->campaign->id)->where('interaction.loaded', 'exists', 'true')->where('updated_at', '>', $rangoFechas[3]['inicio'])->where('updated_at', '<', $rangoFechas[3]['fin'])->count();
+        $grafica['cnt'][4] = CampaignLog::where('campaign_id', $this->campaign->id)->where('interaction.loaded', 'exists', 'true')->where('updated_at', '>', $rangoFechas[4]['inicio'])->where('updated_at', '<', $rangoFechas[4]['fin'])->count();
+        $grafica['cnt'][5] = CampaignLog::where('campaign_id', $this->campaign->id)->where('interaction.loaded', 'exists', 'true')->where('updated_at', '>', $rangoFechas[5]['inicio'])->where('updated_at', '<', $rangoFechas[5]['fin'])->count();
+        $grafica['cnt'][6] = CampaignLog::where('campaign_id', $this->campaign->id)->where('interaction.loaded', 'exists', 'true')->where('updated_at', '>', $rangoFechas[6]['inicio'])->where('updated_at', '<', $rangoFechas[6]['fin'])->count();
+
+//        dd($grafica);
+        return $grafica;
     }
 
     private function genderAge()
     {
+        $this->data['graficname']='Grafica Demografica ';
         /*******         OBTENER LAS INTERACCIONES POR DIAS       ***************/
         $men['1'] = -$this->campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'male')
             ->where('user.age', '>=', 0)->where('user.age', '<=', 17)->distinct('user_id')->count();
@@ -206,57 +168,124 @@ class AnalyticsController extends Controller
             ->where('user.age', '>=', 81)->where('user.age', '<=', 90)->distinct('user_id')->count();
         $women['10'] = $this->campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'female')
             ->where('user.age', '>=', 90)->distinct('user_id')->count();
-        $this->campaign->men = $men;
-        $this->campaign->women = $women;
+//        $this->campaign->men = $men;
+//        $this->campaign->women = $women;
         $grafica['men']=$men;
-//        $grafica['women']=$women;
-//        return $grafica;
-    }
-    /**
-     * @param $id
-     * @return mixed
-     */
-    private function genderAge2($id)
-    {   //        $today =date( "Y-m-d",mktime(0, 0, 0, date("m"),date("d")-5, date("Y")));
-        $Log['users'] = [];//se inicializa el arreglo
-        dd($Log);
-        //se obtiene de los logs los usuarios de 5 dias atras
-        $fecha = $this->fechaInicio(5); //el numero es entere positivo pero en la funcion se ase negativo para buscar asia atras
-        if ($Logs = CampaignLog::groupBy('user')->where('campaign_id', $id)->where('updated_at', '>', $fecha)->get(array('user'))) {
-            $Logs = $Logs->toArray();
-            foreach ($Logs as $clave => $valor) {//recorro el arreglo para acomodar los datos en un arreglo mas presentable
-                if (array_key_exists($valor['user']['age'], $Log['users'])) {
-//                    echo 'se encontro <br>';
-                    if ($valor['user']['gender'] == 'male') {
-                        $Log['users'][$valor['user']['age']]['M'] += 1;
-                    } else {
-                        $Log['users'][$valor['user']['age']]['F'] += '1';
-                    }
-                } else {
-//                    echo 'no se encontro'.$valor['user']['age'].' <br>';
-                    if ($valor['user']['gender'] == 'male') {
-                        $Log['users'][$valor['user']['age']]['M'] = 1;
-                    } else {
-                        $Log['users'][$valor['user']['age']]['F'] = '1';
-                    }
-                }
-                /*$Log['users'][$clave]['gender'] =$valor['user']['gender'];
-            $Log['users'][$clave]['age'] =$valor['user']['age'];*/
-            }//fin del for
-        } else {
-            $Log['users'][0]['F'] = '0';;
-            $Log['users'][0]['M'] = '0';;
-        }
-//        dd($Log);
-        return $Log;
+        $grafica['women']=$women;
+        return $grafica;
     }
 
     /**
-     * @param $id
+     * @return mixed
+     * @internal param $id
+     */
+    private function intXHour()
+    {   //        $today =date( "Y-m-d",mktime(0, 0, 0, date("m"),date("d")-5, date("Y")));
+        $this->data['graficname']='interaciones por hora';
+        $IntXDias = [
+            '00' => ['hora' => '00', 'cntC' => 0, 'cntL' => 0], '01' => ['hora' => '01', 'cntC' => 0, 'cntL' => 0], '02' => ['hora' => '02', 'cntC' => 0, 'cntL' => 0], '03' => ['hora' => '03', 'cntC' => 0, 'cntL' => 0],
+            '04' => ['hora' => '04', 'cntC' => 0, 'cntL' => 0], '05' => ['hora' => '05', 'cntC' => 0, 'cntL' => 0], '06' => ['hora' => '06', 'cntC' => 0, 'cntL' => 0], '07' => ['hora' => '07', 'cntC' => 0, 'cntL' => 0],
+            '08' => ['hora' => '08', 'cntC' => 0, 'cntL' => 0], '09' => ['hora' => '09', 'cntC' => 0, 'cntL' => 0], '10' => ['hora' => '10', 'cntC' => 0, 'cntL' => 0], '11' => ['hora' => '11', 'cntC' => 0, 'cntL' => 0],
+            '12' => ['hora' => '12', 'cntC' => 0, 'cntL' => 0], '13' => ['hora' => '13', 'cntC' => 0, 'cntL' => 0], '14' => ['hora' => '14', 'cntC' => 0, 'cntL' => 0], '15' => ['hora' => '15', 'cntC' => 0, 'cntL' => 0],
+            '16' => ['hora' => '16', 'cntC' => 0, 'cntL' => 0], '17' => ['hora' => '17', 'cntC' => 0, 'cntL' => 0], '18' => ['hora' => '18', 'cntC' => 0, 'cntL' => 0], '19' => ['hora' => '19', 'cntC' => 0, 'cntL' => 0],
+            '20' => ['hora' => '20', 'cntC' => 0, 'cntL' => 0], '21' => ['hora' => '21', 'cntC' => 0, 'cntL' => 0], '22' => ['hora' => '22', 'cntC' => 0, 'cntL' => 0], '23' => ['hora' => '23', 'cntC' => 0, 'cntL' => 0],
+        ];
+
+        /****  fechas para hacer la busqueda ****/
+        $start = $this->campaign->filters['date']['start']->sec;
+        $end = $this->campaign->filters['date']['end']->sec;
+
+
+        /*******         OBTENER LAS INTERACCIONES POR hora       ***************/
+        $collection = DB::getMongoDB()->selectCollection('campaign_logs');
+        $results = $collection->aggregate([
+            [
+                '$match' => [
+                    'campaign_id' => $this->campaign->id,
+                    'interaction.loaded' => [
+                        '$gte' => new MongoDate(strtotime(Carbon::today()->subDays(30)->format('Y-m-d'))),
+                        '$lte' => new MongoDate(strtotime(Carbon::today()->subDays(0)->format('Y-m-d'))),
+                    ]
+                ]
+            ],
+            [
+                '$group' => [
+                    '_id' => [
+                        '$dateToString' => [
+                            'format' => '%H:00:00', 'date' => ['$subtract' => ['$created_at', 18000000]]
+                        ]
+                    ],
+                    'cnt' => [
+                        '$sum' => 1
+                    ]
+                ],
+            ],
+            [
+                '$sort' => [
+                    '_id' => 1
+                ]
+            ]
+        ]);
+        $results2 = $collection->aggregate([
+            [
+                '$match' => [
+                    'campaign_id' => $this->campaign->id,
+                    'interaction.completed' => [
+                        '$gte' => new MongoDate(strtotime(Carbon::today()->subDays(30)->format('Y-m-d'))),
+                        '$lte' => new MongoDate(strtotime(Carbon::today()->subDays(0)->format('Y-m-d'))),
+                    ]
+                ]
+            ],
+            [
+                '$group' => [
+                    '_id' => [
+                        '$dateToString' => [
+                            'format' => '%H:00:00', 'date' => ['$subtract' => ['$created_at', 18000000]]
+                        ]
+                    ],
+                    'cnt' => [
+                        '$sum' => 1
+                    ]
+                ],
+            ],
+            [
+                '$sort' => [
+                    '_id' => 1
+                ]
+            ]
+        ]);
+
+        foreach ($results['result'] as $result => $valor) {
+
+            $time = explode(":", $valor['_id']);
+            if (array_key_exists($time[0], $IntXDias)) {
+//                    echo '<br>si esta<br>';
+                $IntXDias[$time[0]]['cntL'] = $valor['cnt'];
+            } else {
+//                    echo '<br>no esta<br>';
+                $IntXDias[$result][$time[0]] = 0;
+            }
+        }
+        foreach ($results2['result'] as $result => $valor) {
+            $time = explode(":", $valor['_id']);
+            if (array_key_exists($time[0], $IntXDias)) {
+                $IntXDias[$time[0]]['cntC'] = $valor['cnt'];
+            } else {
+                $IntXDias[$result][$time[0]] = 0;
+            }
+        }
+
+//        dd($IntXDias);
+        return $IntXDias;
+    }
+
+    /**
      * @return array
+     * @internal param $id
      */
     public function so()
     {
+        $this->data['graficname']='Grafica de los dispositivos';
         //se obtiene de los logs los usuarios de 5 dias atras
         $fecha = $this->fechaInicio(5); //el numero es entere positivo pero en la funcion se ase negativo para buscar asia atras
         $so['android'] = CampaignLog::where('campaign_id', $this->campaign->id)->where('device.os', 'android')->where('updated_at', '>', $fecha)->count();
@@ -282,7 +311,6 @@ class AnalyticsController extends Controller
                 $ed['users'][$clave]['gender'] = $valor['user']['gender'];
                 $ed['users'][$clave]['age'] = $valor['user']['age'];
             }
-
         } else {//si regresa null regreso 0
             $ed[0] = 0;
         }
@@ -297,10 +325,10 @@ class AnalyticsController extends Controller
     /**
      * @internal param MongoDate $fecha
      */
-    public function getRangoLast5Days()
+    public function getRangoLast7Days()
     {   //para setear el rango de la hora que quiero
         $rangoFechas = array();
-        for ($i = 0; $i < 6; $i++) {
+        for ($i = 0; $i < 7; $i++) {
             $a = new DateTime("-$i days");
             $b = new  DateTime("-$i days");
             $rangoFechas[$i]['inicio'] = $a->setTime(0, 0, 0);

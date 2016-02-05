@@ -35,7 +35,6 @@ graficas = function () {
     }
 //------------------------grafica de barra para los años y edades
     this.genderAge = function genderAge( men , women ){
-
         // Data gathered from http://populationpyramid.net/germany/2015/
         $(function () {
             // Age categories
@@ -229,7 +228,7 @@ graficas = function () {
         return chart3;
     }
     this.intPerHour = function intPerHour(IntXDias,Load,complet,horas){
-        var c3chart_area_stacked_id = '#DistribuciónXHoras';
+        var c3chart_area_stacked_id = '#intXHour';
 
         //var graphHoras = ['x'];
         //var graphIntL = ['Visto'];
@@ -279,6 +278,8 @@ graficas = function () {
                 c3chart_area_stacked.resize();
             });
 
+        }else {
+            console.log('error en el contenedor');
         }
     }
 };

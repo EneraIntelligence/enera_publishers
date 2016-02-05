@@ -287,9 +287,6 @@
     </div>
 </div>
 
-{{--{!!  var_dump($registro) !!}--}}
-{{--{!!  var_dump($registro2) !!}--}}
-
 <!-- common functions -->
 {!! HTML::script('assets/js/common.min.js') !!}
         <!-- altair core functions -->
