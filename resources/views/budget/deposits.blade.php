@@ -31,9 +31,9 @@
                         <div class="md-card-content">
                             <div class="uk-tab-center">
                                 <ul class="uk-tab" data-uk-tab="{connect:'#tabs_5'}">
-                                    {{--<li class="uk-active">
-                                        <a href="#">Terjeta de Credito</a>
-                                    </li>--}}
+                                    {{--<li>--}}
+                                    {{--<a href="#">Terjeta de Credito</a>--}}
+                                    {{--</li>--}}
                                     <li class="uk-active">
                                         <a href="#">Paypal</a>
                                     </li>
@@ -52,7 +52,7 @@
                                 </div>
                             @endif
                             <ul id="tabs_5" class="uk-switcher uk-margin">
-                                <!-- <li>
+                                <!--   <li>
                                     <div class="col-md-4" id="conekta">
                                         <h3 class="uk-panel-title">Conekta</h3>
                                         <div class="uk-width-medium-4-5 uk-container-center">
@@ -69,13 +69,14 @@
                                                             <div class="uk-form-row">
                                                                 <div class="md-input-wrapper"><label>Monto</label>
                                                                     <input class="md-input masked_input"
-                                                                           id="masked_currency"
+                                                                           id="budget_input"
                                                                            name="money" type="text"
                                                                            data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'autoGroup': true, 'digits': 2, 'digitsOptional': false, 'prefix': '$ ', 'placeholder': '0'"
                                                                            data-inputmask-showmaskonhover="false"
                                                                            data-parsley-multipleof="3"
                                                                            data-parsley-required/>
                                                                     <span class="md-input-bar"></span></div>
+                                                                <p id="balance"></p>
                                                             </div>
                                                         </div>
                                                         <div class="uk-width-medium-2-3">
@@ -164,7 +165,7 @@
                                                         </div>
                                                         <div class="uk-width-medium-1-2">
                                                             <div class="uk-form-row">
-                                                                <div class="md-input-wrapper"><label>Pais</label>
+                                                                <div class="md-input-wrapper md-input-filled"><label>Pais</label>
                                                                     <input type="text" name="country" class="md-input"
                                                                            value="México"
                                                                            required>
@@ -244,7 +245,7 @@
                                                         <div class="md-input-wrapper md-input-filled">
                                                             <label>Monto</label>
                                                             <input class="md-input masked_input"
-                                                                   id="masked_currency" name="amount" type="text"
+                                                                   id="budget_input" name="amount" type="text"
                                                                    data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'autoGroup': true, 'digits': 2, 'digitsOptional': false, 'prefix': '$ ', 'placeholder': '0'"
                                                                    data-inputmask-showmaskonhover="false"
                                                                    value="1000" data-parsley-required>
@@ -543,6 +544,7 @@
     </div>
 @stop
 @section('scripts')
+
     {!! HTML::script('bower_components/parsleyjs/dist/parsley.min.js') !!}
     {!! HTML::script('bower_components/parsleyjs/src/i18n/es.js') !!}
     {!! HTML::script('bower_components/countUp.js/countUp.js') !!}
@@ -550,6 +552,23 @@
     {!! HTML::script('bower_components/jquery.inputmask/dist/jquery.inputmask.bundle.min.js') !!}
     {!! HTML::script('assets/js/pages/forms_advanced.min.js') !!}
 
+    <script type="text/javascript">
+        window.Parsley
+                .addValidator('multipleOf', {
+                    requirementType: 'string',
+                    validateNumber: function (value, requirement) {
+                        var budgetStr = value;//remove $
+                        budgetStr = budgetStr.replace(/,/g, '');//remove commas
+
+                        var budget = parseFloat(budgetStr);
+                        return 0 === budget % requirement;
+                    },
+                    messages: {
+                        en: 'This value should be a multiple of %s',
+                        fr: 'Cette valeur doit être un multiple de %s'
+                    }
+                });
+    </script>
     <script>
         Conekta.setPublishableKey('key_EEMfnnqZZp3AhezEdytCc5A');
 
@@ -591,6 +610,26 @@
         for (var i = 0; i == divs.length; i++) {
             console.log(divs.length);
         }
+
+        $("#budget_input").change(function () {
+
+            var budgetStr = $("#budget_input").val().substr(1);//remove $
+            budgetStr = budgetStr.replace(/,/g, '');//remove commas
+
+            var budget = parseFloat(budgetStr);
+            var msg = "";
+
+            $("#balance").css("color", "black");
+            if (budget < 100) {
+                msg = '<div style="color:red" class="md-input-danger"> La cantidad debe ser al menos $100</div> ';
+            }
+            if (budget > 20000) {
+                msg = '<div style="color:red" class="md-input-danger"> La cantidad debe ser menor $20,000</div> ';
+            }
+
+            $("#balance").html(msg);
+        });
+
 
         var option = {
             useEasing: false,

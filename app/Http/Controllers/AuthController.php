@@ -139,7 +139,7 @@ class AuthController extends Controller
 
     public function register()
     {
-        return redirect()->route('auth.index')->with('registro', 'registrar');
+        return view('auth.register');
     }
 
     public function verify($id, $token)

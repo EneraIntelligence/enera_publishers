@@ -159,7 +159,7 @@
                         <img src="images/publisher.png" alt="">
                     </div>
                 </div>
-                <h2 class="heading_a ">Crear Cuenta</h2>
+                <h5 style="text-align: center; color: deepskyblue">Crea tu cuenta y comienza a publicar anuncios hoy. Recibe $500 para tu primer campaña</h5>
                 {!! Form::open(['route'=>'auth.signUp', 'class'=>'uk-form-stacked', 'id'=>'form_validation2']) !!}
                 @if( Session::has('errors') )
                     <div style="text-align: center; color: red;">hubo un {!! $registro = 'error'  !!} al registrarte verifica los campos</div>
@@ -221,21 +221,29 @@
                         <span id="Rerror" class="md-input-bar" style="background: red"> </span>
                     @endforeach
                 </div>
-                <div class="uk-form-row {!! $errors->get('password')? 'md-input-wrapper-danger md-input-focus':' '!!}">
-                    <label for="register_password_repeat">Confirmar Contraseña</label>
+                {{--<div class="uk-form-row {!! $errors->get('password')? 'md-input-wrapper-danger md-input-focus':' '!!}">--}}
+                    {{--<label for="register_password_repeat">Confirmar Contraseña</label>--}}
+                    {{--<input class="md-input" type="password" id="register_password_repeat" name="confirma_contraseña"--}}
+                           {{--required data-parsley-trigger="change"--}}
+                           {{--data-parsley-minlength="8" data-parsley-minlength-message="minimo 8 caracteres"--}}
+                           {{--data-parsley-maxlength="16" data-parsley-maxlength-message="maximo 16 caracteres"--}}
+                           {{--data-parsley-validation-threshold="10"--}}
+                           {{--data-parsley-required-message="se requiere de una contraseña"--}}
+                           {{--data-parsley-equalto="#register_password" data-parsley-equalto-message="esta contraseña no coincide con la otra. Deben ser iguales"--}}
+                    {{--/>--}}
+                    {{--@foreach($errors->get('password') as $m)--}}
+                        {{--<div style="text-align: center; color: red;">{!! $m !!}</div>--}}
+                        {{--<span class="md-input-bar"> </span>--}}
+                    {{--@endforeach--}}
+                {{--</div>--}}
+                <div class="uk-form-row {!! $errors->get('cupon')? 'md-input-wrapper-danger md-input-focus':' '!!}">
+                    <label for="register_password_repeat">Cupón (Opcional)</label>
                     <input class="md-input" type="password" id="register_password_repeat" name="confirma_contraseña"
-                           required data-parsley-trigger="change"
-                           data-parsley-minlength="8" data-parsley-minlength-message="minimo 8 caracteres"
-                           data-parsley-maxlength="16" data-parsley-maxlength-message="maximo 16 caracteres"
-                           data-parsley-validation-threshold="10"
-                           data-parsley-required-message="se requiere de una contraseña"
-                           data-parsley-equalto="#register_password" data-parsley-equalto-message="esta contraseña no coincide con la otra. Deben ser iguales"
-                    />
+                           data-parsley-type="alphanum"/>
                     @foreach($errors->get('password') as $m)
                         <div style="text-align: center; color: red;">{!! $m !!}</div>
                         <span class="md-input-bar"> </span>
                     @endforeach
-
                 </div>
                 {{--<div class="uk-form-row">
                     <label for="register_password_repeat">Estado</label>
@@ -267,7 +275,7 @@
 
     </div>
     <div id="create" class="uk-margin-top uk-text-center">
-        <a href="#" class="white_link" id="signup_form_show">Crear Cuenta</a>
+        <a href="{!! URL::route('auth.register') !!}" class="white_link">Crear Cuenta</a>
     </div>
 
 

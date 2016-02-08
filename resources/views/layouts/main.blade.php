@@ -129,7 +129,7 @@
                                                                                         style="top: 2px; position: relative;">Publishers</span>
                         </a>
 
-                        <div class="uk-dropdown uk-dropdown-width-3" style="margin-top: 15px;">
+                        <div class="uk-dropdown uk-dropdown-width-3" style="margin-top: 14px;">
                             <div class="uk-grid uk-dropdown-grid" data-uk-grid-margin>
                                 <div class="uk-width-2-3">
                                     <div class="uk-grid uk-grid-width-medium-1-3 uk-margin-top uk-margin-bottom uk-text-center"
