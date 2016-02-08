@@ -263,7 +263,7 @@
                                                 <div class="md-card">
                                                     <div id="graficas" class="md-card-content">
                                                         <h3 class="heading_a uk-margin-bottom">Analiticos</h3>
-                                                        <div id='DistribuciónXHoras'
+                                                        <div id='intXHour'
                                                              class="uk-width-large-1-1 uk-margin-right"></div>
                                                         <h3 class="md-hr" style="margin: 10px;"></h3>
                                                         <div id='genderAge' class="uk-width-large-1-1 uk-panel-teaser"
@@ -294,8 +294,6 @@
     @stop
 
     @section('scripts')
-
-
             <!-- slider script -->
     {!! HTML::script('js/preview_helper.js') !!}
 
@@ -361,12 +359,7 @@
 
         var intLJson = '{!! json_encode($IntXDias) !!}';
         var intLObj = JSON.parse(intLJson);
-{{--        var intCJson = '{!! json_encode($cam->intC) !!}';--}}
-//        var intCObj = JSON.parse(intCJson);
-{{--        var horasJson = '{!! json_encode($cam->horas) !!}';--}}
-//        var horasObj = JSON.parse(horasJson);
-        console.log(intLObj);
-//        console.log(intCObj);
+//        console.log(intLObj);
 
         var gra = grafica.genderAge(menObj, womenObj);
         var graf = grafica.intPerHour(intLObj);

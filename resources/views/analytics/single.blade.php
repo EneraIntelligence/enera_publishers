@@ -19,8 +19,8 @@
                             <div class="user_heading_avatar">
                                 <div>
                                     <div id="circle" style="max-width:98px;max-height:98px;margin:auto;">
-                                        <img style="background-image:none!important;margin:-96px 9px;"
-                                             src="{!! URL::asset('images/icons/'. $data['interaction']['name'].'.svg') !!}"
+                                        <img style="background-image:none!important;margin:-96px 9px;background:transparent;border:none;"
+                                             src="{!! URL::asset('images/icons/'. $cam['interaction']['name'].'2.svg') !!}"
                                              alt="producto"/>
                                     </div>
                                 </div>
@@ -28,13 +28,12 @@
                             <div class="user_heading_content">
                                 <h2 class="heading_b uk-margin-bottom">
                                     <span class="uk-text-truncate">{{ $data['name'] }} </span>
-                                    <span class="sub-heading">{{ $data['interaction']['name'] }}</span>
+                                    <span class="sub-heading">{{ $data['interaction'] }}</span>
                                 </h2>
                             </div>
-                            <a class="md-fab md-fab-small md-fab-accent {!! Publishers\Libraries\CampaignStyleHelper::getStatusColor('active') !!}"
-                               {{-- $status--}}
-                               style="background: {!! Publishers\Libraries\CampaignStyleHelper::getStatusColor('active') !!}">  {{-- href="page_user_edit.html" --}}
-                                <i class="material-icons">{!! Publishers\Libraries\CampaignStyleHelper::getStatusIcon('active') !!}</i>
+                            <a data-uk-tooltip="{pos:'left'}" title="{!! $cam->status !!}"
+                               class="md-fab md-fab-small md-fab-accent {!! Publishers\Libraries\CampaignStyleHelper::getStatusColor($cam->status) !!} ">
+                                <i class="material-icons">{!! Publishers\Libraries\CampaignStyleHelper::getStatusIcon($cam->status) !!}</i>
                             </a>
                         </div>
 
@@ -46,6 +45,7 @@
                                         <option value="intPerDay">Interacciones por dia</option>
                                         <option value="genderAge">Generos y edades</option>
                                         <option value="so">sistemas operativos</option>
+                                        <option value="intXHour">Interacciones por hora</option>
                                         <option value="a">Item A</option>
                                     </optgroup>
                                 </select>
@@ -60,10 +60,9 @@
                         {{-- graficas --}}
                         <div  class="uk-width-large-1-1 uk-margin-top " style="height: 500px;">
                             <div id="grafica" style="width: 80%; margin: auto">
-                                <div class="uk-margin-large-left">Grafica de {!! $data['type'] !!}</div>
-                                <div id="{!! $data['type'] !!}" class="uk-width-large-1-1 uk-margin-right">
-
-                                </div>
+                                <div class="uk-margin-large-left">Grafica de {!! $data['graficname'] !!}</div>
+                                <div id="{!! $data['type'] !!}" class="uk-width-large-1-1 uk-margin-right"></div>
+                                {{--<div id="intPerHour" class="uk-width-large-1-1 uk-margin-right"></div>--}}
                                 <div class="uk-width-large-1-2 uk-margin-left">
 
                                 </div>
@@ -72,7 +71,7 @@
                                 </div>
                             </div>
                         </div>
-                        {{--<div id="container" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>--}}
+                        <div id="container" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
                     </div>
                 </div>
             </div>
@@ -136,7 +135,7 @@
             $(select).change(function () {
                 var tipo = select.val();
 //                console.log("Handler for .change() called. " + tipo);
-                var ruta = '{!! URL::route('analytics::single').'/'.$data['_id'] !!}/'+tipo;
+                var ruta = '{!! URL::route('analytics::single').'/'.$cam['_id'] !!}/'+tipo;
                 console.log(ruta);
                 window.location.href = ruta;
             });
@@ -146,22 +145,31 @@
             var gra = '';
             switch (tipo) {
                 case 'intPerDay':
-                    var diasJson = '{!! isset($data['dias']) ? json_encode($data['dias']) : json_encode([0,0,0,0,0,0]) !!}';
+                        console.log('inter per day');
+                    var diasJson = '{!! isset($grafica['fecha']) ? json_encode($grafica['fecha']) : json_encode([0,0,0,0,0,0,0]) !!}';
                     var diasObj = JSON.parse(diasJson);
-                    var cntJson = '{!! isset($data['cnt']) ? json_encode($data['cnt']) : json_encode([0,0,0,0,0,0]) !!}';
+//                    console.log(diasObj);
+                    var cntJson = '{!! isset($grafica['cnt']) ? json_encode($grafica['cnt']) : json_encode([0,10,0,10,0,0,0]) !!}';
                     var cntObj = JSON.parse(cntJson);
-                    console.log(diasJson);
+//                    console.log(cntObj);
                     gra = grafica.intPerDay(diasObj,cntObj);
                     break;
                 case 'genderAge':
-                    var menJson = '{!! isset($data['men']) ? json_encode($data['men']) : json_encode([0,0,0,0,0,0]) !!}';
+                    var menJson = '{!! isset($grafica['men']) ? json_encode($grafica['men']) : json_encode([0,0,0,0,0,0,0]) !!}';
                     var menObj = JSON.parse(menJson);
-                    var womenJson = '{!! isset($data['women']) ? json_encode($data['women']) : json_encode([0,0,0,0,0,0]) !!}';
+                    var womenJson = '{!! isset($grafica['women']) ? json_encode($grafica['women']) : json_encode([0,0,0,0,0,0,0]) !!}';
                     var womenObj = JSON.parse(womenJson);
                     gra = grafica.genderAge(menObj, womenObj);
                     break;
                 case 'so':
-                    gra = grafica.so({!! json_encode($data['grafica']) !!});
+                    console.log('so');
+                    break;
+                case 'intXHour':
+                    console.log('intXHour');
+                    var intLJson = '{!! json_encode($grafica) !!}';
+                    var intLObj = JSON.parse(intLJson);
+//                        console.log(intLObj);
+                    gra = grafica.intPerHour(intLObj);
                     break;
             }
         }); // ----------------------------- termina document ready -----------------
