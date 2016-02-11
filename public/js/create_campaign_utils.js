@@ -201,6 +201,16 @@ create_campaign_helper =
         if(y<0)
             y=0;
 
+        if(y+height>img.naturalHeight)
+        {
+            height = img.naturalHeight-y;
+        }
+
+        if(x+width>img.naturalWidth)
+        {
+            width = img.naturalWidth-x;
+        }
+
         //create canvas
         var resize_canvas = document.createElement('canvas');
         resize_canvas.width = expWidth;
@@ -306,6 +316,7 @@ create_campaign_helper =
 
                 output.cropper({
                     aspectRatio: width / height,
+                    viewMode:3,
                     resizable: true,
                     zoomable: false,
                     rotatable: false,
