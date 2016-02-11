@@ -70,8 +70,7 @@
                     <img src="images/publisher.png" alt="">
                 </div>
             </div>
-            <h5 style="text-align: center; color: deepskyblue">Crea tu cuenta y comienza a publicar anuncios hoy. Recibe
-                $500 para tu primer campaña</h5>
+            <h5 style="text-align: center; color: deepskyblue">Crea tu cuenta y comienza a publicar anuncios hoy</h5>
             {!! Form::open(['route'=>'auth.signUp', 'class'=>'uk-form-stacked', 'id'=>'form_validation2']) !!}
             @if( Session::has('errors') )
                 <div style="text-align: center; color: red;">hubo un {!! $registro = 'error'  !!} al registrarte
@@ -156,7 +155,7 @@
             <div class="uk-form-row {!! $errors->get('cupon')? 'md-input-wrapper-danger md-input-focus':' '!!}">
                 <label for="register_password_repeat">Cupón (Opcional)</label>
                 <input class="md-input" type="text" id="register_password_repeat" name="confirma_contraseña"
-                       data-parsley-type="alphanum"/>
+                       data-parsley-type="alphanum" value="{!! Input::get('code') !!}"/>
                 @foreach($errors->get('password') as $m)
                     <div style="text-align: center; color: red;">{!! $m !!}</div>
                     <span class="md-input-bar"> </span>
