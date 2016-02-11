@@ -196,6 +196,10 @@ create_campaign_helper =
         var previewId = create_campaign_helper.cropData.previewId;
         var input = create_campaign_helper.cropData.input;
 
+        console.log("CROP DATA --------------------");
+        console.log(create_campaign_helper.cropData);
+
+
         //create canvas
         var resize_canvas = document.createElement('canvas');
         resize_canvas.width = expWidth;
@@ -315,7 +319,6 @@ create_campaign_helper =
                         create_campaign_helper.cropData.previewId = previewId;
                         create_campaign_helper.cropData.input = input;
 
-                        console.log(create_campaign_helper.cropData);
                     }
                 });
 
