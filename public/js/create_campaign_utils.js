@@ -316,7 +316,7 @@ create_campaign_helper =
 
                 output.cropper({
                     aspectRatio: width / height,
-                    viewMode:3,
+                    viewMode:1,
                     resizable: true,
                     zoomable: false,
                     rotatable: false,
