@@ -196,6 +196,11 @@ create_campaign_helper =
         var previewId = create_campaign_helper.cropData.previewId;
         var input = create_campaign_helper.cropData.input;
 
+        if(x<0)
+            x=0;
+        if(y<0)
+            y=0;
+
         console.log("CROP DATA --------------------");
         console.log(create_campaign_helper.cropData);
         console.log("x:"+x);
