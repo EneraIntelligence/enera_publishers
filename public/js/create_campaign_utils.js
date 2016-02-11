@@ -189,10 +189,10 @@ create_campaign_helper =
         var img = create_campaign_helper.cropData.image;
         var x = Math.round(create_campaign_helper.cropData.x);
         var y = Math.round(create_campaign_helper.cropData.y);
-        var width = create_campaign_helper.cropData.width;
-        var height = create_campaign_helper.cropData.height;
-        var expWidth = create_campaign_helper.cropData.imageWidth;
-        var expHeight = create_campaign_helper.cropData.imageHeight;
+        var width = Math.round(create_campaign_helper.cropData.width);
+        var height = Math.round(create_campaign_helper.cropData.height);
+        var expWidth = Math.round(create_campaign_helper.cropData.imageWidth);
+        var expHeight = Math.round(create_campaign_helper.cropData.imageHeight);
         var previewId = create_campaign_helper.cropData.previewId;
         var input = create_campaign_helper.cropData.input;
 
