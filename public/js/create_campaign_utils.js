@@ -187,8 +187,8 @@ create_campaign_helper =
 
         //get the crop data
         var img = create_campaign_helper.cropData.image;
-        var x = create_campaign_helper.cropData.x;
-        var y = create_campaign_helper.cropData.y;
+        var x = Math.round(create_campaign_helper.cropData.x);
+        var y = Math.round(create_campaign_helper.cropData.y);
         var width = create_campaign_helper.cropData.width;
         var height = create_campaign_helper.cropData.height;
         var expWidth = create_campaign_helper.cropData.imageWidth;
@@ -198,6 +198,8 @@ create_campaign_helper =
 
         console.log("CROP DATA --------------------");
         console.log(create_campaign_helper.cropData);
+        console.log("x:"+x);
+        console.log("y:"+y);
 
 
         //create canvas
