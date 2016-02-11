@@ -314,6 +314,8 @@ create_campaign_helper =
                         create_campaign_helper.cropData.image = image;
                         create_campaign_helper.cropData.previewId = previewId;
                         create_campaign_helper.cropData.input = input;
+
+                        console.log(create_campaign_helper.cropData);
                     }
                 });
 
