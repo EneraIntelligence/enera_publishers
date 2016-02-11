@@ -201,12 +201,6 @@ create_campaign_helper =
         if(y<0)
             y=0;
 
-        console.log("CROP DATA --------------------");
-        console.log(create_campaign_helper.cropData);
-        console.log("x:"+x);
-        console.log("y:"+y);
-
-
         //create canvas
         var resize_canvas = document.createElement('canvas');
         resize_canvas.width = expWidth;
