@@ -99,6 +99,17 @@
 //                print($('#reporte'));
             });
 
+            /*function print(data) {
+                $(data).printThis({
+                    debug: false,              //!* show the iframe for debugging
+                    importCSS: true,           //!* import page CSS
+                    printContainer: true,      //!* grab outer container as well as the contents of the selector
+                    loadCSS: "public/bower_components/kendo-ui-core/styles/kendo.common-material.min.css", //!* path to additional css file
+                    loadCSS: "public/bower_components/kendo-ui-core/styles/kendo.material.min.css", //!* path to additional css file
+                    pageTitle: "Grafica",             //!* add title to print page
+                    removeInline: false        //!* remove all inline styles from print elements
+                });
+            }*/
 //                       funcion nativa
             function Popup(data) {
                 var mywindow = window.open('', 'my div', 'height=600,width=800');
@@ -106,6 +117,7 @@
                 /*optional stylesheet*/
                 mywindow.document.write('<link rel="stylesheet" href="public/bower_components/kendo-ui-core/styles/kendo.common-material.min.css" type="text/css" />');
                 mywindow.document.write('</head><body >');
+                mywindow.document.write('prueba de impresion');
                 mywindow.document.write(data);
                 mywindow.document.write('</body></html>');
 

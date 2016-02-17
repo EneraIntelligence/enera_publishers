@@ -52,18 +52,18 @@ class Handler extends ExceptionHandler
             if ($this->isHttpException($e)) {
                 return $this->renderHttpException($e);
             } else if ($e instanceof NotFoundHttpException) {
-                return response()->view('error.404', [], 40);
+                return response()->view('error.404', [], 404);
             } else
                 if ($e instanceof FatalErrorException) {
                     //dd('error fatal');
-                    return response()->view('errors.503', [], 500);
+                    return response()->view('errors.503', [], 503);
                 } else
                     if ($e instanceof Exception) {
 //                dd('exeption');
                         return response()->view('errors.500', [], 500);
                     } else {
                         //dd('ninguno');
-                        return response()->view('errors.503', [], 500);
+                        return response()->view('errors.503', [], 503);
 //                return parent::render($request, $e);
                     }
         } elseif ($debug == 1) {
