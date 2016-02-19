@@ -5,6 +5,7 @@ namespace Publishers\Exceptions;
 use Config;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Publishers\Libraries\IssueTrackerHelper;
 use Symfony\Component\Debug\Exception\FatalErrorException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -53,15 +54,14 @@ class Handler extends ExceptionHandler
             } else if ($e instanceof NotFoundHttpException) {
                 return response()->view('error.404', [], 404);
             } else if ($e instanceof FatalErrorException) {
-                //dd('error fatal');
+                IssueTrackerHelper::create($request, $e, 'Publishers');
                 return response()->view('errors.503', [], 503);
             } else if ($e instanceof Exception) {
-//                dd('exeption');
+                IssueTrackerHelper::create($request, $e, 'Publishers');
                 return response()->view('errors.500', [], 500);
             } else {
-                //dd('ninguno');
+                IssueTrackerHelper::create($request, $e, 'Publishers');
                 return response()->view('errors.500', [], 500);
-//                return parent::render($request, $e);
             }
         } elseif ($debug == 1) {
             if ($e instanceof ModelNotFoundException) {
