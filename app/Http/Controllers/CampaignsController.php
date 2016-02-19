@@ -8,6 +8,7 @@ use DB;
 use MongoDate;
 use Publishers\AdministratorMovement;
 use Publishers\CampaignLog;
+use Publishers\Interaction;
 use Publishers\Jobs\MailCreationJob;
 use Publishers\Jobs\mailingJob;
 use Publishers\Libraries\CampaignStyleHelper;
@@ -189,6 +190,7 @@ class CampaignsController extends Controller
                                 ],
                                 'interaction' => [
                                     'name' => Input::get('interactionId'),
+                                    'price' => floatval(Interaction::where('name', Input::get('interactionId'))->first()->amount),
                                 ],
                                 'filters' => [
                                     'age' => array_map('intval', explode(';', Input::get('age'))),
@@ -703,29 +705,29 @@ class CampaignsController extends Controller
                     '$sort' => ['_id' => 1]
                 ]
             ]);
-            $edades=$em['result'];
-            foreach($edades as $mujeres => $valor){
-                echo '<br>'.$mujeres;
+            $edades = $em['result'];
+            foreach ($edades as $mujeres => $valor) {
+                echo '<br>' . $mujeres;
                 var_dump($valor);
-                if($valor['_id']>0 | $valor['_id']<=17){
+                if ($valor['_id'] > 0 | $valor['_id'] <= 17) {
 
-                }else if($valor['_id']>=18 | $valor['_id']<=20){
+                } else if ($valor['_id'] >= 18 | $valor['_id'] <= 20) {
 
-                }else if($valor['_id']>=21 | $valor['_id']<=30){
+                } else if ($valor['_id'] >= 21 | $valor['_id'] <= 30) {
 
-                }else if($valor['_id']>=31 | $valor['_id']<=40){
+                } else if ($valor['_id'] >= 31 | $valor['_id'] <= 40) {
 
-                }else if($valor['_id']>=41 | $valor['_id']<=50){
+                } else if ($valor['_id'] >= 41 | $valor['_id'] <= 50) {
 
-                }else if($valor['_id']>=51 | $valor['_id']<=60){
+                } else if ($valor['_id'] >= 51 | $valor['_id'] <= 60) {
 
-                }else if($valor['_id']>=61 | $valor['_id']<=70){
+                } else if ($valor['_id'] >= 61 | $valor['_id'] <= 70) {
 
-                }else if($valor['_id']>=71 | $valor['_id']<=80){
+                } else if ($valor['_id'] >= 71 | $valor['_id'] <= 80) {
 
-                }else if($valor['_id']>=81 | $valor['_id']<=90){
+                } else if ($valor['_id'] >= 81 | $valor['_id'] <= 90) {
 
-                }else if($valor['_id']>=91){
+                } else if ($valor['_id'] >= 91) {
 
                 }
 //                $women=[]

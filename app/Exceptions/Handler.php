@@ -46,7 +46,6 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
-//        dd($e);
         $debug = env('APP_DEBUG');
         if ($debug == 0) {
             if ($this->isHttpException($e)) {
@@ -70,7 +69,6 @@ class Handler extends ExceptionHandler
             }
             return parent::render($request, $e);
         }
-
 
     }
 }

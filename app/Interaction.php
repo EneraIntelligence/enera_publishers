@@ -17,7 +17,7 @@ class Interaction extends Model
     // relations
     public function campaigns()
     {
-        return $this->hasMany('Publishers\Campaign', 'interaction.id');
+        return $this->hasMany('Publishers\Campaign', 'interaction.name', 'name');
     }
     // end relations
 }
