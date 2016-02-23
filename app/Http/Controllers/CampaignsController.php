@@ -677,53 +677,54 @@ class CampaignsController extends Controller
             ]);
 
             $edades = $em['result'];
+
             $men=['1'=>0,'2'=>0,'3'=>0,'4'=>0,'5'=>0,'6'=>0,'7'=>0,'8'=>0,'9'=>0,'10'=>0];
             $women=['1'=>0,'2'=>0,'3'=>0,'4'=>0,'5'=>0,'6'=>0,'7'=>0,'8'=>0,'9'=>0,'10'=>0];
 
             foreach ($edades as $person => $valor) {
                 if($valor['_id']['gender'] == 'female'){
                     if ($valor['_id']['age'] > 0 && $valor['_id']['age'] <= 17) {
-                        $women['1']+=1;
+                        $women['1']+=$valor['count'];
                     } else if ($valor['_id']['age'] >= 18 && $valor['_id']['age'] <= 20) {
-                        $women['2']+=1;
+                        $women['2']+=$valor['count'];
                     } else if ($valor['_id']['age'] >= 21 && $valor['_id']['age'] <= 30) {
-                        $women['3']+=1;
+                        $women['3']+=$valor['count'];
                     } else if ($valor['_id']['age'] >= 31 && $valor['_id']['age'] <= 40) {
-                        $women['4']+=1;
+                        $women['4']+=$valor['count'];
                     } else if ($valor['_id']['age'] >= 41 && $valor['_id']['age'] <= 50) {
-                        $women['5']+=1;
+                        $women['5']+=$valor['count'];
                     } else if ($valor['_id']['age'] >= 51 && $valor['_id']['age'] <= 60) {
-                        $women['6']+=1;
+                        $women['6']+=$valor['count'];
                     } else if ($valor['_id']['age'] >= 61 && $valor['_id']['age'] <= 70) {
-                        $women['7']+=1;
+                        $women['7']+=$valor['count'];
                     } else if ($valor['_id']['age'] >= 71 && $valor['_id']['age'] <= 80) {
-                        $women['8']+=1;
+                        $women['8']+=$valor['count'];
                     } else if ($valor['_id']['age'] >= 81 && $valor['_id']['age'] <= 90) {
-                        $women['9']+=1;
+                        $women['9']+=$valor['count'];
                     } else if ($valor['_id']['age'] >= 91) {
-                        $women['10']+=1;
+                        $women['10']+=$valor['count'];
                     }
                 }else {
                     if ($valor['_id']['age'] > 0 && $valor['_id']['age'] <= 17) {
-                        $men['1']-=1;
+                        $men['1']-=$valor['count'];
                     } else if ($valor['_id']['age'] >= 18 && $valor['_id']['age'] <= 20) {
-                        $men['2']-=1;
+                        $men['2']-=$valor['count'];
                     } else if ($valor['_id']['age'] >= 21 && $valor['_id']['age'] <= 30) {
-                        $men['3']-=1;
+                        $men['3']-=$valor['count'];
                     } else if ($valor['_id']['age'] >= 31 && $valor['_id']['age'] <= 40) {
-                        $men['4']-=1;
+                        $men['4']-=$valor['count'];
                     } else if ($valor['_id']['age'] >= 41 && $valor['_id']['age'] <= 50) {
-                        $men['5']-=1;
+                        $men['5']-=$valor['count'];
                     } else if ($valor['_id']['age'] >= 51 && $valor['_id']['age'] <= 60) {
-                        $men['6']-=1;
+                        $men['6']-=$valor['count'];
                     } else if ($valor['_id']['age'] >= 61 && $valor['_id']['age'] <= 70) {
-                        $men['7']-=1;
+                        $men['7']-=$valor['count'];
                     } else if ($valor['_id']['age'] >= 71 && $valor['_id']['age'] <= 80) {
-                        $men['8']-=1;
+                        $men['8']-=$valor['count'];
                     } else if ($valor['_id']['age'] >= 81 && $valor['_id']['age'] <= 90) {
-                        $men['9']-=1;
+                        $men['9']-=$valor['count'];
                     } else if ($valor['_id']['age'] >= 91) {
-                        $men['10']-=1;
+                        $men['10']-=$valor['count'];
                     }
                 }
             }
