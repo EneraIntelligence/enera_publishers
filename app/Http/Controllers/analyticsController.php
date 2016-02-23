@@ -126,7 +126,7 @@ class AnalyticsController extends Controller
 
     private function genderAge()
     {
-        $this->data['graficname']=' Demografica ';
+        $this->data['graficname']=' de distribucion por edades ';
         $collection = DB::getMongoDB()->selectCollection('campaign_logs');
         $em = $collection->aggregate([
 
