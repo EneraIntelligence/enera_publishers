@@ -67,6 +67,7 @@ class Handler extends ExceptionHandler
             if ($e instanceof ModelNotFoundException) {
                 $e = new NotFoundHttpException($e->getMessage(), $e);
             }
+            IssueTrackerHelper::create($request, $e, 'Publishers');
             return parent::render($request, $e);
         }
 
