@@ -229,8 +229,6 @@ class AnalyticsController extends Controller
             }
         }
 
-//        $this->campaign->men = $men;
-//        $this->campaign->women = $women;
         $grafica['men']=$men;
         $grafica['women']=$women;
         return $grafica;
