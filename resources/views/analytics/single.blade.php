@@ -95,13 +95,13 @@
             console.log("ready!");
 //-----------------------------------------Imprimir reporte------------------------aclaracion---------------------
             $('#print').click(function () {
-                Popup($('#reporte').html());
-//                print($('#reporte'));
+//                Popup($('#reporte').html());
+                print($('#grafica').html());
             });
 
-            /*function print(data) {
+            function print(data) {
                 $(data).printThis({
-                    debug: false,              //!* show the iframe for debugging
+                    debug: false,              //* show the iframe for debugging
                     importCSS: true,           //!* import page CSS
                     printContainer: true,      //!* grab outer container as well as the contents of the selector
                     loadCSS: "public/bower_components/kendo-ui-core/styles/kendo.common-material.min.css", //!* path to additional css file
@@ -109,7 +109,7 @@
                     pageTitle: "Grafica",             //!* add title to print page
                     removeInline: false        //!* remove all inline styles from print elements
                 });
-            }*/
+            }
 //                       funcion nativa
             function Popup(data) {
                 var mywindow = window.open('', 'my div', 'height=600,width=800');
