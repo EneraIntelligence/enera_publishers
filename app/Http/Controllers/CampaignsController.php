@@ -633,7 +633,7 @@ class CampaignsController extends Controller
                 // Stage 1
                 [
                     '$match' => [
-                        'campaign_id' => '56817e1c2bdb3a73ba25087d',
+                        'campaign_id' => $id,
                         'interaction.loaded' => ['$exists' => true],
                         'user.id' => ['$exists' => true],
                     ]
