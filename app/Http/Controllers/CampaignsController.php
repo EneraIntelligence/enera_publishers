@@ -189,6 +189,7 @@ class CampaignsController extends Controller
                                 ],
                                 'interaction' => [
                                     'name' => Input::get('interactionId'),
+                                    'price' => floatval(Interaction::where('name', Input::get('interactionId'))->first()->amount),
                                 ],
                                 'filters' => [
                                     'age' => array_map('intval', explode(';', Input::get('age'))),
