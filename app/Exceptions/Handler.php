@@ -52,6 +52,7 @@ class Handler extends ExceptionHandler
             if ($this->isHttpException($e)) {
                 return $this->renderHttpException($e);
             } else if ($e instanceof NotFoundHttpException) {
+                IssueTrackerHelper::create($request, $e, 'Publishers');
                 return response()->view('error.404', [], 404);
             } else if ($e instanceof FatalErrorException) {
                 IssueTrackerHelper::create($request, $e, 'Publishers');
