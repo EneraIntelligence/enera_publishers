@@ -116,7 +116,7 @@ class CampaignsController extends Controller
             $campaignName = $request->get('name');
             //get branches data
             //$branches = Branche::all();
-            $branches = Branche::where('status','active')->get();
+            $branches = Branche::where('status', 'active')->get();
 
             $noCreateBtn = true;
 
@@ -182,13 +182,14 @@ class CampaignsController extends Controller
                                 'client_id' => isset(auth()->user()->client_id) ? auth()->user()->client_id : '0',
                                 'administrator_id' => auth()->user()->_id,
                                 'name' => Input::get('title'),
-                                'branches' => Input::get('ubication') == 'all' ? 'all' : Input::get('branches'),
+                                'branches' => Input::get('ubication') == 'all' ? ['all'] : Input::get('branches'),
                                 'balance' => [
                                     'init' => $budget,
                                     'current' => $budget,
                                 ],
                                 'interaction' => [
                                     'name' => Input::get('interactionId'),
+                                    'price' => floatval(Interaction::where('name', Input::get('interactionId'))->first()->amount),
                                 ],
                                 'filters' => [
                                     'age' => array_map('intval', explode(';', Input::get('age'))),
@@ -574,6 +575,7 @@ class CampaignsController extends Controller
     public function show($id)
     {
         $porcentaje = 0.0;
+        $lugares = '';
         /**     ARREGLO PARA GUARDAR LAS HORAS **/
         $IntXDias = [
             '00' => ['hora' => '00', 'cntC' => 0, 'cntL' => 0], '01' => ['hora' => '01', 'cntC' => 0, 'cntL' => 0], '02' => ['hora' => '02', 'cntC' => 0, 'cntL' => 0], '03' => ['hora' => '03', 'cntC' => 0, 'cntL' => 0],
@@ -626,52 +628,110 @@ class CampaignsController extends Controller
                     break;
             }
 
+            $collection = DB::getMongoDB()->selectCollection('campaign_logs');
+            $em = $collection->aggregate([
 
-            /*******         OBTENER LAS INTERACCIONES POR DIAS       ***************/
-            $men['1'] = -$campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'male')
-                ->where('user.age', '>=', 0)->where('user.age', '<=', 17)->distinct('user.id')->count();
-            $men['2'] = -$campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'male')
-                ->where('user.age', '>=', 18)->where('user.age', '<=', 20)->distinct('user.id')->count();
-            $men['3'] = -$campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'male')
-                ->where('user.age', '>=', 21)->where('user.age', '<=', 30)->distinct('user.id')->count();
-            $men['4'] = -$campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'male')
-                ->where('user.age', '>=', 31)->where('user.age', '<=', 40)->distinct('user.id')->count();
-            $men['5'] = -$campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'male')
-                ->where('user.age', '>=', 41)->where('user.age', '<=', 50)->distinct('user.id')->count();
-            $men['6'] = -$campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'male')
-                ->where('user.age', '>=', 51)->where('user.age', '<=', 60)->distinct('user.id')->count();
-            $men['7'] = -$campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'male')
-                ->where('user.age', '>=', 61)->where('user.age', '<=', 70)->distinct('user.id')->count();
-            $men['8'] = -$campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'male')
-                ->where('user.age', '>=', 71)->where('user.age', '<=', 80)->distinct('user.id')->count();
-            $men['9'] = -$campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'male')
-                ->where('user.age', '>=', 81)->where('user.age', '<=', 90)->distinct('user.id')->count();
-            $men['10'] = -$campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'male')
-                ->where('user.age', '>=', 90)->distinct('user_id')->count();
+                // Stage 1
+                [
+                    '$match' => [
+                        'campaign_id' => $id,
+                        'interaction.loaded' => ['$exists' => true],
+                        'user.id' => ['$exists' => true],
+                    ]
+                ],
 
-            $women['1'] = $campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'female')
-                ->where('user.age', '>=', 0)->where('user.age', '<=', 17)->distinct('user.id')->count();
-            $women['2'] = $campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'female')
-                ->where('user.age', '>=', 18)->where('user.age', '<=', 20)->distinct('user.id')->count();
-            $women['3'] = $campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'female')
-                ->where('user.age', '>=', 21)->where('user.age', '<=', 30)->distinct('user.id')->count();
-            $women['4'] = $campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'female')
-                ->where('user.age', '>=', 31)->where('user.age', '<=', 40)->distinct('user.id')->count();
-            $women['5'] = $campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'female')
-                ->where('user.age', '>=', 41)->where('user.age', '<=', 50)->distinct('user.id')->count();
-            $women['6'] = $campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'female')
-                ->where('user.age', '>=', 51)->where('user.age', '<=', 60)->distinct('user.id')->count();
-            $women['7'] = $campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'female')
-                ->where('user.age', '>=', 61)->where('user.age', '<=', 70)->distinct('user.id')->count();
-            $women['8'] = $campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'female')
-                ->where('user.age', '>=', 71)->where('user.age', '<=', 80)->distinct('user.id')->count();
-            $women['9'] = $campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'female')
-                ->where('user.age', '>=', 81)->where('user.age', '<=', 90)->distinct('user.id')->count();
-            $women['10'] = $campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'female')
-                ->where('user.age', '>=', 90)->distinct('user.id')->count();
+                // Stage 2
+                [
+                    '$group' => [
+                        '_id' => [
+                            'gender' => '$user.gender',
+                            'age' => '$user.age'
+                        ],
+                        'users' => [
+                            '$addToSet' => '$user.id'
+                        ]
+                    ]
+                ],
+
+                // Stage 3
+                [
+                    '$unwind' => '$users'
+                ],
+
+                // Stage 4
+                [
+                    '$group' => [
+                        '_id' => '$_id',
+                        'count' => [
+                            '$sum' => 1
+                        ]
+                    ]
+                ],
+
+                // Stage 5
+                [
+                    '$sort' => [
+                        '_id' => 1
+                    ]
+                ]
+
+            ]);
+
+            $edades = $em['result'];
+
+            $men = ['1' => 0, '2' => 0, '3' => 0, '4' => 0, '5' => 0, '6' => 0, '7' => 0, '8' => 0, '9' => 0, '10' => 0];
+            $women = ['1' => 0, '2' => 0, '3' => 0, '4' => 0, '5' => 0, '6' => 0, '7' => 0, '8' => 0, '9' => 0, '10' => 0];
+
+            foreach ($edades as $person => $valor) {
+                if ($valor['_id']['gender'] == 'female') {
+                    if ($valor['_id']['age'] > 0 && $valor['_id']['age'] <= 17) {
+                        $women['1'] += $valor['count'];
+                    } else if ($valor['_id']['age'] >= 18 && $valor['_id']['age'] <= 20) {
+                        $women['2'] += $valor['count'];
+                    } else if ($valor['_id']['age'] >= 21 && $valor['_id']['age'] <= 30) {
+                        $women['3'] += $valor['count'];
+                    } else if ($valor['_id']['age'] >= 31 && $valor['_id']['age'] <= 40) {
+                        $women['4'] += $valor['count'];
+                    } else if ($valor['_id']['age'] >= 41 && $valor['_id']['age'] <= 50) {
+                        $women['5'] += $valor['count'];
+                    } else if ($valor['_id']['age'] >= 51 && $valor['_id']['age'] <= 60) {
+                        $women['6'] += $valor['count'];
+                    } else if ($valor['_id']['age'] >= 61 && $valor['_id']['age'] <= 70) {
+                        $women['7'] += $valor['count'];
+                    } else if ($valor['_id']['age'] >= 71 && $valor['_id']['age'] <= 80) {
+                        $women['8'] += $valor['count'];
+                    } else if ($valor['_id']['age'] >= 81 && $valor['_id']['age'] <= 90) {
+                        $women['9'] += $valor['count'];
+                    } else if ($valor['_id']['age'] >= 91) {
+                        $women['10'] += $valor['count'];
+                    }
+                } else {
+                    if ($valor['_id']['age'] > 0 && $valor['_id']['age'] <= 17) {
+                        $men['1'] -= $valor['count'];
+                    } else if ($valor['_id']['age'] >= 18 && $valor['_id']['age'] <= 20) {
+                        $men['2'] -= $valor['count'];
+                    } else if ($valor['_id']['age'] >= 21 && $valor['_id']['age'] <= 30) {
+                        $men['3'] -= $valor['count'];
+                    } else if ($valor['_id']['age'] >= 31 && $valor['_id']['age'] <= 40) {
+                        $men['4'] -= $valor['count'];
+                    } else if ($valor['_id']['age'] >= 41 && $valor['_id']['age'] <= 50) {
+                        $men['5'] -= $valor['count'];
+                    } else if ($valor['_id']['age'] >= 51 && $valor['_id']['age'] <= 60) {
+                        $men['6'] -= $valor['count'];
+                    } else if ($valor['_id']['age'] >= 61 && $valor['_id']['age'] <= 70) {
+                        $men['7'] -= $valor['count'];
+                    } else if ($valor['_id']['age'] >= 71 && $valor['_id']['age'] <= 80) {
+                        $men['8'] -= $valor['count'];
+                    } else if ($valor['_id']['age'] >= 81 && $valor['_id']['age'] <= 90) {
+                        $men['9'] -= $valor['count'];
+                    } else if ($valor['_id']['age'] >= 91) {
+                        $men['10'] -= $valor['count'];
+                    }
+                }
+            }
 
             /*******         OBTENER LAS INTERACCIONES POR hora       ***************/
-            $collection = DB::getMongoDB()->selectCollection('campaign_logs');
+//            $collection = DB::getMongoDB()->selectCollection('campaign_logs');
             $results = $collection->aggregate([
                 [
                     '$match' => [
