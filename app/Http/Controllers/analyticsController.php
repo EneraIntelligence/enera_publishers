@@ -136,7 +136,7 @@ class AnalyticsController extends Controller
             // Stage 1
             [
                 '$match' => [
-                    'campaign_id' => $id,
+                    'campaign_id' => $this->campaign->id,
                     'user.id' => ['$exists' => true],
                 ]
             ],
