@@ -32,7 +32,7 @@
                             <div class="uk-tab-center">
                                 <ul class="uk-tab" data-uk-tab="{connect:'#tabs_5'}">
                                     {{--<li>--}}
-                                    {{--<a href="#">Terjeta de Credito</a>--}}
+                                        {{--<a href="#">Terjeta de Credito</a>--}}
                                     {{--</li>--}}
                                     <li class="uk-active">
                                         <a href="#">Paypal</a>
@@ -52,7 +52,7 @@
                                 </div>
                             @endif
                             <ul id="tabs_5" class="uk-switcher uk-margin">
-                                <!--   <li>
+                                <!--  <li>
                                     <div class="col-md-4" id="conekta">
                                         <h3 class="uk-panel-title">Conekta</h3>
                                         <div class="uk-width-medium-4-5 uk-container-center">
