@@ -114,11 +114,6 @@ graficas = function () {
                     ['hace 3 dia',  dia3 ],
                     ['hace 4 dia',  dia4 ],
                     ['hace 5 dia',  dia5 ]
-                    /*['Android', 30, 200, 200, 400, 150, 250],
-                     ['Blackberry', 130, 100, 100, 200, 150, 50],
-                     ['IOS', 230, 200, 200, 300, 250, 250],
-                     ['Windows Phone', 230, 200, 200, 300, 250, 250],
-                     ['other', 230, 200, 200, 300, 250, 250]*/
                 ],
                 type: 'bar',
                 /*groups: [
