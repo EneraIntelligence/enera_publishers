@@ -618,8 +618,8 @@ class CampaignsController extends Controller
                     break;
             }
 
-                /*******         OBTENER LAS INTERACCIONES POR DIAS       ***************/
-                $collection = DB::getMongoDB()->selectCollection('campaign_logs');
+            /*******         OBTENER LAS EDADES Y CANTIDAD DE USUARIOS UNICOS       ***************/
+            $collection = DB::getMongoDB()->selectCollection('campaign_logs');
             $gender_age = $collection->aggregate([
 
                 // Stage 1

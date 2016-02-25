@@ -129,18 +129,17 @@ class AnalyticsController extends Controller
     private function genderAge()
     {
         $this->data['graficname'] = ' de distribucion por edades ';
-        $collection = DB::getMongoDB()->selectCollection('campaign_logs');
-        $em = $collection->aggregate([
 
+        /*******         OBTENER LAS EDADES Y CANTIDAD DE USUARIOS UNICOS       ***************/
+        $collection = DB::getMongoDB()->selectCollection('campaign_logs');
+        $gender_age = $collection->aggregate([
             // Stage 1
             [
                 '$match' => [
-                    'campaign_id' => $this->campaign->id,
-                    'interaction.loaded' => ['$exists' => true],
+                    'campaign_id' => $id,
                     'user.id' => ['$exists' => true],
                 ]
             ],
-
             // Stage 2
             [
                 '$group' => [
@@ -153,12 +152,10 @@ class AnalyticsController extends Controller
                     ]
                 ]
             ],
-
             // Stage 3
             [
                 '$unwind' => '$users'
             ],
-
             // Stage 4
             [
                 '$group' => [
@@ -168,71 +165,47 @@ class AnalyticsController extends Controller
                     ]
                 ]
             ],
-
             // Stage 5
             [
                 '$sort' => [
                     '_id' => 1
                 ]
             ]
-
         ]);
 
-        $edades = $em['result'];
+        $male = array_fill(1, 10, 0);
+        $female = array_fill(1, 10, 0);
 
-        $men = ['1' => 0, '2' => 0, '3' => 0, '4' => 0, '5' => 0, '6' => 0, '7' => 0, '8' => 0, '9' => 0, '10' => 0];
-        $women = ['1' => 0, '2' => 0, '3' => 0, '4' => 0, '5' => 0, '6' => 0, '7' => 0, '8' => 0, '9' => 0, '10' => 0];
-
-        foreach ($edades as $person => $valor) {
-            if ($valor['_id']['gender'] == 'female') {
-                if ($valor['_id']['age'] > 0 && $valor['_id']['age'] <= 17) {
-                    $women['1'] += $valor['count'];
-                } else if ($valor['_id']['age'] >= 18 && $valor['_id']['age'] <= 20) {
-                    $women['2'] += $valor['count'];
-                } else if ($valor['_id']['age'] >= 21 && $valor['_id']['age'] <= 30) {
-                    $women['3'] += $valor['count'];
-                } else if ($valor['_id']['age'] >= 31 && $valor['_id']['age'] <= 40) {
-                    $women['4'] += $valor['count'];
-                } else if ($valor['_id']['age'] >= 41 && $valor['_id']['age'] <= 50) {
-                    $women['5'] += $valor['count'];
-                } else if ($valor['_id']['age'] >= 51 && $valor['_id']['age'] <= 60) {
-                    $women['6'] += $valor['count'];
-                } else if ($valor['_id']['age'] >= 61 && $valor['_id']['age'] <= 70) {
-                    $women['7'] += $valor['count'];
-                } else if ($valor['_id']['age'] >= 71 && $valor['_id']['age'] <= 80) {
-                    $women['8'] += $valor['count'];
-                } else if ($valor['_id']['age'] >= 81 && $valor['_id']['age'] <= 90) {
-                    $women['9'] += $valor['count'];
-                } else if ($valor['_id']['age'] >= 91) {
-                    $women['10'] += $valor['count'];
-                }
-            } else {
-                if ($valor['_id']['age'] > 0 && $valor['_id']['age'] <= 17) {
-                    $men['1'] -= $valor['count'];
-                } else if ($valor['_id']['age'] >= 18 && $valor['_id']['age'] <= 20) {
-                    $men['2'] -= $valor['count'];
-                } else if ($valor['_id']['age'] >= 21 && $valor['_id']['age'] <= 30) {
-                    $men['3'] -= $valor['count'];
-                } else if ($valor['_id']['age'] >= 31 && $valor['_id']['age'] <= 40) {
-                    $men['4'] -= $valor['count'];
-                } else if ($valor['_id']['age'] >= 41 && $valor['_id']['age'] <= 50) {
-                    $men['5'] -= $valor['count'];
-                } else if ($valor['_id']['age'] >= 51 && $valor['_id']['age'] <= 60) {
-                    $men['6'] -= $valor['count'];
-                } else if ($valor['_id']['age'] >= 61 && $valor['_id']['age'] <= 70) {
-                    $men['7'] -= $valor['count'];
-                } else if ($valor['_id']['age'] >= 71 && $valor['_id']['age'] <= 80) {
-                    $men['8'] -= $valor['count'];
-                } else if ($valor['_id']['age'] >= 81 && $valor['_id']['age'] <= 90) {
-                    $men['9'] -= $valor['count'];
-                } else if ($valor['_id']['age'] >= 91) {
-                    $men['10'] -= $valor['count'];
-                }
+        foreach ($gender_age['result'] as $person) {
+            if ($person['_id']['age'] > 0 && $person['_id']['age'] <= 17) {
+                ${$person['_id']['gender']}[1] += $person['count'];
+            } else if ($person['_id']['age'] >= 18 && $person['_id']['age'] <= 20) {
+                ${$person['_id']['gender']}[2] += $person['count'];
+            } else if ($person['_id']['age'] >= 21 && $person['_id']['age'] <= 30) {
+                ${$person['_id']['gender']}[3] += $person['count'];
+            } else if ($person['_id']['age'] >= 31 && $person['_id']['age'] <= 40) {
+                ${$person['_id']['gender']}[4] += $person['count'];
+            } else if ($person['_id']['age'] >= 41 && $person['_id']['age'] <= 50) {
+                ${$person['_id']['gender']}[5] += $person['count'];
+            } else if ($person['_id']['age'] >= 51 && $person['_id']['age'] <= 60) {
+                ${$person['_id']['gender']}[6] += $person['count'];
+            } else if ($person['_id']['age'] >= 61 && $person['_id']['age'] <= 70) {
+                ${$person['_id']['gender']}[7] += $person['count'];
+            } else if ($person['_id']['age'] >= 71 && $person['_id']['age'] <= 80) {
+                ${$person['_id']['gender']}[8] += $person['count'];
+            } else if ($person['_id']['age'] >= 81 && $person['_id']['age'] <= 90) {
+                ${$person['_id']['gender']}[9] += $person['count'];
+            } else if ($person['_id']['age'] >= 91) {
+                ${$person['_id']['gender']}[10] += $person['count'];
             }
         }
 
-        $grafica['men'] = $men;
-        $grafica['women'] = $women;
+        $male = array_map(function ($item) {
+            return $item * -1;
+        }, $male);
+
+        $grafica['men'] = $male;
+        $grafica['women'] = $female;
         return $grafica;
     }
 
