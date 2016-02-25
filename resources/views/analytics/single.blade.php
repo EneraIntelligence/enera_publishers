@@ -104,8 +104,8 @@
                     debug: false,              //* show the iframe for debugging
                     importCSS: true,           //!* import page CSS
                     printContainer: true,      //!* grab outer container as well as the contents of the selector
-                    loadCSS: "public/bower_components/kendo-ui-core/styles/kendo.common-material.min.css", //!* path to additional css file
-                    loadCSS: "public/bower_components/kendo-ui-core/styles/kendo.material.min.css", //!* path to additional css file
+//                    loadCSS: "public/bower_components/kendo-ui-core/styles/kendo.common-material.min.css", //!* path to additional css file
+//                    loadCSS: "public/bower_components/kendo-ui-core/styles/kendo.material.min.css", //!* path to additional css file
                     pageTitle: "Grafica",             //!* add title to print page
                     removeInline: false        //!* remove all inline styles from print elements
                 });
