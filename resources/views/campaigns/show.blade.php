@@ -106,8 +106,8 @@
                                                             <span class="md-list-heading azul">Lugares</span>
                                                             @if($lugares!='global')
                                                                 {{--                                                                {!! var_dump($cam->branches) !!}--}}
-                                                                @foreach($lugares as $lugar)
-                                                                    <span> {!! $lugar !!} , </span>
+                                                                @foreach($lugares as $branch)
+                                                                    <span> {{ Publishers\Branche::find($branch)->name }} , </span>
                                                                 @endforeach
                                                             @else
                                                                 <span> Global</span>
