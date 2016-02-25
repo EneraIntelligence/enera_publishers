@@ -346,7 +346,7 @@ class AnalyticsController extends Controller
      */
     public function so()
     {
-        $this->data['graficname'] = ' dispositivos unicos ';
+        $this->data['graficname'] = ' sistemas operativos';
         $collectionCam = DB::getMongoDB()->selectCollection('campaign_logs');
         $sos = $collectionCam->aggregate([
             [
