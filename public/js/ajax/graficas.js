@@ -244,8 +244,8 @@ graficas = function () {
                     x: 'x',
                     columns: columns,
                     types: {
-                        Visto: 'area-spline',
-                        Completado: 'area-spline'
+                        Visto: 'area',
+                        Completado: 'area'
                     },
                     groups: [['Visto', 'Completado']]
                 },
