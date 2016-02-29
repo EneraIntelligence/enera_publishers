@@ -328,7 +328,7 @@ class AnalyticsController extends Controller
             ],
             [
                 '$sort' => [
-                    'count' => -1
+                    'cnt' => -1
                 ]
             ]
         ]);
@@ -337,6 +337,7 @@ class AnalyticsController extends Controller
 
             $so[$v['_id']] = $v['cnt'];
         }
+
 
         dd($so);
         return $so;
