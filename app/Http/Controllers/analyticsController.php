@@ -328,15 +328,17 @@ class AnalyticsController extends Controller
             ],
             [
                 '$sort' => [
-                    '_id' => 1
+                    'count' => -1
                 ]
             ]
         ]);
 
         foreach ($sistemas['result'] as $k => $v) {
+
             $so[$v['_id']] = $v['cnt'];
         }
 
+        dd($so);
         return $so;
     }
 
