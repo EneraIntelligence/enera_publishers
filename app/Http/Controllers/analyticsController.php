@@ -216,26 +216,12 @@ class AnalyticsController extends Controller
     private function intXHour()
     {   //        $today =date( "Y-m-d",mktime(0, 0, 0, date("m"),date("d")-5, date("Y")));
         $this->data['graficname'] = 'interaciones por hora';
-        $IntXDias = [
-            '00' => ['hora' => '00', 'cntC' => 0, 'cntL' => 0], '01' => ['hora' => '01', 'cntC' => 0, 'cntL' => 0], '02' => ['hora' => '02', 'cntC' => 0, 'cntL' => 0], '03' => ['hora' => '03', 'cntC' => 0, 'cntL' => 0],
-            '04' => ['hora' => '04', 'cntC' => 0, 'cntL' => 0], '05' => ['hora' => '05', 'cntC' => 0, 'cntL' => 0], '06' => ['hora' => '06', 'cntC' => 0, 'cntL' => 0], '07' => ['hora' => '07', 'cntC' => 0, 'cntL' => 0],
-            '08' => ['hora' => '08', 'cntC' => 0, 'cntL' => 0], '09' => ['hora' => '09', 'cntC' => 0, 'cntL' => 0], '10' => ['hora' => '10', 'cntC' => 0, 'cntL' => 0], '11' => ['hora' => '11', 'cntC' => 0, 'cntL' => 0],
-            '12' => ['hora' => '12', 'cntC' => 0, 'cntL' => 0], '13' => ['hora' => '13', 'cntC' => 0, 'cntL' => 0], '14' => ['hora' => '14', 'cntC' => 0, 'cntL' => 0], '15' => ['hora' => '15', 'cntC' => 0, 'cntL' => 0],
-            '16' => ['hora' => '16', 'cntC' => 0, 'cntL' => 0], '17' => ['hora' => '17', 'cntC' => 0, 'cntL' => 0], '18' => ['hora' => '18', 'cntC' => 0, 'cntL' => 0], '19' => ['hora' => '19', 'cntC' => 0, 'cntL' => 0],
-            '20' => ['hora' => '20', 'cntC' => 0, 'cntL' => 0], '21' => ['hora' => '21', 'cntC' => 0, 'cntL' => 0], '22' => ['hora' => '22', 'cntC' => 0, 'cntL' => 0], '23' => ['hora' => '23', 'cntC' => 0, 'cntL' => 0],
-        ];
-
-        /****  fechas para hacer la busqueda ****/
-        $start = $this->campaign->filters['date']['start']->sec;
-        $end = $this->campaign->filters['date']['end']->sec;
-
 
         /*******         OBTENER LAS INTERACCIONES POR hora       ***************/
-        $collection = DB::getMongoDB()->selectCollection('campaign_logs');
-        $results = $collection->aggregate([
+        $IntLoaded = $collection->aggregate([
             [
                 '$match' => [
-                    'campaign_id' => $this->campaign->id,
+                    'campaign_id' => $id,
                     'interaction.loaded' => [
                         '$gte' => new MongoDate(strtotime(Carbon::today()->subDays(30)->format('Y-m-d'))),
                         '$lte' => new MongoDate(strtotime(Carbon::today()->subDays(0)->format('Y-m-d'))),
@@ -246,7 +232,7 @@ class AnalyticsController extends Controller
                 '$group' => [
                     '_id' => [
                         '$dateToString' => [
-                            'format' => '%H:00:00', 'date' => ['$subtract' => ['$created_at', 18000000]]
+                            'format' => '%H', 'date' => ['$subtract' => ['$created_at', 18000000]]
                         ]
                     ],
                     'cnt' => [
@@ -260,10 +246,10 @@ class AnalyticsController extends Controller
                 ]
             ]
         ]);
-        $results2 = $collection->aggregate([
+        $IntCompleted = $collection->aggregate([
             [
                 '$match' => [
-                    'campaign_id' => $this->campaign->id,
+                    'campaign_id' => $id,
                     'interaction.completed' => [
                         '$gte' => new MongoDate(strtotime(Carbon::today()->subDays(30)->format('Y-m-d'))),
                         '$lte' => new MongoDate(strtotime(Carbon::today()->subDays(0)->format('Y-m-d'))),
@@ -274,7 +260,7 @@ class AnalyticsController extends Controller
                 '$group' => [
                     '_id' => [
                         '$dateToString' => [
-                            'format' => '%H:00:00', 'date' => ['$subtract' => ['$created_at', 18000000]]
+                            'format' => '%H', 'date' => ['$subtract' => ['$created_at', 18000000]]
                         ]
                     ],
                     'cnt' => [
@@ -289,24 +275,13 @@ class AnalyticsController extends Controller
             ]
         ]);
 
-        foreach ($results['result'] as $result => $valor) {
-
-            $time = explode(":", $valor['_id']);
-            if (array_key_exists($time[0], $IntXDias)) {
-//                    echo '<br>si esta<br>';
-                $IntXDias[$time[0]]['cntL'] = $valor['cnt'];
-            } else {
-//                    echo '<br>no esta<br>';
-                $IntXDias[$result][$time[0]] = 0;
-            }
+        $IntHours = [];
+        foreach ($IntLoaded['result'] as $k => $v) {
+            $IntHours[$v['_id']]['loaded'] = $v['cnt'];
         }
-        foreach ($results2['result'] as $result => $valor) {
-            $time = explode(":", $valor['_id']);
-            if (array_key_exists($time[0], $IntXDias)) {
-                $IntXDias[$time[0]]['cntC'] = $valor['cnt'];
-            } else {
-                $IntXDias[$result][$time[0]] = 0;
-            }
+
+        foreach ($IntCompleted['result'] as $k => $v) {
+            $IntHours[$v['_id']]['completed'] = $v['cnt'];
         }
 
 //        dd($IntXDias);
@@ -321,13 +296,10 @@ class AnalyticsController extends Controller
     {
         $this->data['graficname'] = ' sistemas operativos';
         $collectionCam = DB::getMongoDB()->selectCollection('campaign_logs');
-        $sos = $collectionCam->aggregate([
+        $sistemas = $collectionCam->aggregate([
             [
                 '$match' => [
-                    'campaign_id' => $this->campaign->id,
-                    'interaction.loaded' => [
-                        '$exists' => true
-                    ],
+                    'campaign_id' => '56817e1c2bdb3a73ba25087d',
                     'device.os' => [
                         '$exists' => true
                     ]
@@ -335,25 +307,30 @@ class AnalyticsController extends Controller
             ],
             [
                 '$group' => [
-                    '_id' => [ '$device.mac' ],
-                    'os' => [
-                        '$addToSet' => '$device.os'
+                    '_id' => '$device.os',
+                    'mac' => [
+                        '$addToSet' => '$device.mac'
                     ]
                 ]
             ],
             [
-                '$unwind' => '$os'
+                '$unwind' => '$mac'
             ],
             [
                 '$group' => [
-                    '_id' => '$os',
-                    'count' => [
+                    '_id' => '$_id',
+                    'cnt' => [
                         '$sum' => 1
                     ]
                 ]
             ]
         ]);
-        dd($sos);
+
+        foreach ($sistemas['result'] as $k => $v) {
+            $so[$v['_id']] = $v['cnt'];
+        }
+
+        dd($so);
 
         /*$this->data['graficname'] = 'Grafica de los dispositivos';
         //se obtiene de los logs los usuarios de 5 dias atras

@@ -7,6 +7,16 @@ graficas = function () {
     //grafica de pastel para los sistemas operativos
     this.so = function so(array) {
         console.log(array);
+        var columns = [
+            ['x'],
+            ['Visto'],
+            ['Completado']
+        ];
+        for (var k in IntXDias) {
+            columns[0].push(k);
+            columns[1].push(IntXDias[k]['loaded']);
+            columns[2].push(IntXDias[k]['completed']);
+        }
         var chart4 = c3.generate({
             bindto: '#so',
             data: {
@@ -238,7 +248,7 @@ graficas = function () {
 
         if ($(c3chart_area_stacked_id).length) {
 
-            var c3chart_area_stacked = c3.generate({
+            var chart = c3.generate({
                 bindto: c3chart_area_stacked_id,
                 data: {
                     x: 'x',
@@ -264,9 +274,7 @@ graficas = function () {
     }
 };
 
-//------------------------------------------------------------------
-
-
+//---------------------     EJEMPLOS    ---------------------------------------------
 var chart2 = c3.generate({
     bindto: '#genderAge',
     data: {
