@@ -56,21 +56,48 @@
                                 </div>
                             </div>
                         </div>
-
                         {{-- graficas --}}
+                        @if($data['graficname']==' sistemas operativos')
+                            <div  class="uk-width-large-1-1 uk-margin-top " style="height: 500px;">
+                                <div id="grafica" class="uk-width-large-1-2 uk-float-left">
+                                    <div class="uk-margin-large-left">Grafica de {!! $data['graficname'] !!}</div>
+                                    <div id="{!! $data['type'] !!}" class="uk-width-large-1-1 uk-margin-right"></div>
+                                    <div class="uk-width-1-1 uk-padding">
+                                        <span class="uk-margin-large-left "> {{ $data['name'].'2015/nov/18' }} </span>
+                                    </div>
+                                </div>
+                                <div class="uk-width-large-1-2  uk-float-right">
+                                    <div style="margin: 15px">
+                                        <table class="uk-table">
+                                            <thead>
+                                            <tr>
+                                                <th class="uk-text-nowrap">Sistema Operativo</th>
+                                                <th class="uk-text-nowrap">Cantidad</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr class="uk-table-middle">
+                                                @foreach($grafica as $k => $valor)
+                                                    <td>{!! $k  !!}</td> <td>{!! $valor !!}</td>
+                                                @endforeach
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        @else
                         <div  class="uk-width-large-1-1 uk-margin-top " style="height: 500px;">
                             <div id="grafica" style="width: 80%; margin: auto">
                                 <div class="uk-margin-large-left">Grafica de {!! $data['graficname'] !!}</div>
                                 <div id="{!! $data['type'] !!}" class="uk-width-large-1-1 uk-margin-right"></div>
-                                {{--<div id="intPerHour" class="uk-width-large-1-1 uk-margin-right"></div>--}}
-                                <div class="uk-width-large-1-2 uk-margin-left">
-
-                                </div>
+                                <div class="uk-width-large-1-2 uk-margin-left"></div>
                                 <div class="uk-width-1-1 uk-padding">
                                     <span class="uk-margin-large-left "> {{ $data['name'].'  2015/nov/18' }} </span>
                                 </div>
                             </div>
                         </div>
+                        @endif
                         {{--<div id="container" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>--}}
                     </div>
                 </div>

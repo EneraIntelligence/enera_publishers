@@ -338,8 +338,8 @@ class AnalyticsController extends Controller
             $so[$v['_id']] = $v['cnt'];
         }
 
-
-        dd($so);
+//        echo count($so).'<br>';
+//        dd($so);
         return $so;
     }
 
