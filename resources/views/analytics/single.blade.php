@@ -51,14 +51,16 @@
                                 </select>
                             </div>
                             <div id="wraper-print" class="uk-width-large-1-2 uk-margin-right">
-                                <div id="print" class="uk-float-right" style="width: 50px;" data-uk-tooltip="{pos:'left'}" title="imprimir grafica">
-                                    <i class="md-icon material-icons md-36 uk-float-right uk-margin-right" href="">print</i>
+                                <div id="print" class="uk-float-right" style="width: 50px;"
+                                     data-uk-tooltip="{pos:'left'}" title="imprimir grafica">
+                                    <i class="md-icon material-icons md-36 uk-float-right uk-margin-right"
+                                       href="">print</i>
                                 </div>
                             </div>
                         </div>
                         {{-- graficas --}}
                         @if($data['graficname']==' sistemas operativos')
-                            <div  class="uk-width-large-1-1 uk-margin-top " style="height: 500px;">
+                            <div class="uk-width-large-1-1 uk-margin-top " style="height: 500px;">
                                 <div id="grafica" class="uk-width-large-1-2 uk-float-left">
                                     <div class="uk-margin-large-left">Grafica de {!! $data['graficname'] !!}</div>
                                     <div id="{!! $data['type'] !!}" class="uk-width-large-1-1 uk-margin-right"></div>
@@ -76,27 +78,28 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr class="uk-table-middle">
-                                                @foreach($grafica as $k => $valor)
-                                                    <td>{!! $k  !!}</td> <td>{!! $valor !!}</td>
-                                                @endforeach
-                                            </tr>
+                                            @foreach($grafica as $k => $valor)
+                                                <tr class="uk-table-middle">
+                                                    <td>{!! $k  !!}</td>
+                                                    <td>{!! $valor !!}</td>
+                                                </tr>
+                                            @endforeach
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                             </div>
                         @else
-                        <div  class="uk-width-large-1-1 uk-margin-top " style="height: 500px;">
-                            <div id="grafica" style="width: 80%; margin: auto">
-                                <div class="uk-margin-large-left">Grafica de {!! $data['graficname'] !!}</div>
-                                <div id="{!! $data['type'] !!}" class="uk-width-large-1-1 uk-margin-right"></div>
-                                <div class="uk-width-large-1-2 uk-margin-left"></div>
-                                <div class="uk-width-1-1 uk-padding">
-                                    <span class="uk-margin-large-left "> {{ $data['name'].'  2015/nov/18' }} </span>
+                            <div class="uk-width-large-1-1 uk-margin-top " style="height: 500px;">
+                                <div id="grafica" style="width: 80%; margin: auto">
+                                    <div class="uk-margin-large-left">Grafica de {!! $data['graficname'] !!}</div>
+                                    <div id="{!! $data['type'] !!}" class="uk-width-large-1-1 uk-margin-right"></div>
+                                    <div class="uk-width-large-1-2 uk-margin-left"></div>
+                                    <div class="uk-width-1-1 uk-padding">
+                                        <span class="uk-margin-large-left "> {{ $data['name'].'  2015/nov/18' }} </span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                         @endif
                         {{--<div id="container" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>--}}
                     </div>
@@ -137,6 +140,7 @@
                     removeInline: false        //!* remove all inline styles from print elements
                 });
             }
+
 //                       funcion nativa
             function Popup(data) {
                 var mywindow = window.open('', 'my div', 'height=600,width=800');
@@ -174,7 +178,7 @@
             $(select).change(function () {
                 var tipo = select.val();
 //                console.log("Handler for .change() called. " + tipo);
-                var ruta = '{!! URL::route('analytics::single').'/'.$cam['_id'] !!}/'+tipo;
+                var ruta = '{!! URL::route('analytics::single').'/'.$cam['_id'] !!}/' + tipo;
                 console.log(ruta);
                 window.location.href = ruta;
             });
@@ -184,14 +188,14 @@
             var gra = '';
             switch (tipo) {
                 case 'intPerDay':
-                        console.log('inter per day');
+                    console.log('inter per day');
                     var diasJson = '{!! isset($grafica['fecha']) ? json_encode($grafica['fecha']) : json_encode([0,0,0,0,0,0,0]) !!}';
                     var diasObj = JSON.parse(diasJson);
 //                    console.log(diasObj);
                     var cntJson = '{!! isset($grafica['cnt']) ? json_encode($grafica['cnt']) : json_encode([0,10,0,10,0,0,0]) !!}';
                     var cntObj = JSON.parse(cntJson);
 //                    console.log(cntObj);
-                    gra = grafica.intPerDay(diasObj,cntObj);
+                    gra = grafica.intPerDay(diasObj, cntObj);
                     break;
                 case 'genderAge':
                     var menJson = '{!! isset($grafica['men']) ? json_encode($grafica['men']) : json_encode([0,0,0,0,0,0,0]) !!}';
