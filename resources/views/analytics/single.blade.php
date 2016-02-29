@@ -71,7 +71,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="container" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
+                        {{--<div id="container" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>--}}
                     </div>
                 </div>
             </div>
@@ -175,6 +175,10 @@
                     break;
                 case 'so':
                     console.log('so');
+                    var SOJson = '{!! isset($grafica) ? json_encode($grafica) : json_encode([0,0,0,0]) !!}';
+                    var soObj = JSON.parse(SOJson);
+                    console.log(soObj);
+                    gra = grafica.so(soObj);
                     break;
                 case 'intXHour':
                     console.log('intXHour');

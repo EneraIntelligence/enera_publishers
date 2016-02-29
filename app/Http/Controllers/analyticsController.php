@@ -210,6 +210,7 @@ class AnalyticsController extends Controller
     }
 
     /**
+     *      GRAFICA DE INTERACCIONES POR HORA
      * @return mixed
      * @internal param $id
      */
@@ -285,7 +286,7 @@ class AnalyticsController extends Controller
         }
 
 //        dd($IntXDias);
-        return $IntXDias;
+        return $IntHours;
     }
 
     /**
@@ -294,6 +295,7 @@ class AnalyticsController extends Controller
      */
     public function so()
     {
+        $so=array();
         $this->data['graficname'] = ' sistemas operativos';
         $collectionCam = DB::getMongoDB()->selectCollection('campaign_logs');
         $sistemas = $collectionCam->aggregate([
@@ -323,6 +325,11 @@ class AnalyticsController extends Controller
                         '$sum' => 1
                     ]
                 ]
+            ],
+            [
+                '$sort' => [
+                    '_id' => 1
+                ]
             ]
         ]);
 
@@ -330,18 +337,7 @@ class AnalyticsController extends Controller
             $so[$v['_id']] = $v['cnt'];
         }
 
-        dd($so);
-
-        /*$this->data['graficname'] = 'Grafica de los dispositivos';
-        //se obtiene de los logs los usuarios de 5 dias atras
-        $fecha = $this->fechaInicio(5); //el numero es entere positivo pero en la funcion se ase negativo para buscar asia atras
-        $so['android'] = CampaignLog::where('campaign_id', $this->campaign->id)->where('device.os', 'android')->where('updated_at', '>', $fecha)->count();
-        $so['mac'] = CampaignLog::where('campaign_id', $this->campaign->id)->where('device.os', 'mac')->where('updated_at', '>', $fecha)->count();
-        $so['windows'] = CampaignLog::where('campaign_id', $this->campaign->id)->where('device.os', 'windows')->where('updated_at', '>', $fecha)->count();
-        $so['otro'] = CampaignLog::where('campaign_id', $this->campaign->id)->where('device.os', 'other')->where('updated_at', '>', $fecha)->count();*/
-
-
-//        return $so;
+        return $so;
     }
 
     /**

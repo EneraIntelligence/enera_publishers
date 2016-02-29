@@ -5,27 +5,19 @@ graficas = function () {
 
     };
     //grafica de pastel para los sistemas operativos
-    this.so = function so(array) {
-        console.log(array);
-        var columns = [
-            ['x'],
-            ['Visto'],
-            ['Completado']
-        ];
-        for (var k in IntXDias) {
-            columns[0].push(k);
-            columns[1].push(IntXDias[k]['loaded']);
-            columns[2].push(IntXDias[k]['completed']);
+    this.so = function so(sistemas) {
+        console.log(sistemas);
+        var column = [];
+        for (var k in sistemas) {
+            //console.log(k);
+            column.push([ k,sistemas[k] ]);
         }
+        //console.log(column);
+
         var chart4 = c3.generate({
-            bindto: '#so',
+            bindto : '#so',
             data: {
-                columns: [
-                    ['mac', 30],
-                    ['android', 120],
-                    ['windows', 34],
-                    ['otros', 10]
-                ],
+                columns: column,
                 type: 'pie'
             },
             color: {
