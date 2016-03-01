@@ -21,25 +21,20 @@
     {!! HTML::style('bower_components/kendo-ui/styles/kendo.common-material.min.css') !!}
     {!! HTML::style('bower_components/kendo-ui/styles/kendo.material.min.css') !!}
     {!! HTML::style('bower_components/uikit/css/uikit.almost-flat.min.css') !!}
-
             <!-- flag icons -->
     {!! HTML::style('assets/icons/flags/flags.min.css') !!}
-
             <!-- altair admin -->
     {!! HTML::style('assets/css/main.min.css') !!}
-
     {{--loader--}}
     {!! HTML::style('assets/css/loader.css') !!}
-
-
             <!-- matchMedia polyfill for testing media queries in JS -->
     <!--[if lte IE 9]>
     {!! HTML::script('bower_components/matchMedia/matchMedia.js') !!}
     {!! HTML::script('bower_components/matchMedia/matchMedia.addListener.js') !!}
     <![endif]-->
-
     <!-- c3 charts -->
     {!! HTML::style('bower_components/c3js-chart/c3.min.css') !!}
+    @yield('style')
     <style>
         .uk-dropdown .uk-dropdown-width-3 .uk-dropdown-active .uk-dropdown-shown .uk-dropdown-bottom {
             top: 100px;

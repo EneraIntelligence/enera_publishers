@@ -105,9 +105,8 @@
                                                         <div class="md-list-content ">
                                                             <span class="md-list-heading azul">Lugares</span>
                                                             @if($lugares!='global')
-                                                                {{--                                                                {!! var_dump($cam->branches) !!}--}}
-                                                                @foreach($lugares as $lugar)
-                                                                    <span> {!! $lugar !!} , </span>
+                                                                @foreach($lugares as $branch)
+                                                                    <span> {{ Publishers\Branche::find($branch)->name }} , </span>
                                                                 @endforeach
                                                             @else
                                                                 <span> Global</span>
@@ -347,24 +346,21 @@
         vistos.start();
         var completados = new CountUp("completados", 0, {!! $cam->logs()->where('interaction.completed','exists',true)->count() !!}, 0, 5.0, options);
         completados.start();
-        var users = new CountUp("usuarios", 0, {!! count(DB::collection('campaign_logs')->where('campaign_id',$cam->id)->distinct('user.id')->get()) !!}, 0, 5.0, options);
+        var users = new CountUp("usuarios", 0, {!! $unique_users !!} , 0, 5.0, options);
         users.start();
         //------------------------------------------Grafica---------------------------------------------
-
         var grafica = new graficas;
         var menJson = '{!! json_encode($men) !!}';
         var menObj = JSON.parse(menJson);
         var womenJson = '{!! json_encode($women) !!}';
         var womenObj = JSON.parse(womenJson);
 
-        var intLJson = '{!! json_encode($IntXDias) !!}';
+        var intLJson = '{!! json_encode($IntHours) !!}';
         var intLObj = JSON.parse(intLJson);
-//        console.log(intLObj);
+        //        console.log(intLObj);
 
         var gra = grafica.genderAge(menObj, womenObj);
         var graf = grafica.intPerHour(intLObj);
-        //        var gra = grafica.genderAge();
-        //var gra2= grafica.gender();
 
     </script>
 

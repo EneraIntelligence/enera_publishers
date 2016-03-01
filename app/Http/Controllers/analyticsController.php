@@ -23,6 +23,7 @@ class AnalyticsController extends Controller
 {
     private $campaign;
     private $data;
+
     public function index()
     {
         return view('analytics.index');
@@ -35,7 +36,9 @@ class AnalyticsController extends Controller
      */
     public function single($id, $type = 'intPerDay')
     {
-        $this->data = array();    $porcentaje=0;
+
+        $this->data = array();
+        $porcentaje = 0;
         $this->data['type'] = $type; //guardo el tipo en data por que tambien lo regreso a la vista
         $this->campaign = Campaign::find($id); //busca la campaña
 
@@ -86,9 +89,9 @@ class AnalyticsController extends Controller
 //            dd($this->data);
             return view('analytics.single', [
                 'data' => $this->data,
-                'cam'=> $this->campaign,
+                'cam' => $this->campaign,
                 'user' => Auth::user(),
-                'grafica'=>$datosGrafica
+                'grafica' => $datosGrafica
             ]);
         } else {
             return redirect()->route('campaigns::index')->with('data', 'errorCamp');
@@ -100,7 +103,7 @@ class AnalyticsController extends Controller
      */
     private function intPerDay() //interacciones por dia
     {//sacar un conteo de cuantas interaccion se hacen por dia 5 dias atras
-        $this->data['graficname']='interaciones por dia';
+        $this->data['graficname'] = 'interaciones por dia';
         /**************************   DATOS DE LA GRAFICA    ****************************/
         $rangoFechas = array();//inicialiso el arreglo de las fechas
         for ($i = 0; $i < 7; $i++) {
@@ -125,83 +128,101 @@ class AnalyticsController extends Controller
 
     private function genderAge()
     {
-        $this->data['graficname']='Grafica Demografica ';
-        /*******         OBTENER LAS INTERACCIONES POR DIAS       ***************/
-        $men['1'] = -$this->campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'male')
-            ->where('user.age', '>=', 0)->where('user.age', '<=', 17)->distinct('user_id')->count();
-        $men['2'] = -$this->campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'male')
-            ->where('user.age', '>=', 18)->where('user.age', '<=', 20)->distinct('user_id')->count();
-        $men['3'] = -$this->campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'male')
-            ->where('user.age', '>=', 21)->where('user.age', '<=', 30)->distinct('user_id')->count();
-        $men['4'] = -$this->campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'male')
-            ->where('user.age', '>=', 31)->where('user.age', '<=', 40)->distinct('user_id')->count();
-        $men['5'] = -$this->campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'male')
-            ->where('user.age', '>=', 41)->where('user.age', '<=', 50)->distinct('user_id')->count();
-        $men['6'] = -$this->campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'male')
-            ->where('user.age', '>=', 51)->where('user.age', '<=', 60)->distinct('user_id')->count();
-        $men['7'] = -$this->campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'male')
-            ->where('user.age', '>=', 61)->where('user.age', '<=', 70)->distinct('user_id')->count();
-        $men['8'] = -$this->campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'male')
-            ->where('user.age', '>=', 71)->where('user.age', '<=', 80)->distinct('user_id')->count();
-        $men['9'] = -$this->campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'male')
-            ->where('user.age', '>=', 81)->where('user.age', '<=', 90)->distinct('user_id')->count();
-        $men['10'] = -$this->campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'male')
-            ->where('user.age', '>=', 90)->distinct('user_id')->count();
+        $this->data['graficname'] = ' de distribucion por edades ';
 
-        $women['1'] = $this->campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'female')
-            ->where('user.age', '>=', 0)->where('user.age', '<=', 17)->distinct('user_id')->count();
-        $women['2'] = $this->campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'female')
-            ->where('user.age', '>=', 18)->where('user.age', '<=', 20)->distinct('user_id')->count();
-        $women['3'] = $this->campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'female')
-            ->where('user.age', '>=', 21)->where('user.age', '<=', 30)->distinct('user_id')->count();
-        $women['4'] = $this->campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'female')
-            ->where('user.age', '>=', 31)->where('user.age', '<=', 40)->distinct('user_id')->count();
-        $women['5'] = $this->campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'female')
-            ->where('user.age', '>=', 41)->where('user.age', '<=', 50)->distinct('user_id')->count();
-        $women['6'] = $this->campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'female')
-            ->where('user.age', '>=', 51)->where('user.age', '<=', 60)->distinct('user_id')->count();
-        $women['7'] = $this->campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'female')
-            ->where('user.age', '>=', 61)->where('user.age', '<=', 70)->distinct('user_id')->count();
-        $women['8'] = $this->campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'female')
-            ->where('user.age', '>=', 71)->where('user.age', '<=', 80)->distinct('user_id')->count();
-        $women['9'] = $this->campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'female')
-            ->where('user.age', '>=', 81)->where('user.age', '<=', 90)->distinct('user_id')->count();
-        $women['10'] = $this->campaign->logs()->where('interaction.loaded', 'exists', true)->where('user.gender', 'female')
-            ->where('user.age', '>=', 90)->distinct('user_id')->count();
-//        $this->campaign->men = $men;
-//        $this->campaign->women = $women;
-        $grafica['men']=$men;
-        $grafica['women']=$women;
+        /*******         OBTENER LAS EDADES Y CANTIDAD DE USUARIOS UNICOS       ***************/
+        $collection = DB::getMongoDB()->selectCollection('campaign_logs');
+        $gender_age = $collection->aggregate([
+            // Stage 1
+            [
+                '$match' => [
+                    'campaign_id' => $this->campaign->id,
+                    'user.id' => ['$exists' => true],
+                ]
+            ],
+            // Stage 2
+            [
+                '$group' => [
+                    '_id' => [
+                        'gender' => '$user.gender',
+                        'age' => '$user.age'
+                    ],
+                    'users' => [
+                        '$addToSet' => '$user.id'
+                    ]
+                ]
+            ],
+            // Stage 3
+            [
+                '$unwind' => '$users'
+            ],
+            // Stage 4
+            [
+                '$group' => [
+                    '_id' => '$_id',
+                    'count' => [
+                        '$sum' => 1
+                    ]
+                ]
+            ],
+            // Stage 5
+            [
+                '$sort' => [
+                    '_id' => 1
+                ]
+            ]
+        ]);
+
+        $male = array_fill(1, 10, 0);
+        $female = array_fill(1, 10, 0);
+
+        foreach ($gender_age['result'] as $person) {
+            if ($person['_id']['age'] > 0 && $person['_id']['age'] <= 17) {
+                ${$person['_id']['gender']}[1] += $person['count'];
+            } else if ($person['_id']['age'] >= 18 && $person['_id']['age'] <= 20) {
+                ${$person['_id']['gender']}[2] += $person['count'];
+            } else if ($person['_id']['age'] >= 21 && $person['_id']['age'] <= 30) {
+                ${$person['_id']['gender']}[3] += $person['count'];
+            } else if ($person['_id']['age'] >= 31 && $person['_id']['age'] <= 40) {
+                ${$person['_id']['gender']}[4] += $person['count'];
+            } else if ($person['_id']['age'] >= 41 && $person['_id']['age'] <= 50) {
+                ${$person['_id']['gender']}[5] += $person['count'];
+            } else if ($person['_id']['age'] >= 51 && $person['_id']['age'] <= 60) {
+                ${$person['_id']['gender']}[6] += $person['count'];
+            } else if ($person['_id']['age'] >= 61 && $person['_id']['age'] <= 70) {
+                ${$person['_id']['gender']}[7] += $person['count'];
+            } else if ($person['_id']['age'] >= 71 && $person['_id']['age'] <= 80) {
+                ${$person['_id']['gender']}[8] += $person['count'];
+            } else if ($person['_id']['age'] >= 81 && $person['_id']['age'] <= 90) {
+                ${$person['_id']['gender']}[9] += $person['count'];
+            } else if ($person['_id']['age'] >= 91) {
+                ${$person['_id']['gender']}[10] += $person['count'];
+            }
+        }
+
+        $male = array_map(function ($item) {
+            return $item * -1;
+        }, $male);
+
+        $grafica['men'] = $male;
+        $grafica['women'] = $female;
         return $grafica;
     }
 
     /**
+     *      GRAFICA DE INTERACCIONES POR HORA
      * @return mixed
      * @internal param $id
      */
     private function intXHour()
     {   //        $today =date( "Y-m-d",mktime(0, 0, 0, date("m"),date("d")-5, date("Y")));
-        $this->data['graficname']='interaciones por hora';
-        $IntXDias = [
-            '00' => ['hora' => '00', 'cntC' => 0, 'cntL' => 0], '01' => ['hora' => '01', 'cntC' => 0, 'cntL' => 0], '02' => ['hora' => '02', 'cntC' => 0, 'cntL' => 0], '03' => ['hora' => '03', 'cntC' => 0, 'cntL' => 0],
-            '04' => ['hora' => '04', 'cntC' => 0, 'cntL' => 0], '05' => ['hora' => '05', 'cntC' => 0, 'cntL' => 0], '06' => ['hora' => '06', 'cntC' => 0, 'cntL' => 0], '07' => ['hora' => '07', 'cntC' => 0, 'cntL' => 0],
-            '08' => ['hora' => '08', 'cntC' => 0, 'cntL' => 0], '09' => ['hora' => '09', 'cntC' => 0, 'cntL' => 0], '10' => ['hora' => '10', 'cntC' => 0, 'cntL' => 0], '11' => ['hora' => '11', 'cntC' => 0, 'cntL' => 0],
-            '12' => ['hora' => '12', 'cntC' => 0, 'cntL' => 0], '13' => ['hora' => '13', 'cntC' => 0, 'cntL' => 0], '14' => ['hora' => '14', 'cntC' => 0, 'cntL' => 0], '15' => ['hora' => '15', 'cntC' => 0, 'cntL' => 0],
-            '16' => ['hora' => '16', 'cntC' => 0, 'cntL' => 0], '17' => ['hora' => '17', 'cntC' => 0, 'cntL' => 0], '18' => ['hora' => '18', 'cntC' => 0, 'cntL' => 0], '19' => ['hora' => '19', 'cntC' => 0, 'cntL' => 0],
-            '20' => ['hora' => '20', 'cntC' => 0, 'cntL' => 0], '21' => ['hora' => '21', 'cntC' => 0, 'cntL' => 0], '22' => ['hora' => '22', 'cntC' => 0, 'cntL' => 0], '23' => ['hora' => '23', 'cntC' => 0, 'cntL' => 0],
-        ];
-
-        /****  fechas para hacer la busqueda ****/
-        $start = $this->campaign->filters['date']['start']->sec;
-        $end = $this->campaign->filters['date']['end']->sec;
-
+        $this->data['graficname'] = 'interaciones por hora';
 
         /*******         OBTENER LAS INTERACCIONES POR hora       ***************/
-        $collection = DB::getMongoDB()->selectCollection('campaign_logs');
-        $results = $collection->aggregate([
+        $IntLoaded = $collection->aggregate([
             [
                 '$match' => [
-                    'campaign_id' => $this->campaign->id,
+                    'campaign_id' => $id,
                     'interaction.loaded' => [
                         '$gte' => new MongoDate(strtotime(Carbon::today()->subDays(30)->format('Y-m-d'))),
                         '$lte' => new MongoDate(strtotime(Carbon::today()->subDays(0)->format('Y-m-d'))),
@@ -212,7 +233,7 @@ class AnalyticsController extends Controller
                 '$group' => [
                     '_id' => [
                         '$dateToString' => [
-                            'format' => '%H:00:00', 'date' => ['$subtract' => ['$created_at', 18000000]]
+                            'format' => '%H', 'date' => ['$subtract' => ['$created_at', 18000000]]
                         ]
                     ],
                     'cnt' => [
@@ -226,10 +247,10 @@ class AnalyticsController extends Controller
                 ]
             ]
         ]);
-        $results2 = $collection->aggregate([
+        $IntCompleted = $collection->aggregate([
             [
                 '$match' => [
-                    'campaign_id' => $this->campaign->id,
+                    'campaign_id' => $id,
                     'interaction.completed' => [
                         '$gte' => new MongoDate(strtotime(Carbon::today()->subDays(30)->format('Y-m-d'))),
                         '$lte' => new MongoDate(strtotime(Carbon::today()->subDays(0)->format('Y-m-d'))),
@@ -240,7 +261,7 @@ class AnalyticsController extends Controller
                 '$group' => [
                     '_id' => [
                         '$dateToString' => [
-                            'format' => '%H:00:00', 'date' => ['$subtract' => ['$created_at', 18000000]]
+                            'format' => '%H', 'date' => ['$subtract' => ['$created_at', 18000000]]
                         ]
                     ],
                     'cnt' => [
@@ -255,28 +276,17 @@ class AnalyticsController extends Controller
             ]
         ]);
 
-        foreach ($results['result'] as $result => $valor) {
-
-            $time = explode(":", $valor['_id']);
-            if (array_key_exists($time[0], $IntXDias)) {
-//                    echo '<br>si esta<br>';
-                $IntXDias[$time[0]]['cntL'] = $valor['cnt'];
-            } else {
-//                    echo '<br>no esta<br>';
-                $IntXDias[$result][$time[0]] = 0;
-            }
+        $IntHours = [];
+        foreach ($IntLoaded['result'] as $k => $v) {
+            $IntHours[$v['_id']]['loaded'] = $v['cnt'];
         }
-        foreach ($results2['result'] as $result => $valor) {
-            $time = explode(":", $valor['_id']);
-            if (array_key_exists($time[0], $IntXDias)) {
-                $IntXDias[$time[0]]['cntC'] = $valor['cnt'];
-            } else {
-                $IntXDias[$result][$time[0]] = 0;
-            }
+
+        foreach ($IntCompleted['result'] as $k => $v) {
+            $IntHours[$v['_id']]['completed'] = $v['cnt'];
         }
 
 //        dd($IntXDias);
-        return $IntXDias;
+        return $IntHours;
     }
 
     /**
@@ -285,15 +295,54 @@ class AnalyticsController extends Controller
      */
     public function so()
     {
-        $this->data['graficname']='Grafica de los dispositivos';
-        //se obtiene de los logs los usuarios de 5 dias atras
-        $fecha = $this->fechaInicio(5); //el numero es entere positivo pero en la funcion se ase negativo para buscar asia atras
-        $so['android'] = CampaignLog::where('campaign_id', $this->campaign->id)->where('device.os', 'android')->where('updated_at', '>', $fecha)->count();
-        $so['mac'] = CampaignLog::where('campaign_id', $this->campaign->id)->where('device.os', 'mac')->where('updated_at', '>', $fecha)->count();
-        $so['windows'] = CampaignLog::where('campaign_id', $this->campaign->id)->where('device.os', 'windows')->where('updated_at', '>', $fecha)->count();
-        $so['otro'] = CampaignLog::where('campaign_id', $this->campaign->id)->where('device.os', 'other')->where('updated_at', '>', $fecha)->count();
+        $so=array();
+        $this->data['graficname'] = ' sistemas operativos';
+        $collectionCam = DB::getMongoDB()->selectCollection('campaign_logs');
+        $sistemas = $collectionCam->aggregate([
+            [
+                '$match' => [
+                    'campaign_id' => '56817e1c2bdb3a73ba25087d',
+                    'device.os' => [
+                        '$exists' => true
+                    ]
+                ]
+            ],
+            [
+                '$group' => [
+                    '_id' => '$device.os',
+                    'mac' => [
+                        '$addToSet' => '$device.mac'
+                    ]
+                ]
+            ],
+            [
+                '$unwind' => '$mac'
+            ],
+            [
+                '$group' => [
+                    '_id' => '$_id',
+                    'cnt' => [
+                        '$sum' => 1
+                    ]
+                ]
+            ],
+            [
+                '$sort' => [
+                    'cnt' => -1
+                ]
+            ]
+        ]);
+//        dd($sistemas['result']);
+        foreach ($sistemas['result'] as $k => $v) {
+//            echo $k.'-'.$v['_id'].'-'.$v['cnt'].'<br>';
+            if($v['_id']=='false' || $v['_id']=='0' ){
+//                echo ' otro <br>';
+                $so['otros'] = $v['cnt'];
+            }else{
+                $so[$v['_id']] = $v['cnt'];
+            }
+        }
 //        dd($so);
-
         return $so;
     }
 
