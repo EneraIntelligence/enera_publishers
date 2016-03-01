@@ -6,18 +6,18 @@ graficas = function () {
     };
     //grafica de pastel para los sistemas operativos
     this.so = function so(sistemas) {
-        //console.log(sistemas);
-        var column = [];
+        console.log(sistemas);
+        var column = [['otros',0]];
         var i = 0;
         for (var k in sistemas) {
-            if (i >= 5) {
-                column.push(['otros', column['otros']+sistemas[k]]);
+            if(k=='otros' || i >= 5){
+                column[0][1]+= sistemas[k];
             }else {
                 column.push([k, sistemas[k]]);
             }
             i++;
         }
-
+        console.log(column);
 
         var chart4 = c3.generate({
             bindto: '#so',
