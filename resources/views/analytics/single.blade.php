@@ -208,7 +208,7 @@
                     console.log('so');
                     var SOJson = '{!! isset($grafica) ? json_encode($grafica) : json_encode([0,0,0,0]) !!}';
                     var soObj = JSON.parse(SOJson);
-//                    console.log(soObj);
+                    console.log(soObj);
                     gra = grafica.so(soObj);
                     break;
                 case 'intXHour':

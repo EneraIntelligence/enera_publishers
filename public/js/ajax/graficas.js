@@ -10,7 +10,7 @@ graficas = function () {
         var column = [['otros',0]];
         var i = 0;
         for (var k in sistemas) {
-            if(k=='otros' || i >= 5 || k==0){
+            if(k=='otros' || i >= 5 ){
                 column[0][1]+= sistemas[k];
             }else {
                 column.push([k, sistemas[k]]);

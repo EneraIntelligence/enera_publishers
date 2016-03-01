@@ -332,11 +332,11 @@ class AnalyticsController extends Controller
                 ]
             ]
         ]);
-        dd($sistemas['result']);
+//        dd($sistemas['result']);
         foreach ($sistemas['result'] as $k => $v) {
             echo $v['_id'].'<br>';
             if($v['_id']=='false' || $v['_id']==0 ){
-                echo ' otro';
+                echo ' otro <br>';
                 $so['otros'] = $v['cnt'];
             }else{
                 $so[$v['_id']] = $v['cnt'];
