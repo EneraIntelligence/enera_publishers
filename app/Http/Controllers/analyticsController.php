@@ -343,7 +343,7 @@ class AnalyticsController extends Controller
             }
         }
 
-//        dd($so);
+        dd($so);
         return $so;
     }
 
