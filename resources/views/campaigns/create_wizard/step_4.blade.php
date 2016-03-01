@@ -20,11 +20,14 @@
         </div>
 
         <div class="uk-width-medium-1-1 parsley-row">
-            <p>El costo por interacción es de:
-                <span class="step2-field banner-link captcha like ">$1.00</span>
-                <span class="step2-field video ">$1.20</span>
-                <span class="step2-field mailing-list ">$1.50</span>
-                <span class="step2-field survey ">$2.00</span>
+            <p> <span id="num_interactions">0</span> interacciones aprox. </p>
+            <p>El costo por interacción es de
+                <span class="step2-field banner-link_inline ">${{ number_format($price['banner_link'], 2, '.', ',') }}</span>
+                <span class="step2-field captcha _inline ">${{ number_format($price['captcha'], 2, '.', ',') }}</span>
+                <span class="step2-field like_inline ">${{ number_format($price['like'], 2, '.', ',') }}</span>
+                <span class="step2-field video_inline ">${{ number_format($price['video'], 2, '.', ',') }}</span>
+                <span class="step2-field mailing-list_inline ">${{ number_format($price['mailing_list'], 2, '.', ',') }}</span>
+                <span class="step2-field survey_inline ">${{ number_format($price['survey'], 2, '.', ',') }}</span>
             </p>
             <br>
         </div>

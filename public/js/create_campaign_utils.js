@@ -70,7 +70,7 @@ create_campaign_helper =
         //console.log("setup validator");
     },
     interaction: null,
-    video:null,
+    video: null,
     images: {},
     init: function () {
         var cropBtn = $("#crop-btn");
@@ -81,7 +81,7 @@ create_campaign_helper =
         btnNext.addClass("disabled");
         btnNext.attr("aria-disabled", "true");
 
-        console.log("create_campaign_helper.init");
+        //console.log("create_campaign_helper.init");
 
         $("#video-input").change(function () {
             create_campaign_helper.uploadVideo();
@@ -116,14 +116,16 @@ create_campaign_helper =
         $(".preview").css("display", "none");
         $(".step2-field").css("display", "none");
         $("." + interactionId).css("display", "block");
+        $("." + interactionId+"_inline").css("display", "inline");
 
         //enable button
         var btnNext = $(".button_next");
         btnNext.removeClass("disabled");
         btnNext.attr("aria-disabled", "false");
+
+        preview.setInteraction(interactionId);
     },
-    uploadVideo: function()
-    {
+    uploadVideo: function () {
         var modal = UIkit.modal.blockUI('<div class=\'uk-text-center\'>Cargando imagen...<br/>' +
             '<img class=\'uk-margin-top\' src=\'' + branchMap.base_url + '/assets/img/spinners/spinner.gif\' alt=\'\'>');
 
@@ -196,19 +198,17 @@ create_campaign_helper =
         var previewId = create_campaign_helper.cropData.previewId;
         var input = create_campaign_helper.cropData.input;
 
-        if(x<0)
-            x=0;
-        if(y<0)
-            y=0;
+        if (x < 0)
+            x = 0;
+        if (y < 0)
+            y = 0;
 
-        if(y+height>img.naturalHeight)
-        {
-            height = img.naturalHeight-y;
+        if (y + height > img.naturalHeight) {
+            height = img.naturalHeight - y;
         }
 
-        if(x+width>img.naturalWidth)
-        {
-            width = img.naturalWidth-x;
+        if (x + width > img.naturalWidth) {
+            width = img.naturalWidth - x;
         }
 
         //create canvas
@@ -277,14 +277,14 @@ create_campaign_helper =
 
     },
     showPreview: function (event, previewId, width, height) {
-        console.log("create_campaign_helper.showPreview");
+        //console.log("create_campaign_helper.showPreview");
 
-        create_campaign_helper.modal = UIkit.modal("#modal_image",{keyboard:false,bgclose:false});
+        create_campaign_helper.modal = UIkit.modal("#modal_image", {keyboard: false, bgclose: false});
 
         $('#modal_image').on({
 
             'hide.uk.modal': function () {
-                console.log("Input clear.");
+                //console.log("Input clear.");
                 input.value = "";
 
             }
@@ -316,7 +316,7 @@ create_campaign_helper =
 
                 output.cropper({
                     aspectRatio: width / height,
-                    viewMode:1,
+                    viewMode: 1,
                     resizable: true,
                     zoomable: false,
                     rotatable: false,
@@ -459,36 +459,31 @@ survey =
 time_sliders =
 {
     setup: function () {
-        $("#time_1_slider").ionRangeSlider({
-            type: "double",
-            min: 0,
-            max: 24,
-            min_interval: 3,
-            postfix: ":00",
-            from_min: 5,
-            from: 5,
-            to: 24,
-            step: 1,
-            force_edges: true,
-            onChange: function (data) {
-                //second time slider
-                /*
-                 var slider2 = $("#time_2_slider").data("ionRangeSlider");
-                 slider2.update({
-                 from_min: data.to,
-                 to_min: data.to,
-                 });
-                 */
-            }
-        });
+
+        /*
+         $("#time_1_slider").ionRangeSlider({
+         type: "double",
+         min: 0,
+         max: 24,
+         min_interval: 3,
+         postfix: ":00",
+         from_min: 5,
+         from: 5,
+         to: 24,
+         step: 1,
+         force_edges: true,
+         });
+
+         */
     }
-}
+};
 
 /*
  Setup of the preview div of the create campaign view
  */
 preview =
 {
+    prices:null,
     init: function () {
         var prevContainer = $(".preview-container");
         $(window).scroll(function () {
@@ -497,36 +492,55 @@ preview =
                 .animate({"marginTop": ($(window).scrollTop() )}, "slow");
         });
 
-        $("#budget_input").change(function()
-        {
+        $("#budget_input").keydown(function () {
 
-            var budgetStr = $("#budget_input").val().substr(1);//remove $
-            budgetStr = budgetStr.replace(/,/g, '');//remove commas
+            //preview.updateBudget();
 
-            var budget = parseFloat( budgetStr );
-            var balance =  parseFloat( new_campaign.user_budget-budget );
-
-            console.log(budget);
-            console.log(new_campaign.user_budget);
-            console.log(balance);
-
-            var msg = "";
-            if(balance<0)
-            {
-                $("#balance").css("color","red");
-                msg = '<div class="md-input-danger"> La cantidad debe ser menor o igual a tu balance actual </div> ';
-            }
-            else
-            {
-                $("#balance").css("color","black");
-                if(budget<100)
-                {
-                    msg = '<div style="color:red" class="md-input-danger"> La cantidad debe ser al menos $100</div> ';
-                }
-            }
-            $("#balance").html( "$"+balance.toFixed(2)+msg );
         });
 
+        $("#budget_input").change(function () {
+
+            preview.updateBudget();
+
+        });
+
+    },
+    setPrices: function (arrPrices) {
+        //console.log(arrPrices['banner']);
+        preview.prices = arrPrices;
+    },
+    setInteraction:function(interactionId)
+    {
+        preview.interaction = interactionId;
+    },
+    updateBudget: function () {
+        var budgetStr = $("#budget_input").val().substr(1);//remove $
+        budgetStr = budgetStr.replace(/,/g, '');//remove commas
+
+        var budget = parseFloat(budgetStr);
+        var balance = parseFloat(new_campaign.user_budget - budget);
+
+        /*
+         console.log(budget);
+         console.log(new_campaign.user_budget);
+         console.log(balance);
+         */
+
+        var msg = "";
+        if (balance < 0) {
+            $("#balance").css("color", "red");
+            msg = '<div class="md-input-danger"> La cantidad debe ser menor o igual a tu balance actual </div> ';
+        }
+        else {
+            $("#balance").css("color", "black");
+            if (budget < 100) {
+                msg = '<div style="color:red" class="md-input-danger"> La cantidad debe ser al menos $100</div> ';
+            }
+        }
+        $("#balance").html("$" + balance.toFixed(2) + msg);
+
+        var price = preview.prices[preview.interaction];
+        $("#num_interactions").html(""+Math.floor(budget/price));
     }
 }
 
@@ -573,7 +587,7 @@ branchMap =
         //radio button actions
         var selectRadioBtn = $('#wizard_location_select');
         selectRadioBtn.on('ifClicked', function (event) {
-            var modal = UIkit.modal("#modal_map",{keyboard:false, bgclose:false});
+            var modal = UIkit.modal("#modal_map", {keyboard: false, bgclose: false});
             modal.show();
             setTimeout(branchMap.refresh, 100);
             //branchMap.enableMap();
@@ -603,39 +617,43 @@ branchMap =
         var markerOnImg = iconBaseURL + 'enera_map_marker_on.png';
         var markerOffImg = iconBaseURL + 'enera_map_marker_off.png';
 
-        for (var i = 0; i < branchMap.branches.length; i++) {
-            var branch = branchMap.branches[i];
+        if (branchMap.branches) {
 
-            var marker = new BooleanMarker(branch.location[0], branch.location[1], markerOnImg, markerOffImg);
-            marker.setData(branch._id, branch.name, true);
+            for (var i = 0; i < branchMap.branches.length; i++) {
+                var branch = branchMap.branches[i];
 
-            branchMap.map.addMarker(marker);
+                var marker = new BooleanMarker(branch.location[0], branch.location[1], markerOnImg, markerOffImg);
+                marker.setData(branch._id, branch.name, true);
+
+                branchMap.map.addMarker(marker);
+            }
         }
+
     },
 
     /*
-    enableMap: function () {
-        TweenLite.to(".branchMap", .5, {alpha: 1});
-        $(".branchMap").css("pointer-events", "auto");
+     enableMap: function () {
+     TweenLite.to(".branchMap", .5, {alpha: 1});
+     $(".branchMap").css("pointer-events", "auto");
 
-        branchMap.validateMakerSelection(branchMap.map.activeMarkers);
-    },
-    */
+     branchMap.validateMakerSelection(branchMap.map.activeMarkers);
+     },
+     */
 
     disableMap: function () {
         /*
-        TweenLite.to(".branchMap", .5, {alpha: .4});
-        $(".branchMap").css("pointer-events", "none");
+         TweenLite.to(".branchMap", .5, {alpha: .4});
+         $(".branchMap").css("pointer-events", "none");
 
-        branchMap.validateMakerSelection(branchMap.map.activeMarkers);*/
+         branchMap.validateMakerSelection(branchMap.map.activeMarkers);*/
 
-        var modal = UIkit.modal("#modal_map",{keyboard:false, bgclose:false});
+        var modal = UIkit.modal("#modal_map", {keyboard: false, bgclose: false});
         modal.hide();
 
         /*
-        $("#wizard_location_select").prop("checked", false);
-        $("#wizard_location_all").prop("checked", true);
-        */
+         $("#wizard_location_select").prop("checked", false);
+         $("#wizard_location_all").prop("checked", true);
+         */
     },
 
     validateMakerSelection: function (activeBranchesCount) {
