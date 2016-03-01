@@ -213,8 +213,11 @@
     {!! HTML::script('js/cropper.min.js') !!}
 
     <script>
-                branchMap.base_url = "{!! URL::to('/') !!}";
-                branchMap.setBranches('{!! json_encode($branches) !!}');
+        branchMap.base_url = "{!! URL::to('/') !!}";
+        branchMap.setBranches('{!! json_encode($branches) !!}');
+
+        var pricesJSON = '{!! json_encode($price) !!}';
+        preview.setPrices( JSON.parse(pricesJSON) );
     </script>
 
             <!-- ckeditor -->

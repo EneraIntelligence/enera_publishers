@@ -8,6 +8,7 @@ use DB;
 use MongoDate;
 use Publishers\AdministratorMovement;
 use Publishers\CampaignLog;
+use Publishers\Interaction;
 use Publishers\Jobs\MailCreationJob;
 use Publishers\Jobs\mailingJob;
 use Publishers\Libraries\CampaignStyleHelper;
@@ -122,7 +123,15 @@ class CampaignsController extends Controller
 
             $user = Auth::user();
 
-            return view('campaigns.create', compact('branches', 'noCreateBtn', 'campaignName', 'user'));
+            $interactions = Interaction::all();
+            $price=[];
+            foreach($interactions as $k=>$item)
+            {
+                $price[$item->name] = $item->amount;
+            }
+            //dd($prices);
+
+            return view('campaigns.create', compact('branches', 'noCreateBtn', 'campaignName', 'user', 'price'));
         }
 
     }
