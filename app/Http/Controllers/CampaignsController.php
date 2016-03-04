@@ -8,6 +8,7 @@ use DB;
 use MongoDate;
 use Publishers\AdministratorMovement;
 use Publishers\CampaignLog;
+use Publishers\Interaction;
 use Publishers\Jobs\MailCreationJob;
 use Publishers\Jobs\mailingJob;
 use Publishers\Libraries\CampaignStyleHelper;
@@ -116,13 +117,21 @@ class CampaignsController extends Controller
             $campaignName = $request->get('name');
             //get branches data
             //$branches = Branche::all();
-            $branches = Branche::where('status', 'active')->get();
+            $branches = Branche::where('status', 'active')->where('filters.external_ads', true)->get();
 
             $noCreateBtn = true;
 
             $user = Auth::user();
 
-            return view('campaigns.create', compact('branches', 'noCreateBtn', 'campaignName', 'user'));
+            $interactions = Interaction::all();
+            $price=[];
+            foreach($interactions as $k=>$item)
+            {
+                $price[$item->name] = $item->amount;
+            }
+            //dd($prices);
+
+            return view('campaigns.create', compact('branches', 'noCreateBtn', 'campaignName', 'user', 'price'));
         }
 
     }
@@ -182,7 +191,7 @@ class CampaignsController extends Controller
                                 'client_id' => isset(auth()->user()->client_id) ? auth()->user()->client_id : '0',
                                 'administrator_id' => auth()->user()->_id,
                                 'name' => Input::get('title'),
-                                'branches' => Input::get('ubication') == 'all' ? ['all'] : Input::get('branches'),
+                                'branches' => Input::get('ubication') == 'all' ? 'all' : Input::get('branches'),
                                 'balance' => [
                                     'init' => $budget,
                                     'current' => $budget,
@@ -575,16 +584,6 @@ class CampaignsController extends Controller
     public function show($id)
     {
         $porcentaje = 0.0;
-        $lugares = '';
-        /**     ARREGLO PARA GUARDAR LAS HORAS **/
-        $IntXDias = [
-            '00' => ['hora' => '00', 'cntC' => 0, 'cntL' => 0], '01' => ['hora' => '01', 'cntC' => 0, 'cntL' => 0], '02' => ['hora' => '02', 'cntC' => 0, 'cntL' => 0], '03' => ['hora' => '03', 'cntC' => 0, 'cntL' => 0],
-            '04' => ['hora' => '04', 'cntC' => 0, 'cntL' => 0], '05' => ['hora' => '05', 'cntC' => 0, 'cntL' => 0], '06' => ['hora' => '06', 'cntC' => 0, 'cntL' => 0], '07' => ['hora' => '07', 'cntC' => 0, 'cntL' => 0],
-            '08' => ['hora' => '08', 'cntC' => 0, 'cntL' => 0], '09' => ['hora' => '09', 'cntC' => 0, 'cntL' => 0], '10' => ['hora' => '10', 'cntC' => 0, 'cntL' => 0], '11' => ['hora' => '11', 'cntC' => 0, 'cntL' => 0],
-            '12' => ['hora' => '12', 'cntC' => 0, 'cntL' => 0], '13' => ['hora' => '13', 'cntC' => 0, 'cntL' => 0], '14' => ['hora' => '14', 'cntC' => 0, 'cntL' => 0], '15' => ['hora' => '15', 'cntC' => 0, 'cntL' => 0],
-            '16' => ['hora' => '16', 'cntC' => 0, 'cntL' => 0], '17' => ['hora' => '17', 'cntC' => 0, 'cntL' => 0], '18' => ['hora' => '18', 'cntC' => 0, 'cntL' => 0], '19' => ['hora' => '19', 'cntC' => 0, 'cntL' => 0],
-            '20' => ['hora' => '20', 'cntC' => 0, 'cntL' => 0], '21' => ['hora' => '21', 'cntC' => 0, 'cntL' => 0], '22' => ['hora' => '22', 'cntC' => 0, 'cntL' => 0], '23' => ['hora' => '23', 'cntC' => 0, 'cntL' => 0],
-        ];
         $campaign = Campaign::find($id); //busca la campaña
         if ($campaign && $campaign->administrator_id == auth()->user()->_id) {
             /******     saca el color y el icono que se va a usar regresa un array  ********/
@@ -628,14 +627,14 @@ class CampaignsController extends Controller
                     break;
             }
 
+            /*******         OBTENER LAS EDADES Y CANTIDAD DE USUARIOS UNICOS       ***************/
             $collection = DB::getMongoDB()->selectCollection('campaign_logs');
-            $em = $collection->aggregate([
+            $gender_age = $collection->aggregate([
 
                 // Stage 1
                 [
                     '$match' => [
                         'campaign_id' => $id,
-                        'interaction.loaded' => ['$exists' => true],
                         'user.id' => ['$exists' => true],
                     ]
                 ],
@@ -677,62 +676,39 @@ class CampaignsController extends Controller
 
             ]);
 
-            $edades = $em['result'];
+            $male = array_fill(1, 10, 0);
+            $female = array_fill(1, 10, 0);
 
-            $men = ['1' => 0, '2' => 0, '3' => 0, '4' => 0, '5' => 0, '6' => 0, '7' => 0, '8' => 0, '9' => 0, '10' => 0];
-            $women = ['1' => 0, '2' => 0, '3' => 0, '4' => 0, '5' => 0, '6' => 0, '7' => 0, '8' => 0, '9' => 0, '10' => 0];
-
-            foreach ($edades as $person => $valor) {
-                if ($valor['_id']['gender'] == 'female') {
-                    if ($valor['_id']['age'] > 0 && $valor['_id']['age'] <= 17) {
-                        $women['1'] += $valor['count'];
-                    } else if ($valor['_id']['age'] >= 18 && $valor['_id']['age'] <= 20) {
-                        $women['2'] += $valor['count'];
-                    } else if ($valor['_id']['age'] >= 21 && $valor['_id']['age'] <= 30) {
-                        $women['3'] += $valor['count'];
-                    } else if ($valor['_id']['age'] >= 31 && $valor['_id']['age'] <= 40) {
-                        $women['4'] += $valor['count'];
-                    } else if ($valor['_id']['age'] >= 41 && $valor['_id']['age'] <= 50) {
-                        $women['5'] += $valor['count'];
-                    } else if ($valor['_id']['age'] >= 51 && $valor['_id']['age'] <= 60) {
-                        $women['6'] += $valor['count'];
-                    } else if ($valor['_id']['age'] >= 61 && $valor['_id']['age'] <= 70) {
-                        $women['7'] += $valor['count'];
-                    } else if ($valor['_id']['age'] >= 71 && $valor['_id']['age'] <= 80) {
-                        $women['8'] += $valor['count'];
-                    } else if ($valor['_id']['age'] >= 81 && $valor['_id']['age'] <= 90) {
-                        $women['9'] += $valor['count'];
-                    } else if ($valor['_id']['age'] >= 91) {
-                        $women['10'] += $valor['count'];
-                    }
-                } else {
-                    if ($valor['_id']['age'] > 0 && $valor['_id']['age'] <= 17) {
-                        $men['1'] -= $valor['count'];
-                    } else if ($valor['_id']['age'] >= 18 && $valor['_id']['age'] <= 20) {
-                        $men['2'] -= $valor['count'];
-                    } else if ($valor['_id']['age'] >= 21 && $valor['_id']['age'] <= 30) {
-                        $men['3'] -= $valor['count'];
-                    } else if ($valor['_id']['age'] >= 31 && $valor['_id']['age'] <= 40) {
-                        $men['4'] -= $valor['count'];
-                    } else if ($valor['_id']['age'] >= 41 && $valor['_id']['age'] <= 50) {
-                        $men['5'] -= $valor['count'];
-                    } else if ($valor['_id']['age'] >= 51 && $valor['_id']['age'] <= 60) {
-                        $men['6'] -= $valor['count'];
-                    } else if ($valor['_id']['age'] >= 61 && $valor['_id']['age'] <= 70) {
-                        $men['7'] -= $valor['count'];
-                    } else if ($valor['_id']['age'] >= 71 && $valor['_id']['age'] <= 80) {
-                        $men['8'] -= $valor['count'];
-                    } else if ($valor['_id']['age'] >= 81 && $valor['_id']['age'] <= 90) {
-                        $men['9'] -= $valor['count'];
-                    } else if ($valor['_id']['age'] >= 91) {
-                        $men['10'] -= $valor['count'];
-                    }
+            foreach ($gender_age['result'] as $person) {
+                if ($person['_id']['age'] > 0 && $person['_id']['age'] <= 17) {
+                    ${$person['_id']['gender']}[1] += $person['count'];
+                } else if ($person['_id']['age'] >= 18 && $person['_id']['age'] <= 20) {
+                    ${$person['_id']['gender']}[2] += $person['count'];
+                } else if ($person['_id']['age'] >= 21 && $person['_id']['age'] <= 30) {
+                    ${$person['_id']['gender']}[3] += $person['count'];
+                } else if ($person['_id']['age'] >= 31 && $person['_id']['age'] <= 40) {
+                    ${$person['_id']['gender']}[4] += $person['count'];
+                } else if ($person['_id']['age'] >= 41 && $person['_id']['age'] <= 50) {
+                    ${$person['_id']['gender']}[5] += $person['count'];
+                } else if ($person['_id']['age'] >= 51 && $person['_id']['age'] <= 60) {
+                    ${$person['_id']['gender']}[6] += $person['count'];
+                } else if ($person['_id']['age'] >= 61 && $person['_id']['age'] <= 70) {
+                    ${$person['_id']['gender']}[7] += $person['count'];
+                } else if ($person['_id']['age'] >= 71 && $person['_id']['age'] <= 80) {
+                    ${$person['_id']['gender']}[8] += $person['count'];
+                } else if ($person['_id']['age'] >= 81 && $person['_id']['age'] <= 90) {
+                    ${$person['_id']['gender']}[9] += $person['count'];
+                } else if ($person['_id']['age'] >= 91) {
+                    ${$person['_id']['gender']}[10] += $person['count'];
                 }
             }
 
+            $male = array_map(function ($item) {
+                return $item * -1;
+            }, $male);
+
             /*******         OBTENER LAS INTERACCIONES POR hora       ***************/
-//            $collection = DB::getMongoDB()->selectCollection('campaign_logs');
-            $results = $collection->aggregate([
+            $IntLoaded = $collection->aggregate([
                 [
                     '$match' => [
                         'campaign_id' => $id,
@@ -746,7 +722,7 @@ class CampaignsController extends Controller
                     '$group' => [
                         '_id' => [
                             '$dateToString' => [
-                                'format' => '%H:00:00', 'date' => ['$subtract' => ['$created_at', 18000000]]
+                                'format' => '%H', 'date' => ['$subtract' => ['$created_at', 18000000]]
                             ]
                         ],
                         'cnt' => [
@@ -760,7 +736,7 @@ class CampaignsController extends Controller
                     ]
                 ]
             ]);
-            $results2 = $collection->aggregate([
+            $IntCompleted = $collection->aggregate([
                 [
                     '$match' => [
                         'campaign_id' => $id,
@@ -774,7 +750,7 @@ class CampaignsController extends Controller
                     '$group' => [
                         '_id' => [
                             '$dateToString' => [
-                                'format' => '%H:00:00', 'date' => ['$subtract' => ['$created_at', 18000000]]
+                                'format' => '%H', 'date' => ['$subtract' => ['$created_at', 18000000]]
                             ]
                         ],
                         'cnt' => [
@@ -789,49 +765,49 @@ class CampaignsController extends Controller
                 ]
             ]);
 
-            foreach ($results['result'] as $result => $valor) {
-
-                $time = explode(":", $valor['_id']);
-                if (array_key_exists($time[0], $IntXDias)) {
-//                    echo '<br>si esta<br>';
-                    $IntXDias[$time[0]]['cntL'] = $valor['cnt'];
-                } else {
-//                    echo '<br>no esta<br>';
-                    $IntXDias[$result][$time[0]] = 0;
-                }
-            }
-            foreach ($results2['result'] as $result => $valor) {
-                $time = explode(":", $valor['_id']);
-                if (array_key_exists($time[0], $IntXDias)) {
-                    $IntXDias[$time[0]]['cntC'] = $valor['cnt'];
-                } else {
-                    $IntXDias[$result][$time[0]] = 0;
-                }
+            $IntHours = [];
+            foreach ($IntLoaded['result'] as $k => $v) {
+                $IntHours[$v['_id']]['loaded'] = $v['cnt'];
             }
 
-            /****         SI EL BRANCH TIENE ALL SE MOSTRARA COMO GLOBAL       ***************/
-            $today = new DateTime();
-            if ($campaign->branches == ['all']) {//SI TIENE ALL CAMBIO EL TEXTO POR GLOBAL
-//                echo 'tiene globales';
-                $lugares = 'global';
-            } else {//SI NO ES GLOBAL SACO EL NOMBRE DE LOS BRANCHES
-//                echo 'no tiene globales';
-                $branches = $campaign->branches;// saco los branches a otra bariable para que me sea mas facil manejar los datos
-                foreach ($branches as $clave => $valor) { // recorro el arreglo para hacer una consulta de todos los id de branches
-//                    echo '<br>'.$clave.'  '.$valor;
-                    $BRA = Branche::where('_id', $valor)->get(['name']); //guardo el valor de la consulta
-                    $lugares[$clave] = $BRA[0]['original']['name'];//saco solo el valor que me interesa para no tener un array dentro de un array
-                }
-            }//FIN DEL ELSE PARA MANEJAR LOS BRANCHES
+            foreach ($IntCompleted['result'] as $k => $v) {
+                $IntHours[$v['_id']]['completed'] = $v['cnt'];
+            }
+
+            $unique_users_query = $collection->aggregate([
+                [
+                    '$match' => [
+                        'campaign_id' => $id,
+                    ]
+                ],
+                [
+                    '$group' => [
+                        '_id' => '',
+                        'users' => [
+                            '$addToSet' => '$user.id',
+                        ]
+                    ],
+                ],
+                ['$unwind' => '$users'],
+                [
+                    '$group' => [
+                        '_id' => '$_id',
+                        'cnt' => ['$sum' => 1]
+                    ]
+                ]
+            ])['result'];
+            $unique_users = isset($unique_users_query[0]['cnt']) ? $unique_users_query[0]['cnt'] : 0;
+
+            $lugares = in_array('all', $campaign->branches) ? 'global' : $campaign->branches;
 
             return view('campaigns.show', [
                 'cam' => $campaign,
                 'lugares' => $lugares,
-                'men' => $men,
-                'women' => $women,
-                'user' => auth()->user(),
+                'men' => $male,
+                'women' => $female,
                 'porcentaje' => $porcentaje,
-                'IntXDias' => $IntXDias
+                'IntHours' => $IntHours,
+                'unique_users' => $unique_users,
             ]);
         } else {
             return redirect()->route('campaigns::index')->with('data', 'errorCamp');
