@@ -16,7 +16,9 @@
 
         <div class="uk-width-medium-1-2 parsley-row">
             <label for="budget">Presupuesto</label>
+            <p style="text-align: right; font: 400 15px/18px Roboto,sans-serif; margin: 0 4px 0 0; ">  ${{ number_format( (float) auth()->user()->wallet->current, 2, '.', '') }}   </p>
             <input class="md-input masked_input" required name="budget" id="budget_input" type="text" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'autoGroup': true, 'digits': 2, 'digitsOptional': false, 'prefix': '$ ', 'placeholder': '0'" data-inputmask-showmaskonhover="false" />
+            <p id="balance" style="text-align: right; font: 400 15px/18px Roboto,sans-serif; padding: 5px 4px 12px 4px;">  ${{ number_format( (float) auth()->user()["balance"]["current"], 2, '.', '') }}   </p>
         </div>
 
         <div class="uk-width-medium-1-1 parsley-row">
@@ -33,11 +35,11 @@
         </div>
 
 
-        <div class="uk-width-medium-1-1 parsley-row">
-            <h3>Saldo</h3>
-            <p id="balance">  ${{ number_format( (float) auth()->user()["balance"]["current"], 2, '.', '') }}   </p>
-            <br>
-        </div>
+        {{--<div class="uk-width-medium-1-1 parsley-row">--}}
+            {{--<h3>Saldo</h3>--}}
+            {{--<p id="balance">  ${{ number_format( (float) auth()->user()["balance"]["current"], 2, '.', '') }}   </p>--}}
+            {{--<br>--}}
+        {{--</div>--}}
 
     </div>
 
