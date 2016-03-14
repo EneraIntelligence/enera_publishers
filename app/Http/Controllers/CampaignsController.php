@@ -117,7 +117,7 @@ class CampaignsController extends Controller
             $campaignName = $request->get('name');
             //get branches data
             //$branches = Branche::all();
-            $branches = Branche::where('status', 'active')->get();
+            $branches = Branche::where('status', 'active')->where('filters.external_ads', true)->get();
 
             $noCreateBtn = true;
 

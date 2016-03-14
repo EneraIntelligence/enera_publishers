@@ -22,10 +22,9 @@ class PreviewMiddleware
         $route = $request->route()->getName();
         $user = Administrator::where('_id', Auth::user()->_id)->first();
         $test = isset($user->routePublisher) ? $user->routePublisher : [];
-
-        if ($route != "home" && $route != "campaigns::show" && $route != "campaigns::sub" && $route != 'campaigns::store'
-            && $route != 'campaigns::save_item' && $route != 'budget::conekta' && $route != 'auth.logout'
-            && $route != 'edit.profile') {
+        $accept = ['home', 'campaigns::show', 'campaigns::sub', 'campaigns::store','campaigns::save_item',
+                   'budget::conekta', 'auth.logout', 'edit.profile'];
+        if (!in_array($route, $accept)) {
             array_unshift($test, PreviewHelper::getNameRoute($route) . '/' . $route);
         }
         if (count($test) > 5) {
