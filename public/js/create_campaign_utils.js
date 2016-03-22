@@ -244,9 +244,9 @@ create_campaign_helper =
             url: '/campaigns/save_item',
             type: 'POST',
             dataType: 'JSON',
-            data: JSON.stringify(form_data),
+            data: form_data,
             cache: false,
-            contentType: 'application/json',
+            contentType: false,
             processData: false
         }).done(function (data) {
             inputField.removeAttr("required");
