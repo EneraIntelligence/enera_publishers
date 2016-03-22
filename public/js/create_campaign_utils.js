@@ -228,14 +228,14 @@ create_campaign_helper =
         form_data.append("imgType", previewId);
         form_data.append("imgToSave", pic);
 
-        console.log(pic.length);
+        //console.log(pic.length);
 
         //div to receive any possible error
         var errorDiv = $(previewId + "-errors");
         errorDiv.html('');
 
         var inputId = "#" + previewId.substring(1, previewId.length);
-        console.log("inputId: " + inputId);
+        //console.log("inputId: " + inputId);
         var inputField = $(inputId);
 
 
@@ -243,11 +243,11 @@ create_campaign_helper =
         $.ajax({
             url: '/campaigns/save_item',
             type: 'POST',
-            dataType: 'JSON',
+            //dataType: 'JSON',
             data: form_data,
             cache: false,
-            contentType: false,
-            processData: false
+            contentType: "application/x-www-form-urlencoded"
+            //processData: false
         }).done(function (data) {
             inputField.removeAttr("required");
 
