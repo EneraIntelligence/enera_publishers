@@ -412,7 +412,7 @@ class CampaignsController extends Controller
     public function saveItem(Request $request)
     {
 
-        echo "{success: 'true', img_length:".strlen($request)."}";
+        echo "{success: 'true', img_length:".print_r($request)."}";
 
 
         if (Input::get("imgType") == ".banner-1") {
