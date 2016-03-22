@@ -243,10 +243,10 @@ create_campaign_helper =
         $.ajax({
             url: '/campaigns/save_item',
             type: 'POST',
-            dataType: 'application/json',
+            dataType: 'JSON',
             data: JSON.stringify(form_data),
             cache: false,
-            contentType: false,
+            contentType: 'application/json',
             processData: false
         }).done(function (data) {
             inputField.removeAttr("required");
