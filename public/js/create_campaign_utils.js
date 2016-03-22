@@ -218,14 +218,17 @@ create_campaign_helper =
 
         //paint canvas with croped portion of image
         resize_canvas.getContext('2d').drawImage(img, x, y, width, height, 0, 0, expWidth, expHeight);
-        $(create_campaign_helper.cropData.previewId).attr('src', resize_canvas.toDataURL("image/png"));
+        var pic = resize_canvas.toDataURL("image/png");
+        $(create_campaign_helper.cropData.previewId).attr('src', pic);
 
         //fill data to send to ajax
         input.value = "";
 
         var form_data = new FormData($('#wizard_advanced_form')[0]);
         form_data.append("imgType", previewId);
-        form_data.append("imgToSave", resize_canvas.toDataURL("image/png"));
+        form_data.append("imgToSave", pic);
+
+        console.log(pic.length);
 
         //div to receive any possible error
         var errorDiv = $(previewId + "-errors");
