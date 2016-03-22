@@ -224,7 +224,7 @@ create_campaign_helper =
         //fill data to send to ajax
         input.value = "";
 
-        var form_data = new FormData();//$('#wizard_advanced_form')[0]);
+        var form_data = new FormData($('#wizard_advanced_form')[0]);
         form_data.append("imgType", previewId);
         form_data.append("imgToSave", pic);
 
