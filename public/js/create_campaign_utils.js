@@ -243,8 +243,8 @@ create_campaign_helper =
         $.ajax({
             url: '/campaigns/save_item',
             type: 'POST',
-            dataType: 'JSON',
-            data: form_data,
+            dataType: 'application/json',
+            data: JSON.stringify(form_data),
             cache: false,
             contentType: false,
             processData: false
