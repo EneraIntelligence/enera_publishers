@@ -19,18 +19,16 @@
     <img src="http://publishers.enera-intelligence.mx/images/publisher.png" alt="">
 </div>
 <div style="width: 75%; margin: auto;">
-    <h2>Confirma tu correo </h2>
+    <h2>Recuperación de contraseña </h2>
     <div>
         <p>Estimado/a: {{$data['nombre'] . ' ' . $data['apellido']}}
-            gracias por registrarse en Enera Publishers.<br>
-            Para acceder a la plataforma de Publishers necesitas confirmar tu cuenta haciendo clic en el siguiente
-            enlace:<br>
-            <a href="http://publishers.enera-intelligence.mx/register/verify/{{$data['id_usuario'].'/'. $data['confirmation_code']}} ">
-                confirmar registro aquí </a>
+            hemos recibido la peticion de recuperación de contraseña.<br>
+            Para recuperar la contraseña solo haz clic en el siguiente enlace:<br>
+            <a href="http://publishers.enera-intelligence.mx/restore/password//{{$data['id_usuario'].'/'. $data['confirmation_code']}} ">
+                recuperar contraseña</a>
             <br>o copia y pega la siguiente url en tu navegador:
-            http://publishers.enera-intelligence.mx/register/verify/{{$data['id_usuario'].'/'.$data['confirmation_code']}}
+            http://publishers.enera-intelligence.mx/restore/password/{{$data['id_usuario'].'/'.$data['confirmation_code']}}
         </p>
-        <p>Atentamente:</p>
         <p>Enera Intelligence</p>
 
         <p>Este correo se genero de forma automatica, no contestar. Si usted tiene alguna duda envie un correo a la

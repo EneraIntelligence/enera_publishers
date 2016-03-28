@@ -58,14 +58,12 @@ Route::group(['middleware' => ['auth', 'guardian', 'preview']], function () {
 
         Route::get('/invoices/{id}', ['as' => 'invoices', 'uses' => 'BudgetController@invoices']);
 
-
         // PayPal Payment
         Route::post('/paypal/store', ['as' => 'paypal.store', 'uses' => 'PayPalPaymentController@getCheckout']);
         Route::get('/paypal/done/{payment_id}', ['as' => 'paypal.done', 'uses' => 'PayPalPaymentController@getDone']);
         Route::get('/paypal/cancel/{payment_id}', ['as' => 'paypal.cancel', 'uses' => 'PayPalPaymentController@getCancel']);
         //Route::get('/paypal', ['as' => 'paypal', 'uses' => 'PayPalPaymentController@index']);
         //Route::get('/paypal/index', ['as' => 'paypal.index', 'uses' => 'PayPalPaymentController@index']);
-
 
         Route::post('/conekta', ['as' => 'conekta', 'uses' => 'ConektaController@conekta']);
 
@@ -81,11 +79,15 @@ Route::group(['middleware' => ['auth', 'guardian', 'preview']], function () {
 });
 
 Route::group(['middleware' => ['auth.ready']], function () {
-    Route::get('/login', ['as' => 'auth.index', 'uses' => 'AuthController@index']);
-    Route::post('/login', ['as' => 'auth.login', 'uses' => 'AuthController@login']);
-    Route::post('/signUp', ['as' => 'auth.signUp', 'uses' => 'AuthController@signUp']);
-    Route::get('/register', ['as' => 'auth.register', 'uses' => 'AuthController@register']);
-    Route::get('/register/verify/{id}/{token}', ['as' => 'auth.verify', 'uses' => 'AuthController@verify']);
+    Route::get('/login', ['as' => 'auth.index', 'uses' => 'AuthController@index']);     //vista index
+    Route::post('/login', ['as' => 'auth.login', 'uses' => 'AuthController@login']);    //form
+    Route::post('/signUp', ['as' => 'auth.signUp', 'uses' => 'AuthController@signUp']);     //ruta post que registra al nuevo usuario
+    Route::get('/register', ['as' => 'auth.register', 'uses' => 'AuthController@register']);//vista de registro
+    Route::post('/restore', ['as' => 'auth.restore', 'uses' => 'AuthController@restore']);  //ruta peticion recuperar contraseña
+    Route::get('/restore/password/{id}/{token}', ['as' => 'auth.reset', 'uses' => 'AuthController@verify']);  //ruta que valida el token de nueva contraseña
+    Route::get('/register/verify/{id}/{token}', ['as' => 'auth.verify', 'uses' => 'AuthController@verify']); //ruta que valida el correo
+    Route::get('/restore/password', ['as' => 'auth.newpassword', 'uses' => 'AuthController@newpassword']);     //vista para cambiar la contraseña
+    Route::post('/restore/password', ['as' => 'auth.newpass', 'uses' => 'AuthController@newpass']);
 });
 
 Route::get('/choose', ['as' => 'choose.platform', function () {

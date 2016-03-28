@@ -6,6 +6,7 @@ use App;
 use Illuminate\Http\Request;
 use Hash;
 use Input;
+use Mail;
 use Publishers\Http\Requests;
 use Publishers\Http\Controllers\Controller;
 use Publishers\Jobs\newAdminJob;
@@ -44,7 +45,7 @@ class AuthController extends Controller
                     return redirect()->route('auth.index')->with('error', 'El correo y/o la contraseña son incorrectos.');
                 }
             } elseif ($admin && $admin->status != 'active') {
-                return redirect()->route('auth.index')->with('error', 'Debe validar tu cuenta antes de ingresar.');
+                return redirect()->route('auth.index')->with('error', 'Debe validar su cuenta antes de ingresar.');
             } else {
                 return redirect()->route('auth.index')->with('error', 'El correo y/o la contraseña son incorrectos.');
             }
@@ -121,11 +122,11 @@ class AuthController extends Controller
                             'confirmation_code' => $confirmation_code
                         ]));
                         return redirect()->route('auth.index')->with('success', 'registro-success');
-                    }else{  //valida si se guardo el token
+                    } else {  //valida si se guardo el token
                         $validator->errors()->add('registro', 'no se pudo enviar correo de confirmacion');
                         return redirect()->route('auth.index')->withErrors($validator);
                     }
-                }else{  //fin del if que valida si se creo el usuario para mandar el correo
+                } else {  //fin del if que valida si se creo el usuario para mandar el correo
                     $validator->errors()->add('registro', 'no se pudo completar el registro intenta mas tarde');
                     return redirect()->route('auth.index')->withErrors($validator);
                 }
@@ -142,39 +143,132 @@ class AuthController extends Controller
         return view('auth.register');
     }
 
-    public function verify($id, $token)
+    public function verify($id, $token) //verifica los codigos que llegan
     {
-//        echo 'verificando <br>';
-        $code = ValidationCode::where('administrator_id', '=', $id)->first();// busco el codigo en la base de datos
-        if ($code!=null && $code->count() > 0) //si se encuentra el usuario
+        $code = ValidationCode::where('token', $token)->first();// busco el codigo en la base de datos
+        if ($code != null && $code->count() > 0) //si el codigo exite
         {
-            if ($code->token == $token) //verifico si el token es el mismo
+            if ($code->administrator_id == $id) //verifico si el token es el mismo
             {
-                /*** se hace el cambio por activo  ***/
-                $admin = Administrator::find($id);
-
-                if ($admin && $admin->status != 'active')
-                {
-                    $admin->status = 'active';   //cambio el status de pending a active
-                    $admin->save();
-                    /**    se agrega el historial de cuando se cambio a activo     **/
-                    $admin->history()->create(array('previous_status' => 'pending'));
-                    /**    se borra el validation code     **/
-                    $code->delete();
-                    //  se regresa al login con mensaje de que se activo cuenta
-                    return redirect()->route('auth.index')->with('data', 'active');
-                } else
-                {
-//                    echo "ups";
-                    return redirect()->route('auth.index')->with('data', 'invalido');
+                $tipo = $code->type;
+                /*** se compara que tipo de codigo es   ***/
+                switch ($tipo) {
+                    case 'resetPassword':
+                        $data['id'] = $id;
+                        $data['token'] = $token;
+                        return redirect()->route('auth.newpassword')->with('data', $data);
+                        break;
+                    case 'validationEmail':
+                        $admin = Administrator::find($id);
+                        if ($admin && $admin->status != 'active') {
+                            $admin->status = 'active';   //cambio el status de pending a active
+                            $admin->save();
+                            /**    se agrega el historial de cuando se cambio a activo     **/
+                            $admin->history()->create(array('previous_status' => 'pending'));
+                            /**    se borra el validation code     **/
+                            $code->delete();
+                            //  se regresa al login con mensaje de que se activo cuenta
+                            return redirect()->route('auth.index')->with('data', 'active');
+                        } else {
+                            return redirect()->route('auth.index')->with('data', 'invalido');
+                        }
+                        break;
+                    default:
+                        return redirect()->route('auth.index')->with('data', 'invalido');
+                        break;
                 }
             } else {
+                /*echo 'codigo no valido';
+                dd($code);*/
                 return redirect()->route('auth.index')->with('data', 'invalido');
             }
         } else {
             return redirect()->route('auth.index')->with('data', 'invalido');
         }
-//        return 'verificando';
 
     }
+
+    public function restore()   //manda correo para recuperar contraseña
+    {
+        $validator = Validator::make(Input::all(), [
+            'reset_password_email' => 'required|email|max:250'
+        ]);
+
+        if ($validator->passes()) {
+            $admin = Administrator::where('email', Input::get('reset_password_email'))->first();
+            if ($admin != null) {
+                if ($admin && $admin->status == 'active') {
+                    $confirmation_code = md5(Input::get('email'));
+                    $data['correo'] = $admin->email;
+                    $data['nombre'] = $admin->name['first'];
+                    $data['apellido'] = $admin->name['last'];
+                    $data['session'] = session('_token');
+                    $data['id_usuario'] = $admin->_id;
+                    $data['confirmation_code'] = $confirmation_code;
+                    $correo = $admin->email;
+                    $nombre = $admin->name['first'];
+
+                    $Token = ValidationCode::create(array(
+                        'administrator_id' => $admin->_id, 'type' => 'resetPassword', 'token' => $confirmation_code
+                    ));
+
+                    Mail::send('emails.resetpass', ['data' => $data], function ($message) use ($correo, $nombre) {
+                        $message->from('notificacion@enera.mx', 'Enera Intelligence');
+                        $message->to($correo, $nombre)->subject('Recuperacion de contraseña');
+                    });
+                    return redirect()->route('auth.index')->with('reset', 'warning');
+                } else if ($admin && $admin->status == 'pending') {
+                    return redirect()->route('auth.index')->with('reset_msg', 'la cuenta <strong>' . Input::get('reset_password_email') . '</strong> no se ha activado todavía. por favor activa tu cuenta primero ');
+                }
+            } else {
+                return redirect()->route('auth.index')->with('reset_msg', 'se a enviado un mail a tu correo: <strong>' . Input::get('reset_password_email') . '</strong> . Para restablecer la contraseña');
+            }
+        } else {
+            return redirect()->route('auth.index')->withErrors($validator);
+        }
+    }
+
+    public function newpassword() //vista solo valida, si no traes variables te regresa a login
+    {
+        $data = session('data');
+        if ($data != null || session('cc') != null) {
+            return view('auth.newpassword')->with('data', $data);
+        } else {
+            $status = 'invalido';
+        }
+        return redirect()->route('auth.index')->with('data', $status);
+    }
+
+    public function newpass() //post recibe la nueva contraseña y la pone
+    {
+        $validator = Validator::make(Input::all(), [
+            'password' => 'required|alpha_num|min:8|max:16',
+            'confirma_contraseña' => 'required|alpha_num|min:8|max:16',
+            'u' => 'required',
+            't' => 'required'
+        ]);
+
+        if ($validator->passes()) {
+            $new = Hash::make(Input::get('password'));
+            $admin = Administrator::where('_id', Input::get('u'))->first();
+            if ($admin != null) {
+                $admin->password = $new;
+                $admin->save();
+                /**    se agrega el historial de cuando se cambio a activo     **/
+                $admin->history()->create(array('previous_status' => 'cambio de contraseña'));
+                /**    se borra el validation code     **/
+                $code = ValidationCode::where('token', Input::get('t'))->first();// busco el codigo en la base de datos y lo borro
+                $code->delete();
+                return redirect()->route('auth.newpassword')->with('cc', 'se ha cambiado la contraseña');
+            } else {
+                return redirect()->route('auth.index')->with('data', 'invalido');
+            }
+        } else {
+            return redirect()->route('auth.index')->with('data', 'invalido');
+//            return view('auth.newpassword')->withErrors($validator);
+//            dd('fallo');
+        }
+
+    }
+
 }
