@@ -57,7 +57,7 @@ class CampaignsController extends Controller
             $start = new DateTime(date('Y-m-d H:i:s', $valor->filters['date']['start']->sec));
             $end = new DateTime(date('Y-m-d H:i:s', $valor->filters['date']['end']->sec));
             $start->setTime(00, 00, 00);
-            $end->setTime(00, 00, 00);
+            $end->setTime(23, 59, 59);
             if ($valor->status == 'active') {
                 $today = new DateTime();
                 if ($today < $start) {// si a fecha de hoy es menor a la de inicio el porcentaje tambien es 0
@@ -86,15 +86,15 @@ class CampaignsController extends Controller
                 $graficat['dia' . ($i + 1)]['fecha'] = $a->format('Y-m-d');//guardo la fecha de los dias que se sacan para mostrarlos en la grafica
             }
 
-            $graficat['dia1']['num'] = CampaignLog::where('campaign_id', $id)->where('interaction.loaded', 'exists', 'true')->where('updated_at', '>', $rangoFechas[0]['inicio'])->where('updated_at', '<', $rangoFechas[0]['fin'])->count();
+            /*$graficat['dia1']['num'] = CampaignLog::where('campaign_id', $id)->where('interaction.loaded', 'exists', 'true')->where('updated_at', '>', $rangoFechas[0]['inicio'])->where('updated_at', '<', $rangoFechas[0]['fin'])->count();
             $graficat['dia2']['num'] = CampaignLog::where('campaign_id', $id)->where('interaction.loaded', 'exists', 'true')->where('updated_at', '>', $rangoFechas[1]['inicio'])->where('updated_at', '<', $rangoFechas[1]['fin'])->count();
             $graficat['dia3']['num'] = CampaignLog::where('campaign_id', $id)->where('interaction.loaded', 'exists', 'true')->where('updated_at', '>', $rangoFechas[2]['inicio'])->where('updated_at', '<', $rangoFechas[2]['fin'])->count();
             $graficat['dia4']['num'] = CampaignLog::where('campaign_id', $id)->where('interaction.loaded', 'exists', 'true')->where('updated_at', '>', $rangoFechas[3]['inicio'])->where('updated_at', '<', $rangoFechas[3]['fin'])->count();
             $graficat['dia5']['num'] = CampaignLog::where('campaign_id', $id)->where('interaction.loaded', 'exists', 'true')->where('updated_at', '>', $rangoFechas[4]['inicio'])->where('updated_at', '<', $rangoFechas[4]['fin'])->count();
             $graficat['dia6']['num'] = CampaignLog::where('campaign_id', $id)->where('interaction.loaded', 'exists', 'true')->where('updated_at', '>', $rangoFechas[5]['inicio'])->where('updated_at', '<', $rangoFechas[5]['fin'])->count();
-            $graficat['dia7']['num'] = CampaignLog::where('campaign_id', $id)->where('interaction.loaded', 'exists', 'true')->where('updated_at', '>', $rangoFechas[6]['inicio'])->where('updated_at', '<', $rangoFechas[6]['fin'])->count();
+            $graficat['dia7']['num'] = CampaignLog::where('campaign_id', $id)->where('interaction.loaded', 'exists', 'true')->where('updated_at', '>', $rangoFechas[6]['inicio'])->where('updated_at', '<', $rangoFechas[6]['fin'])->count();*/
 
-            $grafica[$campaign] = $graficat;
+//            $grafica[$campaign] = $graficat;
         }//FIN DEL FOR
 //dd($grafica);
         return view('campaigns.index', ['campaigns' => $campaigns, 'grafica' => $grafica, 'dias' => $dias, 'subcampaigns' => $subcampaigns, 'user' => Auth::user()]);
