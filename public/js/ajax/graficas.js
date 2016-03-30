@@ -230,44 +230,32 @@ graficas = function () {
         return chart3;
     };
     this.intPerHour = function intPerHour(IntXDias, Load, complet, horas) {
-        var c3chart_area_stacked_id = '#intXHour';
-
+        //console.log(IntXDias);
         var columns = [
-            ['x'],
+            //['x'],
             ['Visto'],
             ['Completado']
         ];
         for (var k in IntXDias) {
-            columns[0].push(k);
-            columns[1].push(IntXDias[k]['loaded']);
-            columns[2].push(IntXDias[k]['completed']);
+            //console.log(k);
+            //console.log(IntXDias[k]);
+            //columns[0].push(k);
+            columns[0].push(IntXDias[k]['loaded']);
+            columns[1].push(IntXDias[k]['completed']);
         }
-
-        if ($(c3chart_area_stacked_id).length) {
-
-            var chart = c3.generate({
-                bindto: c3chart_area_stacked_id,
-                data: {
-                    x: 'x',
-                    columns: columns,
-                    types: {
-                        Visto: 'area',
-                        Completado: 'area'
-                    },
-                    groups: [['Visto', 'Completado']]
-                },
-                color: {
-                    pattern: ['#1565C0', '#727272']
+        console.log(columns);
+        var chart3 = c3.generate({
+            bindto: '#intXHour',
+            data: {
+                //x: 'x',
+                columns: columns,
+                types: {
+                    Visto: 'area',
+                    Completado: 'area'
                 }
-            });
-
-            $window.on('debouncedresize', function () {
-                c3chart_area_stacked.resize();
-            });
-
-        } else {
-            console.log('error en el contenedor');
-        }
+            },
+            groups: [['Visto', 'Completado']]
+        });
     }
 };
 

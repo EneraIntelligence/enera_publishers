@@ -766,13 +766,19 @@ class CampaignsController extends Controller
                 ]
             ]);
 
-            $IntHours = [];
+            $IntHours = array();
+            for ($i = 0; $i < 24; $i++) {
+                $IntHours[$i]['loaded'] = 0;
+                $IntHours[$i]['completed'] = 0;
+            }
+
             foreach ($IntLoaded['result'] as $k => $v) {
-                $IntHours[$v['_id']]['loaded'] = $v['cnt'];
+//                echo $v['_id'].'- <br>';
+                $IntHours[intval($v['_id'])]['loaded'] = $v['cnt'];
             }
 
             foreach ($IntCompleted['result'] as $k => $v) {
-                $IntHours[$v['_id']]['completed'] = $v['cnt'];
+                $IntHours[intval($v['_id'])]['completed'] = $v['cnt'];
             }
 
             $unique_users_query = $collection->aggregate([
