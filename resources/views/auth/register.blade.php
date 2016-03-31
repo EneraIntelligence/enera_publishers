@@ -268,6 +268,16 @@
 <script>
     //        llamada al parsley
     $('#form_validation2').parsley();
+    var registro = '{!!  session('success') !!}';
+    console.log(registro);
+    if (registro) {
+        console.log('true');
+        $("#registro").show();
+        $("#login_card").hide();
+        $("#create").hide();
+    } else {
+        console.log('no hay nada');
+    }
 </script>
 
 

@@ -88,7 +88,7 @@ class AuthController extends Controller
             /***+*****   verifico si el correo esta registrado     *************/
             if (Administrator::where('email', Input::get('email'))->count() > 0) {
                 $validator->errors()->add('email', 'este correo ya esta registrado');
-                return redirect()->route('auth.index')->withErrors($validator);
+                return redirect()->route('auth.register')->withErrors($validator);
             } else {
                 /***+*****  consulta que guarda el documento en mongo *************/
                 $newAdmin = Administrator::create(array(
@@ -113,28 +113,35 @@ class AuthController extends Controller
                     if ($Token->count() > 0) {
 //                        echo 'se guardo la tabla de token';
                         //se llama el job mandar correo confirmacion
-                        $this->dispatch(new newAdminJob([
+                        $data=[
                             'session' => session('_token'),
                             'nombre' => Input::get('nombre'),
                             'apellido' => Input::get('apellido'),
                             'email' => Input::get('email'),
                             'id_usuario' => $newAdmin->id,
                             'confirmation_code' => $confirmation_code
-                        ]));
-                        return redirect()->route('auth.index')->with('success', 'registro-success');
+                        ];
+                        $correo = Input::get('email');
+                        $nombre = Input::get('nombre');
+                        Mail::send('emails.verify', ['data' => $data], function ($message) use ($correo, $nombre) {
+                            $message->from('notificacion@enera.mx', 'Enera Intelligence');
+                            $message->to($correo, $nombre)->subject('Confirmacion de registro');
+                        });
+
+                        return redirect()->route('auth.register')->with('success', 'registro-success');
                     } else {  //valida si se guardo el token
                         $validator->errors()->add('registro', 'no se pudo enviar correo de confirmacion');
-                        return redirect()->route('auth.index')->withErrors($validator);
+                        return redirect()->route('auth.register')->withErrors($validator);
                     }
                 } else {  //fin del if que valida si se creo el usuario para mandar el correo
                     $validator->errors()->add('registro', 'no se pudo completar el registro intenta mas tarde');
-                    return redirect()->route('auth.index')->withErrors($validator);
+                    return redirect()->route('auth.register')->withErrors($validator);
                 }
             }//fin del else que valida si el correo ya esta registrado
         } else {
 //            $registro='error';
             $validator->errors()->add('registro', 'error');
-            return redirect()->route('auth.index')->withErrors($validator);
+            return redirect()->route('auth.register')->withErrors($validator);
         }
     }
 
