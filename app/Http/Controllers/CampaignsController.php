@@ -191,7 +191,7 @@ class CampaignsController extends Controller
                                 'client_id' => isset(auth()->user()->client_id) ? auth()->user()->client_id : '0',
                                 'administrator_id' => auth()->user()->_id,
                                 'name' => Input::get('title'),
-                                'branches' => Input::get('ubication') == 'all' ? 'all' : Input::get('branches'),
+                                'branches' => Input::get('ubication') == 'all' ? ['all'] : Input::get('branches'),
                                 'balance' => [
                                     'init' => $budget,
                                     'current' => $budget,
