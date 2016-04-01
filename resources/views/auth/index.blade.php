@@ -43,7 +43,7 @@
                 <div style=display:inline-block;text-align:center;">
                     <img src="images/publisher.png" alt="">
                 </div>
-
+                {!! session('reset_msg2') !!}
                 @if(session('data')=='active')
                     <div class="uk-alert uk-alert-success" style="padding-right:10px">
                         <a href="#" class="uk-alert-close "></a>
