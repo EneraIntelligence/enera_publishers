@@ -90,7 +90,7 @@ class AuthController extends Controller
                 $validator->errors()->add('email', 'este correo ya esta registrado');
                 return redirect()->route('auth.register')->withErrors($validator);
             } else {
-                /***+*****  consulta que guarda el documento en mongo *************/
+                /***+*****  consulta que guarda el usuario, documento en mongo *************/
                 $newAdmin = Administrator::create(array(
                     'name' => [
                         'first' => Input::get('nombre'),
@@ -105,14 +105,14 @@ class AuthController extends Controller
                 ));
                 //se agrega el wallet
                 $newAdmin->wallet()->create(['current' => 0]);
-                /**********      si el usuario se creo se llama el job para mandarle el correo de confirmacion        ***************/
-                if ($newAdmin) {
+                /**********      si el usuario se creo se manda  el correo de confirmacion        ***************/
+                if ($newAdmin) {    //se crea el registro del token para mandarlo con el correo
                     $Token = ValidationCode::create(array(
                         'administrator_id' => $newAdmin->id, 'type' => 'validationEmail', 'token' => $confirmation_code
                     ));
                     if ($Token->count() > 0) {
 //                        echo 'se guardo la tabla de token';
-                        //se llama el job mandar correo confirmacion
+                        //se manda correo de confirmacion
                         $data=[
                             'session' => session('_token'),
                             'nombre' => Input::get('nombre'),
@@ -205,7 +205,7 @@ class AuthController extends Controller
             $admin = Administrator::where('email', Input::get('reset_password_email'))->first();
             if ($admin != null) {
                 if ($admin && $admin->status == 'active') {
-                    $confirmation_code = md5(Input::get('email'));
+                    $confirmation_code = md5(Input::get('reset_password_email'));
                     $data['correo'] = $admin->email;
                     $data['nombre'] = $admin->name['first'];
                     $data['apellido'] = $admin->name['last'];
@@ -223,12 +223,12 @@ class AuthController extends Controller
                         $message->from('notificacion@enera.mx', 'Enera Intelligence');
                         $message->to($correo, $nombre)->subject('Recuperacion de contraseña');
                     });
-                    return redirect()->route('auth.index')->with('reset', 'warning');
+                    return redirect()->route('auth.index')->with('reset_msg2', 'se a enviado un mail a tu correo: <strong>' . Input::get('reset_password_email') . '</strong> . Para restablecer la contraseña');
                 } else if ($admin && $admin->status == 'pending') {
-                    return redirect()->route('auth.index')->with('reset_msg', 'la cuenta <strong>' . Input::get('reset_password_email') . '</strong> no se ha activado todavía. por favor activa tu cuenta primero ');
+                    return redirect()->route('auth.index')->with('reset_msg2', 'la cuenta <strong>' . Input::get('reset_password_email') . '</strong> no se ha activado todavía. por favor activa tu cuenta primero ');
                 }
             } else {
-                return redirect()->route('auth.index')->with('reset_msg', 'se a enviado un mail a tu correo: <strong>' . Input::get('reset_password_email') . '</strong> . Para restablecer la contraseña');
+                return redirect()->route('auth.index')->with('reset_msg2', 'se a enviado un mail a tu correo: <strong>' . Input::get('reset_password_email') . '</strong> . Para restablecer la contraseña');
             }
         } else {
             return redirect()->route('auth.index')->withErrors($validator);
@@ -266,7 +266,7 @@ class AuthController extends Controller
                 /**    se borra el validation code     **/
                 $code = ValidationCode::where('token', Input::get('t'))->first();// busco el codigo en la base de datos y lo borro
                 $code->delete();
-                return redirect()->route('auth.newpassword')->with('cc', 'se ha cambiado la contraseña');
+                return redirect()->route('auth.index')->with('reset_msg2', 'se ha cambiado la contraseña');
             } else {
                 return redirect()->route('auth.index')->with('data', 'invalido');
             }

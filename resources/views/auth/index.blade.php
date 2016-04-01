@@ -294,24 +294,18 @@
         var restore = {!! $errors->get('reset_password_email')!=null? true : 'null'  !!}
         //        console.log(restore);
         if (restore) {
-            console.log('true');
+//            console.log('true');
             $("#login_password_reset").show();
             $("#login_form").hide();
             $("#create").hide();
-        } else {
-            console.log('no hay restore');
         }
-        var reset = '{!! session('reset_msg') !!}';
-        {{--        console.log({!! isset($resetmsg)? $resetmsg : 'null'  !!});--}}
-                        console.log(reset);
-        if (reset) {
-            console.log('true');
-            $("#reset_msg").show();
+
+        var reset_f = '{!! session('reset_msg') !!}';
+        if (reset_f) {
+//            console.log('true');
             $("#login_password_reset").show();
             $("#login_form").hide();
             $("#create").hide();
-        } else {
-            console.log('no hay reset');
         }
 
     });
