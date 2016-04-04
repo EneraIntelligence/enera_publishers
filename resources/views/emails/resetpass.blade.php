@@ -22,12 +22,16 @@
     <h2>Recuperación de contraseña </h2>
     <div>
         <p>Estimado/a: {{$data['nombre'] . ' ' . $data['apellido']}}
-            hemos recibido la peticion de recuperación de contraseña.<br>
+            Si recibiste este correo electrónico es porque solicitaste restablecer la contraseña de tu Cuenta de Enera.
+            Si no solicitaste este cambio, puedes ignorar sin riesgos este correo electrónico.
+            {{--hemos recibido la peticion de recuperación de contraseña.--}}
+            <br>
             Para recuperar la contraseña solo haz clic en el siguiente enlace:<br>
             <a href="http://publishers.enera-intelligence.mx/restore/password//{{$data['id_usuario'].'/'. $data['confirmation_code']}} ">
                 recuperar contraseña</a>
             <br>o copia y pega la siguiente url en tu navegador:
-            http://publishers.enera-intelligence.mx/restore/password/{{$data['id_usuario'].'/'.$data['confirmation_code']}}
+            http://publishers.enera-intelligence.mx/restore/password/{{$data['id_usuario'].'/'.$data['confirmation_code']}}<br>
+            Este enlace expirará después de 24 horas.
         </p>
         <p>Enera Intelligence</p>
 

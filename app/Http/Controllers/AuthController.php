@@ -199,13 +199,13 @@ class AuthController extends Controller
     {
         $validator = Validator::make(Input::all(), [
             'reset_password_email' => 'required|email|max:250'
-        ]);
+       ]);
 
         if ($validator->passes()) {
             $admin = Administrator::where('email', Input::get('reset_password_email'))->first();
             if ($admin != null) {
                 if ($admin && $admin->status == 'active') {
-                    $confirmation_code = md5(Input::get('reset_password_email'));
+                    $confirmation_code = md5(Input::get('reset_password_email')).date('Ymdhms');
                     $data['correo'] = $admin->email;
                     $data['nombre'] = $admin->name['first'];
                     $data['apellido'] = $admin->name['last'];
@@ -214,7 +214,6 @@ class AuthController extends Controller
                     $data['confirmation_code'] = $confirmation_code;
                     $correo = $admin->email;
                     $nombre = $admin->name['first'];
-
                     $Token = ValidationCode::create(array(
                         'administrator_id' => $admin->_id, 'type' => 'resetPassword', 'token' => $confirmation_code
                     ));
@@ -241,9 +240,9 @@ class AuthController extends Controller
         if ($data != null || session('cc') != null) {
             return view('auth.newpassword')->with('data', $data);
         } else {
-            $status = 'invalido';
+            $status = 'Introduce la dirección de correo electrónico que usaste para crear la cuenta';
         }
-        return redirect()->route('auth.index')->with('data', $status);
+        return redirect()->route('auth.index')->with('reset_msg', $status);
     }
 
     public function newpass() //post recibe la nueva contraseña y la pone

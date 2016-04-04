@@ -83,11 +83,11 @@ Route::group(['middleware' => ['auth.ready']], function () {
     Route::post('/login', ['as' => 'auth.login', 'uses' => 'AuthController@login']);    //form
     Route::post('/signUp', ['as' => 'auth.signUp', 'uses' => 'AuthController@signUp']);     //ruta post que registra al nuevo usuario
     Route::get('/register', ['as' => 'auth.register', 'uses' => 'AuthController@register']);//vista de registro
-    Route::post('/restore', ['as' => 'auth.restore', 'uses' => 'AuthController@restore']);  //ruta peticion recuperar contraseña
-    Route::get('/restore/password/{id}/{token}', ['as' => 'auth.reset', 'uses' => 'AuthController@verify']);  //ruta que valida el token de nueva contraseña
+    Route::post('/restore', ['as' => 'auth.restore', 'uses' => 'AuthController@restore']);  //2do paso de recuperar contraseña
+    Route::get('/restore/password/{id}/{token}', ['as' => 'auth.reset', 'uses' => 'AuthController@verify']); //3er paso de recuperar contraseña valida el token de nueva contraseña
     Route::get('/register/verify/{id}/{token}', ['as' => 'auth.verify', 'uses' => 'AuthController@verify']); //ruta que valida el correo
-    Route::get('/restore/password', ['as' => 'auth.newpassword', 'uses' => 'AuthController@newpassword']);     //vista para cambiar la contraseña
-    Route::post('/restore/password', ['as' => 'auth.newpass', 'uses' => 'AuthController@newpass']);
+    Route::get('/restore/password', ['as' => 'auth.newpassword', 'uses' => 'AuthController@newpassword']);   //4to paso de recuperar contraseña vista para poner la nueva contraseña
+    Route::post('/restore/password', ['as' => 'auth.newpass', 'uses' => 'AuthController@newpass']);         //5to paso de recuperar contraseña
 });
 
 Route::get('/choose', ['as' => 'choose.platform', function () {
