@@ -7,7 +7,6 @@
 */
 Route::group(['middleware' => ['auth', 'guardian', 'preview']], function () {
     Route::get('/', ['as' => 'home', 'uses' => 'DashboardController@index']);
-    Route::get('/terms', ['as' => 'terms', 'uses' => 'DashboardController@terms']);
 
     Route::group(['prefix' => 'campaigns', 'as' => 'campaigns::'], function () {
         Route::get('/', ['as' => 'index', 'uses' => 'CampaignsController@index']);
@@ -97,3 +96,5 @@ Route::get('/choose', ['as' => 'choose.platform', function () {
         'msg' => Input::has('msg') ? Input::get('msg') : 'Selecciona alguna de las plataformas.'
     ]);
 }]);
+
+Route::get('/terms', ['as' => 'terms',  'uses' => 'AuthController@terms']);
