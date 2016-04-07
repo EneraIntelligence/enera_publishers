@@ -52,4 +52,11 @@ class DashboardController extends Controller
             'sitios' => $sitios
         ]);
     }
+
+    public function terms()
+    {
+        return view('dashboard.terms', [
+            'hideTermsFooter'=>true
+        ]);
+    }
 }

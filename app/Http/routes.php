@@ -7,6 +7,7 @@
 */
 Route::group(['middleware' => ['auth', 'guardian', 'preview']], function () {
     Route::get('/', ['as' => 'home', 'uses' => 'DashboardController@index']);
+    Route::get('/terms', ['as' => 'terms', 'uses' => 'DashboardController@terms']);
 
     Route::group(['prefix' => 'campaigns', 'as' => 'campaigns::'], function () {
         Route::get('/', ['as' => 'index', 'uses' => 'CampaignsController@index']);
