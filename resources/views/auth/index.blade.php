@@ -55,7 +55,7 @@
                     </div>
                 @endif
             </div>
-            {!! Form::open(['route'=>'auth.login', 'class'=>'uk-form-stacked', 'id'=>'form_validation']) !!}
+            {!! Form::open(['route'=>'auth.login', 'class'=>'uk-form-stacked spinnerForm', 'id'=>'form_validation']) !!}
             @if( Session::has('error') )
                 <div style="text-align: center; color: red; margin-bottom: 10px;">{!! session('error') !!}</div>
             @endif
@@ -101,8 +101,11 @@
             </div>
 
             <div class="uk-margin-medium-top">
-                <button type="submit" class="md-btn md-btn-primary md-btn-block md-btn-large">Entrar</button>
+                <button type="submit" class="md-btn md-btn-primary md-btn-block md-btn-large">
+                    Entrar
+                </button>
             </div>
+
             <div class="uk-margin-top">
                 <a href="#" id="login_help_show" class="uk-float-right">Necesitas ayuda?</a>
                     <span class="icheck-inline">
@@ -290,10 +293,12 @@
 {!! HTML::script('assets/js/pages/forms_validation.min.js') !!}
 
 <script>
-    $(document).ready(function () {
+    $(document).ready(function ()
+    {
         var restore = {!! $errors->get('reset_password_email')!=null? true : 'null'  !!}
         //        console.log(restore);
-        if (restore) {
+        if (restore)
+        {
 //            console.log('true');
             $("#login_password_reset").show();
             $("#login_form").hide();
@@ -301,7 +306,8 @@
         }
 
         var reset_f = '{!! session('reset_msg') !!}';
-        if (reset_f) {
+        if (reset_f)
+        {
 //            console.log('true');
             $("#login_password_reset").show();
             $("#login_form").hide();
@@ -313,6 +319,10 @@
     //        llamada al parsley
     $('#form_validation2').parsley();
 </script>
+
+
+{!! HTML::script('js/spinnerbuttons/spin.min.js') !!}
+{!! HTML::script('js/spinnerbuttons/spinnerButton.js') !!}
 
 
 </body>
