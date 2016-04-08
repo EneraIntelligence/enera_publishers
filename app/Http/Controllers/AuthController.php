@@ -271,8 +271,6 @@ class AuthController extends Controller
             }
         } else {
             return redirect()->route('auth.index')->with('data', 'invalido');
-//            return view('auth.newpassword')->withErrors($validator);
-//            dd('fallo');
         }
 
     }
