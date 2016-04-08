@@ -52,4 +52,6 @@ class DashboardController extends Controller
             'sitios' => $sitios
         ]);
     }
+
+
 }

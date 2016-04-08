@@ -13,7 +13,7 @@
     {{--<link rel="icon" type="image/png" href="assets/img/favicon-16x16.png" sizes="16x16">
     <link rel="icon" type="image/png" href="assets/img/favicon-32x32.png" sizes="32x32">--}}
     <link rel="icon" type="image/png" href="{!! URL::asset('images/favicon.png') !!}" sizes="32x32">
-    <title>Enera Admins @yield('title')</title>
+    <title>Enera Publishers @yield('title')</title>
     @yield('head_scripts')
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -336,6 +336,13 @@
 
 
     @yield('content')
+
+    @if(!isset($hideTermsFooter) || !$hideTermsFooter)
+    <footer class="uk-text-center">
+        <a href="{!! URL::route('terms') !!}" target="_blank">Términos y condiciones</a>
+    </footer>
+    @endif
+
             <!-- google web fonts -->
     <script>
         WebFontConfig = {

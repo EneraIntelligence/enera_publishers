@@ -96,3 +96,5 @@ Route::get('/choose', ['as' => 'choose.platform', function () {
         'msg' => Input::has('msg') ? Input::get('msg') : 'Selecciona alguna de las plataformas.'
     ]);
 }]);
+
+Route::get('/terms', ['as' => 'terms',  'uses' => 'AuthController@terms']);

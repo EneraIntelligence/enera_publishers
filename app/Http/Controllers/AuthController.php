@@ -275,4 +275,11 @@ class AuthController extends Controller
 
     }
 
+    public function terms()
+    {
+        return view('dashboard.terms', [
+            'hideTermsFooter'=>true
+        ]);
+    }
+
 }
