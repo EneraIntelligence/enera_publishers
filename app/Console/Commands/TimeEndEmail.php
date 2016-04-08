@@ -50,7 +50,8 @@ class TimeEndEmail extends Command
     public function handle()
     {
 
-        try {
+        try
+        {
             $this->info('------------ Mandando Correo de Notificación -------------');
             $today = date('Y-m-d h:m:s');
 
@@ -62,17 +63,23 @@ class TimeEndEmail extends Command
                 ])
                 ->get();
 
-            foreach ($campaigns as $key => $cam) {
+            foreach ($campaigns as $key => $cam)
+            {
                 $cam->status = 'ended';
                 $cam->save();
-                $cam->history()->create(array('administrator_id' => '0', 'status' => 'ended', 'date' => $today, 'note' => 'Campaña finalizada por fecha de terminación'));
+                $cam->history()->create(array('administrator_id' => $cam->administrator_id, 'status' => 'ended', 'date' => $today, 'note' => 'Campaña finalizada por fecha de terminación'));
                 $camBalance = $cam->balance['current'];
-                Administrator::where($cam->administrator_id)->increment('wallet.current' , $camBalance);
-                $cam->history()->create(array('administrator_id' => '0', 'status' => 'returned', 'date' => $today, 'note' => 'Balance restante se regreso a los fondos del cliente por la cantidad de $'. number_format($camBalance, 2, '.', ',')));
+
+                $admin = Administrator::find($cam->administrator_id);
+                if ($admin)
+                    $admin->increment('wallet.current', $camBalance);
+
+                $cam->history()->create(array('administrator_id' => $cam->administrator_id, 'status' => 'returned', 'date' => $today, 'note' => 'Balance restante se regreso a los fondos del cliente por la cantidad de $' . number_format($camBalance, 2, '.', ',')));
 
                 $user = Administrator::find($cam->administrator_id);
 
-                Mail::send('emails.notifications', ['user' => $user], function ($m) use ($user) {
+                Mail::send('emails.notifications', ['user' => $user], function ($m) use ($user)
+                {
                     $m->from('soporte@enera.mx', 'Enera Intelligence');
                     $m->to($user->email, $user->name['first'] . ' ' . $user->name['last'])->subject('Terminacion de Camapaña');
                 });
@@ -82,7 +89,8 @@ class TimeEndEmail extends Command
             $this->info('-------------------- Fin de comando ----------------------');
 
 
-        } catch (Exception $e) {
+        } catch (Exception $e)
+        {
             $this->error($e);
         }
     }
