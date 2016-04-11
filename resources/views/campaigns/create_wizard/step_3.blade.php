@@ -147,12 +147,12 @@
 
             <label class="uk-form-label">Género <i class="material-icons">&#xE63D;</i></label>
             <span class="icheck">
-                <input type="radio" name="gender" id="wizard_gender_men" class="wizard-icheck" value="men" />
+                <input type="radio" name="gender" id="wizard_gender_men" class="wizard-icheck" value="male" />
                 <label for="wizard_gender_men" class="inline-label">Hombres </label>
             </span>
             <div class="clearfix"></div>
             <span class="icheck">
-                <input type="radio" name="gender" id="wizard_gender_women" class="wizard-icheck" value="women" />
+                <input type="radio" name="gender" id="wizard_gender_women" class="wizard-icheck" value="female" />
                 <label for="wizard_gender_women" class="inline-label">Mujeres</label>
             </span>
             <div class="clearfix"></div>
