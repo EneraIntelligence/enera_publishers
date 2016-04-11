@@ -33,7 +33,10 @@
             http://publishers.enera-intelligence.mx/restore/password/{{$data['id_usuario'].'/'.$data['confirmation_code']}}<br>
             Este enlace expirará después de 24 horas.
         </p>
-        <p>Enera Intelligence</p>
+
+        <p>Si no has sido tu quien solicito el cambio de contraseña haz clic en este enlace:
+            http://publishers.enera-intelligence.mx/remove?id={{$data['id_usuario']}}<br>
+        </p>
 
         <p>Este correo se genero de forma automatica, no contestar. Si usted tiene alguna duda envie un correo a la
             siguente dirección: soporte&#64;enera.mx </p>

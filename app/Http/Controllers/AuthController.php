@@ -275,6 +275,24 @@ class AuthController extends Controller
 
     }
 
+    public function remove()
+    {
+        echo Input::get('id').'<br>';
+        if (Input::get('id') != null) {
+            echo 'si trae datos';
+
+            $tokens = ValidationCode::where('administrator_id', Input::get('id'))->get();// busco el codigo en la base de datos y lo borro
+            foreach ($tokens as $k => $v) { //se recorre el arreglo con todos los tokens que alla creado y se borran
+                $tokens[$k]->delete();
+            }
+//            $tokens = ValidationCode::where('administrator_id', Input::get('id'))->get();
+            return redirect()->route('auth.index')->with('reset_msg2', 'tu solicitud de cancelacion se ha procesado');
+        } else {
+            echo 'no trae datos';
+            return redirect()->route('auth.index');
+        }
+    }
+
     public function terms()
     {
         return view('dashboard.terms', [
