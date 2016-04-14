@@ -61,6 +61,7 @@
                     <label for="register_password">Contraseña </label>
                     <input class="md-input" type="password" id="register_password" name="password"
                            required data-parsley-trigger="change"
+                           data-parsley-type="alphanum"
                            data-parsley-minlength="8" data-parsley-minlength-message="minimo 8 caracteres"
                            data-parsley-maxlength="16" data-parsley-maxlength-message="maximo 16 caracteres"
                            data-parsley-validation-threshold="10"
@@ -77,6 +78,7 @@
                     <label for="register_password_repeat">Confirmar Contraseña</label>
                     <input class="md-input" type="password" id="register_password_repeat" name="confirma_contraseña"
                            required data-parsley-trigger="change"
+                           data-parsley-type="alphanum"
                            data-parsley-minlength="8" data-parsley-minlength-message="minimo 8 caracteres"
                            data-parsley-maxlength="16" data-parsley-maxlength-message="maximo 16 caracteres"
                            data-parsley-validation-threshold="10"
