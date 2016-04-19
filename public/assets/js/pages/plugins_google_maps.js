@@ -1,3 +1,11 @@
+/*
+*  altair admin
+*  @version v2.5.0
+*  @author tzd
+*  @license http://themeforest.net/licenses
+*  plugins_google_maps.js - plugins_google_maps.html
+*/
+
 // google maps variables
 var marker_url = isHighDensity() ? 'assets/img/md-images/ic_place_black_48dp.png' : 'assets/img/md-images/ic_place_black_24dp.png',
     marker_url_beenhere = isHighDensity() ? 'assets/img/md-images/ic_beenhere_black_48dp.png' : 'assets/img/md-images/ic_beenhere_black_24dp.png',

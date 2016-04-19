@@ -1,3 +1,11 @@
+/*
+*  altair admin
+*  @version v2.5.0
+*  @author tzd
+*  @license http://themeforest.net/licenses
+*  page_invoices.js - page_invoices.html
+*/
+
 $(function() {
     // init invoices
     altair_invoices.init();
@@ -117,7 +125,8 @@ altair_invoices  = {
 
             var invoice_id = parseInt($this.attr('data-invoice-id')),
                 context = {
-                    invoice_id: {
+                    invoice: {
+                        id:                     invoice_id,
                         invoice_number:         Math.floor((Math.random() * 200) + 1) + '/2015',
                         invoice_date:           moment().format('DD.MM.YYYY'),
                         invoice_due_date:       moment().add(14,'days').format('DD.MM.YYYY'),
@@ -156,15 +165,42 @@ altair_invoices  = {
                             }
                         ],
                         invoice_payment_info:   'BANK XYZ<br/>IBAN 123 123 123 123',
-                        invoice_payment_due:    '14'
+                        invoice_payment_due:    '14',
+                        header:                 (invoice_id == 3 || invoice_id == 7),
+                        footer:                 (invoice_id == 3 || invoice_id == 7)
                     }
-                },
-                theCompiledHtml = template_compiled(context);
+            },
+            theCompiledHtml = template_compiled(context);
 
             $invoice_preview.html(theCompiledHtml);
             $invoice_form.html('');
 
             $window.resize();
+
+            setTimeout(function() {
+                // reinitialize uikit margin
+                altair_uikit.reinitialize_grid_margin();
+            },290);
+
+
+            // ajax function to get invoices
+            /*var invoice_id = parseInt($this.attr('data-invoice-id'));
+            $.ajax({
+                type: 'post',
+                url: './data/get_invoice.php',
+                data: { invoice_id: invoice_id },
+                dataType: 'json',
+                success: function(response) {
+                    var theCompiledHtml = template_compiled(response);
+                    $invoice_preview.html(theCompiledHtml);
+                    $invoice_form.html('');
+                    $window.resize();
+                    setTimeout(function() {
+                        // reinitialize uikit margin
+                        altair_uikit.reinitialize_grid_margin();
+                    },290);
+                }
+            })*/
 
         };
 
@@ -172,20 +208,27 @@ altair_invoices  = {
             .on('click','a', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
+                // toggle card and show invoice
                 altair_md.card_show_hide($invoice_card,undefined,show_invoice,$(this));
+                // set active class
                 $(this).closest('li').siblings('li').removeClass('md-list-item-active').end().addClass('md-list-item-active');
-                setTimeout(function() {
-                    // reinitialize uikit margin
-                    altair_uikit.reinitialize_grid_margin();
-                },560); //2 x animation duration
-            })
-            .find('a').eq(2).click();
+            });
+
+        if($(invoice_list_class).find('a').length) {
+            // open first invoice
+            $(invoice_list_class).find('a').eq(0).click();
+        } else {
+            // open form
+            $invoice_add_btn.trigger('click');
+        }
 
     },
     print_invoice: function() {
         $body.on('click','#invoice_print',function(e) {
             e.preventDefault();
             UIkit.modal.confirm('Do you want to print this invoice?', function () {
+                // hide sidebar
+                altair_main_sidebar.hide_sidebar();
                 // wait for dialog to fully hide
                 setTimeout(function () {
                     window.print();

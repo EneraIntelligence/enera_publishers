@@ -1,3 +1,11 @@
+/*
+*  altair admin
+*  @version v2.5.0
+*  @author tzd
+*  @license http://themeforest.net/licenses
+*  plugins_vector_maps.js - plugins_vector_maps.html
+*/
+
 $(function() {
     // vector maps
     altair_vector_maps.world_connected();

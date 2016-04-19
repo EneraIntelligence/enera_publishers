@@ -1,3 +1,11 @@
+/*
+*  altair admin
+*  @version v2.5.0
+*  @author tzd
+*  @license http://themeforest.net/licenses
+*  forms_file_upload.js - forms_file_upload.html
+*/
+
 $(function() {
     // file upload
     altair_form_file_upload.init();

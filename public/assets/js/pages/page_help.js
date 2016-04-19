@@ -1,3 +1,11 @@
+/*
+*  altair admin
+*  @version v2.5.0
+*  @author tzd
+*  @license http://themeforest.net/licenses
+*  page_help.js - page_help.html
+*/
+
 $(function() {
     // help/faq
     altair_help.init();

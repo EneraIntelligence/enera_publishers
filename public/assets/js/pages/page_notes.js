@@ -1,3 +1,11 @@
+/*
+*  altair admin
+*  @version v2.5.0
+*  @author tzd
+*  @license http://themeforest.net/licenses
+*  page_notes.js - page_notes.html
+*/
+
 $(function() {
     // copy notes list to sidebar
     altair_notes.copy_list_sidebar();

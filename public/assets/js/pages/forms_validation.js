@@ -1,3 +1,11 @@
+/*
+*  altair admin
+*  @version v2.5.0
+*  @author tzd
+*  @license http://themeforest.net/licenses
+*  forms_validation.js - forms_validation.html
+*/
+
 //  require altair_forms.parsley_validation_config(); ( altair_admin_common.js )
 
 $(function() {
@@ -20,5 +28,13 @@ altair_form_validation = {
                     altair_md.update_input( $(parsleyField.$element) );
                 }
             });
+
+        window.Parsley.on('field:validate', function() {
+            var $server_side_error = $(this.$element).closest('.md-input-wrapper').siblings('.error_server_side');
+            if($server_side_error) {
+                $server_side_error.hide();
+            }
+        });
+
     }
 };

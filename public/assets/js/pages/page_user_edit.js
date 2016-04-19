@@ -1,3 +1,11 @@
+/*
+*  altair admin
+*  @version v2.5.0
+*  @author tzd
+*  @license http://themeforest.net/licenses
+*  page_user_edit.js - page_user_edit.html
+*/
+
 $(function() {
     // user edit
     altair_user_edit.init();

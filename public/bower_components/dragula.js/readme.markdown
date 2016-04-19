@@ -1,6 +1,6 @@
 [![logo.png][3]][2]
 
-[![Travis CI][5]][4] [![Slack Status][17]][18] [![Flattr][6]][7] [![Patreon][19]][20]
+[![Travis CI][5]][4] [![Slack Status][17]][18] [![Support](https://supporter.60devs.com/api/b/f4co3kmopd9mngbzjgn6ymbug)](https://supporter.60devs.com/give/f4co3kmopd9mngbzjgn6ymbug) [![Patreon][19]][20]
 
 > Drag and drop so simple it hurts
 
@@ -44,7 +44,19 @@ Or bower, too.
 bower install dragula --save
 ```
 
+Or a CDN.
+
+```shell
+<script src='https://cdnjs.cloudflare.com/ajax/libs/dragula/$VERSION/dragula.min.js'></script>
+```
+
 If you're not using either package manager, you can use `dragula` by downloading the [files in the `dist` folder][15]. We **strongly suggest** using `npm`, though.
+
+##### Including the JavaScript
+
+There's a caveat to `dragula`. You shouldn't include it in the `<head>` of your web applications. It's bad practice to place scripts in the `<head>`, and as such `dragula` makes no effort to support this use case.
+
+Place `dragula` in the `<body>`, instead.
 
 ##### Including the CSS!
 
@@ -85,7 +97,7 @@ dragula(containers, {
   accepts: function (el, target, source, sibling) {
     return true; // elements can be dropped in any of the `containers` by default
   },
-  invalid: function (el, target) {
+  invalid: function (el, handle) {
     return false; // don't prevent any drags from initiating by default
   },
   direction: 'vertical',             // Y axis is considered when determining where an element would be dropped
@@ -190,10 +202,10 @@ When an element is dropped onto a container, it'll be placed near the point wher
 
 #### `options.invalid`
 
-You can provide an `invalid` method with a `(el, target)` signature. This method should return `true` for elements that shouldn't trigger a drag. Here's the default implementation, which doesn't prevent any drags.
+You can provide an `invalid` method with a `(el, handle)` signature. This method should return `true` for elements that shouldn't trigger a drag. The `handle` argument is the element that was clicked, while `el` is the item that would be dragged. Here's the default implementation, which doesn't prevent any drags.
 
 ```js
-function invalidTarget (el, target) {
+function invalidTarget (el, handle) {
   return false;
 }
 ```
@@ -203,7 +215,7 @@ Note that `invalid` will be invoked on the DOM element that was clicked and ever
 As an example, you could set `invalid` to return `false` whenever the clicked element _(or any of its parents)_ is an anchor tag.
 
 ```js
-invalid: function (el) {
+invalid: function (el, handle) {
   return el.tagName === 'A';
 }
 ```
@@ -286,7 +298,7 @@ See [contributing.markdown][14] for details.
 
 # Support
 
-There's now a dedicated support channel in Slack. Visit the `dragula` [demo page][2] to get an invite. Support requests won't be handled through the repository anymore.
+There's now a dedicated support channel in Slack. Visit [this page][21] to get an invite. Support requests won't be handled through the repository anymore.
 
 # License
 
@@ -312,3 +324,4 @@ MIT
 [18]: https://bevacqua.github.io/dragula/
 [19]: https://rawgit.com/bevacqua/dragula/master/resources/patreon.svg
 [20]: https://patreon.com/bevacqua
+[21]: https://dragula-slackin.herokuapp.com/

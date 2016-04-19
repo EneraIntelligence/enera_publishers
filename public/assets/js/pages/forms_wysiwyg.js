@@ -1,6 +1,16 @@
+/*
+*  altair admin
+*  @version v2.5.0
+*  @author tzd
+*  @license http://themeforest.net/licenses
+*  forms_wysiwyg.js - forms_wysiwyg.html
+*/
+
 $(function() {
     // ckeditor
     altair_wysiwyg._ckeditor();
+    // ckeditor inline
+    altair_wysiwyg._ckeditor_inline();
     // tinymce
     altair_wysiwyg._tinymce();
 });
@@ -31,6 +41,19 @@ altair_wysiwyg = {
                 ],
                 toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
             });
+        }
+    },
+    _ckeditor_inline: function() {
+        var $ckEditor_inline = $('#wysiwyg_ckeditor_inline');
+        if($ckEditor_inline.length) {
+            console.log($ckEditor_inline);
+            $ckEditor_inline
+                .ckeditor(function() {
+                    /* Callback function code. */
+                }, {
+                    customConfig: '../../assets/js/custom/ckeditor_config.js',
+                    allowedContent: true
+                });
         }
     }
 };

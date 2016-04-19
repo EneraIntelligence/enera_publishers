@@ -1,3 +1,39 @@
+# 3.6.8 Calculated Risk
+
+- Fixed a bug where `drake.cancel` would misbehave when `copy` was `true`
+
+# 3.6.7 Miscalculation
+
+- Fixed a long-standing bug where candidate positioning would be off by one position
+
+# 3.6.6 Living on the Edge
+
+- Fixed a bug with clicks on IE7, IE8, IE9
+
+# 3.6.5 Shadowbane
+
+- Fixed a bug where `shadow` even would trigger multiple times when moving over the last position
+
+# 3.6.4 Water Tap
+
+- Fixed an instrumentation issue that prevented the tests from running
+
+# 3.6.3 Body Double
+
+- Fixed an issue that prevented `dragula` from execution early in the document load life-cycle
+
+# 3.6.2 Rugrats
+
+- Fixed a _touch events_ regression introduced in `3.6.1`
+
+# 3.6.1 Point Blank
+
+- Fixed issues in touch-enabled browsers such as Windows Phone 10
+
+# 3.6.0 Prognosis Negative
+
+- Introduced support for `contentEditable` DOM attribute
+
 # 3.5.4 Parental Discretion
 
 - Switched from `.parentElement` to `.parentNode` avoiding bugs when hovering over `<svg>` elements

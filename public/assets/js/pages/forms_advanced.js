@@ -1,3 +1,11 @@
+/*
+*  altair admin
+*  @version v2.5.0
+*  @author tzd
+*  @license http://themeforest.net/licenses
+*  forms_advanced.js - forms_advanced.html
+*/
+
 $(function() {
     // characters/words counter
     altair_form_adv.char_words_counter();
@@ -39,7 +47,11 @@ altair_form_adv = {
     },
     // range slider
     rangeSlider: function() {
-        $('[data-ion-slider]').ionRangeSlider();
+
+        $('.ion-slider').each(function() {
+
+            $(this).val('').ionRangeSlider();
+        });
 
         $("#ionslider_movement_limit").ionRangeSlider({
             type: "double",
@@ -127,6 +139,11 @@ altair_form_adv = {
         var REGEX_EMAIL = '([a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*@' +
             '(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)';
         $('#selec_adv_2').selectize({
+            plugins: {
+                'remove_button': {
+                    label     : ''
+                }
+            },
             persist: false,
             maxItems: null,
             valueField: 'email',
@@ -229,6 +246,9 @@ altair_form_adv = {
 
         $dp_start.on('change',function() {
             end_date.options.minDate = $dp_start.val();
+            setTimeout(function() {
+                $dp_end.focus();
+            },300);
         });
 
         $dp_end.on('change',function() {

@@ -130,8 +130,10 @@
   display: block !important;
   -webkit-animation: none !important;
   animation: none !important;
-  -webkit-transition: -webkit-transform 280ms cubic-bezier(0.4, 0, 0.2, 1), opacity 280ms ease-in;
+  -webkit-transition: opacity 280ms ease-in, -webkit-transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 280ms ease-in, -webkit-transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
   transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1), opacity 280ms ease-in;
+  transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1), opacity 280ms ease-in, -webkit-transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
   -webkit-transform: scale(0);
   transform: scale(0);
 }
@@ -154,6 +156,11 @@
   font-size: 16px;
   display: block;
   color: #727272;
+}
+.uk-modal-dialog .uk-modal-header .material-icons {
+  font-size: 24px;
+  vertical-align: -4px;
+  cursor: default;
 }
 .uk-modal-dialog .uk-modal-footer {
   margin: 16px -16px -16px;
@@ -209,6 +216,14 @@
 .uk-modal.uk-modal-dialog-replace .uk-modal-content {
   font-size: 18px;
 }
+.uk-modal-spinner {
+  -webkit-animation: uk-rotate 2s infinite linear;
+  animation: uk-rotate 2s infinite linear;
+  margin-left: -12px;
+  margin-top: -17px;
+  left: 50%;
+  right: auto;
+}
 /* dropdowns */
 .uk-dropdown {
   -webkit-transform: scale(0.25, 0);
@@ -248,8 +263,17 @@
 .uk-dropdown > ul > li.uk-active > a {
   background: rgba(0, 0, 0, 0.085);
 }
+.uk-dropdown > ul > li.padding_sm {
+  padding: 2px 4px;
+}
+.uk-dropdown > ul > li.padding_md {
+  padding: 4px 8px;
+}
 .uk-dropdown.dropdown-modal {
   z-index: 1310;
+}
+.uk-dropdown.dropdown-fs {
+  z-index: 9999;
 }
 .uk-dropdown.uk-dropdown-scrollable {
   -webkit-overflow-scrolling: touch;
@@ -273,6 +297,7 @@
   left: 0 !important;
   width: 100% !important;
   min-width: inherit !important;
+  margin-left: 0 !important;
 }
 .uk-dropdown-active {
   display: block !important;
@@ -413,6 +438,15 @@
 }
 .uk-input-group > .md-input-wrapper {
   display: inline-block;
+}
+.uk-input-group.uk-input-group-danger .uk-input-group-addon i {
+  color: #e53935 !important;
+}
+.uk-input-group.uk-input-group-danger + .parsley-errors-list {
+  margin-left: 58px;
+}
+.uk-input-group.uk-input-group-success .uk-input-group-addon i {
+  color: #7cb342 !important;
 }
 /* pagination */
 .uk-pagination {
@@ -589,7 +623,7 @@
 }
 /* ------------ Components ------------ */
 /* accordion */
-/*! UIkit 2.23.0 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
+/*! UIkit 2.26.2 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
 /* ========================================================================
    Component: Accordion
  ========================================================================== */
@@ -648,7 +682,9 @@
   display: block;
   color: #727272;
   -webkit-transition: -webkit-transform 280ms;
+  transition: -webkit-transform 280ms;
   transition: transform 280ms;
+  transition: transform 280ms, -webkit-transform 280ms;
 }
 .uk-accordion-title.uk-active:after {
   -webkit-transform: rotate(-180deg);
@@ -709,8 +745,137 @@
 .uk-accordion-alt .uk-accordion-content {
   padding: 24px;
 }
+/* dotnav */
+/*! UIkit 2.26.2 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
+/* ========================================================================
+   Component: Dotnav
+ ========================================================================== */
+/*
+ * 1. Gutter
+ * 2. Remove default list style
+ */
+.uk-dotnav {
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: -webkit-box;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+  /* 1 */
+  margin-left: -15px;
+  margin-top: -15px;
+  /* 2 */
+  padding: 0;
+  list-style: none;
+}
+/*
+ * 1. Space is allocated solely based on content dimensions
+ * 2. Horizontal gutter is using `padding` so `uk-width-*` classes can be applied
+ */
+.uk-dotnav > * {
+  /* 1 */
+  -ms-flex: none;
+  -webkit-flex: none;
+  -webkit-box-flex: 0;
+  flex: none;
+  /* 2 */
+  padding-left: 15px;
+  margin-top: 15px;
+}
+/*
+ * DEPRECATED IE9 Support
+ */
+.uk-dotnav:before,
+.uk-dotnav:after {
+  content: "";
+  display: block;
+  overflow: hidden;
+}
+.uk-dotnav:after {
+  clear: both;
+}
+.uk-dotnav > * {
+  float: left;
+}
+/* Items
+ ========================================================================== */
+/*
+ * Items
+ * 1. Hide text if present
+ */
+.uk-dotnav > * > * {
+  display: block;
+  box-sizing: content-box;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(50, 50, 50, 0.1);
+  /* 1 */
+  text-indent: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+/*
+ * Hover
+ * 1. Apply hover style also to focus state
+ * 2. Remove default focus style
+ */
+.uk-dotnav > * > :hover,
+.uk-dotnav > * > :focus {
+  background: rgba(50, 50, 50, 0.4);
+  /* 2 */
+  outline: none;
+}
+/* OnClick */
+.uk-dotnav > * > :active {
+  background: rgba(50, 50, 50, 0.6);
+}
+/* Active */
+.uk-dotnav > .uk-active > * {
+  background: rgba(50, 50, 50, 0.4);
+}
+/* Modifier: `uk-dotnav-contrast`
+ ========================================================================== */
+.uk-dotnav-contrast > * > * {
+  background: rgba(255, 255, 255, 0.4);
+}
+/*
+ * Hover
+ * 1. Apply hover style also to focus state
+ */
+.uk-dotnav-contrast > * > :hover,
+.uk-dotnav-contrast > * > :focus {
+  background: rgba(255, 255, 255, 0.7);
+}
+/* OnClick */
+.uk-dotnav-contrast > * > :active {
+  background: rgba(255, 255, 255, 0.9);
+}
+/* Active */
+.uk-dotnav-contrast > .uk-active > * {
+  background: rgba(255, 255, 255, 0.9);
+}
+/* Modifier: 'uk-dotnav-vertical'
+ ========================================================================== */
+/*
+ * DEPRECATED
+ */
+.uk-dotnav-vertical {
+  -ms-flex-direction: column;
+  -webkit-flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  flex-direction: column;
+}
+/*
+ * DEPRECATED IE9 Support
+ */
+.uk-dotnav-vertical > * {
+  float: none;
+}
 /* progress */
-/*! UIkit 2.23.0 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
+/*! UIkit 2.26.2 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
 /* ========================================================================
    Component: Progress
  ========================================================================== */
@@ -832,7 +997,7 @@
   background-color: #ffa000;
 }
 /* htmleditor */
-/*! UIkit 2.23.0 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
+/*! UIkit 2.26.2 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
 /* ========================================================================
    Component: HTML editor
  ========================================================================== */
@@ -1088,7 +1253,7 @@
   top: 38px;
 }
 /* upload */
-/*! UIkit 2.23.0 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
+/*! UIkit 2.26.2 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
 /* ========================================================================
    Component: Form file
  ========================================================================== */
@@ -1122,7 +1287,7 @@
   /* 2 */
   font-size: 500px;
 }
-/*! UIkit 2.23.0 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
+/*! UIkit 2.26.2 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
 /* ========================================================================
    Component: Upload
  ========================================================================== */
@@ -1164,7 +1329,7 @@ div.uk-form-file {
   cursor: pointer;
 }
 /* form select */
-/*! UIkit 2.23.0 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
+/*! UIkit 2.26.2 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
 /* ========================================================================
    Component: Form select
  ========================================================================== */
@@ -1241,8 +1406,9 @@ div.uk-form-file {
   width: 20px;
   font-family: FontAwesome;
 }
-.uk-datepicker.uk-dropdown-up {
-  bottom: auto;
+.uk-datepicker.dp-top {
+  -webkit-transform-origin: 50% 100% !important;
+  transform-origin: 50% 100% !important;
 }
 .uk-datepicker-table {
   width: 100%;
@@ -1304,6 +1470,13 @@ a.uk-datepicker-table-muted {
   opacity: 1;
   max-height: 210px;
 }
+[data-uk-autocomplete] .uk-dropdown {
+  width: 100%;
+  box-sizing: border-box;
+}
+[data-uk-autocomplete] .uk-dropdown .uk-nav {
+  margin: 0;
+}
 /* password toggle */
 .uk-form-password-toggle {
   position: absolute;
@@ -1315,7 +1488,7 @@ a.uk-datepicker-table-muted {
   color: #727272;
 }
 /* nestable */
-/*! UIkit 2.23.0 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
+/*! UIkit 2.26.2 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
 /* ========================================================================
    Component: Nestable
  ========================================================================== */
@@ -1496,7 +1669,7 @@ a.uk-datepicker-table-muted {
   content: "\e313";
 }
 /* notify */
-/*! UIkit 2.23.0 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
+/*! UIkit 2.26.2 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
 /* ========================================================================
    Component: Notify
  ========================================================================== */
@@ -1729,8 +1902,154 @@ a.uk-datepicker-table-muted {
     margin-left: -80px;
   }
 }
+/* slideshow */
+/*! UIkit 2.26.2 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
+/* ========================================================================
+   Component: Slideshow
+ ========================================================================== */
+/*
+ * 1. Create position context
+ * 2. Create stacking context to prevent z-index issues with other components
+ * 3. Set width because child elements are positioned absolute. Height is set via JS
+ * 4. Reset list style
+ * 5. Clip child elements
+ * 6. Deactivate browser history navigation in IE11
+ */
+.uk-slideshow {
+  /* 1 */
+  position: relative;
+  /* 2 */
+  z-index: 0;
+  /* 3 */
+  width: 100%;
+  /* 4 */
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  /* 5 */
+  overflow: hidden;
+  /* 6 */
+  -ms-touch-action: pan-y;
+  touch-action: pan-y;
+}
+/*
+ * Sub-object item
+ * 1. Position items above each other
+ * 2. Expand to parent container width
+ * 3. Hide by default
+ */
+.uk-slideshow > li {
+  /* 1 */
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* 2 */
+  width: 100%;
+  /* 3 */
+  opacity: 0;
+}
+/*
+ * Active
+ * 1. Stack at first
+ * 2. Show slide
+ */
+.uk-slideshow > .uk-active {
+  /* 1 */
+  z-index: 10;
+  /* 2 */
+  opacity: 1;
+}
+/*
+ * Hide default images which is only relevant to keep existing proportions
+ */
+.uk-slideshow > li > img {
+  visibility: hidden;
+}
+/*
+ * Pointer for controls
+ */
+[data-uk-slideshow-slide] {
+  cursor: pointer;
+}
+/* Modifier: `uk-slideshow-fullscreen`
+ ========================================================================== */
+.uk-slideshow-fullscreen,
+.uk-slideshow-fullscreen > li {
+  height: 100vh;
+}
+/* Animations
+ ========================================================================== */
+/*
+ * Fade
+ */
+.uk-slideshow-fade-in {
+  -webkit-animation: uk-fade 0.5s linear;
+  animation: uk-fade 0.5s linear;
+}
+.uk-slideshow-fade-out {
+  -webkit-animation: uk-fade 0.5s linear reverse;
+  animation: uk-fade 0.5s linear reverse;
+}
+/*
+ * Scroll
+ */
+.uk-slideshow-scroll-forward-in {
+  -webkit-animation: uk-slide-right 0.5s ease-in-out;
+  animation: uk-slide-right 0.5s ease-in-out;
+}
+.uk-slideshow-scroll-forward-out {
+  -webkit-animation: uk-slide-left 0.5s ease-in-out reverse;
+  animation: uk-slide-left 0.5s ease-in-out reverse;
+}
+.uk-slideshow-scroll-backward-in {
+  -webkit-animation: uk-slide-left 0.5s ease-in-out;
+  animation: uk-slide-left 0.5s ease-in-out;
+}
+.uk-slideshow-scroll-backward-out {
+  -webkit-animation: uk-slide-right 0.5s ease-in-out reverse;
+  animation: uk-slide-right 0.5s ease-in-out reverse;
+}
+/*
+ * Scale
+ */
+.uk-slideshow-scale-out {
+  -webkit-animation: uk-fade-scale-15 0.5s ease-in-out reverse;
+  animation: uk-fade-scale-15 0.5s ease-in-out reverse;
+}
+/*
+ * Swipe
+ */
+.uk-slideshow-swipe-forward-in {
+  -webkit-animation: uk-slide-left-33 0.5s ease-in-out;
+  animation: uk-slide-left-33 0.5s ease-in-out;
+}
+.uk-slideshow-swipe-forward-out {
+  -webkit-animation: uk-slide-left 0.5s ease-in-out reverse;
+  animation: uk-slide-left 0.5s ease-in-out reverse;
+}
+.uk-slideshow-swipe-backward-in {
+  -webkit-animation: uk-slide-right-33 0.5s ease-in-out;
+  animation: uk-slide-right-33 0.5s ease-in-out;
+}
+.uk-slideshow-swipe-backward-out {
+  -webkit-animation: uk-slide-right 0.5s ease-in-out reverse;
+  animation: uk-slide-right 0.5s ease-in-out reverse;
+}
+.uk-slideshow-swipe-forward-in:before,
+.uk-slideshow-swipe-backward-in:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.6);
+  -webkit-animation: uk-fade 0.5s ease-in-out reverse;
+  animation: uk-fade 0.5s ease-in-out reverse;
+}
 /* slidenav */
-/*! UIkit 2.23.0 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
+/*! UIkit 2.26.2 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
 /* ========================================================================
    Component: Slidenav
  ========================================================================== */
@@ -1829,7 +2148,7 @@ a.uk-datepicker-table-muted {
   color: rgba(255, 255, 255, 0.9);
 }
 /* tooltips */
-/*! UIkit 2.23.0 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
+/*! UIkit 2.26.2 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
 /* ========================================================================
    Component: Tooltip
  ========================================================================== */
@@ -1956,7 +2275,7 @@ a.uk-datepicker-table-muted {
   text-shadow: none;
   min-width: 80px;
   text-align: center;
-  z-index: 1114;
+  z-index: 1304;
   opacity: 0;
 }
 .uk-tooltip .uk-tooltip-inner {
@@ -2014,6 +2333,7 @@ a.uk-datepicker-table-muted {
   box-sizing: border-box;
   position: relative;
   top: 1px;
+  text-shadow: none;
 }
 .uk-tab > li > a:hover,
 .uk-tab > li > a:focus {
@@ -2097,12 +2417,35 @@ a.uk-datepicker-table-muted {
 .uk-tab-icons > li > a > .material-icons {
   font-size: 24px;
 }
+.uk-tab-double-header {
+  margin: 10px 24px 0 !important;
+}
+.uk-tab-double-header > li > a {
+  color: #fff;
+  border-bottom: 4px solid transparent;
+}
+.uk-tab-double-header > li > a:hover,
+.uk-tab-double-header > li > a:focus {
+  color: #fff;
+  border-bottom-color: #39a1f4;
+}
+.uk-tab-double-header > li.uk-active > a {
+  color: #fff;
+  border-bottom-color: #7cb342;
+}
+.uk-tab-double-header > li.uk-tab-responsive > a {
+  border-bottom: none;
+  padding-bottom: 5px !important;
+}
+.uk-tab-double-header > li.uk-tab-responsive > a:before {
+  color: #fff;
+}
 /* text truncate */
 .uk-text-truncate {
   display: block;
 }
 /* sortable */
-/*! UIkit 2.23.0 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
+/*! UIkit 2.26.2 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
 /* ========================================================================
    Component: Sortable
  ========================================================================== */
@@ -2165,6 +2508,10 @@ a.uk-datepicker-table-muted {
 .uk-sortable-moving,
 .uk-sortable-moving * {
   cursor: move;
+}
+.uk-sortable > * {
+  -ms-touch-action: auto;
+  touch-action: auto;
 }
 .uk-sortable.sortable-handler > * {
   cursor: move;
@@ -2338,6 +2685,10 @@ a.uk-datepicker-table-muted {
   outline: none;
   text-decoration: none;
   color: #212121;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+.md-btn:active,
+.uk-button-dropdown.uk-open > .md-btn {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 }
 .md-btn-flat {
@@ -2403,27 +2754,45 @@ a.uk-datepicker-table-muted {
 .md-btn-danger:focus,
 .md-btn-danger:active {
   background: #e53935;
-  color: #fff;
 }
 .md-btn-primary,
 .md-btn-primary:hover,
 .md-btn-primary:focus,
 .md-btn-primary:active {
   background: #2196f3;
-  color: #fff;
 }
 .md-btn-success,
 .md-btn-success:hover,
 .md-btn-success:focus,
 .md-btn-success:active {
   background: #7cb342;
-  color: #fff;
 }
 .md-btn-warning,
 .md-btn-warning:hover,
 .md-btn-warning:focus,
 .md-btn-warning:active {
   background: #ffa000;
+}
+.md-btn-danger,
+.md-btn-primary,
+.md-btn-success,
+.md-btn-warning,
+.md-btn-danger:hover,
+.md-btn-primary:hover,
+.md-btn-success:hover,
+.md-btn-warning:hover,
+.md-btn-danger:focus,
+.md-btn-primary:focus,
+.md-btn-success:focus,
+.md-btn-warning:focus,
+.md-btn-danger:active,
+.md-btn-primary:active,
+.md-btn-success:active,
+.md-btn-warning:active,
+.md-btn-danger > i,
+.md-btn-primary > i,
+.md-btn-success > i,
+.md-btn-warning > i {
   color: #fff;
 }
 .md-btn.disabled,
@@ -2436,14 +2805,24 @@ a.uk-datepicker-table-muted {
   cursor: default;
   pointer-events: none;
 }
+.md-btn > i.material-icons {
+  margin-top: 5px;
+  font-size: 18px;
+}
+.md-btn-mini {
+  line-height: 21px !important;
+  min-width: 12px;
+  font-size: 10px !important;
+  min-height: 24px;
+}
 .md-btn-small {
-  line-height: 27px;
+  line-height: 27px !important;
   min-width: 14px;
-  font-size: 11px;
+  font-size: 11px !important;
 }
 .md-btn-large {
-  line-height: 42px;
-  font-size: 16px;
+  line-height: 42px !important;
+  font-size: 16px !important;
 }
 .md-btn::-moz-focus-inner {
   border: 0;
@@ -2455,8 +2834,72 @@ a.uk-datepicker-table-muted {
 .md-btn-block {
   width: 100%;
 }
+.md-btn-block + .md-btn-block {
+  margin-left: 0;
+  margin-top: 12px;
+}
 .md-btn + .md-btn-group {
   margin-left: 16px;
+}
+.md-btn-facebook {
+  background: #3b5998 !important;
+}
+.md-btn-twitter {
+  background: #00aced !important;
+}
+.md-btn-gplus {
+  background: #dd4b39 !important;
+}
+.md-btn-facebook,
+.md-btn-twitter,
+.md-btn-gplus,
+.md-btn-facebook > i,
+.md-btn-twitter > i,
+.md-btn-gplus > i {
+  color: #fff !important;
+}
+.md-btn-icon > i.no_right_margin {
+  margin-right: 0 !important;
+}
+.md-btn-icon-large,
+.md-btn-icon.md-btn-large {
+  min-width: 72px;
+}
+.md-btn-icon-large > i,
+.md-btn-icon.md-btn-large > i {
+  font-size: 24px;
+  margin-right: 12px;
+  vertical-align: -3px;
+}
+.md-btn-icon-default,
+.md-btn-icon {
+  min-width: 64px;
+}
+.md-btn-icon-default > i,
+.md-btn-icon > i {
+  font-size: 18px;
+  margin-right: 8px;
+  vertical-align: -2px;
+}
+.md-btn-icon-small,
+.md-btn-icon.md-btn-small {
+  min-width: 48px;
+}
+.md-btn-icon-small > i,
+.md-btn-icon.md-btn-small > i {
+  font-size: 16px;
+  margin-right: 6px;
+  vertical-align: -2px;
+}
+.md-btn-icon-mini,
+.md-btn-icon.md-btn-mini {
+  min-width: 36px;
+}
+.md-btn-icon-mini > i,
+.md-btn-icon.md-btn-mini > i {
+  font-size: 16px;
+  margin-right: 4px;
+  vertical-align: -2px;
 }
 .md-fab {
   box-sizing: border-box;
@@ -2569,57 +3012,73 @@ a.uk-datepicker-table-muted {
   right: 0;
 }
 .md-fab-speed-dial .md-fab-wrapper-small .md-fab-small:nth-child(1) {
-  -webkit-transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 50ms, opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 50ms;
+  -webkit-transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 50ms, -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 50ms;
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 50ms, -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 50ms;
   transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 50ms, opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 50ms;
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 50ms, opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 50ms, -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 50ms;
 }
 .md-fab-speed-dial .md-fab-wrapper-small .md-fab-small:nth-last-child(2) {
   bottom: 64px;
 }
 .md-fab-speed-dial .md-fab-wrapper-small .md-fab-small:nth-child(2) {
-  -webkit-transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 100ms, opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 100ms;
+  -webkit-transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 100ms, -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 100ms;
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 100ms, -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 100ms;
   transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 100ms, opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 100ms;
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 100ms, opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 100ms, -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 100ms;
 }
 .md-fab-speed-dial .md-fab-wrapper-small .md-fab-small:nth-last-child(3) {
   bottom: 128px;
 }
 .md-fab-speed-dial .md-fab-wrapper-small .md-fab-small:nth-child(3) {
-  -webkit-transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 150ms, opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 150ms;
+  -webkit-transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 150ms, -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 150ms;
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 150ms, -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 150ms;
   transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 150ms, opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 150ms;
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 150ms, opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 150ms, -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 150ms;
 }
 .md-fab-speed-dial .md-fab-wrapper-small .md-fab-small:nth-last-child(4) {
   bottom: 192px;
 }
 .md-fab-speed-dial .md-fab-wrapper-small .md-fab-small:nth-child(4) {
-  -webkit-transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 200ms, opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 200ms;
+  -webkit-transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 200ms, -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 200ms;
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 200ms, -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 200ms;
   transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 200ms, opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 200ms;
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 200ms, opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 200ms, -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 200ms;
 }
 .md-fab-speed-dial .md-fab-wrapper-small .md-fab-small:nth-last-child(5) {
   bottom: 256px;
 }
 .md-fab-speed-dial .md-fab-wrapper-small .md-fab-small:nth-child(5) {
-  -webkit-transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 250ms, opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 250ms;
+  -webkit-transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 250ms, -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 250ms;
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 250ms, -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 250ms;
   transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 250ms, opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 250ms;
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 250ms, opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 250ms, -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 250ms;
 }
 .md-fab-speed-dial .md-fab-wrapper-small .md-fab-small:nth-last-child(6) {
   bottom: 320px;
 }
 .md-fab-speed-dial .md-fab-wrapper-small .md-fab-small:nth-child(6) {
-  -webkit-transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 300ms, opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 300ms;
+  -webkit-transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 300ms, -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 300ms;
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 300ms, -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 300ms;
   transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 300ms, opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 300ms;
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 300ms, opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 300ms, -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 300ms;
 }
 .md-fab-speed-dial .md-fab-wrapper-small .md-fab-small:nth-last-child(7) {
   bottom: 384px;
 }
 .md-fab-speed-dial .md-fab-wrapper-small .md-fab-small:nth-child(7) {
-  -webkit-transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 350ms, opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 350ms;
+  -webkit-transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 350ms, -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 350ms;
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 350ms, -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 350ms;
   transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 350ms, opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 350ms;
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 350ms, opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 350ms, -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 350ms;
 }
 .md-fab-speed-dial .md-fab-wrapper-small .md-fab-small:nth-last-child(8) {
   bottom: 448px;
 }
 .md-fab-speed-dial .md-fab-wrapper-small .md-fab-small:nth-child(8) {
-  -webkit-transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 400ms, opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 400ms;
+  -webkit-transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 400ms, -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 400ms;
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 400ms, -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 400ms;
   transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 400ms, opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 400ms;
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 400ms, opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 400ms, -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 400ms;
 }
 .md-fab-speed-dial.md-fab-active .md-fab-small {
   -webkit-transform: scale(1);
@@ -2628,36 +3087,52 @@ a.uk-datepicker-table-muted {
   z-index: 10;
 }
 .md-fab-speed-dial.md-fab-active .md-fab-small:nth-last-child(1) {
-  -webkit-transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 50ms, opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 50ms;
+  -webkit-transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 50ms, -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 50ms;
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 50ms, -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 50ms;
   transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 50ms, opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 50ms;
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 50ms, opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 50ms, -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 50ms;
 }
 .md-fab-speed-dial.md-fab-active .md-fab-small:nth-last-child(2) {
-  -webkit-transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 100ms, opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 100ms;
+  -webkit-transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 100ms, -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 100ms;
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 100ms, -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 100ms;
   transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 100ms, opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 100ms;
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 100ms, opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 100ms, -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 100ms;
 }
 .md-fab-speed-dial.md-fab-active .md-fab-small:nth-last-child(3) {
-  -webkit-transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 150ms, opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 150ms;
+  -webkit-transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 150ms, -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 150ms;
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 150ms, -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 150ms;
   transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 150ms, opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 150ms;
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 150ms, opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 150ms, -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 150ms;
 }
 .md-fab-speed-dial.md-fab-active .md-fab-small:nth-last-child(4) {
-  -webkit-transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 200ms, opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 200ms;
+  -webkit-transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 200ms, -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 200ms;
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 200ms, -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 200ms;
   transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 200ms, opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 200ms;
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 200ms, opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 200ms, -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 200ms;
 }
 .md-fab-speed-dial.md-fab-active .md-fab-small:nth-last-child(5) {
-  -webkit-transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 250ms, opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 250ms;
+  -webkit-transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 250ms, -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 250ms;
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 250ms, -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 250ms;
   transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 250ms, opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 250ms;
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 250ms, opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 250ms, -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 250ms;
 }
 .md-fab-speed-dial.md-fab-active .md-fab-small:nth-last-child(6) {
-  -webkit-transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 300ms, opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 300ms;
+  -webkit-transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 300ms, -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 300ms;
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 300ms, -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 300ms;
   transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 300ms, opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 300ms;
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 300ms, opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 300ms, -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 300ms;
 }
 .md-fab-speed-dial.md-fab-active .md-fab-small:nth-last-child(7) {
-  -webkit-transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 350ms, opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 350ms;
+  -webkit-transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 350ms, -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 350ms;
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 350ms, -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 350ms;
   transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 350ms, opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 350ms;
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 350ms, opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 350ms, -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 350ms;
 }
 .md-fab-speed-dial.md-fab-active .md-fab-small:nth-last-child(8) {
-  -webkit-transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 400ms, opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 400ms;
+  -webkit-transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 400ms, -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 400ms;
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 400ms, -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 400ms;
   transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 400ms, opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 400ms;
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 400ms, opacity 100ms cubic-bezier(0.4, 0, 0.2, 1) 400ms, -webkit-transform 100ms cubic-bezier(0.4, 0, 0.2, 1) 400ms;
 }
 .md-fab-toolbar {
   -webkit-transition: all 280ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -2988,6 +3463,85 @@ input[type="tel"].md-input-small,
 input[type="color"].md-input-small {
   padding: 4px;
 }
+select.md-input.uk-form-width-mini,
+textarea.md-input.uk-form-width-mini,
+input:not([type]).md-input.uk-form-width-mini,
+input[type="text"].md-input.uk-form-width-mini,
+input[type="password"].md-input.uk-form-width-mini,
+input[type="datetime"].md-input.uk-form-width-mini,
+input[type="datetime-local"].md-input.uk-form-width-mini,
+input[type="date"].md-input.uk-form-width-mini,
+input[type="month"].md-input.uk-form-width-mini,
+input[type="time"].md-input.uk-form-width-mini,
+input[type="week"].md-input.uk-form-width-mini,
+input[type="number"].md-input.uk-form-width-mini,
+input[type="email"].md-input.uk-form-width-mini,
+input[type="url"].md-input.uk-form-width-mini,
+input[type="search"].md-input.uk-form-width-mini,
+input[type="tel"].md-input.uk-form-width-mini,
+input[type="color"].md-input.uk-form-width-mini {
+  width: 40px;
+}
+select.md-input.uk-form-width-small,
+textarea.md-input.uk-form-width-small,
+input:not([type]).md-input.uk-form-width-small,
+input[type="text"].md-input.uk-form-width-small,
+input[type="password"].md-input.uk-form-width-small,
+input[type="datetime"].md-input.uk-form-width-small,
+input[type="datetime-local"].md-input.uk-form-width-small,
+input[type="date"].md-input.uk-form-width-small,
+input[type="month"].md-input.uk-form-width-small,
+input[type="time"].md-input.uk-form-width-small,
+input[type="week"].md-input.uk-form-width-small,
+input[type="number"].md-input.uk-form-width-small,
+input[type="email"].md-input.uk-form-width-small,
+input[type="url"].md-input.uk-form-width-small,
+input[type="search"].md-input.uk-form-width-small,
+input[type="tel"].md-input.uk-form-width-small,
+input[type="color"].md-input.uk-form-width-small {
+  width: 130px;
+}
+select.md-input.uk-form-width-medium,
+textarea.md-input.uk-form-width-medium,
+input:not([type]).md-input.uk-form-width-medium,
+input[type="text"].md-input.uk-form-width-medium,
+input[type="password"].md-input.uk-form-width-medium,
+input[type="datetime"].md-input.uk-form-width-medium,
+input[type="datetime-local"].md-input.uk-form-width-medium,
+input[type="date"].md-input.uk-form-width-medium,
+input[type="month"].md-input.uk-form-width-medium,
+input[type="time"].md-input.uk-form-width-medium,
+input[type="week"].md-input.uk-form-width-medium,
+input[type="number"].md-input.uk-form-width-medium,
+input[type="email"].md-input.uk-form-width-medium,
+input[type="url"].md-input.uk-form-width-medium,
+input[type="search"].md-input.uk-form-width-medium,
+input[type="tel"].md-input.uk-form-width-medium,
+input[type="color"].md-input.uk-form-width-medium {
+  width: 200px;
+}
+select.md-input.uk-form-width-large,
+textarea.md-input.uk-form-width-large,
+input:not([type]).md-input.uk-form-width-large,
+input[type="text"].md-input.uk-form-width-large,
+input[type="password"].md-input.uk-form-width-large,
+input[type="datetime"].md-input.uk-form-width-large,
+input[type="datetime-local"].md-input.uk-form-width-large,
+input[type="date"].md-input.uk-form-width-large,
+input[type="month"].md-input.uk-form-width-large,
+input[type="time"].md-input.uk-form-width-large,
+input[type="week"].md-input.uk-form-width-large,
+input[type="number"].md-input.uk-form-width-large,
+input[type="email"].md-input.uk-form-width-large,
+input[type="url"].md-input.uk-form-width-large,
+input[type="search"].md-input.uk-form-width-large,
+input[type="tel"].md-input.uk-form-width-large,
+input[type="color"].md-input.uk-form-width-large {
+  width: 500px;
+}
+select.md-input.uk-form-width-mini {
+  width: 65px;
+}
 .md-input-width-small {
   min-width: 80px !important;
 }
@@ -3004,6 +3558,13 @@ textarea.md-input {
   -webkit-transition: height 200ms ease-out;
   transition: height 200ms ease-out;
   line-height: 24px;
+}
+textarea.no_autosize {
+  min-height: inherit;
+  overflow: auto;
+  -webkit-transition: none;
+  transition: none;
+  resize: both;
 }
 .md-input-wrapper {
   position: relative;
@@ -3035,6 +3596,18 @@ textarea.md-input {
 }
 .md-input-wrapper .md-input-bar:after {
   right: 50%;
+}
+.md-input-wrapper .md-input-bar.uk-form-width-mini {
+  width: 40px;
+}
+.md-input-wrapper .md-input-bar.uk-form-width-small {
+  width: 130px;
+}
+.md-input-wrapper .md-input-bar.uk-form-width-medium {
+  width: 200px;
+}
+.md-input-wrapper .md-input-bar.uk-form-width-large {
+  width: 500px;
 }
 .md-input-wrapper > label {
   color: #727272;
@@ -3203,14 +3776,13 @@ button.md-icon {
 /* dropdown list */
 .md-list-inputs {
   margin: 0;
-}
-.md-list-inputs > li {
-  margin: 0;
-}
-.md-list-inputs,
-.md-list-inputs > li {
-  list-style: none;
   padding: 0;
+  list-style: none;
+}
+.md-list-inputs > li {
+  padding: 0;
+  margin: 0;
+  list-style: none;
 }
 .md-list-inputs li + li {
   margin-top: 8px;
@@ -3259,6 +3831,9 @@ button.md-icon {
     transform: scale3d(1, 1, 1);
   }
 }
+.hierarchical_show {
+  will-change: transform, opacity;
+}
 .hierarchical_show > * {
   visibility: hidden;
 }
@@ -3301,6 +3876,9 @@ button.md-icon {
     transform: translate3d(0, 0, 0);
   }
 }
+.hierarchical_slide {
+  will-change: transform, opacity;
+}
 .hierarchical_slide > * {
   visibility: hidden;
 }
@@ -3322,6 +3900,8 @@ button.md-icon {
 html {
   height: 100%;
   overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   background: #ececec;
 }
 body {
@@ -3497,15 +4077,14 @@ address p + p {
 }
 .inline-list {
   margin: 0;
+  padding: 0;
+  list-style: none;
   overflow: hidden;
 }
 .inline-list > li {
-  margin: 0;
-}
-.inline-list,
-.inline-list > li {
-  list-style: none;
   padding: 0;
+  margin: 0;
+  list-style: none;
 }
 .inline-list li {
   float: left;
@@ -3556,31 +4135,6 @@ address p + p {
   left: -3px;
   position: relative;
 }
-/* page preloader */
-body.page_preloader_active {
-  overflow: hidden;
-}
-body.page_preloader_active > .page_preloader {
-  -webkit-transition: opacity 1000ms ease-out;
-  transition: opacity 1000ms ease-out;
-  opacity: 1;
-  position: fixed;
-  background-color: #fff;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 10005;
-}
-body.page_preloader_active > .page_preloader > .regular-preloader {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin: -24px 0 0 -24px;
-}
-body.pace-done > .page_preloader {
-  opacity: 0;
-}
 /* layout */
 #page_content:before {
   content: '';
@@ -3607,8 +4161,8 @@ body.pace-done > .page_preloader {
   .boxed_layout .uk-width-large-8-10.uk-container-center {
     width: 100%;
   }
-  .boxed_layout.sidebar_main_open,
-  .boxed_layout.sidebar_main_active {
+  .boxed_layout.sidebar_main_open #page_content,
+  .boxed_layout.sidebar_main_active #page_content {
     padding-left: 240px;
   }
   .boxed_layout .md-top-bar {

@@ -1,3 +1,11 @@
+/*
+*  altair admin
+*  @version v2.5.0
+*  @author tzd
+*  @license http://themeforest.net/licenses
+*  dashboard.js - dashboard.html
+*/
+
 $(function() {
     // dashboard init functions
     altair_dashboard.init();
@@ -29,15 +37,19 @@ altair_dashboard = {
     },
     // metrics-graphics
     metrics_charts: function () {
-        var mGraph_sale_id = '#mGraph_sale';
+        var mGraph_sale = '#mGraph_sale';
 
-        if ($(mGraph_sale_id).length) {
+        if ($(mGraph_sale).length) {
 
-            var $thisEl_height = $(mGraph_sale_id).height();
+            var $thisEl_height = 0;
 
             function buildGraph_sale() {
 
-                var $thisEl_width = $(mGraph_sale_id).width();
+                if($thisEl_height == 0) {
+                    var $thisEl_height = $(mGraph_sale).height();
+                }
+
+                var $thisEl_width = $(mGraph_sale).width();
 
                 d3.json("data/mg_dashboard_chart.min.json", function (data) {
                     data = [data];
@@ -61,7 +73,7 @@ altair_dashboard = {
                         width: $thisEl_width,
                         height: $thisEl_height,
                         right: 20,
-                        target: mGraph_sale_id,
+                        target: mGraph_sale,
                         markers: markers,
                         x_accessor: 'date',
                         y_accessor: 'value'
@@ -74,7 +86,11 @@ altair_dashboard = {
 
             $window.on('debouncedresize', function () {
                 buildGraph_sale();
-            })
+            });
+
+            $("#mGraph_sale").on('display.uk.check', function(){
+                buildGraph_sale();
+            });
 
         }
     },

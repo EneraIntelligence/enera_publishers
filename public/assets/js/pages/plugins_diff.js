@@ -1,3 +1,11 @@
+/*
+*  altair admin
+*  @version v2.5.0
+*  @author tzd
+*  @license http://themeforest.net/licenses
+*  plugins_diff.js - plugins_diff.html
+*/
+
 $(function() {
     // diff
     altair_diff.init();

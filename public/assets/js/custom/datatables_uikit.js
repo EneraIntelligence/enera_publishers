@@ -191,6 +191,7 @@
 
                 // initilaize selectize
                 $(this).find('.dt-selectize').selectize({
+                    dropdownParent: 'body',
                     onDropdownOpen: function($dropdown) {
                         $dropdown
                             .hide()

@@ -1,4 +1,4 @@
-/*! UIkit 2.22 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
+/*! UIkit 2.24.3 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
 // removed moment_js from core
 // customized by tzd
 
@@ -162,7 +162,6 @@
 
             var $this = this;
 
-
             this.current  = this.element.val() ? moment(this.element.val(), this.options.format) : moment();
 
             this.on("click focus", function(){
@@ -207,28 +206,31 @@
                 });
 
                 dropdown.appendTo("body");
-
             }
         },
 
         pick: function(initdate) {
 
             var offset = this.element.offset(),
-                offset_left = offset.left,
-                offset_top = offset.top,
+                offset_left = parseInt(offset.left),
+                offset_top = parseInt(offset.top),
                 css = {
                     'left': offset_left,
                     'right': ""
                 };
 
-
-            this.current  = initdate ? moment(initdate, this.options.format):moment();
+            this.current  = isNaN(initdate) ? moment(initdate, this.options.format):moment();
             this.initdate = this.current.format("YYYY-MM-DD");
 
             this.update();
 
-            if (UI.langdirection == 'right') {
-                css.right = window.innerWidth - (css.left + this.element.outerWidth());
+            // check if datepicker input is in modal
+            if(($(this.element[0]).closest('.ui-dialog').length || $(this.element[0]).closest('.uk-modal').length) && !dropdown.hasClass('dropdown-modal')) {
+                dropdown.addClass('dropdown-modal');
+            }
+
+            if (UI.langdirection == 'right' || ( window.innerWidth - offset_left - dropdown.outerWidth() < 0 ) ) {
+                css.right = (window.innerWidth - (window.innerWidth - $('body').width())) - (css.left + this.element.outerWidth());
                 css.left  = "";
             }
 
@@ -239,10 +241,10 @@
 
             if (this.options.pos == 'top') {
                 css.top = posTop;
-                dropdown.addClass('uk-dropdown-up');
-            } else if(this.options.pos == 'auto' && (window.innerHeight - posBottom - dropdown.outerHeight() + $body.scrollTop() < 0 && posTop >= 0) ) {
+                dropdown.addClass('dp-top');
+            } else if(this.options.pos == 'auto' && (window.innerHeight - posBottom - dropdown.outerHeight() + UI.$win.scrollTop() < 0 && posTop >= 0) ) {
                 css.top = posTop;
-                dropdown.addClass('uk-dropdown-up');
+                dropdown.addClass('dp-top');
             }
 
             css.minWidth = dropdown.actual('outerWidth');
@@ -355,11 +357,9 @@
             if (active && active === this) {
                 dropdown.removeClass('uk-dropdown-shown');
                 setTimeout(function() {
-                    dropdown.removeClass('uk-dropdown-active uk-dropdown-up')
+                    dropdown.removeClass('uk-dropdown-active dp-top')
                 },280);
-
                 active = false;
-
                 this.trigger('hide.uk.datepicker');
             }
         }

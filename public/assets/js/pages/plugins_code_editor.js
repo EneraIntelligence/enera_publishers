@@ -1,3 +1,11 @@
+/*
+*  altair admin
+*  @version v2.5.0
+*  @author tzd
+*  @license http://themeforest.net/licenses
+*  plugins_code_editor.js - plugins_code_editor.html
+*/
+
 $(function() {
     // code editor
     altair_code_editor.init();

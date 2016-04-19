@@ -1,3 +1,11 @@
+/*
+*  altair admin
+*  @version v2.5.0
+*  @author tzd
+*  @license http://themeforest.net/licenses
+*  components_preloaders.js - components_preloaders.html
+*/
+
 $(function() {
     // show preloader
     $('#show_preloader_regular').click(function() {

@@ -1,4 +1,4 @@
-/*! UIkit 2.23.0 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
+/*! UIkit 2.26.2 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
 /*
   * Based on nativesortable - Copyright (c) Brian Grinstead - https://github.com/bgrins/nativesortable
   */
@@ -21,7 +21,7 @@
     "use strict";
 
     var supportsTouch       = ('ontouchstart' in window) || (window.DocumentTouch && document instanceof DocumentTouch),
-        draggingPlaceholder, currentlyDraggingElement, currentlyDraggingTarget, dragging, moving, clickedlink, delayIdle, touchedlists, moved;
+        draggingPlaceholder, currentlyDraggingElement, currentlyDraggingTarget, dragging, moving, clickedlink, delayIdle, touchedlists, moved, overElement;
 
     function closestSortable(ele) {
 
@@ -106,7 +106,7 @@
                     draggingPlaceholder.css({'left': left, 'top': top });
 
                     // adjust document scrolling
-                    
+
                     if (top + (draggingPlaceholder.height()/3) > document.body.offsetHeight) {
                         return;
                     }
@@ -131,7 +131,7 @@
                 }
 
                 // inside or outside of sortable?
-                var sortable  = closestSortable(e.target),
+                var sortable  = closestSortable(currentlyDraggingElement),
                     component = draggingPlaceholder.$sortable,
                     ev        = { type: e.type };
 
@@ -155,11 +155,20 @@
 
             var handleDragStart = delegate(function(e) {
 
+                if (e.data && e.data.sortable) {
+                    return;
+                }
+
                 var $target = UI.$(e.target),
                     $link   = $target.is('a[href]') ? $target:$target.parents('a[href]');
 
                 if ($target.is(':input')) {
                     return;
+                }
+
+                if ($this.options.handleClass) {
+                    var handle = $target.hasClass($this.options.handleClass) ? $target : $target.closest('.'+$this.options.handleClass, $this.element);
+                    if (!handle.length) return;
                 }
 
                 e.preventDefault();
@@ -173,20 +182,11 @@
                     });
                 }
 
+                e.data = e.data || {};
+
+                e.data.sortable = element;
+
                 return $this.dragStart(e, this);
-            });
-
-            var handleDragOver = delegate(function(e) {
-
-                if (!currentlyDraggingElement) {
-                    return true;
-                }
-
-                if (e.preventDefault) {
-                    e.preventDefault();
-                }
-
-                return false;
             });
 
             var handleDragEnter = delegate(UI.Utils.debounce(function(e) {
@@ -271,6 +271,8 @@
                         if (supportsTouch && document.elementFromPoint) {
                             target = document.elementFromPoint(e.pageX - document.body.scrollLeft, e.pageY - document.body.scrollTop);
                         }
+
+                        overElement = UI.$(target);
                     }
 
                     if (UI.$(target).hasClass($this.options.childClass)) {
@@ -304,17 +306,7 @@
                 return;
             }
 
-            if ($this.options.handleClass) {
-
-                var handle = target.hasClass($this.options.handleClass) ? target : target.closest('.'+$this.options.handleClass, $this.element);
-
-                if (!handle.length) {
-                    //e.preventDefault();
-                    return;
-                }
-            }
-
-            if (target.is('.'+$this.options.noDragClass) || target.closest('.'+$this.options._noDragClass).length) {
+            if (target.is('.'+$this.options.noDragClass) || target.closest('.'+$this.options.noDragClass).length) {
                 return;
             }
 
@@ -335,7 +327,7 @@
             delayIdle = {
 
                 pos       : { x:e.pageX, y:e.pageY },
-                threshold : $this.options.threshold,
+                threshold : $this.options.handleClass ? 0 : $this.options.threshold,
                 apply     : function(evt) {
 
                     draggingPlaceholder = UI.$('<div class="'+([$this.options.draggingClass, $this.options.dragCustomClass].join(' '))+'"></div>').css({
@@ -375,8 +367,10 @@
         },
 
         dragMove: function(e, elem) {
-            var overEl       = UI.$(document.elementFromPoint(e.pageX - document.body.scrollLeft, e.pageY - (window.pageYOffset || document.documentElement.scrollTop))),
-                overRoot     = overEl.closest('.'+this.options.baseClass),
+
+            overElement = UI.$(document.elementFromPoint(e.pageX - (document.body.scrollLeft || document.scrollLeft || 0), e.pageY - (document.body.scrollTop || document.documentElement.scrollTop || 0)));
+
+            var overRoot     = overElement.closest('.'+this.options.baseClass),
                 groupOver    = overRoot.data("sortable-group"),
                 $current     = UI.$(currentlyDraggingElement),
                 currentRoot  = $current.parent(),
@@ -392,7 +386,7 @@
 
                 // swap root
                 if (overRoot.children().length > 0) {
-                    overChild = overEl.closest('.'+this.options.childClass);
+                    overChild = overElement.closest('.'+this.options.childClass);
 
                     if (overChild.length) {
                         overChild.before($current);
@@ -401,7 +395,7 @@
                     }
 
                 } else { // empty list
-                    overEl.append($current);
+                    overElement.append($current);
                 }
 
                 UIkit.$doc.trigger('mouseover');
@@ -417,15 +411,27 @@
                 return true;
             }
 
-            // Prevent dragenter on a child from allowing a dragleave on the container
             var previousCounter = this.dragenterData(elem);
 
             this.dragenterData(elem, previousCounter + 1);
 
+            // Prevent dragenter on a child from allowing a dragleave on the container
             if (previousCounter === 0) {
 
-                UI.$(elem).addClass(this.options.overClass);
+                var currentlist = UI.$(elem).parent(),
+                    startlist   = UI.$(currentlyDraggingElement).data("start-list");
 
+                if (currentlist[0] !== startlist[0]) {
+
+                    var groupOver    = currentlist.data('sortable-group'),
+                        groupCurrent = UI.$(currentlyDraggingElement).data("sortable-group");
+
+                    if ((groupOver ||  groupCurrent) && (groupOver != groupCurrent)) {
+                        return false;
+                    }
+                }
+
+                UI.$(elem).addClass(this.options.overClass);
                 this.moveElementNextTo(currentlyDraggingElement, elem);
             }
 
@@ -505,7 +511,9 @@
             }
 
             triggers.forEach(function (trigger, i) {
-                trigger.sortable.element.trigger('change.uk.sortable', [trigger.sortable, el, trigger.mode]);
+                if (trigger.sortable) {
+                    trigger.sortable.element.trigger('change.uk.sortable', [trigger.sortable, el, trigger.mode]);
+                }
             });
         },
 
@@ -589,10 +597,12 @@
 
             this.element.children().each(function(j, child) {
                 item = {};
-                for (var i = 0; i < child.attributes.length; i++) {
+                for (var i = 0, attr, val; i < child.attributes.length; i++) {
                     attribute = child.attributes[i];
                     if (attribute.name.indexOf('data-') === 0) {
-                        item[attribute.name.substr(5)] = UI.Utils.str2json(attribute.value);
+                        attr       = attribute.name.substr(5);
+                        val        =  UI.Utils.str2json(attribute.value);
+                        item[attr] = (val || attribute.value=='false' || attribute.value=='0') ? val:attribute.value;
                     }
                 }
                 data.push(item);

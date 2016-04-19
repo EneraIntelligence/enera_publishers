@@ -1,3 +1,11 @@
+/*
+*  altair admin
+*  @version v2.5.0
+*  @author tzd
+*  @license http://themeforest.net/licenses
+*  page_snippets.js - page_snippets.html
+*/
+
 $(function() {
     // snippets init functions
     altair_snippets.init();
@@ -7,7 +15,8 @@ altair_snippets = {
     init: function () {
 
         var $snippets = $('#snippets'),
-            snippet_modal = $('#snippet_new');
+            $snippet_modal = $('#snippet_new'),
+            $html_editor = $('#snippet_content');
 
         // show code on content click
         $snippets
@@ -30,8 +39,10 @@ altair_snippets = {
                 );
             });
 
-        // html editor
-        var snippet_CodeMirror = $("#snippet_content").data("htmleditor").editor;
+        var snippet_CodeMirror = UIkit.htmleditor($html_editor, {
+            'toolbar': '',
+            'height': '240'
+        }).editor;
 
         // save snippet
         $('#snippet_new_save').on('click',function() {
@@ -42,7 +53,7 @@ altair_snippets = {
                 content = snippet_CodeMirror.getValue();
 
             // close main modal
-            snippet_modal.find('.uk-modal-close').click();
+            $snippet_modal.find('.uk-modal-close').click();
 
             // uncomment code bellow to save snippet to json
             UIkit.modal.confirm('Do you want to save this snippet: <strong>"' + title + '"</strong>?', function(){
@@ -72,7 +83,7 @@ altair_snippets = {
         });
 
         // refresh htmleditor on modal show
-        snippet_modal.on({
+        $snippet_modal.on({
             'show.uk.modal': function(){
                 $("#snippet_title").focus();
                 snippet_CodeMirror.refresh();

@@ -1,3 +1,11 @@
+/*
+*  altair admin
+*  @version v2.5.0
+*  @author tzd
+*  @license http://themeforest.net/licenses
+*  plugins_crud_table.js - plugins_crud_table.html
+*/
+
 $(function() {
     // crud table
     altair_crud_table.init();
@@ -116,7 +124,7 @@ altair_crud_table = {
                 CityId: {
                     title: 'City',
                     width: '12%',
-                    options: 'data/crud_table/cities.json'
+                    options: 'data/crud_table/cities.php'
                 },
                 BirthDate: {
                     title: 'Birth Date',
@@ -125,9 +133,9 @@ altair_crud_table = {
                     type: 'date',
                     input: function(data) {
                         if (data.record) {
-                            return '<input class="md-input" type="text" name="BirthDate" value="' + data.value + '" data-uk-datepicker="{format:\'DD/MM/YYYY\',addClass: \'dropdown-modal\'}"/>';
+                            return '<input class="md-input" type="text" name="BirthDate" value="' + data.value + '" data-uk-datepicker="{format:\'DD/MM/YYYY\'}"/>';
                         } else {
-                            return '<input class="md-input" type="text" name="BirthDate"  value="" data-uk-datepicker="{format:\'DD/MM/YYYY\',addClass: \'dropdown-modal\'}"/>';
+                            return '<input class="md-input" type="text" name="BirthDate"  value="" data-uk-datepicker="{format:\'DD/MM/YYYY\'}"/>';
                         }
                     }
                 },

@@ -1,4 +1,4 @@
-/*! UIkit 2.23.0 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
+/*! UIkit 2.26.2 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
 (function(core) {
 
     if (typeof define == "function" && define.amd) { // AMD
@@ -44,7 +44,7 @@
 
     var UI = {}, _UI = global.UIkit ? Object.create(global.UIkit) : undefined;
 
-    UI.version = '2.23.0';
+    UI.version = '2.26.2';
 
     UI.noConflict = function() {
         // restore UIkit version
@@ -260,7 +260,11 @@
 
     UI.Utils.options = function(string) {
 
-        if ($.isPlainObject(string)) return string;
+        if ($.type(string)!='string') return string;
+
+        if (string.indexOf(':') != -1 && string.trim().substr(-1) != '}') {
+            string = '{'+string+'}';
+        }
 
         var start = (string ? string.indexOf("{") : -1), options = {};
 
@@ -278,12 +282,11 @@
         var d = $.Deferred();
 
         element = UI.$(element);
-        cls     = cls;
 
         element.css('display', 'none').addClass(cls).one(UI.support.animation.end, function() {
             element.removeClass(cls);
             d.resolve();
-        }).width();
+        });
 
         element.css('display', '');
 
@@ -591,7 +594,7 @@
                 var observer = new UI.support.mutationobserver(UI.Utils.debounce(function(mutations) {
                     fn.apply(element, []);
                     $element.trigger('changed.uk.dom');
-                }, 50));
+                }, 50), {childList: true, subtree: true});
 
                 // pass in the target node, as well as the observer options
                 observer.observe(element, { childList: true, subtree: true });
@@ -618,86 +621,125 @@
         if (UI.domready) UI.Utils.checkDisplay();
     });
 
-    $(function(){
+    document.addEventListener('DOMContentLoaded', function(){
 
-        UI.$body = UI.$('body');
+        var domReady = function() {
 
-        UI.ready(function(context){
-            UI.domObserve('[data-uk-observe]');
-        });
+            UI.$body = UI.$('body');
 
-        UI.on('changed.uk.dom', function(e) {
-            UI.init(e.target);
-            UI.Utils.checkDisplay(e.target);
-        });
+            UI.trigger('beforeready.uk.dom');
 
-        UI.trigger('beforeready.uk.dom');
+            UI.component.bootComponents();
 
-        UI.component.bootComponents();
+            // custom scroll observer
+            requestAnimationFrame((function(){
 
-        // custom scroll observer
-        requestAnimationFrame((function(){
+                var memory = {dir: {x:0, y:0}, x: window.pageXOffset, y:window.pageYOffset};
 
-            var memory = {x: window.pageXOffset, y:window.pageYOffset}, dir;
+                var fn = function(){
+                    // reading this (window.page[X|Y]Offset) causes a full page recalc of the layout in Chrome,
+                    // so we only want to do this once
+                    var wpxo = window.pageXOffset;
+                    var wpyo = window.pageYOffset;
 
-            var fn = function(){
+                    // Did the scroll position change since the last time we were here?
+                    if (memory.x != wpxo || memory.y != wpyo) {
 
-                if (memory.x != window.pageXOffset || memory.y != window.pageYOffset) {
+                        // Set the direction of the scroll and store the new position
+                        if (wpxo != memory.x) {memory.dir.x = wpxo > memory.x ? 1:-1; } else { memory.dir.x = 0; }
+                        if (wpyo != memory.y) {memory.dir.y = wpyo > memory.y ? 1:-1; } else { memory.dir.y = 0; }
 
-                    dir = {x: 0 , y: 0};
+                        memory.x = wpxo;
+                        memory.y = wpyo;
 
-                    if (window.pageXOffset != memory.x) dir.x = window.pageXOffset > memory.x ? 1:-1;
-                    if (window.pageYOffset != memory.y) dir.y = window.pageYOffset > memory.y ? 1:-1;
+                        // Trigger the scroll event, this could probably be sent using memory.clone() but this is
+                        // more explicit and easier to see exactly what is being sent in the event.
+                        UI.$doc.trigger('scrolling.uk.document', [{
+                            "dir": {"x": memory.dir.x, "y": memory.dir.y}, "x": wpxo, "y": wpyo
+                        }]);
+                    }
 
-                    memory = {
-                        "dir": dir, "x": window.pageXOffset, "y": window.pageYOffset
-                    };
+                    requestAnimationFrame(fn);
+                };
 
-                    UI.$doc.trigger('scrolling.uk.document', [memory]);
+                if (UI.support.touch) {
+                    UI.$html.on('touchmove touchend MSPointerMove MSPointerUp pointermove pointerup', fn);
                 }
 
-                requestAnimationFrame(fn);
-            };
+                if (memory.x || memory.y) fn();
+
+                return fn;
+
+            })());
+
+            // run component init functions on dom
+            UI.trigger('domready.uk.dom');
 
             if (UI.support.touch) {
-                UI.$html.on('touchmove touchend MSPointerMove MSPointerUp pointermove pointerup', fn);
+
+                // remove css hover rules for touch devices
+                // UI.Utils.removeCssRules(/\.uk-(?!navbar).*:hover/);
+
+                // viewport unit fix for uk-height-viewport - should be fixed in iOS 8
+                if (navigator.userAgent.match(/(iPad|iPhone|iPod)/g)) {
+
+                    UI.$win.on('load orientationchange resize', UI.Utils.debounce((function(){
+
+                        var fn = function() {
+                            $('.uk-height-viewport').css('height', window.innerHeight);
+                            return fn;
+                        };
+
+                        return fn();
+
+                    })(), 100));
+                }
             }
 
-            if (memory.x || memory.y) fn();
+            UI.trigger('afterready.uk.dom');
 
-            return fn;
+            // mark that domready is left behind
+            UI.domready = true;
 
-        })());
+            // auto init js components
+            if (UI.support.mutationobserver) {
 
-        // run component init functions on dom
-        UI.trigger('domready.uk.dom');
+                var initFn = UI.Utils.debounce(function(){
+                    requestAnimationFrame(function(){ UI.init(document.body);});
+                }, 10);
 
-        if (UI.support.touch) {
+                (new UI.support.mutationobserver(function(mutations) {
 
-            // remove css hover rules for touch devices
-            // UI.Utils.removeCssRules(/\.uk-(?!navbar).*:hover/);
+                    var init = false;
 
-            // viewport unit fix for uk-height-viewport - should be fixed in iOS 8
-            if (navigator.userAgent.match(/(iPad|iPhone|iPod)/g)) {
+                    mutations.every(function(mutation){
 
-                UI.$win.on('load orientationchange resize', UI.Utils.debounce((function(){
+                        if (mutation.type != 'childList') return true;
 
-                    var fn = function() {
-                        $('.uk-height-viewport').css('height', window.innerHeight);
-                        return fn;
-                    };
+                        for (var i = 0, node; i < mutation.addedNodes.length; ++i) {
 
-                    return fn();
+                            node = mutation.addedNodes[i];
 
-                })(), 100));
+                            if (node.outerHTML && node.outerHTML.indexOf('data-uk-') !== -1) {
+                                return (init = true) && false;
+                            }
+                        }
+                        return true;
+                    });
+
+                    if (init) initFn();
+
+                })).observe(document.body, {childList: true, subtree: true});
             }
+        };
+
+        if (document.readyState == 'complete' || document.readyState == 'interactive') {
+            setTimeout(domReady);
         }
 
-        UI.trigger('afterready.uk.dom');
+        return domReady;
 
-        // mark that domready is left behind
-        UI.domready = true;
-    });
+    }());
 
     // add touch identifier class
     UI.$html.addClass(UI.support.touch ? "uk-touch" : "uk-notouch");
@@ -913,7 +955,9 @@
     UI.component('stackMargin', {
 
         defaults: {
-            'cls': 'uk-margin-small-top'
+            cls: 'uk-margin-small-top',
+            rowfirst: false,
+            observe: false
         },
 
         boot: function() {
@@ -923,10 +967,10 @@
 
                 UI.$("[data-uk-margin]", context).each(function() {
 
-                    var ele = UI.$(this), obj;
+                    var ele = UI.$(this);
 
                     if (!ele.data("stackMargin")) {
-                        obj = UI.stackMargin(ele, UI.Utils.options(ele.attr("data-uk-margin")));
+                        UI.stackMargin(ele, UI.Utils.options(ele.attr("data-uk-margin")));
                     }
                 });
             });
@@ -935,8 +979,6 @@
         init: function() {
 
             var $this = this;
-
-            this.columns = [];
 
             UI.$win.on('resize orientationchange', (function() {
 
@@ -952,30 +994,49 @@
                 return UI.Utils.debounce(fn, 20);
             })());
 
-            UI.$html.on("changed.uk.dom", function(e) {
-                $this.process();
-            });
-
             this.on("display.uk.check", function(e) {
                 if (this.element.is(":visible")) this.process();
             }.bind(this));
+
+            if (this.options.observe) {
+
+                UI.domObserve(this.element, function(e) {
+                    if ($this.element.is(":visible")) $this.process();
+                });
+            }
 
             stacks.push(this);
         },
 
         process: function() {
 
-            this.columns = this.element.children();
+            var $this = this, columns = this.element.children();
 
-            UI.Utils.stackMargin(this.columns, this.options);
+            UI.Utils.stackMargin(columns, this.options);
 
-            return this;
-        },
+            if (!this.options.rowfirst || !columns.length) {
+                return this;
+            }
 
-        revert: function() {
-            this.columns.removeClass(this.options.cls);
+            // Mark first column elements
+            var group = {}, minleft = false;
+
+            columns.removeClass(this.options.rowfirst).each(function(offset, $ele){
+
+                $ele = UI.$(this);
+
+                if (this.style.display != 'none') {
+                    offset = $ele.offset().left;
+                    ((group[offset] = group[offset] || []) && group[offset]).push(this);
+                    minleft = minleft === false ? offset : Math.min(minleft, offset);
+                }
+            });
+
+            UI.$(group[minleft]).addClass(this.options.rowfirst);
+
             return this;
         }
+
     });
 
 
@@ -1008,7 +1069,7 @@
 
                         var ele = UI.$(this), obj;
 
-                        if (!ele.data("responsiveIframe")) {
+                        if (!ele.data("responsiveElement")) {
                             obj = UI.responsiveElement(ele, {});
                         }
                     });
@@ -1057,30 +1118,41 @@
             'cls': 'uk-margin-small-top'
         }, options);
 
-        options.cls = options.cls;
-
         elements = UI.$(elements).removeClass(options.cls);
 
-        var skip         = false,
-            firstvisible = elements.filter(":visible:first"),
-            offset       = firstvisible.length ? (firstvisible.position().top + firstvisible.outerHeight()) - 1 : false; // (-1): weird firefox bug when parent container is display:flex
+        var min = false;
 
-        if (offset === false) return;
+        elements.each(function(offset, height, pos, $ele){
 
-        elements.each(function() {
+            $ele   = UI.$(this);
 
-            var column = UI.$(this);
+            if ($ele.css('display') != 'none') {
 
-            if (column.is(":visible")) {
+                offset = $ele.offset();
+                height = $ele.outerHeight();
+                pos    = offset.top + height;
 
-                if (skip) {
-                    column.addClass(options.cls);
-                } else {
+                $ele.data({
+                    'ukMarginPos': pos,
+                    'ukMarginTop': offset.top
+                });
 
-                    if (column.position().top >= offset) {
-                        skip = column.addClass(options.cls);
-                    }
+                if (min === false || (offset.top < min.top) ) {
+
+                    min = {
+                        top  : offset.top,
+                        left : offset.left,
+                        pos  : pos
+                    };
                 }
+            }
+
+        }).each(function($ele) {
+
+            $ele   = UI.$(this);
+
+            if ($ele.css('display') != 'none' && $ele.data('ukMarginTop') > min.top && $ele.data('ukMarginPos') > min.pos) {
+                $ele.addClass(options.cls);
             }
         });
     };
@@ -1342,6 +1414,7 @@
 
                         if (element.data('scrollspy-idle')) {
                             clearTimeout(element.data('scrollspy-idle'));
+                            element.data('scrollspy-idle', false);
                         }
 
                         element.removeClass("uk-scrollspy-inview").toggleClass(toggle);
@@ -1404,7 +1477,7 @@
         init: function() {
 
             var ids     = [],
-                links   = this.find("a[href^='#']").each(function(){ ids.push(UI.$(this).attr("href")); }),
+                links   = this.find("a[href^='#']").each(function(){ if(this.getAttribute("href").trim()!=='#') ids.push(this.getAttribute("href")); }),
                 targets = UI.$(ids.join(",")),
 
                 clsActive  = this.options.cls,
@@ -1435,7 +1508,7 @@
                     if (!target) return;
 
                     if ($this.options.closest) {
-                        links.closest(clsClosest).removeClass(clsActive);
+                        links.blur().closest(clsClosest).removeClass(clsActive);
                         navitems = links.filter("a[href='#"+target.attr("id")+"']").closest(clsClosest).addClass(clsActive);
                     } else {
                         navitems = links.removeClass(clsActive).filter("a[href='#"+target.attr("id")+"']").addClass(clsActive);
@@ -1814,14 +1887,14 @@
         'x': {
             "bottom-left"   : 'bottom-right',
             "bottom-right"  : 'bottom-left',
-            "bottom-center" : 'bottom-right',
+            "bottom-center" : 'bottom-center',
             "top-left"      : 'top-right',
             "top-right"     : 'top-left',
-            "top-center"    : 'top-right',
-            "left-top"      : 'right',
+            "top-center"    : 'top-center',
+            "left-top"      : 'right-top',
             "left-bottom"   : 'right-bottom',
             "left-center"   : 'right-center',
-            "right-top"     : 'left',
+            "right-top"     : 'left-top',
             "right-bottom"  : 'left-bottom',
             "right-center"  : 'left-center'
         },
@@ -1832,15 +1905,26 @@
             "top-left"      : 'bottom-left',
             "top-right"     : 'bottom-right',
             "top-center"    : 'bottom-center',
-            "left-top"      : 'top-left',
-            "left-bottom"   : 'left-bottom',
-            "left-center"   : 'top-left',
-            "right-top"     : 'top-left',
-            "right-bottom"  : 'bottom-left',
-            "right-center"  : 'top-left'
+            "left-top"      : 'left-bottom',
+            "left-bottom"   : 'left-top',
+            "left-center"   : 'left-center',
+            "right-top"     : 'right-bottom',
+            "right-bottom"  : 'right-top',
+            "right-center"  : 'right-center'
         },
         'xy': {
-
+            "bottom-left"   : 'top-right',
+            "bottom-right"  : 'top-left',
+            "bottom-center" : 'top-center',
+            "top-left"      : 'bottom-right',
+            "top-right"     : 'bottom-left',
+            "top-center"    : 'bottom-center',
+            "left-top"      : 'right-bottom',
+            "left-bottom"   : 'right-top',
+            "left-center"   : 'right-center',
+            "right-top"     : 'left-bottom',
+            "right-bottom"  : 'left-top',
+            "right-center"  : 'left-center'
         }
     };
 
@@ -1855,7 +1939,8 @@
            'boundary'        : UI.$win,
            'delay'           : 0,
            'dropdownSelector': '.uk-dropdown,.uk-dropdown-blank',
-           'hoverDelayIdle'  : 250
+           'hoverDelayIdle'  : 250,
+           'preventflip'     : false
         },
 
         remainIdle: false,
@@ -1920,7 +2005,7 @@
 
             if (this.options.mode == "click" || UI.support.touch) {
 
-                this.on("click.uikit.dropdown", function(e) {
+                this.on("click.uk.dropdown", function(e) {
 
                     var $target = UI.$(e.target);
 
@@ -1996,6 +2081,9 @@
                     }
 
                     if (active && active == $this) {
+                        if (!$this.dropdown.find(e.target).length || $target.is(".uk-dropdown-close") || $target.parents(".uk-dropdown-close").length) {
+                            $this.hide();
+                        }
                         return;
                     }
 
@@ -2100,11 +2188,11 @@
                 pos            = UI.$.extend({}, this.offsetParent.offset(), {width: this.offsetParent[0].offsetWidth, height: this.offsetParent[0].offsetHeight}),
                 posoffset      = this.options.offset,
                 dropdown       = this.dropdown,
-                offset         = dropdown.show().offset(),
+                offset         = dropdown.show().offset() || {left: 0, top: 0},
                 width          = dropdown.outerWidth(),
                 height         = dropdown.outerHeight(),
                 boundarywidth  = this.boundary.width(),
-                boundaryoffset = this.boundary.offset() ? this.boundary.offset(): {top:0, left:0},
+                boundaryoffset = this.boundary[0] !== window && this.boundary.offset() ? this.boundary.offset(): {top:0, left:0},
                 dpos           = this.options.pos;
 
             var variants =  {
@@ -2132,21 +2220,34 @@
                 justify(dropdown.css({left:0}), this.justified, boundarywidth);
             } else {
 
-                switch(this.checkBoundary(pos.left + css.left, pos.top + css.top, width, height, boundarywidth)) {
+                if (this.options.preventflip !== true) {
 
-                    case "x":
-                        dpos = flips['x'][dpos] || 'right-top';
-                        break;
-                    case "y":
-                        dpos = flips['y'][dpos] || 'top-left';
-                        break;
-                    case "xy":
-                        dpos = flips['xy'][dpos] || 'right-bottom';
-                        break;
+                    var fdpos;
+
+                    switch(this.checkBoundary(pos.left + css.left, pos.top + css.top, width, height, boundarywidth)) {
+                        case "x":
+                            if(this.options.preventflip !=='x') fdpos = flips['x'][dpos] || 'right-top';
+                            break;
+                        case "y":
+                            if(this.options.preventflip !=='y') fdpos = flips['y'][dpos] || 'top-left';
+                            break;
+                        case "xy":
+                            if(!this.options.preventflip) fdpos = flips['xy'][dpos] || 'right-bottom';
+                            break;
+                    }
+
+                    if (fdpos) {
+
+                        pp  = fdpos.split('-');
+                        css = variants[fdpos] ? variants[fdpos] : variants['bottom-left'];
+
+                        // check flipped
+                        if (this.checkBoundary(pos.left + css.left, pos.top + css.top, width, height, boundarywidth)) {
+                            pp  = dpos.split('-');
+                            css = variants[dpos] ? variants[dpos] : variants['bottom-left'];
+                        }
+                    }
                 }
-
-                pp = dpos.split('-');
-                css = variants[dpos] ? variants[dpos] : variants['bottom-left'];
             }
 
             if (width > boundarywidth) {
@@ -2165,7 +2266,7 @@
                axis += "x";
             }
 
-            if (top < 0 || ((top - UI.$win.scrollTop())+height) > window.innerHeight) {
+            if ((top - UI.$win.scrollTop()) < 0 || ((top - UI.$win.scrollTop())+height) > window.innerHeight) {
                axis += "y";
             }
 
@@ -2314,7 +2415,8 @@
         defaults: {
             "target"        : false,
             "row"           : true,
-            "ignorestacked" : false
+            "ignorestacked" : false,
+            "observe"       : false
         },
 
         boot: function() {
@@ -2344,7 +2446,7 @@
             UI.$win.on('load resize orientationchange', (function() {
 
                 var fn = function() {
-                    $this.match();
+                    if ($this.element.is(":visible")) $this.match();
                 };
 
                 UI.$(function() { fn(); });
@@ -2352,11 +2454,12 @@
                 return UI.Utils.debounce(fn, 50);
             })());
 
-            UI.$html.on("changed.uk.dom", function(e) {
-                $this.columns  = $this.element.children();
-                $this.elements = $this.options.target ? $this.find($this.options.target) : $this.columns;
-                $this.match();
-            });
+            if (this.options.observe) {
+
+                UI.domObserve(this.element, function(e) {
+                    if ($this.element.is(":visible")) $this.match();
+                });
+            }
 
             this.on("display.uk.check", function(e) {
                 if(this.element.is(":visible")) this.match();
@@ -2391,7 +2494,8 @@
     UI.component('gridMargin', {
 
         defaults: {
-            "cls": "uk-grid-margin"
+            cls      : 'uk-grid-margin',
+            rowfirst : 'uk-row-first'
         },
 
         boot: function() {
@@ -2422,6 +2526,12 @@
     "use strict";
 
     var active = false, activeCount = 0, $html = UI.$html, body;
+
+    UI.$win.on("resize orientationchange", UI.Utils.debounce(function(){
+        UI.$('.uk-modal.uk-open').each(function(){
+            UI.$(this).data('modal').resize();
+        });
+    }, 150));
 
     UI.component('modal', {
 
@@ -2463,6 +2573,10 @@
                 if (target[0] == $this.element[0] && $this.options.bgclose) {
                     $this.hide();
                 }
+            });
+
+            UI.domObserve(this.element, function(e) {
+                $this.resize();
             });
         },
 
@@ -2562,14 +2676,17 @@
 
             if (scrollable.length) {
 
-                scrollable.css("height", 0);
+                scrollable.css('height', 0);
 
-                var offset = Math.abs(parseInt(this.dialog.css("margin-top"), 10)),
+                var offset = Math.abs(parseInt(this.dialog.css('margin-top'), 10)),
                 dh     = this.dialog.outerHeight(),
                 wh     = window.innerHeight,
                 h      = wh - 2*(offset < 20 ? 20:offset) - dh;
 
-                scrollable.css("height", h < this.options.minScrollHeight ? "":h);
+                scrollable.css({
+                    'max-height': (h < this.options.minScrollHeight ? '':h),
+                    'height':''
+                });
 
                 return true;
             }
@@ -2583,19 +2700,19 @@
             if (activeCount > 0) activeCount--;
             else activeCount = 0;
 
-            this.element.hide().removeClass("uk-open");
+            this.element.hide().removeClass('uk-open');
 
             // Update ARIA
             this.element.attr('aria-hidden', 'true');
 
             if (!activeCount) {
-                $html.removeClass("uk-modal-page");
+                $html.removeClass('uk-modal-page');
                 body.css(this.paddingdir, "");
             }
 
             if(active===this) active = false;
 
-            this.trigger("hide.uk.modal");
+            this.trigger('hide.uk.modal');
         },
 
         isActive: function() {
@@ -2632,10 +2749,6 @@
                     active.hide();
                 }
             });
-
-            UI.$win.on("resize orientationchange", UI.Utils.debounce(function(){
-                if (active) active.resize();
-            }, 150));
         },
 
         init: function() {
@@ -2695,18 +2808,21 @@
         return modal.show();
     };
 
-    UI.modal.confirm = function(content, onconfirm, options) {
+    UI.modal.confirm = function(content, onconfirm, oncancel) {
+
+        var options = arguments.length > 1 && arguments[arguments.length-1] ? arguments[arguments.length-1] : {};
 
         onconfirm = UI.$.isFunction(onconfirm) ? onconfirm : function(){};
-        options   = UI.$.extend(true, {bgclose:false, keyboard:false, modal:false, labels:UI.modal.labels}, options);
+        oncancel  = UI.$.isFunction(oncancel) ? oncancel : function(){};
+        options   = UI.$.extend(true, {bgclose:false, keyboard:false, modal:false, labels:UI.modal.labels}, UI.$.isFunction(options) ? {}:options);
 
         var modal = UI.modal.dialog(([
             '<div class="uk-margin uk-modal-content">'+String(content)+'</div>',
-            '<div class="uk-modal-footer uk-text-right"><button class="uk-button uk-modal-close">'+options.labels.Cancel+'</button> <button class="uk-button uk-button-primary js-modal-confirm">'+options.labels.Ok+'</button></div>'
+            '<div class="uk-modal-footer uk-text-right"><button class="uk-button js-modal-confirm-cancel">'+options.labels.Cancel+'</button> <button class="uk-button uk-button-primary js-modal-confirm">'+options.labels.Ok+'</button></div>'
         ]).join(""), options);
 
-        modal.element.find(".js-modal-confirm").on("click", function(){
-            onconfirm();
+        modal.element.find(".js-modal-confirm, .js-modal-confirm-cancel").on("click", function(){
+            UI.$(this).is('.js-modal-confirm') ? onconfirm() : oncancel();
             modal.hide();
         });
 
@@ -2829,7 +2945,7 @@
 
             var $this = this;
 
-            this.on("click.uikit.nav", this.options.toggle, function(e) {
+            this.on("click.uk.nav", this.options.toggle, function(e) {
                 e.preventDefault();
                 var ele = UI.$(this);
                 $this.open(ele.parent()[0] == $this.element[0] ? ele : ele.parent("li"));
@@ -3033,7 +3149,7 @@
                 Offcanvas.hide();
             });
 
-            element.on("click", "a[href^='#']", function(e){
+            element.on("click", "a[href*='#']", function(e){
 
                 var link = UI.$(this),
                     href = link.attr("href");
@@ -3047,16 +3163,16 @@
                     var target;
 
                     try {
-                        target = UI.$(href);
+                        target = UI.$(link[0].hash);
                     } catch (e){
-                        target = ""
+                        target = '';
                     }
 
                     if (!target.length) {
-                        target = UI.$('[name="'+href.replace('#','')+'"]');
+                        target = UI.$('[name="'+link[0].hash.replace('#','')+'"]');
                     }
 
-                    if (target.length && link.attr('data-uk-smooth-scroll') && UI.Utils.scrollToElement) {
+                    if (target.length && UI.Utils.scrollToElement) {
                         UI.Utils.scrollToElement(target, UI.Utils.options(link.attr('data-uk-smooth-scroll') || '{}'));
                     } else {
                         window.location.href = href;
@@ -3152,7 +3268,7 @@
 
             var $this = this;
 
-            this.on("click.uikit.switcher", this.options.toggle, function(e) {
+            this.on("click.uk.switcher", this.options.toggle, function(e) {
                 e.preventDefault();
                 $this.show(this);
             });
@@ -3161,7 +3277,7 @@
 
                 this.connect = UI.$(this.options.connect);
 
-                this.connect.find(".uk-active").removeClass(".uk-active");
+                this.connect.children().removeClass("uk-active");
 
                 // delegate switch commands within container content
                 if (this.connect.length) {
@@ -3185,7 +3301,7 @@
                             default:
                                 $this.show(parseInt(item, 10));
                         }
-                    })
+                    });
 
                     if (this.options.swiping) {
 
@@ -3214,10 +3330,6 @@
                 // Init ARIA for toggles
                 toggles.not(active).attr('aria-expanded', 'false');
                 active.attr('aria-expanded', 'true');
-
-                this.on('changed.uk.dom', function() {
-                    $this.connect = UI.$($this.options.connect);
-                });
             }
 
         },
@@ -3460,7 +3572,7 @@
 
             this.current = false;
 
-            this.on("click.uikit.tab", this.options.target, function(e) {
+            this.on("click.uk.tab", this.options.target, function(e) {
 
                 e.preventDefault();
 
@@ -3497,7 +3609,7 @@
             if (this.element.hasClass("uk-tab-bottom")) this.responsivetab.dropdown.addClass("uk-dropdown-up");
 
             // handle click
-            this.responsivetab.lst.on('click.uikit.tab', 'a', function(e) {
+            this.responsivetab.lst.on('click.uk.tab', 'a', function(e) {
 
                 e.preventDefault();
                 e.stopPropagation();
@@ -3525,7 +3637,7 @@
                 });
             }
 
-            UI.dropdown(this.responsivetab, {"mode": "click"});
+            UI.dropdown(this.responsivetab, {"mode": "click", "preventflip": "y"});
 
             // init
             $this.trigger("change.uk.tab", [this.element.find(this.options.target).not('.uk-tab-responsive').filter('.uk-active')]);
@@ -3685,7 +3797,7 @@
 
 })(UIkit);
 
-/*! UIkit 2.23.0 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
+/*! UIkit 2.26.2 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
 (function(addon) {
     var component;
 
@@ -3739,7 +3851,7 @@
 
             var $this = this;
 
-            this.element.on('click.uikit.accordion', this.options.toggle, function(e) {
+            this.element.on('click.uk.accordion', this.options.toggle, function(e) {
 
                 e.preventDefault();
 
@@ -3758,12 +3870,14 @@
             var $this = this;
 
             wrapper.data('toggle').toggleClass(this.options.clsactive);
+            wrapper.data('content').toggleClass(this.options.clsactive);
 
             var active = wrapper.data('toggle').hasClass(this.options.clsactive);
 
             if (collapse) {
                 this.toggle.not(wrapper.data('toggle')).removeClass(this.options.clsactive);
-                this.content.not(wrapper.data('content')).parent().stop().css('overflow', 'hidden').animate({ height: 0 }, {easing: this.options.easing, duration: animated ? this.options.duration : 0}).attr('aria-expanded', 'false');
+                this.content.not(wrapper.data('content')).removeClass(this.options.clsactive)
+                    .parent().stop().css('overflow', 'hidden').animate({ height: 0 }, {easing: this.options.easing, duration: animated ? this.options.duration : 0}).attr('aria-expanded', 'false');
             }
 
             wrapper.stop().css('overflow', 'hidden');
@@ -3858,7 +3972,7 @@
     return UI.accordion;
 });
 
-/*! UIkit 2.23.0 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
+/*! UIkit 2.26.2 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
 (function(addon) {
 
     var component;
@@ -4193,7 +4307,7 @@
     return UI.autocomplete;
 });
 
-/*! UIkit 2.22 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
+/*! UIkit 2.24.3 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
 // removed moment_js from core
 // customized by tzd
 
@@ -4357,7 +4471,6 @@
 
             var $this = this;
 
-
             this.current  = this.element.val() ? moment(this.element.val(), this.options.format) : moment();
 
             this.on("click focus", function(){
@@ -4402,28 +4515,31 @@
                 });
 
                 dropdown.appendTo("body");
-
             }
         },
 
         pick: function(initdate) {
 
             var offset = this.element.offset(),
-                offset_left = offset.left,
-                offset_top = offset.top,
+                offset_left = parseInt(offset.left),
+                offset_top = parseInt(offset.top),
                 css = {
                     'left': offset_left,
                     'right': ""
                 };
 
-
-            this.current  = initdate ? moment(initdate, this.options.format):moment();
+            this.current  = isNaN(initdate) ? moment(initdate, this.options.format):moment();
             this.initdate = this.current.format("YYYY-MM-DD");
 
             this.update();
 
-            if (UI.langdirection == 'right') {
-                css.right = window.innerWidth - (css.left + this.element.outerWidth());
+            // check if datepicker input is in modal
+            if(($(this.element[0]).closest('.ui-dialog').length || $(this.element[0]).closest('.uk-modal').length) && !dropdown.hasClass('dropdown-modal')) {
+                dropdown.addClass('dropdown-modal');
+            }
+
+            if (UI.langdirection == 'right' || ( window.innerWidth - offset_left - dropdown.outerWidth() < 0 ) ) {
+                css.right = (window.innerWidth - (window.innerWidth - $('body').width())) - (css.left + this.element.outerWidth());
                 css.left  = "";
             }
 
@@ -4434,10 +4550,10 @@
 
             if (this.options.pos == 'top') {
                 css.top = posTop;
-                dropdown.addClass('uk-dropdown-up');
-            } else if(this.options.pos == 'auto' && (window.innerHeight - posBottom - dropdown.outerHeight() + $body.scrollTop() < 0 && posTop >= 0) ) {
+                dropdown.addClass('dp-top');
+            } else if(this.options.pos == 'auto' && (window.innerHeight - posBottom - dropdown.outerHeight() + UI.$win.scrollTop() < 0 && posTop >= 0) ) {
                 css.top = posTop;
-                dropdown.addClass('uk-dropdown-up');
+                dropdown.addClass('dp-top');
             }
 
             css.minWidth = dropdown.actual('outerWidth');
@@ -4550,11 +4666,9 @@
             if (active && active === this) {
                 dropdown.removeClass('uk-dropdown-shown');
                 setTimeout(function() {
-                    dropdown.removeClass('uk-dropdown-active uk-dropdown-up')
+                    dropdown.removeClass('uk-dropdown-active dp-top')
                 },280);
-
                 active = false;
-
                 this.trigger('hide.uk.datepicker');
             }
         }
@@ -4564,7 +4678,7 @@
 
     return UI.datepicker;
 });
-/*! UIkit 2.23.0 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
+/*! UIkit 2.26.2 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
 (function(addon) {
 
     var component;
@@ -4632,7 +4746,7 @@
     return UI.formPassword;
 });
 
-/*! UIkit 2.23.0 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
+/*! UIkit 2.26.2 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
 (function(addon) {
 
     var component;
@@ -4685,7 +4799,14 @@
                 var select = $this.select[0], fn = function(){
 
                     try {
-                        $this.target.text(select.options[select.selectedIndex].text);
+                        if($this.options.target === 'input')
+                        {
+                            $this.target.val(select.options[select.selectedIndex].text);
+                        }
+                        else
+                        {
+                            $this.target.text(select.options[select.selectedIndex].text);
+                        }
                     } catch(e) {}
 
                     $this.element[$this.select.val() ? 'addClass':'removeClass']($this.options.activeClass);
@@ -4703,7 +4824,7 @@
     return UI.formSelect;
 });
 
-/*! UIkit 2.23.0 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
+/*! UIkit 2.26.2 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
 (function(addon) {
 
     var component;
@@ -4768,7 +4889,7 @@
                 // filter
                 this.controls.on('click', '[data-uk-filter]', function(e){
                     e.preventDefault();
-                    $this.filter(UI.$(this).data('ukFilter'));
+                    $this.filter(UI.$(this).attr('data-uk-filter'));
                 });
 
                 // sort
@@ -4793,7 +4914,7 @@
                 if ($this.element.is(":visible"))  $this.updateLayout();
             });
 
-            UI.$html.on("changed.uk.dom", function(e) {
+            UI.domObserve(this.element, function(e) {
                 $this.updateLayout();
             });
 
@@ -4932,6 +5053,10 @@
             this.currentfilter = filter;
 
             filter = filter || [];
+
+            if (typeof(filter) === 'number') {
+                filter = filter.toString();
+            }
 
             if (typeof(filter) === 'string') {
                 filter = filter.split(/,/).map(function(item){ return item.trim(); });
@@ -5227,7 +5352,7 @@
     }
 });
 
-/*! UIkit 2.23.0 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
+/*! UIkit 2.26.2 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
 (function(addon) {
 
     var component;
@@ -5314,7 +5439,7 @@
 
                     siblings.push({
                         'source': ele.attr('href'),
-                        'title' : ele.attr('title'),
+                        'title' : ele.attr('data-title') || ele.attr('title'),
                         'type'  : ele.attr("data-lightbox-type") || 'auto',
                         'link'  : ele
                     });
@@ -5713,6 +5838,33 @@
     });
 
 
+    UIkit.plugin("lightbox", "iframe", {
+
+        init: function (lightbox) {
+
+            lightbox.on("showitem.uk.lightbox", function (e, data) {
+
+                var resolve = function (source, width, height) {
+
+                    data.meta = {
+                        'content': '<iframe class="uk-responsive-width" src="' + source + '" width="' + width + '" height="' + height + '"></iframe>',
+                        'width': width,
+                        'height': height
+                    };
+
+                    data.type = 'iframe';
+
+                    data.promise.resolve();
+                };
+
+                if (data.type === 'iframe' || data.source.match(/\.(html|php)$/)) {
+                    resolve(data.source, (lightbox.options.width || 800), (lightbox.options.height || 600));
+                }
+            });
+
+        }
+    });
+    
     function getModal(lightbox) {
 
         if (modal) {
@@ -5783,7 +5935,7 @@
     return UI.lightbox;
 });
 
-/*! UIkit 2.23.0 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
+/*! UIkit 2.26.2 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
 /*
  * Based on Nestable jQuery Plugin - Copyright (c) 2012 David Bushell - http://dbushell.com/
  */
@@ -5825,6 +5977,7 @@
             listItemClass   : 'uk-nestable-item',
             dragClass       : 'uk-nestable-dragged',
             movingClass     : 'uk-nestable-moving',
+            noChildrenClass : 'uk-nestable-nochildren',
             emptyClass      : 'uk-nestable-empty',
             handleClass     : '',
             collapsedClass  : 'uk-collapsed',
@@ -6020,10 +6173,12 @@
                             item  = {}, attribute,
                             sub   = li.children(list.options._listClass);
 
-                        for (var i = 0; i < li[0].attributes.length; i++) {
+                        for (var i = 0, attr, val; i < li[0].attributes.length; i++) {
                             attribute = li[0].attributes[i];
                             if (attribute.name.indexOf('data-') === 0) {
-                                item[attribute.name.substr(5)] = UI.Utils.str2json(attribute.value);
+                                attr       = attribute.name.substr(5);
+                                val        =  UI.Utils.str2json(attribute.value);
+                                item[attr] = (val || attribute.value=='false' || attribute.value=='0') ? val:attribute.value;
                             }
                         }
 
@@ -6276,8 +6431,8 @@
                 mouse.distAxX = 0;
                 prev = this.placeEl.prev('li');
 
-                // increase horizontal level if previous sibling exists and is not collapsed
-                if (mouse.distX > 0 && prev.length && !prev.hasClass(opt.collapsedClass)) {
+                // increase horizontal level if previous sibling exists, is not collapsed, and does not have a 'no children' class
+                if (mouse.distX > 0 && prev.length && !prev.hasClass(opt.collapsedClass) && !prev.hasClass(opt.noChildrenClass)) {
 
                     // cannot increase level when item above is collapsed
                     list = prev.find(opt._listClass).last();
@@ -6422,7 +6577,7 @@
     return UI.nestable;
 });
 
-/*! UIkit 2.23.0 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
+/*! UIkit 2.26.2 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
 (function(addon) {
 
     var component;
@@ -6612,7 +6767,570 @@
     return notify;
 });
 
-/*! UIkit 2.23.0 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
+/*! UIkit 2.26.2 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
+(function(addon) {
+
+    var component;
+
+    if (window.UIkit) {
+        component = addon(UIkit);
+    }
+
+    if (typeof define == "function" && define.amd) {
+        define("uikit-slideshow", ["uikit"], function() {
+            return component || addon(UIkit);
+        });
+    }
+
+})(function(UI) {
+
+    "use strict";
+
+    var Animations, playerId = 0;
+
+    UI.component('slideshow', {
+
+        defaults: {
+            animation          : "fade",
+            duration           : 500,
+            height             : "auto",
+            start              : 0,
+            autoplay           : false,
+            autoplayInterval   : 7000,
+            videoautoplay      : true,
+            videomute          : true,
+            slices             : 15,
+            pauseOnHover       : true,
+            kenburns           : false,
+            kenburnsanimations : [
+                'uk-animation-middle-left',
+                'uk-animation-top-right',
+                'uk-animation-bottom-left',
+                'uk-animation-top-center',
+                '', // middle-center
+                'uk-animation-bottom-right'
+            ]
+        },
+
+        current  : false,
+        interval : null,
+        hovering : false,
+
+        boot: function() {
+
+            // init code
+            UI.ready(function(context) {
+
+                UI.$('[data-uk-slideshow]', context).each(function() {
+
+                    var slideshow = UI.$(this);
+
+                    if (!slideshow.data("slideshow")) {
+                        UI.slideshow(slideshow, UI.Utils.options(slideshow.attr("data-uk-slideshow")));
+                    }
+                });
+            });
+        },
+
+        init: function() {
+
+            var $this = this, canvas, kbanimduration;
+
+            this.container     = this.element.hasClass('uk-slideshow') ? this.element : UI.$(this.find('.uk-slideshow'));
+            this.slides        = this.container.children();
+            this.slidesCount   = this.slides.length;
+            this.current       = this.options.start;
+            this.animating     = false;
+            this.triggers      = this.find('[data-uk-slideshow-item]');
+            this.fixFullscreen = navigator.userAgent.match(/(iPad|iPhone|iPod)/g) && this.container.hasClass('uk-slideshow-fullscreen'); // viewport unit fix for height:100vh - should be fixed in iOS 8
+
+            if (this.options.kenburns) {
+
+                kbanimduration = this.options.kenburns === true ? '15s': this.options.kenburns;
+
+                if (!String(kbanimduration).match(/(ms|s)$/)) {
+                    kbanimduration += 'ms';
+                }
+
+                if (typeof(this.options.kenburnsanimations) == 'string') {
+                    this.options.kenburnsanimations = this.options.kenburnsanimations.split(',');
+                }
+            }
+
+            this.slides.each(function(index) {
+
+                var slide = UI.$(this),
+                    media = slide.children('img,video,iframe').eq(0);
+
+                slide.data('media', media);
+                slide.data('sizer', media);
+
+                if (media.length) {
+
+                    var placeholder;
+
+                    switch(media[0].nodeName) {
+                        case 'IMG':
+
+                            var cover = UI.$('<div class="uk-cover-background uk-position-cover"></div>').css({'background-image':'url('+ media.attr('src') + ')'});
+
+                            if (media.attr('width') && media.attr('height')) {
+                                placeholder = UI.$('<canvas></canvas>').attr({width:media.attr('width'), height:media.attr('height')});
+                                media.replaceWith(placeholder);
+                                media = placeholder;
+                                placeholder = undefined;
+                            }
+
+                            media.css({width: '100%',height: 'auto', opacity:0});
+                            slide.prepend(cover).data('cover', cover);
+                            break;
+
+                        case 'IFRAME':
+
+                            var src = media[0].src, iframeId = 'sw-'+(++playerId);
+
+                            media
+                                .attr('src', '').on('load', function(){
+
+                                    if (index !== $this.current || (index == $this.current && !$this.options.videoautoplay)) {
+                                        $this.pausemedia(media);
+                                    }
+
+                                    if ($this.options.videomute) {
+
+                                        $this.mutemedia(media);
+
+                                        var inv = setInterval((function(ic) {
+                                            return function() {
+                                                $this.mutemedia(media);
+                                                if (++ic >= 4) clearInterval(inv);
+                                            }
+                                        })(0), 250);
+                                    }
+
+                                })
+                                .data('slideshow', $this)  // add self-reference for the vimeo-ready listener
+                                .attr('data-player-id', iframeId)  // add frameId for the vimeo-ready listener
+                                .attr('src', [src, (src.indexOf('?') > -1 ? '&':'?'), 'enablejsapi=1&api=1&player_id='+iframeId].join(''))
+                                .addClass('uk-position-absolute');
+
+                            // disable pointer events
+                            if(!UI.support.touch) media.css('pointer-events', 'none');
+
+                            placeholder = true;
+
+                            if (UI.cover) {
+                                UI.cover(media);
+                                media.attr('data-uk-cover', '{}');
+                            }
+
+                            break;
+
+                        case 'VIDEO':
+                            media.addClass('uk-cover-object uk-position-absolute');
+                            placeholder = true;
+
+                            if ($this.options.videomute) $this.mutemedia(media);
+                    }
+
+                    if (placeholder) {
+
+                        canvas  = UI.$('<canvas></canvas>').attr({'width': media[0].width, 'height': media[0].height});
+                        var img = UI.$('<img style="width:100%;height:auto;">').attr('src', canvas[0].toDataURL());
+
+                        slide.prepend(img);
+                        slide.data('sizer', img);
+                    }
+
+                } else {
+                    slide.data('sizer', slide);
+                }
+
+                if ($this.hasKenBurns(slide)) {
+
+                    slide.data('cover').css({
+                        '-webkit-animation-duration': kbanimduration,
+                        'animation-duration': kbanimduration
+                    });
+                }
+            });
+
+            this.on("click.uk.slideshow", '[data-uk-slideshow-item]', function(e) {
+
+                e.preventDefault();
+
+                var slide = UI.$(this).attr('data-uk-slideshow-item');
+
+                if ($this.current == slide) return;
+
+                switch(slide) {
+                    case 'next':
+                    case 'previous':
+                        $this[slide=='next' ? 'next':'previous']();
+                        break;
+                    default:
+                        $this.show(parseInt(slide, 10));
+                }
+
+                $this.stop();
+            });
+
+            // Set start slide
+            this.slides.attr('aria-hidden', 'true').eq(this.current).addClass('uk-active').attr('aria-hidden', 'false');
+            this.triggers.filter('[data-uk-slideshow-item="'+this.current+'"]').addClass('uk-active');
+
+            UI.$win.on("resize load", UI.Utils.debounce(function() {
+                $this.resize();
+
+                if ($this.fixFullscreen) {
+                    $this.container.css('height', window.innerHeight);
+                    $this.slides.css('height', window.innerHeight);
+                }
+            }, 100));
+
+            // chrome image load fix
+            setTimeout(function(){
+                $this.resize();
+            }, 80);
+
+            // Set autoplay
+            if (this.options.autoplay) {
+                this.start();
+            }
+
+            if (this.options.videoautoplay && this.slides.eq(this.current).data('media')) {
+                this.playmedia(this.slides.eq(this.current).data('media'));
+            }
+
+            if (this.options.kenburns) {
+                this.applyKenBurns(this.slides.eq(this.current));
+            }
+
+            this.container.on({
+                mouseenter: function() { if ($this.options.pauseOnHover) $this.hovering = true;  },
+                mouseleave: function() { $this.hovering = false; }
+            });
+
+            this.on('swipeRight swipeLeft', function(e) {
+                $this[e.type=='swipeLeft' ? 'next' : 'previous']();
+            });
+
+            this.on('display.uk.check', function(){
+                if ($this.element.is(":visible")) {
+
+                    $this.resize();
+
+                    if ($this.fixFullscreen) {
+                        $this.container.css('height', window.innerHeight);
+                        $this.slides.css('height', window.innerHeight);
+                    }
+                }
+            });
+        },
+
+
+        resize: function() {
+
+            if (this.container.hasClass('uk-slideshow-fullscreen')) return;
+
+            var height = this.options.height;
+
+            if (this.options.height === 'auto') {
+
+                height = 0;
+
+                this.slides.css('height', '').each(function() {
+                    height = Math.max(height, UI.$(this).height());
+                });
+            }
+
+            this.container.css('height', height);
+            this.slides.css('height', height);
+        },
+
+        show: function(index, direction) {
+
+            if (this.animating || this.current == index) return;
+
+            this.animating = true;
+
+            var $this        = this,
+                current      = this.slides.eq(this.current),
+                next         = this.slides.eq(index),
+                dir          = direction ? direction : this.current < index ? 1 : -1,
+                currentmedia = current.data('media'),
+                animation    = Animations[this.options.animation] ? this.options.animation : 'fade',
+                nextmedia    = next.data('media'),
+                finalize     = function() {
+
+                    if (!$this.animating) return;
+
+                    if (currentmedia && currentmedia.is('video,iframe')) {
+                        $this.pausemedia(currentmedia);
+                    }
+
+                    if (nextmedia && nextmedia.is('video,iframe')) {
+                        $this.playmedia(nextmedia);
+                    }
+
+                    next.addClass("uk-active").attr('aria-hidden', 'false');
+                    current.removeClass("uk-active").attr('aria-hidden', 'true');
+
+                    $this.animating = false;
+                    $this.current   = index;
+
+                    UI.Utils.checkDisplay(next, '[class*="uk-animation-"]:not(.uk-cover-background.uk-position-cover)');
+
+                    $this.trigger('show.uk.slideshow', [next, current, $this]);
+                };
+
+            $this.applyKenBurns(next);
+
+            // animation fallback
+            if (!UI.support.animation) {
+                animation = 'none';
+            }
+
+            current = UI.$(current);
+            next    = UI.$(next);
+
+            $this.trigger('beforeshow.uk.slideshow', [next, current, $this]);
+
+            Animations[animation].apply(this, [current, next, dir]).then(finalize);
+
+            $this.triggers.removeClass('uk-active');
+            $this.triggers.filter('[data-uk-slideshow-item="'+index+'"]').addClass('uk-active');
+        },
+
+        applyKenBurns: function(slide) {
+
+            if (!this.hasKenBurns(slide)) {
+                return;
+            }
+
+            var animations = this.options.kenburnsanimations,
+                index      = this.kbindex || 0;
+
+
+            slide.data('cover').attr('class', 'uk-cover-background uk-position-cover').width();
+            slide.data('cover').addClass(['uk-animation-scale', 'uk-animation-reverse', animations[index].trim()].join(' '));
+
+            this.kbindex = animations[index + 1] ? (index+1):0;
+        },
+
+        hasKenBurns: function(slide) {
+            return (this.options.kenburns && slide.data('cover'));
+        },
+
+        next: function() {
+            this.show(this.slides[this.current + 1] ? (this.current + 1) : 0, 1);
+        },
+
+        previous: function() {
+            this.show(this.slides[this.current - 1] ? (this.current - 1) : (this.slides.length - 1), -1);
+        },
+
+        start: function() {
+
+            this.stop();
+
+            var $this = this;
+
+            this.interval = setInterval(function() {
+                if (!$this.hovering) $this.next();
+            }, this.options.autoplayInterval);
+
+        },
+
+        stop: function() {
+            if (this.interval) clearInterval(this.interval);
+        },
+
+        playmedia: function(media) {
+
+            if (!(media && media[0])) return;
+
+            switch(media[0].nodeName) {
+                case 'VIDEO':
+
+                    if (!this.options.videomute) {
+                        media[0].muted = false;
+                    }
+
+                    media[0].play();
+                    break;
+                case 'IFRAME':
+
+                    if (!this.options.videomute) {
+                        media[0].contentWindow.postMessage('{ "event": "command", "func": "unmute", "method":"setVolume", "value":1}', '*');
+                    }
+
+                    media[0].contentWindow.postMessage('{ "event": "command", "func": "playVideo", "method":"play"}', '*');
+                    break;
+            }
+        },
+
+        pausemedia: function(media) {
+
+            switch(media[0].nodeName) {
+                case 'VIDEO':
+                    media[0].pause();
+                    break;
+                case 'IFRAME':
+                    media[0].contentWindow.postMessage('{ "event": "command", "func": "pauseVideo", "method":"pause"}', '*');
+                    break;
+            }
+        },
+
+        mutemedia: function(media) {
+
+            switch(media[0].nodeName) {
+                case 'VIDEO':
+                    media[0].muted = true;
+                    break;
+                case 'IFRAME':
+                    media[0].contentWindow.postMessage('{ "event": "command", "func": "mute", "method":"setVolume", "value":0}', '*');
+                    break;
+            }
+        }
+    });
+
+    Animations = {
+
+        'none': function() {
+
+            var d = UI.$.Deferred();
+            d.resolve();
+            return d.promise();
+        },
+
+        'scroll': function(current, next, dir) {
+
+            var d = UI.$.Deferred();
+
+            current.css('animation-duration', this.options.duration+'ms');
+            next.css('animation-duration', this.options.duration+'ms');
+
+            next.css('opacity', 1).one(UI.support.animation.end, function() {
+
+                current.removeClass(dir == -1 ? 'uk-slideshow-scroll-backward-out' : 'uk-slideshow-scroll-forward-out');
+                next.css('opacity', '').removeClass(dir == -1 ? 'uk-slideshow-scroll-backward-in' : 'uk-slideshow-scroll-forward-in');
+                d.resolve();
+
+            }.bind(this));
+
+            current.addClass(dir == -1 ? 'uk-slideshow-scroll-backward-out' : 'uk-slideshow-scroll-forward-out');
+            next.addClass(dir == -1 ? 'uk-slideshow-scroll-backward-in' : 'uk-slideshow-scroll-forward-in');
+            next.width(); // force redraw
+
+            return d.promise();
+        },
+
+        'swipe': function(current, next, dir) {
+
+            var d = UI.$.Deferred();
+
+            current.css('animation-duration', this.options.duration+'ms');
+            next.css('animation-duration', this.options.duration+'ms');
+
+            next.css('opacity', 1).one(UI.support.animation.end, function() {
+
+                current.removeClass(dir === -1 ? 'uk-slideshow-swipe-backward-out' : 'uk-slideshow-swipe-forward-out');
+                next.css('opacity', '').removeClass(dir === -1 ? 'uk-slideshow-swipe-backward-in' : 'uk-slideshow-swipe-forward-in');
+                d.resolve();
+
+            }.bind(this));
+
+            current.addClass(dir == -1 ? 'uk-slideshow-swipe-backward-out' : 'uk-slideshow-swipe-forward-out');
+            next.addClass(dir == -1 ? 'uk-slideshow-swipe-backward-in' : 'uk-slideshow-swipe-forward-in');
+            next.width(); // force redraw
+
+            return d.promise();
+        },
+
+        'scale': function(current, next, dir) {
+
+            var d = UI.$.Deferred();
+
+            current.css('animation-duration', this.options.duration+'ms');
+            next.css('animation-duration', this.options.duration+'ms');
+
+            next.css('opacity', 1);
+
+            current.one(UI.support.animation.end, function() {
+
+                current.removeClass('uk-slideshow-scale-out');
+                next.css('opacity', '');
+                d.resolve();
+
+            }.bind(this));
+
+            current.addClass('uk-slideshow-scale-out');
+            current.width(); // force redraw
+
+            return d.promise();
+        },
+
+        'fade': function(current, next, dir) {
+
+            var d = UI.$.Deferred();
+
+            current.css('animation-duration', this.options.duration+'ms');
+            next.css('animation-duration', this.options.duration+'ms');
+
+            next.css('opacity', 1);
+
+            // for plain text content slides - looks smoother
+            if (!(next.data('cover') || next.data('placeholder'))) {
+
+                next.css('opacity', 1).one(UI.support.animation.end, function() {
+                    next.removeClass('uk-slideshow-fade-in');
+                }).addClass('uk-slideshow-fade-in');
+            }
+
+            current.one(UI.support.animation.end, function() {
+
+                current.removeClass('uk-slideshow-fade-out');
+                next.css('opacity', '');
+                d.resolve();
+
+            }.bind(this));
+
+            current.addClass('uk-slideshow-fade-out');
+            current.width(); // force redraw
+
+            return d.promise();
+        }
+    };
+
+    UI.slideshow.animations = Animations;
+
+    // Listen for messages from the vimeo player
+    window.addEventListener('message', function onMessageReceived(e) {
+
+        var data = e.data, iframe;
+
+        if (typeof(data) == 'string') {
+
+            try {
+                data = JSON.parse(data);
+            } catch(err) {
+                data = {};
+            }
+        }
+
+        if (e.origin && e.origin.indexOf('vimeo') > -1 && data.event == 'ready' && data.player_id) {
+            iframe = UI.$('[data-player-id="'+ data.player_id+'"]');
+
+            if (iframe.length) {
+                iframe.data('slideshow').mutemedia(iframe);
+            }
+        }
+    }, false);
+
+});
+
+/*! UIkit 2.26.2 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
 /*
   * Based on nativesortable - Copyright (c) Brian Grinstead - https://github.com/bgrins/nativesortable
   */
@@ -6635,7 +7353,7 @@
     "use strict";
 
     var supportsTouch       = ('ontouchstart' in window) || (window.DocumentTouch && document instanceof DocumentTouch),
-        draggingPlaceholder, currentlyDraggingElement, currentlyDraggingTarget, dragging, moving, clickedlink, delayIdle, touchedlists, moved;
+        draggingPlaceholder, currentlyDraggingElement, currentlyDraggingTarget, dragging, moving, clickedlink, delayIdle, touchedlists, moved, overElement;
 
     function closestSortable(ele) {
 
@@ -6720,7 +7438,7 @@
                     draggingPlaceholder.css({'left': left, 'top': top });
 
                     // adjust document scrolling
-                    
+
                     if (top + (draggingPlaceholder.height()/3) > document.body.offsetHeight) {
                         return;
                     }
@@ -6745,7 +7463,7 @@
                 }
 
                 // inside or outside of sortable?
-                var sortable  = closestSortable(e.target),
+                var sortable  = closestSortable(currentlyDraggingElement),
                     component = draggingPlaceholder.$sortable,
                     ev        = { type: e.type };
 
@@ -6769,11 +7487,20 @@
 
             var handleDragStart = delegate(function(e) {
 
+                if (e.data && e.data.sortable) {
+                    return;
+                }
+
                 var $target = UI.$(e.target),
                     $link   = $target.is('a[href]') ? $target:$target.parents('a[href]');
 
                 if ($target.is(':input')) {
                     return;
+                }
+
+                if ($this.options.handleClass) {
+                    var handle = $target.hasClass($this.options.handleClass) ? $target : $target.closest('.'+$this.options.handleClass, $this.element);
+                    if (!handle.length) return;
                 }
 
                 e.preventDefault();
@@ -6787,20 +7514,11 @@
                     });
                 }
 
+                e.data = e.data || {};
+
+                e.data.sortable = element;
+
                 return $this.dragStart(e, this);
-            });
-
-            var handleDragOver = delegate(function(e) {
-
-                if (!currentlyDraggingElement) {
-                    return true;
-                }
-
-                if (e.preventDefault) {
-                    e.preventDefault();
-                }
-
-                return false;
             });
 
             var handleDragEnter = delegate(UI.Utils.debounce(function(e) {
@@ -6885,6 +7603,8 @@
                         if (supportsTouch && document.elementFromPoint) {
                             target = document.elementFromPoint(e.pageX - document.body.scrollLeft, e.pageY - document.body.scrollTop);
                         }
+
+                        overElement = UI.$(target);
                     }
 
                     if (UI.$(target).hasClass($this.options.childClass)) {
@@ -6918,17 +7638,7 @@
                 return;
             }
 
-            if ($this.options.handleClass) {
-
-                var handle = target.hasClass($this.options.handleClass) ? target : target.closest('.'+$this.options.handleClass, $this.element);
-
-                if (!handle.length) {
-                    //e.preventDefault();
-                    return;
-                }
-            }
-
-            if (target.is('.'+$this.options.noDragClass) || target.closest('.'+$this.options._noDragClass).length) {
+            if (target.is('.'+$this.options.noDragClass) || target.closest('.'+$this.options.noDragClass).length) {
                 return;
             }
 
@@ -6949,7 +7659,7 @@
             delayIdle = {
 
                 pos       : { x:e.pageX, y:e.pageY },
-                threshold : $this.options.threshold,
+                threshold : $this.options.handleClass ? 0 : $this.options.threshold,
                 apply     : function(evt) {
 
                     draggingPlaceholder = UI.$('<div class="'+([$this.options.draggingClass, $this.options.dragCustomClass].join(' '))+'"></div>').css({
@@ -6989,8 +7699,10 @@
         },
 
         dragMove: function(e, elem) {
-            var overEl       = UI.$(document.elementFromPoint(e.pageX - document.body.scrollLeft, e.pageY - (window.pageYOffset || document.documentElement.scrollTop))),
-                overRoot     = overEl.closest('.'+this.options.baseClass),
+
+            overElement = UI.$(document.elementFromPoint(e.pageX - (document.body.scrollLeft || document.scrollLeft || 0), e.pageY - (document.body.scrollTop || document.documentElement.scrollTop || 0)));
+
+            var overRoot     = overElement.closest('.'+this.options.baseClass),
                 groupOver    = overRoot.data("sortable-group"),
                 $current     = UI.$(currentlyDraggingElement),
                 currentRoot  = $current.parent(),
@@ -7006,7 +7718,7 @@
 
                 // swap root
                 if (overRoot.children().length > 0) {
-                    overChild = overEl.closest('.'+this.options.childClass);
+                    overChild = overElement.closest('.'+this.options.childClass);
 
                     if (overChild.length) {
                         overChild.before($current);
@@ -7015,7 +7727,7 @@
                     }
 
                 } else { // empty list
-                    overEl.append($current);
+                    overElement.append($current);
                 }
 
                 UIkit.$doc.trigger('mouseover');
@@ -7031,15 +7743,27 @@
                 return true;
             }
 
-            // Prevent dragenter on a child from allowing a dragleave on the container
             var previousCounter = this.dragenterData(elem);
 
             this.dragenterData(elem, previousCounter + 1);
 
+            // Prevent dragenter on a child from allowing a dragleave on the container
             if (previousCounter === 0) {
 
-                UI.$(elem).addClass(this.options.overClass);
+                var currentlist = UI.$(elem).parent(),
+                    startlist   = UI.$(currentlyDraggingElement).data("start-list");
 
+                if (currentlist[0] !== startlist[0]) {
+
+                    var groupOver    = currentlist.data('sortable-group'),
+                        groupCurrent = UI.$(currentlyDraggingElement).data("sortable-group");
+
+                    if ((groupOver ||  groupCurrent) && (groupOver != groupCurrent)) {
+                        return false;
+                    }
+                }
+
+                UI.$(elem).addClass(this.options.overClass);
                 this.moveElementNextTo(currentlyDraggingElement, elem);
             }
 
@@ -7119,7 +7843,9 @@
             }
 
             triggers.forEach(function (trigger, i) {
-                trigger.sortable.element.trigger('change.uk.sortable', [trigger.sortable, el, trigger.mode]);
+                if (trigger.sortable) {
+                    trigger.sortable.element.trigger('change.uk.sortable', [trigger.sortable, el, trigger.mode]);
+                }
             });
         },
 
@@ -7203,10 +7929,12 @@
 
             this.element.children().each(function(j, child) {
                 item = {};
-                for (var i = 0; i < child.attributes.length; i++) {
+                for (var i = 0, attr, val; i < child.attributes.length; i++) {
                     attribute = child.attributes[i];
                     if (attribute.name.indexOf('data-') === 0) {
-                        item[attribute.name.substr(5)] = UI.Utils.str2json(attribute.value);
+                        attr       = attribute.name.substr(5);
+                        val        =  UI.Utils.str2json(attribute.value);
+                        item[attr] = (val || attribute.value=='false' || attribute.value=='0') ? val:attribute.value;
                     }
                 }
                 data.push(item);
@@ -7277,7 +8005,7 @@
     return UI.sortable;
 });
 
-/*! UIkit 2.22.0 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
+/*! UIkit 2.26.2 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
 (function(addon) {
 
     var component;
@@ -7333,7 +8061,7 @@
 
                 for (var i = 0; i < sticked.length; i++) {
                     sticked[i].reset(true);
-                    sticked[i].self.computeWrapper();
+                    //sticked[i].self.computeWrapper();
                 }
 
                 checkscrollposition();
@@ -7360,17 +8088,17 @@
 
         init: function() {
 
-            var wrapper  = UI.$('<div class="uk-sticky-placeholder"></div>'), boundary = this.options.boundary, boundtoparent;
+            var boundary = this.options.boundary, boundtoparent;
 
-            this.wrapper = this.element.css('margin', 0).wrap(wrapper).parent();
-
+            this.wrapper = this.element.wrap('<div class="uk-sticky-placeholder"></div>').parent();
             this.computeWrapper();
+            this.element.css('margin', 0);
 
             if (boundary) {
 
-                if (boundary === true) {
+                if (boundary === true || boundary[0] === '!') {
 
-                    boundary      = this.wrapper.parent();
+                    boundary      = boundary === true ? this.wrapper.parent() : this.wrapper.closest(boundary.substr(1));
                     boundtoparent = true;
 
                 } else if (typeof boundary === "string") {
@@ -7385,7 +8113,7 @@
                 currentTop    : null,
                 wrapper       : this.wrapper,
                 init          : false,
-                getWidthFrom  : this.options.getWidthFrom || this.wrapper,
+                getWidthFrom  : UI.$(this.options.getWidthFrom || this.wrapper),
                 boundary      : boundary,
                 boundtoparent : boundtoparent,
                 top           : 0,
@@ -7399,7 +8127,7 @@
                         // e.g. 50vh
                         if (this.options.top.match(/^(-|)(\d+)vh$/)) {
                             top = window.innerHeight * parseInt(this.options.top, 10)/100;
-                            // e.g. #elementId, or .class-1,class-2,.class-3 (first found is used)
+                        // e.g. #elementId, or .class-1,class-2,.class-3 (first found is used)
                         } else {
 
                             var topElement = UI.$(this.options.top).first();
@@ -7413,7 +8141,8 @@
 
                     this.top = top;
                 },
-                reset         : function(force) {
+
+                reset: function(force) {
 
                     this.calcTop();
 
@@ -7421,6 +8150,7 @@
                         this.element.css({"position":"", "top":"", "width":"", "left":"", "margin":"0"});
                         this.element.removeClass([this.options.animation, 'uk-animation-reverse', this.options.clsactive].join(' '));
                         this.element.addClass(this.options.clsinactive);
+                        this.element.trigger('inactive.uk.sticky');
 
                         this.currentTop = null;
                         this.animate    = false;
@@ -7514,6 +8244,12 @@
                 'float'  : this.element.css('float') != 'none' ? this.element.css('float') : '',
                 'margin' : this.element.css('margin')
             });
+
+            if (this.element.css('position') == 'fixed') {
+                this.element.css({
+                    width: this.sticky.getWidthFrom.length ? this.sticky.getWidthFrom.width() : this.element.width()
+                });
+            }
         }
     });
 
@@ -7561,7 +8297,7 @@
                     if (sticky.boundtoparent) {
                         containerBottom = documentHeight - (bTop + sticky.boundary.outerHeight()) + parseInt(sticky.boundary.css('padding-bottom'));
                     } else {
-                        containerBottom = documentHeight - bTop - parseInt(sticky.boundary.css('margin-top'));
+                        containerBottom = documentHeight - bTop;
                     }
 
                     newTop = (scrollTop + stickyHeight) > (documentHeight - containerBottom - (sticky.top < 0 ? 0 : sticky.top)) ? (documentHeight - containerBottom) - (scrollTop + stickyHeight) : newTop;
@@ -7571,10 +8307,9 @@
                 if (sticky.currentTop != newTop) {
 
                     sticky.element.css({
-                        "position" : "fixed",
-                        "top"      : newTop,
-                        "width"    : (typeof sticky.getWidthFrom !== 'undefined') ? UI.$(sticky.getWidthFrom).width() : sticky.element.width(),
-                        "left"     : sticky.wrapper.offset().left
+                        position : "fixed",
+                        top      : newTop,
+                        width    : sticky.getWidthFrom.length ? sticky.getWidthFrom.width() : sticky.element.width()
                     });
 
                     if (!sticky.init) {
@@ -7611,6 +8346,7 @@
                     }
 
                     sticky.element.addClass(sticky.options.clsactive).removeClass(sticky.options.clsinactive);
+                    sticky.element.trigger('active.uk.sticky');
                     sticky.element.css('margin', '');
 
                     if (sticky.options.animation && sticky.init && !UI.Utils.isInView(sticky.wrapper)) {
@@ -7628,7 +8364,7 @@
     return UI.sticky;
 });
 
-/*! UIkit 2.23.0 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
+/*! UIkit 2.26.2 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
 (function(addon) {
     var component;
 
@@ -7863,7 +8599,7 @@
     return UI.tooltip;
 });
 
-/*! UIkit 2.22.0 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
+/*! UIkit 2.24.3 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
 (function(addon) {
 
     var component;
@@ -7873,7 +8609,7 @@
     }
 
     if (typeof define == "function" && define.amd) {
-        define("uikit-search", ["uikit"], function(){
+        define("uikit-timepicker", ["uikit"], function(){
             return component || addon(UIkit);
         });
     }
@@ -8056,7 +8792,7 @@
 
 });
 
-/*! UIkit 2.23.0 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
+/*! UIkit 2.26.2 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
 (function(addon) {
 
     var component;

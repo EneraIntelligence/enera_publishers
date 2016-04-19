@@ -1,3 +1,11 @@
+/*
+*  altair admin
+*  @version v2.5.0
+*  @author tzd
+*  @license http://themeforest.net/licenses
+*  page_todo.js - page_todo.html
+*/
+
 $(function() {
     // tasks list
     altair_todo.init();

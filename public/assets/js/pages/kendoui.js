@@ -1,3 +1,11 @@
+/*
+*  altair admin
+*  @version v2.5.0
+*  @author tzd
+*  @license http://themeforest.net/licenses
+*  kendoui.js - kendoui_*.html
+*/
+
 $(function() {
 	kendoUI.autocomplete_widget();
     kendoUI.calendar_widget();

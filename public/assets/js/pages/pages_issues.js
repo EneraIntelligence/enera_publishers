@@ -1,3 +1,11 @@
+/*
+*  altair admin
+*  @version v2.5.0
+*  @author tzd
+*  @license http://themeforest.net/licenses
+*  pages_issues.js - pages_issues.html
+*/
+
 $(function() {
 
     if(Modernizr.touch) {
@@ -55,7 +63,6 @@ altair_issues = {
                     selectizePage = selectizeObj[0].selectize;
                     selectizePage.setValue($('select.ts_gotoPage option:selected').index() + 1, false);
                 }
-
             });
 
         // replace 'goto Page' select

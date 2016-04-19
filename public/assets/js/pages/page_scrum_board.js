@@ -1,3 +1,11 @@
+/*
+*  altair admin
+*  @version v2.5.0
+*  @author tzd
+*  @license http://themeforest.net/licenses
+*  page_scrum_board.js - page_scrum_board.html
+*/
+
 $(function() {
     // draggable tasks
     altair_scrum_board.draggable_tasks();
@@ -19,6 +27,12 @@ altair_scrum_board = {
         for (var i = 0; i < length; i++) {
             $(containers[i]).addClass('dragula dragula-vertical');
         }
+
+        drake.on('drop', function(el, target, source, sibling) {
+            console.log(el);
+            console.log(target);
+            console.log(source);
+        })
 
     }
 };

@@ -1,3 +1,11 @@
+/*
+*  altair admin
+*  @version v2.5.0
+*  @author tzd
+*  @license http://themeforest.net/licenses
+*  plugins_charts.js - plugins_charts.html
+*/
+
 $(function() {
     // metrics-graphics
     altair_charts.metrics_graphics();
@@ -426,7 +434,7 @@ altair_charts = {
     },
     chartist_charts: function() {
         // simple lines
-        new Chartist.Line('#chartist_simple_lines', {
+        var ch_simple_lines = new Chartist.Line('#chartist_simple_lines', {
             labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
             series: [
                 [12, 9, 7, 8, 5],
@@ -439,9 +447,13 @@ altair_charts = {
                 right: 40
             }
         });
+        $window.on('resize',function() {
+            ch_simple_lines.update();
+        });
+
 
         // line chart with area
-        new Chartist.Line('#chartist_line_area', {
+        var ch_line_area = new Chartist.Line('#chartist_line_area', {
             labels: [1, 2, 3, 4, 5, 6, 7, 8],
             series: [
                 [5, 9, 7, 8, 5, 3, 5, 4]
@@ -450,9 +462,12 @@ altair_charts = {
             low: 0,
             showArea: true
         });
+        $window.on('resize',function() {
+            ch_line_area.update();
+        });
 
         // bi-polar line chart with area only
-        new Chartist.Line('#chartist_bipolar', {
+        var ch_bipolar = new Chartist.Line('#chartist_bipolar', {
             labels: [1, 2, 3, 4, 5, 6, 7, 8],
             series: [
                 [1, 2, 3, 1, -2, 0, 1, 0],
@@ -472,13 +487,19 @@ altair_charts = {
                 showGrid: false
             }
         });
+        $window.on('resize',function() {
+            ch_bipolar.update();
+        });
 
         // distributed series
-        new Chartist.Bar('#chartist_distributed_series', {
+        var ch_distributed_series = new Chartist.Bar('#chartist_distributed_series', {
             labels: ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
             series: [20, 60, 120, 200, 180, 20, 10]
         }, {
             distributeSeries: true
+        });
+        $window.on('resize',function() {
+            ch_distributed_series.update();
         });
 
         // simple pie chart
@@ -488,10 +509,13 @@ altair_charts = {
 
         var sum = function(a, b) { return a + b };
 
-        new Chartist.Pie('#chartist_simple_pie', data, {
+        var ch_simple_pie = new Chartist.Pie('#chartist_simple_pie', data, {
             labelInterpolationFnc: function(value) {
                 return Math.round(value / data.series.reduce(sum) * 100) + '%';
             }
+        });
+        $window.on('resize',function() {
+            ch_simple_pie.update();
         });
 
         // pie chart with custom labels
@@ -529,7 +553,10 @@ altair_charts = {
             }]
         ];
 
-        new Chartist.Pie('#chartist_pie_custom_labels', data, options, responsiveOptions);
+        var ch_pie_custom_labels = new Chartist.Pie('#chartist_pie_custom_labels', data, options, responsiveOptions);
+        $window.on('resize',function() {
+            ch_pie_custom_labels.update();
+        });
 
         // animating a donut with svg.animate
         var chart = new Chartist.Pie('#chartist_donut_animate', {
@@ -538,6 +565,9 @@ altair_charts = {
         }, {
             donut: true,
             showLabel: false
+        });
+        $window.on('resize',function() {
+            chart.update();
         });
 
         chart.on('draw', function(data) {

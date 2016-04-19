@@ -1,3 +1,11 @@
+/*
+*  altair admin
+*  @version v2.5.0
+*  @author tzd
+*  @license http://themeforest.net/licenses
+*  forms_wizard.js - forms_wizard.html
+*/
+
 $(function() {
     // wizard
     altair_wizard.advanced_wizard();
@@ -22,8 +30,13 @@ altair_wizard = {
                 trigger: 'change',
                 onInit: function(event, currentIndex) {
                     altair_wizard.content_height($wizard_advanced,currentIndex);
+                    // reinitialize textareas autosize
+                    altair_forms.textarea_autosize();
                     // reinitialize checkboxes
                     altair_md.checkbox_radio($(".wizard-icheck"));
+                    $(".wizard-icheck").on('ifChecked', function(event){
+                        console.log(event.currentTarget.value);
+                    });
                     // reinitialize uikit margin
                     altair_uikit.reinitialize_grid_margin();
                     // reinitialize selects

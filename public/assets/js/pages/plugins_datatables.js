@@ -1,3 +1,11 @@
+/*
+*  altair admin
+*  @version v2.5.0
+*  @author tzd
+*  @license http://themeforest.net/licenses
+*  plugins_datatables.js - plugins_datatables.html
+*/
+
 $(function() {
     // datatables
     altair_datatables.dt_default();
