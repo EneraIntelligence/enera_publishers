@@ -13,6 +13,11 @@
         .border-bottom {
             margin-bottom: 10px;
         }
+
+        li {
+            height: 55px !important;
+        }
+
     </style>
 @stop
 @section('content')
@@ -77,10 +82,10 @@
                     </div>
                 </div>
                 <div class="uk-width-medium-1-3 uk-hidden-small" style="position: fixed;">
-                    <div style="">
+                    <div id="marco_presupuesto" >
                         <h4 class="heading_a uk-margin-bottom">Información de presupuestos</h4>
-                        <div class="md-card">
-                            <div class="md-card-content">
+                        <div class="md-card uk-overflow-container">
+                            <div class="md-card-content ">
                                 <span class="uk-text-small">Balance actual</span>
                                 <h2 class="uk-text-center" id="myTargetElement2" style="margin: 10px;">23</h2>
                                 {{--<span class="uk-text-small border-bottom">Agregar fondos</span>--}}
@@ -91,7 +96,7 @@
                                 <span class=" uk-text-small">Fondos camapañas activas</span>
                                 <div class="uk-width-large-1 uk-width-medium-1 uk-grid-margin">
                                     <ul class="md-list md-list-addon">
-                                        <li>
+                                        <li style="height: 55px">
                                             <div class="md-list-addon-element">
                                                 <i class="md-list-addon-icon material-icons uk-text-primary">
                                                     &#xE918;
