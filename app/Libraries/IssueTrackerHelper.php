@@ -12,7 +12,9 @@ namespace Publishers\Libraries;
 use Exception;
 use File;
 use \Illuminate\Http\Request;
-use Publishers\Issue;
+use Mail;
+use MongoDate;
+use Portal\Issue;
 use Session;
 
 class IssueTrackerHelper
@@ -21,9 +23,10 @@ class IssueTrackerHelper
      * @param Request $request
      * @param Exception $e
      * @param $plataform
+     * @param int $responsible
      * @internal param array $data
      */
-    public static function create(Request $request, Exception $e, $plataform)
+    public static function create(Request $request, Exception $e, $plataform, $responsible = 0)
     {
         /* Genera URL actual */
         if (count($_GET) > 0) {
@@ -43,32 +46,104 @@ class IssueTrackerHelper
             $context .= isset($file[$i]) ? $file[$i] : '';
         }
 
-        /* Creacion de Issue */
         $instance = explode('\\', get_class($e));
-        Issue::create([
-            // 'msg' => $e->getMessage() != '' ? $e->getMessage() : 'IssueTracket Error',
-            'msg' => $instance[count($instance) - 1] . ' ' . $request->method() . ' /' . $request->path(),
-            'request' => [
-                'url' => $request->url() . $url,
-                'host' => gethostname(),
-                'platform' => $plataform,
-                'environment' => env('APP_ENV', 'local'),
-                'session_vars' => Session::all(),
-            ],
-            'file' => [
-                'line' => $e->getLine(),
-                'path' => str_replace(base_path(), '', $e->getFile()),
-                'context' => $context,
-            ],
-            'exception' => [
-                'msg' => $e->getMessage(),
-                'code' => $e->getCode(),
-                'trace' => $e->getTraceAsString(),
-            ],
-            'responsible_id' => 0,
-            'priority' => 'error',
-            'status' => 'pending',
-            'history' => [],
-        ]);
+        $issue_title = $instance[count($instance) - 1] . ' ' . $request->method() . ' /' . $request->path();
+        $issue_file_path = str_replace(base_path(), '', $e->getFile());
+        $issue_file_line = $e->getLine();
+
+        $issue = Issue::where('issue.title', $issue_title)
+            ->where('issue.file.path', $issue_file_path)
+            ->where('issue.file.line', $issue_file_line)
+            ->where('issue.platform', $plataform)->first();
+
+        if ($issue) {
+            $issue_statistic = $issue->statistic;
+            $issue_date = date('Y-m-d');
+            if (isset($issue_statistic[$issue_date])) {
+                $issue_statistic[$issue_date]['recurrence']++;
+                if (isset($issue_statistic[$issue_date]['host'][gethostname()])) {
+                    $issue_statistic[$issue_date]['host'][gethostname()]++;
+                } else {
+                    $issue_statistic[$issue_date]['host'][gethostname()] = 1;
+                }
+            } else {
+                $issue_statistic[$issue_date] = [
+                    'recurrence' => 1,
+                    'host' => [
+                        gethostname() => 1
+                    ]
+                ];
+            }
+            $issue->statistic = $issue_statistic;
+            $issue->save();
+
+            $issue->recurrence()->create([
+                'request' => [
+                    'url' => $request->url() . $url,
+                    'host' => gethostname(),
+                    'platform' => $plataform,
+                    'environment' => env('APP_ENV', 'local'),
+                    'session_vars' => Session::all(),
+                ],
+                'exception' => [
+                    'msg' => $e->getMessage(),
+                    'code' => $e->getCode(),
+                    'trace' => $e->getTraceAsString(),
+                ]
+            ]);
+
+        } else {
+            /* Creacion de Issue */
+            $issue = Issue::create([
+                'issue' => [
+                    'title' => $issue_title,
+                    'file' => [
+                        'line' => $issue_file_line,
+                        'path' => $issue_file_path,
+                        'context' => $context,
+                    ],
+                    'platform' => $plataform,
+                ],
+                'exception' => [
+                    'msg' => $e->getMessage(),
+                    'code' => $e->getCode(),
+                    'trace' => $e->getTraceAsString(),
+                ],
+                'statistic' => [
+                    date('Y-m-d') => [
+                        'recurrence' => intval('1'),
+                        'host' => [
+                            gethostname() => intval('1')
+                        ]
+                    ]
+                ],
+                'recurrence' => [],
+                'responsible_id' => $responsible,
+                'priority' => 'error',
+                'status' => 'pending',
+                'history' => [],
+            ]);
+
+            $issue->recurrence()->create([
+                'request' => [
+                    'url' => $request->url() . $url,
+                    'host' => gethostname(),
+                    'platform' => $plataform,
+                    'environment' => env('APP_ENV', 'local'),
+                    'session_vars' => Session::all(),
+                ],
+                'exception' => [
+                    'msg' => $e->getMessage(),
+                    'code' => $e->getCode(),
+                    'trace' => $e->getTraceAsString(),
+                ]
+            ]);
+
+            Mail::send('mail.issuestracker', ['issue' => $issue], function ($m) {
+                $m->from('servers@enera.mx', 'Enera Portal');
+                $m->to(['pluna@enera.mx', 'arosas@enera.mx'])->subject('Issue Tracker');
+            });
+
+        }
     }
 }
