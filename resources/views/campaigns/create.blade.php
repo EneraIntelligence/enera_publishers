@@ -178,7 +178,7 @@
             <!--  forms wizard functions -->
     {!! HTML::script('js/form_wizard_custom.js') !!}
             <!-- slider script -->
-    {!! HTML::script('bower_components/ionrangeslider/js/ion.rangeSlider.min.js') !!}
+    {!! HTML::script('bower_components/ion.rangeslider/js/ion.rangeSlider.min.js') !!}
     {!! HTML::script('bower_components/jquery.inputmask/dist/jquery.inputmask.bundle.js') !!}
     {!! HTML::script('assets/js/pages/forms_advanced.min.js') !!}
 

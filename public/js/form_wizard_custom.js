@@ -119,9 +119,9 @@ altair_wizard = {
                     if (create_campaign_helper.interaction != "captcha") {
                         delete formObj.captcha;
                     }
-                    if (create_campaign_helper.interaction != "banner-link" && create_campaign_helper.interaction != "like") {
+                    /*if (create_campaign_helper.interaction != "banner-link" && create_campaign_helper.interaction != "like") {
                         delete formObj.banner_link;
-                    }
+                    }*/
 
                     formObj.branches = branchMap.getMarkersById();
 
