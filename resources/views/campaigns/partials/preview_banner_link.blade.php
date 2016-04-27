@@ -65,6 +65,6 @@
     <i class="uk-icon-link"  style="margin-right:6px;"></i>
     link:
     <a id="link" class=""
-       href="http://{{ isset($cam->content['link'])? str_replace("http://","",$cam->content['link']):'no definido' }}"
-       target="_blank">{!! isset($cam->content['link'])? $cam->content['link']:'Like url no definido www.enera.mx' !!}</a>
+       href="{{ isset($cam->content['banner_link'])? $cam->content['banner_link']:'no definido' }}"
+       target="_blank">{!! isset($cam->content['banner_link'])? $cam->content['banner_link']:'Like url no definido www.enera.mx' !!}</a>
 </div>
