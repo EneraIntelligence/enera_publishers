@@ -114,7 +114,7 @@
                 </div>
             </div>
             <div class="price">
-                <span>$ 2.00</span>
+                <span>$ 2.50</span>
             </div>
         </div>
 
@@ -166,7 +166,7 @@
                 </div>
             </div>
             <div class="price">
-                <span>$ 2.00</span>
+                <span>$ 1.00</span>
             </div>
         </div>
 
@@ -220,7 +220,7 @@
                 </div>
             </div>
             <div class="price">
-                <span>$ 2.00</span>
+                <span>$ 10.00</span>
             </div>
         </div>
 
