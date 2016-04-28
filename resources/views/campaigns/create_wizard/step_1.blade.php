@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="price">
-                <span>$ 2.00</span>
+                <span>$ {{number_format($price['like'], 2, '.', ',')}}</span>
             </div>
         </div>
 
@@ -69,7 +69,7 @@
                 </div>
             </div>
             <div class="price">
-                <span>$ 2.00</span>
+                <span>$ {{number_format($price['banner_link'], 2, '.', ',')}}</span>
             </div>
         </div>
 
@@ -114,7 +114,7 @@
                 </div>
             </div>
             <div class="price">
-                <span>$ 2.50</span>
+                <span>$ {{number_format($price['mailing_list'], 2, '.', ',')}}</span>
             </div>
         </div>
 
@@ -166,7 +166,7 @@
                 </div>
             </div>
             <div class="price">
-                <span>$ 1.00</span>
+                <span>$ {{number_format($price['captcha'], 2, '.', ',')}}</span>
             </div>
         </div>
 
@@ -220,7 +220,7 @@
                 </div>
             </div>
             <div class="price">
-                <span>$ 10.00</span>
+                <span>$ {{number_format($price['survey'], 2, '.', ',')}}</span>
             </div>
         </div>
 
@@ -243,7 +243,7 @@
                 </div>
             </div>
             <div class="price">
-                <span>$ 2.00</span>
+                <span>$ {{number_format($price['video'], 2, '.', ',')}}</span>
             </div>
         </div>
 
