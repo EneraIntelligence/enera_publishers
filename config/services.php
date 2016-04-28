@@ -15,8 +15,8 @@ return [
     */
 
     'mailgun' => [
-        'domain' => env('MAILGUN_DOMAIN'),
-        'secret' => env('MAILGUN_SECRET'),
+        'domain' => 'enera-intelligence.mx',
+        'secret' => 'key-2eeac48a97fd2992ddb1e4c860d74470',
     ],
 
     'mandrill' => [
