@@ -14,7 +14,7 @@ use File;
 use \Illuminate\Http\Request;
 use Mail;
 use MongoDate;
-use Portal\Issue;
+use Publishers\Issue;
 use Session;
 
 class IssueTrackerHelper
