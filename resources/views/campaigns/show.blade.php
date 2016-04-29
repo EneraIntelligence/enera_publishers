@@ -34,7 +34,7 @@
                             <div class="user_heading_avatar">
                                 <div>
                                     <div id="circle" style="max-width:98px;max-height:98px;margin:auto;">
-                                        <img class="svg" style="background-image:none!important;margin:-96px 9px;background:transparent;border:none;"
+                                        <img class="svg" style="background-image:none!important;margin:-100px 1px;background:transparent;border:none;"
                                              src="{!! URL::asset('images/icons/'.
                                                                 CampaignStyle::getCampaignIcon( $cam->interaction['name']
                                                              ) ) !!}2.svg"
