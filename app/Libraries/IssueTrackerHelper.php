@@ -64,7 +64,7 @@ class IssueTrackerHelper
                 if (isset($issue_statistic[$issue_date]['host'][gethostname()])) {
                     $issue_statistic[$issue_date]['host'][gethostname()]++;
                 } else {
-                    $issue_statistic[$issue_date]['host'][gethostname()] = 1;
+                    $issue_statistic[$issue_date]['host'][gethostname()] = intval('1');
                 }
             } else {
                 $issue_statistic[$issue_date] = [
