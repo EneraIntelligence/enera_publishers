@@ -13,33 +13,33 @@
     </div>
     <div style="width: 40%; display: inline-block;"></div>
     <div style="display: inline-block;">
-        <h1 style="margin: 0 auto; color: white;">Issues Traker</h1>
+        <h1 style="margin: 0 auto; color: white;">New exception in Enera {{ $issue->issue['platform'] }}</h1>
     </div>
 </header>
 
 <main style="padding: 0 50px;">
     <p>
         <font size="9" color="#696969">
-            New exception in Enera {{ $issue->issue['platform'] }}
+            {{ $issue->issue['title'] }}
         </font>
     </p>
     <br>
     <p>
         <font size="4" color="#000000">
-            {{ $issue->issue['title'] }}
-        </font>
+            {{ $issue->issue['file']['path'] }}:{{ $issue->issue['file']['line'] }}
+        </font><br>
         <font size="4" color="#696969">
-            - {{ $issue->issue['file']['path'] }}:{{ $issue->issue['file']['line'] }}
+            {{ $issue->exception['msg'] }}
         </font>
     </p>
     <p>
         <font size="3" color="#696969">
-            {{ $issue->exception['msg'] }}
+
         </font>
     </p>
     <br>
     <p style="margin:0 0 2px 0;"><font size="4" color="#000000" >STAGE</font></p>
-    <p style="margin:0 0 10px 0;"><font size="3" color="#696969" >production</font></p>
+    <p style="margin:0 0 10px 0;"><font size="3" color="#696969" >{{ $issue->issue[] }}</font></p>
     <p style="margin:0 0 2px 0;"><font size="4" color="#000000" >SEVERITY</font></p>
     <p style="margin:0 0 10px 0;"><font size="3" color="#696969" >error</font></p>
     <p style="margin:0 0 2px 0;"><font size="4" color="#000000" >Host</font></p>

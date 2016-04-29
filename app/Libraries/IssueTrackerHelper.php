@@ -112,7 +112,7 @@ class IssueTrackerHelper
                     'trace' => $e->getTraceAsString(),
                 ],
                 'statistic' => [
-                    'recurrence' => inval(1),
+                    'recurrence' => intval('1'),
                     'host' => [
                         gethostname() => intval('1')
                     ],
