@@ -50,47 +50,46 @@ class TimeEndEmail extends Command
     public function handle()
     {
 
-        try
-        {
+        try {
             $this->info('------------ Mandando Correo de Notificación -------------');
             $today = date('Y-m-d h:m:s');
 
             $campaigns = Campaign::where('status', 'active')
                 ->whereRaw([
                     'filters.date.end' => [
-                        '$lt' => new MongoDate(strtotime($today))
+                        '$gt' => new MongoDate(strtotime($today))
                     ]
                 ])
                 ->get();
-
-            foreach ($campaigns as $key => $cam)
-            {
-                $cam->status = 'ended';
-                $cam->save();
+            
+            foreach ($campaigns as $key => $cam) {
+                $camBalance = $cam->balance;
                 $cam->history()->create(array('administrator_id' => $cam->administrator_id, 'status' => 'ended', 'date' => $today, 'note' => 'Campaña finalizada por fecha de terminación'));
-                $camBalance = $cam->balance['current'];
+
 
                 $admin = Administrator::find($cam->administrator_id);
-                if ($admin)
-                    $admin->increment('wallet.current', $camBalance);
-
-                $cam->history()->create(array('administrator_id' => $cam->administrator_id, 'status' => 'returned', 'date' => $today, 'note' => 'Balance restante se regreso a los fondos del cliente por la cantidad de $' . number_format($camBalance, 2, '.', ',')));
-
-                $user = Administrator::find($cam->administrator_id);
+                if ($admin) {
+                    $admin->wallet->increment('current', $camBalance['current']);
+                    $cam->history()->create(array('administrator_id' => $cam->administrator_id, 'status' => 'returned', 'date' => $today, 'note' => 'Balance restante se regreso a los fondos del cliente por la cantidad de $' . number_format($camBalance['current'], 2, '.', ',')));
+                    $user = Administrator::find($cam->administrator_id);
 
                 Mail::send('emails.notifications', ['user' => $user], function ($m) use ($user)
                 {
                     $m->from('soporte@enera.mx', 'Enera Intelligence');
                     $m->to($user->email, $user->name['first'] . ' ' . $user->name['last'])->subject('Terminacion de Camapaña');
                 });
-                $key += 1;
-                $this->info('             Correo # ' . $key . ' enviado  ' . $user->email . '              ');
+                    $key += 1;
+                    $this->info('             Correo # ' . $key . ' enviado  ' . $user->email . '              ');
+                    $cam->status = 'ended';
+                    $camBalance['current'] = 0;
+                    $cam->balance = $camBalance;
+                    $cam->save();
+                }
             }
             $this->info('-------------------- Fin de comando ----------------------');
 
 
-        } catch (Exception $e)
-        {
+        } catch (Exception $e) {
             $this->error($e);
         }
     }
