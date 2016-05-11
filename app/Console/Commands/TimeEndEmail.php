@@ -57,11 +57,11 @@ class TimeEndEmail extends Command
             $campaigns = Campaign::where('status', 'active')
                 ->whereRaw([
                     'filters.date.end' => [
-                        '$gt' => new MongoDate(strtotime($today))
+                        '$lt' => new MongoDate(strtotime($today))
                     ]
                 ])
                 ->get();
-            
+
             foreach ($campaigns as $key => $cam) {
                 $camBalance = $cam->balance;
                 $cam->history()->create(array('administrator_id' => $cam->administrator_id, 'status' => 'ended', 'date' => $today, 'note' => 'Campaña finalizada por fecha de terminación'));
