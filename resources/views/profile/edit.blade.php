@@ -329,10 +329,8 @@
         });
 
 
-
         $('#form_validation').parsley();
         $('#form').parsley();
-
 
 
     </script>

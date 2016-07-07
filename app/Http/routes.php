@@ -18,6 +18,7 @@ Route::group(['middleware' => ['auth', 'guardian', 'preview']], function () {
         Route::post('/save_item_video', ['as' => 'save_item_video', 'uses' => 'CampaignsController@saveItemVideo']);
         Route::post('/send_mailing', ['as' => 'send_mailing', 'uses' => 'CampaignsController@sendMailing']);
         Route::get('/deposits', ['as' => 'deposits', 'uses' => 'CampaignsController@deposits']);
+        Route::match(['get', 'post'], '/search', ['as' => 'search::campaign', 'uses' => 'CampaignsController@search']);
 
         Route::group([], function () {
             Route::match(['post', 'get'], '/store', ['as' => 'store', 'uses' => 'CampaignsController@store']);
