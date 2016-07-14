@@ -1,4 +1,75 @@
 // @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
+.mobil-menu {
+  margin: 0 0 0 10px;
+  height: 0 !important;
+}
 
+.user {
+  margin: 0 10px 0 0;
+}
 
+.title-menu {
+  margin: 0 0 0 10px;
+}
+
+.nav-wrapper, .page-footer, .footer-copyright {
+  padding: 0 !important;
+}
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+.mi-1_5 {
+  font-size: 1.5rem !important;
+}
+
+nav ul a i span.badge {
+  position: static;
+  margin-left: 4px;
+  line-height: 0;
+}
+
+.dropdown-menu {
+  margin-top: 64px;
+}
+
+.page-loader {
+  display: none;
+  margin-top: 0;
+}
+
+.current-network
+{
+  margin-top:13px;
+  margin-bottom:13px;
+  ul
+  {
+    box-shadow : 0 8px 17px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  nav .brand-logo {
+    left: 45%;
+  }
+}
+
+@media only screen and (min-width: 993px) {
+  .height-menu {
+    height: 64px;
+  }
+}
+
+nav
+{
+  height:64px !important;
+  line-height: 64px !important;
+}
