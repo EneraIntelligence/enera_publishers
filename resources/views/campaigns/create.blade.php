@@ -102,6 +102,7 @@
 
     </div>
 
+
 @stop
 
 
@@ -110,6 +111,8 @@
     {!! HTML::script('js/greensock/plugins/ScrollToPlugin.min.js') !!}
     {!! HTML::script('js/events/EventDispatcher.js') !!}
     {!! HTML::script('js/events/WizardEvents.js') !!}
+    {!! HTML::script('js/campaign_wizard/WizardSteps.js') !!}
+    {!! HTML::script('js/campaign_wizard/WizardSetup.js') !!}
 
     {!! HTML::script('js/nouislider.js') !!}
     {!! HTML::script('js/cropper.min.js') !!}
@@ -120,4 +123,28 @@
     {!! HTML::script('js/tinymce/tinymce.min.js') !!}
 
 {{--    {!! HTML::script('assets/js/campaign_wizard/wizard.js') !!}--}}
+
+
+    <script>
+
+        let wizardSetup = new WizardSetup($("#next-btn"),$("#prev-btn"));
+
+
+        $(document).ready(function () {
+
+            wizardSetup.onDocumentReady();
+
+
+        });
+
+        $(window).load(function () {
+            wizardSetup.onLoad();
+
+        });
+
+
+
+    </script>
+
+
 @stop

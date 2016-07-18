@@ -33394,7 +33394,7 @@ define("tinymce/EditorObservable", [
 			}
 
 			self.dom.unbind(self.getBody());
-			self.dom.unbind(self.getContainer());
+			self.dom.unbind(Step1.getContainer());
 		}
 	};
 
@@ -38739,7 +38739,7 @@ define("tinymce/EditorManager", [
 
 	function purgeDestroyedEditor(editor) {
 		// User has manually destroyed the editor lets clean up the mess
-		if (editor && !(editor.getContainer() || editor.getBody()).parentNode) {
+		if (editor && !(Step1.getContainer() || editor.getBody()).parentNode) {
 			removeEditorFromList(editor);
 			editor.unbindAllNativeEvents();
 			editor.destroy(true);

@@ -329,7 +329,7 @@ tinymce.ThemeManager.add('modern', function(editor) {
 			};
 		}
 
-		containerElm = editor.getContainer();
+		containerElm = Step1.getContainer();
 		iframeElm = editor.getContentAreaContainer().firstChild;
 		containerSize = getSize(containerElm);
 		iframeSize = getSize(iframeElm);
