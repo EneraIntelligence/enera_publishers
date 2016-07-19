@@ -122,7 +122,7 @@
             <div class="col s12 l4 hide-on-large-only" >
                 <h4 class="heading_a">Información de presupuestos</h4>
                 <div class="col s12" style="padding: 0;">
-                    <div class="toc-wrapper" >
+                    <div class="" >
                         <div class="card white table-of-contents">
                             <div class="card-content black-text" >
                                 <span class="text-small">Balance actual</span>
@@ -152,7 +152,7 @@
                                 </thead>
                                 <tbody>
                                 @foreach($movements as $movement)
-                                    <tr class="budget">
+                                    <tr class="budget" >
                                         <td class="mov" data-uk-tooltip="{cls:'long-text'}"
                                             title="Aumento de fondos">
                                             @if($movement->movement['type'] == 'income')
@@ -163,16 +163,16 @@
                                                 <i class="material-icons md-36 blue-text text-darken-2">remove</i>
                                             @endif
                                         </td>
-                                        <td class="mov">{{ $movement->id }}</td>
+                                        <td class="mov" style="min-width: 200px;">{{ $movement->id }}</td>
                                         <td class="mov">
-                                            <div class="md-list-content">
+                                            <div class="md-list-content" style="min-width: 200px;">
                                                 <span class="md-list-heading">{{ $movement->movement['concept'] }}</span>
                             <span class="uk-text-small uk-text-muted uk-text-truncate">
                             <a href="{{route('analytics::single', ['id' => '56393f9aa8268b300d479644'])}}">Campaña </a>
                             </span>
                                             </div>
                                         </td>
-                                        <td class="mov">
+                                        <td class="mov" style="min-width: 120px;">
                                             <b>$ {{ number_format($movement->amount,2,'.',',') }}</b>
                                         </td>
                                     </tr>
