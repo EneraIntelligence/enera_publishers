@@ -122,7 +122,7 @@
             <div class="col s12 l4 hide-on-large-only" >
                 <h4 class="heading_a">Información de presupuestos</h4>
                 <div class="col s12" style="padding: 0;">
-                    <div class="" >
+                    <div class="">
                         <div class="card white table-of-contents">
                             <div class="card-content black-text" >
                                 <span class="text-small">Balance actual</span>
@@ -257,7 +257,7 @@
         });
 
 
-        $('.tabs-wrapper').pushpin({ Top: 0, Bottom: 60,  Offset: 400});
+//        $('.tabs-wrapper').pushpin({ Top: 0, Bottom: 60,  Offset: 400});
         setTimeout(function() {
             var tocWrapperHeight = 260; // Max height of ads.
             var tocHeight = $('.toc-wrapper .table-of-contents').length ? $('.toc-wrapper .table-of-contents').height() : 0;
