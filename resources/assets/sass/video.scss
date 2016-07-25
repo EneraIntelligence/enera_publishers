@@ -1,0 +1,50 @@
+.banner
+{
+  padding: 0;
+  margin: 10px -5% 0;
+  //max-width: 800px;
+  position: relative;
+  z-index: 5;
+}
+
+video::-webkit-media-controls-start-playback-button {
+  display:none;
+}
+
+.icon-play
+{
+  color: white;
+  position: absolute;
+  opacity: 0.4;
+  filter: alpha(opacity=40); /* For IE8 and earlier */
+
+  left: 50%;
+  margin-left: -40px;
+  top: 50%;
+  margin-top: -40px;
+}
+
+.actions-card
+{
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.nav-btn
+{
+  margin-top: 10px;
+  display: none;
+}
+
+.banner-video
+{
+  margin-bottom: -6px;
+}
+
+@media screen and (min-width: 400px) {
+  .banner
+  {
+    margin: 10px auto 0;
+  }
+}
+

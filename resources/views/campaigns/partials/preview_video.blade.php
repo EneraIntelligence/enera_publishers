@@ -1,54 +1,52 @@
 <!-- preview -->
-<div class="preview-container">
 
-    <img class="uk-align-center uk-responsive-width phone" src="{!! URL::asset('images/android_placeholder.png') !!}" alt="">
-
-    <!-- banner link preview -->
-    <div class="interaction uk-align-center uk-position-relative">
-
-        <img style="position:absolute;" src="{!! URL::asset('images/icons/video.svg') !!}" alt="">
-        <img class="interaction-image" src="{!! "https://s3-us-west-1.amazonaws.com/enera-publishers/items/". $cam->content['images']['large'] !!}"alt=""/>
+{!! HTML::style('assets/css/video.css') !!}
+<div id="fb-root"></div>
 
 
-        <div class="uk-clearfix"></div>
+<!-- Banner card -->
+<div class="banner card-panel z-depth-2 center-align black" onclick="playVideo()">
+
+    {{--<i class="large material-icons icon-play">play_circle_filled</i>--}}
+    <i class="large material-icons icon-play">&#xE038;</i>
+
+    <video id="theVideo" class="responsive-video banner-video"
+           poster="https://s3-us-west-1.amazonaws.com/enera-publishers/items/{!! $cam->content['images']['video'] !!}">
+    <source src="https://s3-us-west-1.amazonaws.com/enera-publishers/items/trailer.mp4" type="video/mp4">
+
+    {{--<source src="http://media.w3.org/2010/05/sintel/trailer.webm" type="video/webm">--}}
+    {{--<source src="http://media.w3.org/2010/05/sintel/trailer.ogv" type="video/ogg">--}}
+    Tu navegador no soporta reproduccion de video.
+    </video>
+</div>
+<!-- Banner card -->
+
+<!-- botones -->
+<div class="card-panel center-align actions-card">
 
 
+    <a class="btn waves-effect waves-light play-btn indigo z-depth-2" href="#!"
+       onclick="playVideo()">
+            <span class="white-text left">
+                Reproducir video
+            </span>
+        {{--<i class="material-icons right">play_circle_filled</i>--}}
 
-        <div style="position: absolute; bottom: 0; width: 100%;" class="md-btn md-btn-primary boton">Navegar en internet</div>
+    </a>
 
+    <a class="btn waves-effect waves-light nav-btn indigo z-depth-2" href="#!"
+       success_url="{{Input::get('base_grant_url') }}">
+            <span class="white-text left">
+                Navegar en internet
+            </span>
+        <i class="right material-icons">wifi</i>
 
-    </div>
+    </a>
+
 
 </div>
+
 
 <!-- end preview -->
 
 <!-- campaign elements -->
-<h3 class="heading_c uk-margin-small-bottom">Elementos de la campaña</h3>
-
-<div class="md-list-heading uk-width-large-1 azul">
-    @if(isset($cam->content['video']))
-        <i class="uk-icon-youtube-play"
-           style="margin-right:10px;"></i>Video :
-        <a id="link" class=""
-           data-uk-modal="{target:'#video'}">
-            {!! $cam->content['video'] !!}</a>
-        <div class="uk-modal" id="video">
-            <div class="uk-modal-dialog uk-modal-dialog-lightbox">
-                <button type="button"
-                        class="uk-modal-close uk-close uk-close-alt"></button>
-                <video width="600" height="300" controls>
-                    <source src="{!! URL::asset('https://s3-us-west-1.amazonaws.com/enera-publishers/items/'.$cam->content['video']) !!}"
-                            type="video/mp4">
-                    Your browser does not support HTML5 video.
-                </video>
-                {{--<div class="uk-modal-caption">Lorem</div>--}}
-            </div>
-        </div>
-    @else
-        <span>
-            <i class="uk-icon-youtube-play" style="margin-right:10px;"> no
-                hay video asignado </i>
-        </span>
-    @endif
-</div>

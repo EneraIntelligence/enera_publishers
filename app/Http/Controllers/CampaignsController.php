@@ -97,7 +97,7 @@ class CampaignsController extends Controller
 //            $grafica[$campaign] = $graficat;
         }//FIN DEL FOR
 //dd($grafica);
-        return view('campaigns.index', ['campaigns' => $campaigns, 'grafica' => $grafica, 'dias' => $dias, 'subcampaigns' => $subcampaigns, 'user' => Auth::user()]);
+        return view('campaigns.index', ['campaigns' => $campaigns , 'grafica' => $grafica, 'dias' => $dias, 'subcampaigns' => $subcampaigns, 'user' => Auth::user()]);
     }
 
     /**
