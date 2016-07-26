@@ -97,7 +97,7 @@ class CampaignsController extends Controller
 //            $grafica[$campaign] = $graficat;
         }//FIN DEL FOR
 //dd($grafica);
-        return view('campaigns.index', ['campaigns' => $campaigns , 'grafica' => $grafica, 'dias' => $dias, 'subcampaigns' => $subcampaigns, 'user' => Auth::user()]);
+        return view('campaigns.index', ['campaigns' => $campaigns, 'grafica' => $grafica, 'dias' => $dias, 'subcampaigns' => $subcampaigns, 'user' => Auth::user()]);
     }
 
     /**
@@ -124,9 +124,8 @@ class CampaignsController extends Controller
             $user = Auth::user();
 
             $interactions = Interaction::all();
-            $price=[];
-            foreach($interactions as $k=>$item)
-            {
+            $price = [];
+            foreach ($interactions as $k => $item) {
                 $price[$item->name] = $item->amount;
             }
             //dd($prices);
@@ -585,6 +584,7 @@ class CampaignsController extends Controller
     public function show($id)
     {
         $porcentaje = 0.0;
+        $json = "{}";
         $campaign = Campaign::find($id); //busca la campaña
         if ($campaign && $campaign->administrator_id == auth()->user()->_id) {
             /******     saca el color y el icono que se va a usar regresa un array  ********/
@@ -809,37 +809,40 @@ class CampaignsController extends Controller
 
             $count = 0;
             $chart5 = [];
-            foreach ($campaign->content['survey'] as $q) {
-                $survey = $collection->aggregate([
-                    [
-                        '$match' => [
-                            'campaign_id' => $campaign->_id,
-                            'survey.q' . $count => ['$exists' => true]
+            if (isset($campaign->content['survey'])) {
+                foreach ($campaign->content['survey'] as $q) {
+                    $survey = $collection->aggregate([
+                        [
+                            '$match' => [
+                                'campaign_id' => $campaign->_id,
+                                'survey.q' . $count => ['$exists' => true]
+                            ]
+                        ],
+                        [
+                            '$group' => [
+                                '_id' =>
+                                    ['answer' => '$survey.q' . $count,
+                                        'gender' => '$user.gender',
+                                        'question' => ['$literal' => 'q' . ($count)]
+                                    ],
+                                'cnt' => ['$sum' => 1]
+                            ]
+                        ],
+                        [
+                            '$sort' => ['_id' => 1]
                         ]
-                    ],
-                    [
-                        '$group' => [
-                            '_id' =>
-                                ['answer' => '$survey.q' . $count,
-                                    'gender' => '$user.gender',
-                                    'question' => ['$literal' => 'q' . ($count)]
-                                ],
-                            'cnt' => ['$sum' => 1]
-                        ]
-                    ],
-                    [
-                        '$sort' => ['_id' => 1]
-                    ]
-                ])['result'];
-                $count++;
-                array_push($chart5, $survey);
+                    ])['result'];
+                    $count++;
+                    array_push($chart5, $survey);
+                }
+
+
+                $json = json_decode($json);
+                foreach ($campaign->content['survey'] as $key => $value) {
+                    $json->$key = array('total' => 0, 'a0' => array('male' => 0, 'female' => 0), 'data' => $value);
+                }
             }
 
-            $json = "{}";
-            $json = json_decode($json);
-            foreach ($campaign->content['survey'] as $key => $value) {
-                $json->$key = array('total' => 0, 'a0' => array('male' => 0, 'female' => 0), 'data' => $value);
-            }
             foreach ($chart5 as $v) {
                 foreach ($v as $c) {
                     if ($c['_id']['gender'] == 'male') {
