@@ -7,8 +7,8 @@
     <div class="container">
         <div class="col 12 margin-breadcrumb hide-on-small-only">
             <div class="col s6">
-                <a href="#!" class="breadcrumb">Home</a>
-                <a href="#!" class="breadcrumb">Campañas</a>
+                <a href="{{route('home')}}" class="breadcrumb">Home</a>
+                <a href="javascript:void(0)" class="breadcrumb">Campañas</a>
             </div>
         </div>
 

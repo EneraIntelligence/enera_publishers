@@ -3,6 +3,7 @@
         <!-- c3.js (charts) -->
 {!! HTML::style('bower_components/c3js-chart/c3.min.css') !!}
 {!! HTML::style(asset('assets/css/campaign.css')) !!}
+{!! HTML::style('css/show.css') !!}
 
 @stop
 
@@ -11,9 +12,9 @@
     <div class="container main-container">
         <div class="row">
             <div class="col 12 margin-breadcrumb hide-on-small-only">
-                <a href="#!" class="breadcrumb">Home</a>
-                <a href="#!" class="breadcrumb">Campañas</a>
-                <a href="#!" class="breadcrumb">{{$cam->name}}</a>
+                <a href="{{route('home')}}" class="breadcrumb">Home</a>
+                <a href="{{route('campaigns::index')}}" class="breadcrumb">Campañas</a>
+                <a href="javascript:void(0)" class="breadcrumb">{{$cam->name}}</a>
             </div>
         </div>
         <div class="row">
@@ -114,19 +115,18 @@
                 </div>
             </div>
         </div>
+
+
     </div>
 
     @stop
 
     @section('scripts')
             <!-- slider script -->
-    {!! HTML::script('js/preview_helper.js') !!}
 
     {!! HTML::script('bower_components/jquery.easy-pie-chart/dist/jquery.easypiechart.min.js') !!}
     {!! HTML::script('bower_components/ionrangeslider/js/ion.rangeSlider.min.js') !!}
-    {!! HTML::script('bower_components/countUp.js/countUp.js') !!}
-    {!! HTML::script('js/circle-progress.js') !!}
-    {!! HTML::style('css/show.css') !!}
+
             <!-- links para que funcione la grafica demografica  -->
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
@@ -148,32 +148,7 @@
 
     <script>
         //-------------------------------------- animacion del circulo  ---------------------------------------------
-        $('#circle').circleProgress({
-            value: {{$porcentaje}}, //lo que se va a llenar con el color
-            size: 98,   //tamaño del circulo
-            startAngle: -300, //de donde va a empezar la animacion
-            reverse: true, //empieza la animacion al contrario
-            thickness: 8,  //el grosor la linea
-            fill: {color: "{!! Publishers\Libraries\CampaignStyleHelper::getStatusColor($cam->status) !!}"} //el color de la linea
-        }).on('circle-animation-progress', function (event, progress) {
-            $(this).find('strong').html(parseInt(100 * progress) + '<i>%</i>');
-        });
 
-        //-------------------------------------- animación de los numeros  ---------------------------------------------
-        var options = {
-            useEasing: true,
-            useGrouping: true,
-            separator: ',',
-            decimal: '.',
-            prefix: '',
-            suffix: ''
-        };
-        var vistos = new CountUp("vistos", 0, {!! $cam->logs()->where('interaction.loaded','exists',true)->count() !!}, 0, 5.0, options);
-        vistos.start();
-        var completados = new CountUp("completados", 0, {!! $cam->logs()->where('interaction.completed','exists',true)->count() !!}, 0, 5.0, options);
-        completados.start();
-        var users = new CountUp("usuarios", 0, {!! $unique_users !!} , 0, 5.0, options);
-        users.start();
         //------------------------------------------Grafica---------------------------------------------
         var grafica = new graficas;
         var menJson = '{!! json_encode($men) !!}';
@@ -188,6 +163,14 @@
         var gra = grafica.genderAge(menObj, womenObj);
         var graf = grafica.intPerHour(intLObj);
 
+        // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+        $('.modal-trigger').leanModal();
+
+        $('.right-corner').click(function () {
+            $('.modal').closeModal();
+        });
+
     </script>
+
 
 @stop
