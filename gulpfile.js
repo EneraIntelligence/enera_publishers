@@ -14,6 +14,8 @@ var elixir = require('laravel-elixir');
 
 elixir(function(mix) {
     mix.sass('app.scss','public/assets/css/app.css');
+    mix.sass('budget.scss','public/assets/css/budget.css');
+    mix.sass('deposits.scss','public/assets/css/deposits.css');
     mix.sass('profile.scss','public/assets/css/profile.css');
     mix.sass('analytics.scss','public/assets/css/analytics.css');
     mix.sass('campaign.scss','public/assets/css/campaign.css');
@@ -21,10 +23,17 @@ elixir(function(mix) {
     mix.sass('loader.scss','public/assets/css/loader.css');
     mix.sass('login_enera.scss','public/assets/css/login_enera.css');
 
+    //interactions scss
+    mix.sass('captcha.scss','public/assets/css/captcha.css');
+    mix.sass('bannerLink.scss','public/assets/css/bannerLink.css');
+    mix.sass('video.scss','public/assets/css/video.css');
+    mix.sass('mailing_list.scss','public/assets/css/mailing_list.css');
+    mix.sass('like.scss','public/assets/css/like.css');
+    mix.sass('survey.scss','public/assets/css/survey.css');
 
     //materialize import to public
     mix.sass([
-            'material-icons.scss',
+            'material-icons.scss', 
             'sticky-footer.scss'
         ],
         'public/css/material-extra.css');

@@ -1,0 +1,76 @@
+.heading_a {
+  margin: 20px 0 15px 0;
+  font: 400 18px/24px Roboto, sans-serif;
+}
+
+.mov {
+  vertical-align: middle !important;
+}
+
+.budget:hover {
+  background-color: #e3f2fd;
+}
+
+.border-bottom {
+  margin-bottom: 10px;
+}
+
+li {
+  height: 55px !important;
+}
+
+.text-small {
+  font-size: 12px!important;
+}
+
+.amount{
+  font-family: Roboto,sans-serif;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 30px;
+}
+
+.td-heading{
+  margin: 0;
+  font-weight: 500;
+  display: block;
+  overflow: hidden;
+  padding-bottom: 1px;
+}
+
+.p25{
+  width: 10%;
+}
+.p75{
+  width: 90%;
+}
+
+.text-muted{
+  color: #757575!important;
+}
+
+.balance td{
+  padding: 5px 0;
+}
+
+.budget-button{
+  margin: 10px;
+  padding: 10px 15px 30px 15px;
+  color: white !important;
+}
+
+.breadcrumb{
+  color: #0091ea!important;
+}
+.breadcrumb:last-child{
+  color: black!important;
+}
+
+.thumb{
+  position: absolute;
+  width: 80px;
+  height: 100px;
+  overflow: hidden;
+  margin-right: 17px;
+  left: 0px;
+}

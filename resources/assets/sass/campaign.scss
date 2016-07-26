@@ -1,173 +1,469 @@
-#vista{
-  min-width:239px;
-}
-
-#img_preview{
-  max-width:207px;
-  max-height:325px;
-  position: absolute !important;
-  top: 189px;
-  margin: 0 50% 0;
-  left: -103px;
-}
-
-#interaccion{
-  max-width:207px;
-  max-height:325px;
-  position: absolute;
-  top: 189px;
-  margin: 0 50% 0;
-  left: -103px;
-}
-
-#video_id{
-  position: absolute;
-  top: 227px;
-  margin: 0 50% 0;
-  left: -100px;
-}
-#Suscribirme{
-  font-size:10px;
-  pointer-events:none;
-  width: 190px;
-  position: absolute;
-  top: 494px;
-  margin: 0 50% 0;
-  left: -95px;
-}
-#map{
-  width: 500px;
-  height: 400px;
-}
-#gmap_markers{
-  width:100%;
-  height:500px;
-}
-#grid{
-  margin-top: 20px;
-}
-
-#container-center{
-  padding:0 20px 0 60px;
-}
-
-#dropdown{
-  margin-bottom:10px;
-  pointer-events:none;
-  opacity:.5;
-}
-#event{
-  pointer-events:none;
-  opacity:.5;
-}
-
-#name{
-  height:80px;
-  margin-bottom: 10px;
-}
-
-.center-text{
-  padding: 10px 10% 0 10%;
-}
-
-.none{
-  display: none;
-}
-
-.view{
-  max-width:200px;
-  max-height:250px;
-  position: absolute;
-  top: 200px;
-  margin: 0 50% 0;
-  left: -100px;
-}
-
-.view-c{
-  max-width:200px;
-  max-height:250px;
-  position: absolute;
-  top: 194px;
-  margin: 0 50% 0;
-  left: -100px;
-}
-
-.boton{
-  pointer-events:none;
-  width: 190px;
-  position: absolute;
-  top: 467px;
-  margin: 0 50% 0;
-  left: -95px;
-}
-
-.abajo{
-  margin-bottom:10px
-}
-
-.margin-10{
-  margin: 10px 0
-}
-
-.bottom-10
-{
-  margin-bottom: 10px;
-}
-
-.top-bottom-20
-{
-  margin-top:13px !important;
-  margin-bottom:10px !important;
-}
-
-.chart_id{
-  margin-top: 15px;
-  height: 100px;
-}
-
-@media only screen and (min-width: 960px)
-{
-  .wizard
-  {
-    .steps
-    {
-      ul{
-        li
-        {
-          width: 20% !important;
-        }
-      }
-    }
+@media only screen and (max-width: 480px){
+  .card-footer{
+    padding: 22px 0 13px 0 ;
+  }
+  .container{
+    margin: 0;
+    width: 100%;
+  }
+  .m-title{
+    margin-left: 15px;
   }
 }
+.margin-breadcrumb{
+  margin: 20px 0;
+  color: black;
+}
+
+.breadcrumb{
+  color: #0091ea!important;
+}
+.breadcrumb:last-child{
+  color: black!important;
+}
+
+.thumb{
+  position: absolute;
+  width: 80px;
+  height: 100px;
+  overflow: hidden;
+  margin-right: 17px;
+  left: 0px;
+}
+
+.bottom-right
+{
+  bottom: 0;
+  position: absolute;
+  right: 0;
+}
+
+.bottom-left
+{
+  bottom: 0;
+  position: absolute;
+  left: 0;
+}
+
+.card-footer{
+  padding: 22px 0 11px 0 ;
+  background-color: #e1f5fe;
+}
+
+#mydiv {
+  position: absolute;
+  top: 62px;
+  left: 23px;
+  width: 206px;
+  height: 336px;
+}
 
 
-.text {
+
+//colors
+$blue: #1565c0;
+$white: #FFFFFF;
+
+//new css
+.menu{
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.icon-menu{
+  background-color: $blue;
+  padding: 5px 1px 5px 5px;
+  margin: 0 18px 0 0;
+  border-radius: 50%;
+  text-align: center;
+  color: $white;
+}
+
+.data-menu{
+  float: right;
+}
+.l-margin{
+  margin-left: 50px;
+}
+
+.bottom-right
+{
+  bottom: 0;
+  position: absolute;
+  right: 0;
+}
+
+.bottom-left
+{
+  bottom: 0;
+  position: absolute;
+  left: 0;
+}
+
+.thumb{
+  position: absolute;
+  width: 80px;
+  height: 100px;
+  overflow: hidden;
+  margin-right: 17px;
+  left: 0px;
+}
+
+.zero{
+  margin: 0;
+  padding: 0;
+}
+
+[data-icon] {
+  &::before {
+    content: attr(data-icon);
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 1em;  /* Preferred icon size */
+    display: inline-block;
+    vertical-align: middle;
+    width: 1em;
+    height: 1em;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+
+    /* Support for all WebKit browsers. */
+    -webkit-font-smoothing: antialiased;
+    /* Support for Safari and Chrome. */
+    text-rendering: optimizeLegibility;
+
+    /* Support for Firefox. */
+    -moz-osx-font-smoothing: grayscale;
+
+    /* Support for IE. */
+    font-feature-settings: 'liga';
+  }
+}
+.svg{
+  width: 100%;
+  height: 100px;
+  margin: 0 auto;
+  top: -112px;
+  right: 1px;
   position: relative;
 }
 
-.text .price {
+.avatar{
+  margin: 0 auto;
+}
+
+canvas {
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+.enera-title{
+  position: relative;
+  top: -50px;;
+}
+
+#mydiv {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: #a5d6a7;
-  padding: 2px 5px;
-  border-radius: 5px;
-  color: #000000;
-  font-size: 10px;
+  top: 62px;
+  left: 23px;
+  width: 206px;
+  height: 336px;
 }
 
-.note{
-  background-color: #a5d6a7;
-  padding: 2px 5px;
-  border-radius: 5px;
-  color: #000000;
-  font-size: 10px;
+.btn-mobil{
+  margin-left: 15%;
+  width: 75%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.sbm-button {
+  border: none;
+  color: white;
+  padding: 15px 25px;
   text-align: center;
-  margin: 10px 0px 0px auto;
-  width: 30%;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
 }
 
-#wizard_advanced-p-0{
-  padding: 48px 24px 25px !important;
+input.error {
+  color:#f23;
 }
+
+input.error:focus{
+  color:#f23;
+  border: none;
+  border-bottom: 1px solid red;
+}
+
+div.error{
+  color: red;
+}
+
+@media only screen and (max-width: 600px){
+  .modal{
+    width: 100%;
+  }
+
+  #btn-modal{
+    padding: 10px 15px;
+  }
+
+
+}
+
+.card_info{
+  margin: 0 0 0 30px;
+  padding: 15px 0 0 0;
+}
+
+.head-info{
+  margin: 10.500px;
+}
+
+.preview-overflow{
+  overflow: hidden;
+  display: none;
+}
+
+.right-corner{
+  position: absolute;
+  right:    5px;
+  top:   5px;
+  color: #c9c9c9;
+  cursor: pointer;
+}
+
+
+.card-campaign{
+  min-height: 575px;
+}
+
+.card-li{
+  min-height: 42px !important;
+}
+
+.margin-image{
+  margin: -20px -20px 5px -20px;
+}
+
+.light-text{
+  font-weight: lighter;
+}
+
+@media only screen and(max-width: 1300px){
+  .main-container{
+    min-width: 90%;
+  }
+}
+
+.collection-item{
+  display: inline-block;
+}
+
+.collection .collection-item {
+  background-color: #fff;
+  line-height: 1.5rem;
+  padding: 10px 20px;
+  margin: 0;
+  border-bottom: 1px solid #e0e0e0 !important;
+}
+
+.collection{
+  border: none;
+}
+
+.int-image{
+  height: auto;
+  pointer-events: none;
+  box-shadow: none;
+  background: none;
+  overflow: hidden;
+}
+
+//old css
+//#vista{
+//  min-width:239px;
+//}
+//
+//#img_preview{
+//  max-width:207px;
+//  max-height:325px;
+//  position: absolute !important;
+//  top: 189px;
+//  margin: 0 50% 0;
+//  left: -103px;
+//}
+//
+//#interaccion{
+//  max-width:207px;
+//  max-height:325px;
+//  position: absolute;
+//  top: 189px;
+//  margin: 0 50% 0;
+//  left: -103px;
+//}
+//
+//#video_id{
+//  position: absolute;
+//  top: 227px;
+//  margin: 0 50% 0;
+//  left: -100px;
+//}
+//#Suscribirme{
+//  font-size:10px;
+//  pointer-events:none;
+//  width: 190px;
+//  position: absolute;
+//  top: 494px;
+//  margin: 0 50% 0;
+//  left: -95px;
+//}
+//#map{
+//  width: 500px;
+//  height: 400px;
+//}
+//#gmap_markers{
+//  width:100%;
+//  height:500px;
+//}
+//#grid{
+//  margin-top: 20px;
+//}
+//
+//#container-center{
+//  padding:0 20px 0 60px;
+//}
+//
+//#dropdown{
+//  margin-bottom:10px;
+//  pointer-events:none;
+//  opacity:.5;
+//}
+//#event{
+//  pointer-events:none;
+//  opacity:.5;
+//}
+//
+//#name{
+//  height:80px;
+//  margin-bottom: 10px;
+//}
+//
+//.center-text{
+//  padding: 10px 10% 0 10%;
+//}
+//
+//.none{
+//  display: none;
+//}
+//
+//.view{
+//  max-width:200px;
+//  max-height:250px;
+//  position: absolute;
+//  top: 200px;
+//  margin: 0 50% 0;
+//  left: -100px;
+//}
+//
+//.view-c{
+//  max-width:200px;
+//  max-height:250px;
+//  position: absolute;
+//  top: 194px;
+//  margin: 0 50% 0;
+//  left: -100px;
+//}
+//
+//.boton{
+//  pointer-events:none;
+//  width: 190px;
+//  position: absolute;
+//  top: 467px;
+//  margin: 0 50% 0;
+//  left: -95px;
+//}
+//
+//.abajo{
+//  margin-bottom:10px
+//}
+//
+//.margin-10{
+//  margin: 10px 0
+//}
+//
+//.bottom-10
+//{
+//  margin-bottom: 10px;
+//}
+//
+//.top-bottom-20
+//{
+//  margin-top:13px !important;
+//  margin-bottom:10px !important;
+//}
+//
+//.chart_id{
+//  margin-top: 15px;
+//  height: 100px;
+//}
+//
+//@media only screen and (min-width: 960px)
+//{
+//  .wizard
+//  {
+//    .steps
+//    {
+//      ul{
+//        li
+//        {
+//          width: 20% !important;
+//        }
+//      }
+//    }
+//  }
+//}
+//
+//
+//.text {
+//  position: relative;
+//}
+//
+//.text .price {
+//  position: absolute;
+//  top: 10px;
+//  right: 10px;
+//  background-color: #a5d6a7;
+//  padding: 2px 5px;
+//  border-radius: 5px;
+//  color: #000000;
+//  font-size: 10px;
+//}
+//
+//.note{
+//  background-color: #a5d6a7;
+//  padding: 2px 5px;
+//  border-radius: 5px;
+//  color: #000000;
+//  font-size: 10px;
+//  text-align: center;
+//  margin: 10px 0px 0px auto;
+//  width: 30%;
+//}
+//
+//#wizard_advanced-p-0{
+//  padding: 48px 24px 25px !important;
+//}
+
+

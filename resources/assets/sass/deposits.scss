@@ -1,0 +1,124 @@
+@media only screen and (max-width: 480px){
+  .b-mobile{
+    margin: 10px 0;
+  }
+}
+
+
+
+
+.heading_a {
+  margin: 20px 0 15px 0;
+  font: 400 18px/24px Roboto, sans-serif;
+}
+
+.mov {
+  vertical-align: middle !important;
+}
+
+.budget:hover {
+  background-color: #e3f2fd;
+}
+
+.border-bottom {
+  margin-bottom: 10px;
+}
+
+li {
+  height: 55px !important;
+}
+
+.text-small {
+  font-size: 12px!important;
+}
+
+.amount{
+  font-family: Roboto,sans-serif;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 30px;
+}
+
+.td-heading{
+  margin: 0;
+  font-weight: 500;
+  display: block;
+  overflow: hidden;
+  padding-bottom: 1px;
+}
+
+.p25{
+  width: 10%;
+}
+.p75{
+  width: 90%;
+}
+
+.text-muted{
+  color: #757575!important;
+}
+
+.balance td{
+  padding: 5px 0;
+}
+
+.budget-button{
+  margin: 10px;
+  padding: 10px 15px 30px 15px;
+  color: white !important;
+}
+
+.tabs .indicator {
+  position: absolute;
+  bottom: 0;
+  height: 2px;
+  background-color: #2196f3;
+  will-change: left, right;
+}
+
+.tabs .tab a {
+  color: #040404;
+}
+
+.tabs .tab a:hover {
+  color: #040404;
+}
+
+.tabs .tab.disabled a {
+  color: #c9c9c9;
+  cursor: default;
+}
+
+.container-center{
+  margin:  0 auto;
+  padding: 0 25px;
+}
+
+.error{
+  color: red;
+}
+input[type=text].error{
+  border-bottom: 1px solid #ff2123;
+  box-shadow: 0 1px 0 0 #ff2123;
+}
+
+.table-of-contents a{
+  color: #FFFFff;
+  padding: 10px 10px 30px 10px;
+}
+
+.breadcrumb{
+  color: #0091ea!important;
+}
+.breadcrumb:last-child{
+  color: black!important;
+}
+
+.thumb{
+  position: absolute;
+  width: 80px;
+  height: 100px;
+  overflow: hidden;
+  margin-right: 17px;
+  left: 0px;
+}
