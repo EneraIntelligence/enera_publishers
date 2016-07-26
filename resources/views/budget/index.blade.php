@@ -9,7 +9,7 @@
     <div class="container" style="width: 85%;">
         <div class="row">
             <div class="col s12">
-                <div class="col s12 margin-breadcrumb" style="padding: 0;">
+                <div class="col s12 margin-breadcrumb" style="padding: 15px 0;">
                     <a href="#!" class="breadcrumb">Home</a>
                     <a href="#!" class="breadcrumb">Presupuestos</a>
                 </div>

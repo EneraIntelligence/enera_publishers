@@ -57,7 +57,6 @@
                    class="tiny material-icons platform-hide white-text">keyboard_arrow_down</i>
             </a>
 
-
             <!-- desktop menu left-->
             <ul class="left hide-on-med-and-down platform-hide">
 
@@ -70,6 +69,10 @@
 
                 <li class="{{ isset($navData["campaigns"])?$navData["campaigns"]:""  }}"><a
                             href="{{ route("campaigns::index") }}">Campañas</a></li>
+
+
+                <li class="{{ isset($navData["budget"])?$navData["budget"]:""  }}"><a
+                            href="{{ route("budget::index") }}">Presupuestos</a></li>
             </ul>
 
             <!-- desktop menu right-->
@@ -99,7 +102,7 @@
                 <!-- avatar -->
 
                     {{--                    <a class="valign-wrapper profile-link" href="{{ route("profile::index") }}" style="padding: 7px 5px 0 0;">--}}
-                    <a class="valign-wrapper profile-link" href="#!" style="padding: 7px 5px 0 0;">
+                    <a class="valign-wrapper profile-link" href="{{ route("profile::index") }}" style="padding: 7px 5px 0 0;">
 
                         <div style="width: 50px; overflow: hidden; height: 50px;
                                 background-image: url('https://s3-us-west-1.amazonaws.com/enera-publishers/avatars/{!! isset($user->image) ? $user->image : 'usern.png'!!}');

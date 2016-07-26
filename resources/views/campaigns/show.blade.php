@@ -18,7 +18,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col m12">
+            <div class="col m12 no-padding">
                 <div class="col s12 m6 l4">
                     <div class="card">
                         <div class="card-content">

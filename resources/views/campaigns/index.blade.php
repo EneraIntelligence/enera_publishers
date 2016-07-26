@@ -11,18 +11,15 @@
                 <a href="javascript:void(0)" class="breadcrumb">Campañas</a>
             </div>
         </div>
-
         <div class="col 12">
-            <h5 class="hide-on-med-and-up">Campañas</h5>
+            <h5 class="hide-on-med-and-up m-title">Campañas</h5>
             @if(count($campaigns) <= 0)
                 <div class="card white">
                     <div class="card-content black-text center-align">
                         <img src="{!! URL::asset('images/icons/banner_new.svg') !!}" alt="">
-
                         <h4 class="heading_a"><br>
                             <span></span>
                         </h4>
-
                         <a class="md-btn md-btn-primary" href="#" onclick="new_campaign.prompt()">
                             ¡Crea tu primer campaña!
                         </a>
@@ -30,15 +27,12 @@
                 </div>
             @else
                 <div class="row">
-
                     @foreach($campaigns as $campaign)
-
-
                         <div class="col s12 m6 l4">
-
                             <div class="card">
                                 <div style="margin-left:87px;">
-                                    <img class="thumb" src="{{"https://s3-us-west-1.amazonaws.com/enera-publishers/items/". ($campaign->interaction['name'] != 'survey' ? $campaign->content['images']['large'] : $campaign->content['images']['survey'])}}">
+                                    <img class="thumb"
+                                         src="{{"https://s3-us-west-1.amazonaws.com/enera-publishers/items/". ($campaign->interaction['name'] != 'survey' ? $campaign->content['images']['large'] : $campaign->content['images']['survey'])}}">
                                     <strong>{{$campaign->name}} <br> </strong>
                             <span>
                             Vistos: 100 <br>
@@ -63,7 +57,6 @@
         </div>
     </div>
 @stop
-
 @section('scripts')
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>

@@ -13,15 +13,15 @@
     <div class="container " style="width: 85%;">
         <div class="row">
             <div class="col s12">
-                <div class="col s12 margin-breadcrumb" >
+                <div class="col s12 margin-breadcrumb" style="padding: 15px 0;">
                     <a href="{{route('home')}}" class="breadcrumb">Home</a>
                     <a href="{{route('budget::index')}}" class="breadcrumb">Presupuestos</a>
                     <a href="javascript:void(0)" class="breadcrumb">Depositos</a>
                 </div>
             </div>
-            <div class="col s12 l4 hide-on-large-only">
+            <div class="col s12 l4 hide-on-large-only ">
                 <h4 class="heading_a">Información de presupuestos</h4>
-                <div class="col s12" style="padding: 0;">
+                <div class="col s12 no-padding" style="padding: 15px 0;">
                     <div class="">
                         <div class="card white table-of-contents">
                             <div class="card-content black-text">
@@ -37,7 +37,7 @@
                 </div>
             </div>
             <div class="col s12 l8">
-                <div class="col s12">
+                <div class="col s12 no-padding">
                     <h4 class="heading_a">Metodos de pago</h4>
                     <div class="card white">
                         <div class="card-content black-text">
