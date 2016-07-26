@@ -5,13 +5,12 @@
            style="margin-right:10px;"></i>Imagen chica :
         <a class="waves-effect waves-light modal-trigger"
            href="#image-small">{!! $cam->content['images']['small'] !!}</a>
-        <div id="image-small" class="modal modal-fixed-footer" style="height: auto;pointer-events: none; box-shadow: none;
-                                                                background: none;">
-                    <div class="responsive-img">
-                        <img class="" style="display: block;margin: auto;"
-                             src="{!! "https://s3-us-west-1.amazonaws.com/enera-publishers/items/". $cam->content['images']['small'] !!}"
-                             alt=""/>
-                    </div>
+        <div id="image-small" class="modal modal-fixed-footer int-image" >
+            <div class="responsive-img">
+                <img class="" style="display: block;margin: auto;"
+                     src="{!! "https://s3-us-west-1.amazonaws.com/enera-publishers/items/". $cam->content['images']['small'] !!}"
+                     alt=""/>
+            </div>
         </div>
     </div>
 
@@ -20,13 +19,12 @@
            style="margin-right:10px;"></i>Imagen grande :
         <a class="waves-effect waves-light modal-trigger"
            href="#image-large">{!! $cam->content['images']['large'] !!}</a>
-        <div id="image-large" class="modal modal-fixed-footer" style="height: auto;pointer-events: none; box-shadow: none;
-                                                                background: none;">
-                    <div class="responsive-img">
-                        <img class="" style="display: block;margin: auto;"
-                             src="{!! "https://s3-us-west-1.amazonaws.com/enera-publishers/items/". $cam->content['images']['large'] !!}"
-                             alt=""/>
-                    </div>
+        <div id="image-large" class="modal modal-fixed-footer int-image">
+            <div class="responsive-img">
+                <img class="" style="display: block;margin: auto;"
+                     src="{!! "https://s3-us-west-1.amazonaws.com/enera-publishers/items/". $cam->content['images']['large'] !!}"
+                     alt=""/>
+            </div>
         </div>
     </div>
 @else
@@ -35,16 +33,15 @@
            style="margin-right:10px;"></i>Imagen encuesta :
         <a class="waves-effect waves-light modal-trigger"
            href="#survey-image">{!! $cam->content['images']['survey'] !!}</a>
-        <div id="survey-image" class="modal modal-fixed-footer" style="height: auto;pointer-events: none; box-shadow: none;
-                                                                background: none;">
-            <div class="responsive-img" >
+        <div id="survey-image" class="modal modal-fixed-footer int-image">
+            <div class="responsive-img">
                 <img class="" style="display: block;margin: auto;"
                      src="{!! "https://s3-us-west-1.amazonaws.com/enera-publishers/items/". $cam->content['images']['survey'] !!}"
                      alt=""/>
             </div>
             {{--<div class="modal-footer">--}}
-                {{--<a href="javascript:void(0)"--}}
-                   {{--class=" modal-action modal-close waves-effect waves-green btn-flat">Aceptar</a>--}}
+            {{--<a href="javascript:void(0)"--}}
+            {{--class=" modal-action modal-close waves-effect waves-green btn-flat">Aceptar</a>--}}
             {{--</div>--}}
         </div>
     </div>
@@ -94,15 +91,15 @@
                     @if(isset($cam->content['survey']))
                         @foreach($cam->content['survey'] as $key => $con)
                             <li data-icon="keyboard_arrow_right">
-                                <span class="azul">P {!! $key[1] !!}:</span>
+                                <span class="azul"> {!! strtoupper($key) !!}:</span>
                                 <span> &nbsp;{!! $con['question'] !!}</span>
-                                @foreach($con['answers'] as $key => $a)
-                                    <ul class="black-text">
-                                        <li data-icon="remove" style="margin-left: 25px;">
-                                            R {!! $key[1] !!}
+                                <ul class="collection">
+                                    @foreach($con['answers'] as $key => $a)
+                                        <li class="collection-item">R {!! $key[1] !!}
                                             : {!! $a !!}</li>
-                                    </ul>
-                                @endforeach
+                                    @endforeach
+                                </ul>
+
                             </li>
                         @endforeach
                     @else

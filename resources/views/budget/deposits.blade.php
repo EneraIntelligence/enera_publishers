@@ -14,9 +14,9 @@
         <div class="row">
             <div class="col s12">
                 <div class="col s12 margin-breadcrumb" >
-                    <a href="#!" class="breadcrumb">Home</a>
-                    <a href="#!" class="breadcrumb">Presupuestos</a>
-                    <a href="#!" class="breadcrumb">Depositos</a>
+                    <a href="{{route('home')}}" class="breadcrumb">Home</a>
+                    <a href="{{route('budget::index')}}" class="breadcrumb">Presupuestos</a>
+                    <a href="javascript:void(0)" class="breadcrumb">Depositos</a>
                 </div>
             </div>
             <div class="col s12 l4 hide-on-large-only">

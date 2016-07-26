@@ -59,11 +59,18 @@ li {
   color: white !important;
 }
 
-.margin-breadcrumb{
-  margin: 20px 0;
-  color: black;
+.breadcrumb{
+  color: #0091ea!important;
+}
+.breadcrumb:last-child{
+  color: black!important;
 }
 
-.breadcrumb{
-  color: black!important;
+.thumb{
+  position: absolute;
+  width: 80px;
+  height: 100px;
+  overflow: hidden;
+  margin-right: 17px;
+  left: 0px;
 }
