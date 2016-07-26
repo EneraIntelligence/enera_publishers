@@ -17,6 +17,7 @@ elixir(function(mix) {
     mix.sass('profile.scss','public/assets/css/profile.css');
     mix.sass('analytics.scss','public/assets/css/analytics.css');
     mix.sass('campaign.scss','public/assets/css/campaign.css');
+    mix.sass('campaign_wizard.scss','public/assets/css/campaign_wizard.css');
     mix.sass('loader.scss','public/assets/css/loader.css');
     mix.sass('login_enera.scss','public/assets/css/login_enera.css');
 

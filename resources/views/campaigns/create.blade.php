@@ -5,6 +5,8 @@
     {!! HTML::style('css/nouislider.css') !!}
     {!! HTML::style('css/cropper.min.css') !!}
 
+    {!! HTML::style('assets/css/campaign_wizard.css') !!}
+
 @stop
 
 @section('content')
@@ -142,7 +144,9 @@
 
         });
 
-
+        $( window ).resize(function() {
+            wizardSetup.onResize();
+        });
 
     </script>
 

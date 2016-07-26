@@ -2,35 +2,34 @@
 /// <reference path="../../../typings/jquery/jquery.d.ts" />
 /// <reference path="../events/EventDispatcher.ts"/>
 /// <reference path="../events/WizardEvents.ts"/>
+/// <reference path="../../../typings/materialize-css/materialize-css.d.ts" />
+/// <reference path="../../../typings/tinymce/tinymce.d.ts" />
 var Step1 = (function () {
     function Step1() {
         this.validForm = false;
-        console.log("constructor");
-        this.validForm = false;
+        var step1 = this;
+        //setup clicks on interactions
+        this.getContainer().find(".collection-item").each(function (index) {
+            $(this).click(function () {
+                var ev = EventDispatcher;
+                ev.trigger(WizardEvents.interactionSelected, $(this).data("interaction"));
+                step1.validForm = true;
+                ev.trigger(WizardEvents.validForm);
+                ev.trigger(WizardEvents.goNext);
+                step1.interaction = $(this).data("interaction");
+            });
+        });
     }
     Step1.prototype.isValid = function () {
-        console.log("isValid: " + this.validForm);
         return this.validForm;
     };
     ;
     Step1.prototype.getData = function () {
-        return {};
+        return { "interaction": this.interaction };
     };
     ;
     Step1.prototype.initialize = function (interacionId) {
-        this.validForm = true;
-        setTimeout(function () {
-            var ev = EventDispatcher;
-            ev.trigger(WizardEvents.interactionSelected, "banner_link");
-            /*
-                         $(this).addClass("indigo active");
-            
-                         $(this).find("img").removeClass("indigo");
-                         $(this).find("img").addClass("white");*/
-            ev.trigger(WizardEvents.validForm, null);
-            ev.trigger(WizardEvents.goNext, null);
-            console.log("event sent");
-        }, 5000);
+        this.validForm = false;
     };
     ;
     Step1.prototype.getContainer = function () {
@@ -41,23 +40,326 @@ var Step1 = (function () {
 }());
 var Step2 = (function () {
     function Step2() {
-        this.validForm = false;
+        this.numQuestions = 5;
+        this.rules = {
+            onsubmit: false,
+            onfocusout: this.labelFix,
+            rules: {
+                link: {
+                    required: true,
+                    url: true
+                },
+                like: {
+                    required: true,
+                    url: true
+                },
+                captcha: {
+                    required: true
+                },
+                mail_name: {
+                    required: true
+                },
+                mail_subject: {
+                    required: true
+                },
+                mailing_content: {
+                    required: true
+                },
+                mail_address: {
+                    required: true,
+                    email: true
+                },
+                question_1: {
+                    required: true
+                },
+                answer_1_1: {
+                    required: true
+                },
+                answer_1_2: {
+                    required: true
+                },
+                image_small: {
+                    required: true
+                },
+                image_large: {
+                    required: true
+                },
+                image_survey: {
+                    required: true
+                },
+                image_video: {
+                    required: true
+                },
+                video: {
+                    required: true
+                }
+            }
+        };
+        this.dataMasks = {
+            "banner_link": { "link": true, "image_small": true, "image_large": true },
+            "like": { "like": true, "image_small": true, "image_large": true },
+            "mailing_list": { "mail_name": true, "mail_address": true, "mail_subject": true, "mailing_content": true },
+            "captcha": { "captcha": true, "image_small": true, "image_large": true },
+            "survey": { "image_survey": true },
+            "video": { "video": true, "image_video": true }
+        };
+        //initialize mask with all the question fields
+        for (var q = 1; q <= this.numQuestions; q++) {
+            var surveyMask = this.dataMasks['survey'];
+            surveyMask["question_" + q] = true;
+            for (var ans = 1; ans <= 4; ans++) {
+                surveyMask["answer_" + q + "_" + ans] = true;
+            }
+        }
+        var step2 = this;
+        //initialize image changes
+        $("#image-small").change(function () {
+            step2.showPreview(event, "#image-small", 600, 602);
+        });
+        $("#image-large").change(function () {
+            step2.showPreview(event, "#image-large", 684, 864);
+        });
+        $("#image-survey").change(function () {
+            step2.showPreview(event, "#image-survey", 684, 400);
+        });
+        $("#image-video").change(function () {
+            step2.showPreview(event, "#image-video", 640, 360);
+        });
+        //video upload
+        $("#video-input").change(function () {
+            step2.uploadVideo();
+        });
+        $("#crop-btn").click(function () {
+            //crop button pressed
+            step2.cropUploadImage();
+        });
     }
     Step2.prototype.isValid = function () {
-        return this.validForm;
+        if (!this.form.valid()) {
+            //fields not valid
+            this.validator.focusInvalid();
+            Materialize.updateTextFields();
+        }
+        else if (this.interactionId == "mailing_list" && tinymce.activeEditor.getContent() == "") {
+            //text area not valid
+            Materialize.toast('¡Debes llenar el contenido del correo!', 4000);
+            tinymce.execCommand('mceFocus', false, '#mailing_content');
+            return false;
+        }
+        return this.form.valid();
     };
     ;
     Step2.prototype.getData = function () {
-        return {};
+        //return the json form data
+        var serialized = $("#data-form").serializeArray();
+        var jsonCam = {};
+        var mask = this.currentMask;
+        // build key-values
+        $.each(serialized, function () {
+            if (mask[this.name] && this.value != "")
+                jsonCam[this.name] = this.value;
+        });
+        //inject images to data
+        if (mask["image_small"] && this.images['small'])
+            jsonCam["image_small"] = this.images['small'];
+        if (mask["image_large"] && this.images['large'])
+            jsonCam["image_large"] = this.images['large'];
+        if (mask["image_survey"] && this.images['survey'])
+            jsonCam["image_survey"] = this.images['survey'];
+        if (mask["image_video"] && this.images['video'])
+            jsonCam["image_video"] = this.images['video'];
+        if (mask["video"] && this.video)
+            jsonCam["video"] = this.video;
+        return jsonCam;
     };
     ;
-    Step2.prototype.initialize = function (interacionId) {
+    Step2.prototype.initialize = function (interactionId) {
+        this.interactionId = interactionId;
+        //initialize rules for the form depending on the interaction
+        this.currentMask = this.dataMasks[interactionId];
+        setTimeout(function () {
+            $("#link-input").focus();
+            var ev = EventDispatcher;
+            ev.trigger(WizardEvents.validForm);
+        }, 400);
+        //hide unnecesary fields and set validation rules
+        this.hideAllExcept(interactionId);
+        this.form = $("#data-form");
+        this.validator = this.getValidator(interactionId);
     };
     ;
     Step2.prototype.getContainer = function () {
         return $("#step_2");
     };
     ;
+    Step2.prototype.showPreview = function (event, previewId, width, height) {
+        //initialize and clear image cropper
+        var imageContainer = $("#image-cropper");
+        imageContainer.empty();
+        imageContainer.append('<img class="responsive-img" src="" alt="">');
+        var output = imageContainer.find("img");
+        output.attr("src", "");
+        var _URL = window.URL || window.webkitURL;
+        var input = event.target;
+        var image = new Image();
+        image.onload = function () {
+            //load image on input field
+            var reader = new FileReader();
+            reader.onload = function () {
+                var dataURL = reader.result;
+                //change modal image to crop
+                output.attr("src", dataURL);
+                $('#modal-image').openModal({
+                    dismissible: false,
+                    complete: function () {
+                        //close on cancel
+                        var input = event.target;
+                        input.value = "";
+                    }
+                });
+                output.cropper({
+                    aspectRatio: width / height,
+                    viewMode: 1,
+                    resizable: true,
+                    zoomable: false,
+                    rotatable: false,
+                    multiple: true,
+                    crop: function (e) {
+                        // save the crop data to have it available when user clicks save
+                        this.cropData = e;
+                        this.cropData.previewId = previewId;
+                        this.cropData.imageWidth = width;
+                        this.cropData.imageHeight = height;
+                        this.cropData.image = image;
+                        this.cropData.previewId = previewId;
+                        this.cropData.input = input;
+                    }
+                });
+            };
+            reader.readAsDataURL(input.files[0]);
+        };
+        image.src = _URL.createObjectURL(input.files[0]);
+    };
+    Step2.prototype.cropUploadImage = function () {
+        //show loader
+        $('#modal-loader').openModal({
+            dismissible: false // Modal can't be dismissed by clicking outside of the modal
+        });
+        //get the crop data
+        var img = this.cropData.image;
+        var x = Math.round(this.cropData.x);
+        var y = Math.round(this.cropData.y);
+        var width = Math.round(this.cropData.width);
+        var height = Math.round(this.cropData.height);
+        var expWidth = Math.round(this.cropData.imageWidth);
+        var expHeight = Math.round(this.cropData.imageHeight);
+        var previewId = this.cropData.previewId;
+        var input = this.cropData.input;
+        if (x < 0)
+            x = 0;
+        if (y < 0)
+            y = 0;
+        if (y + height > img.naturalHeight) {
+            height = img.naturalHeight - y;
+        }
+        if (x + width > img.naturalWidth) {
+            width = img.naturalWidth - x;
+        }
+        //create canvas
+        var resize_canvas = document.createElement('canvas');
+        resize_canvas.width = expWidth;
+        resize_canvas.height = expHeight;
+        //paint canvas with croped portion of image
+        resize_canvas.getContext('2d').drawImage(img, x, y, width, height, 0, 0, expWidth, expHeight);
+        var pic = resize_canvas.toDataURL("image/png");
+        $(this.cropData.previewId + "-cropped").attr('src', pic);
+        //fill data to send to ajax
+        input.value = "";
+        var form_data = new FormData($('#data-form')[0]);
+        form_data.append("imgType", previewId);
+        form_data.append("imgToSave", pic);
+        var inputId = "#" + previewId.substring(1, previewId.length);
+        //console.log("inputId: " + inputId);
+        var inputField = $(inputId);
+        //upload item via ajax
+        $.ajax({
+            url: '/campaigns/save-image',
+            type: 'POST',
+            dataType: 'JSON',
+            data: form_data,
+            cache: false,
+            contentType: false,
+            processData: false
+        }).done(function (data) {
+            this.images[data.imageType] = data;
+            inputField.rules("remove");
+            $('#modal-loader').closeModal();
+            $('#modal-image').closeModal();
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR);
+            console.log(textStatus);
+            console.log(errorThrown);
+            alert("Hubo un problema al subir la imagen. Revisa tu conexión a internet e intenta de nuevo.");
+            setTimeout(function () {
+                $('#modal-loader').closeModal();
+            }, 200);
+        });
+    };
+    Step2.prototype.uploadVideo = function () {
+        //show loader
+        $('#modal-loader').openModal({
+            dismissible: false // Modal can't be dismissed by clicking outside of the modal
+        });
+        var form_data = new FormData($('#data-form')[0]);
+        var inputId = "#video-input";
+        var inputField = $(inputId);
+        //upload item via ajax
+        $.ajax({
+            url: '/campaigns/save-video',
+            type: 'POST',
+            dataType: 'JSON',
+            data: form_data,
+            cache: false,
+            contentType: false,
+            processData: false
+        }).done(function (data) {
+            inputField.rules("remove");
+            this.video = data;
+            this.validator.element("#video-input");
+            $('#modal-loader').closeModal();
+            Materialize.toast('Video subido exitosamente.', 4000);
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            alert("Hubo un problema al subir el video. Verifica que el peso del archivo sea menor a 10mb.");
+            setTimeout(function () {
+                $('#modal-loader').closeModal();
+            }, 200);
+            //inputField.value = "";
+        });
+    };
+    Step2.prototype.hideAllExcept = function (interaction) {
+        $(".data-field").css("display", "none");
+        $(".data-" + interaction).css("display", "block");
+    };
+    Step2.prototype.labelFix = function (element, event) {
+        console.log("derp: " + this);
+        this.validator.element(element);
+        Materialize.updateTextFields();
+    };
+    ;
+    Step2.prototype.getValidator = function (interactionId) {
+        if (this.validator)
+            return this.validator;
+        // var validatorObject = wizard_validators.validators[interactionId];
+        var validatorObject = this.rules;
+        if (validatorObject) {
+            this.validator = this.form.validate(validatorObject);
+            return this.validator;
+        }
+        else {
+            console.log("Error:  wizard_validators.validator for --> " + interactionId + " not created");
+            return null;
+        }
+    };
     return Step2;
 }());
 var Step3 = (function () {

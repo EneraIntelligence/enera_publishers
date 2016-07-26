@@ -1,6 +1,8 @@
 /// imports reference to jquery
 /// <reference path="../../../typings/jquery/jquery.d.ts" />
 /// <reference path="../../../typings/greensock/greensock.d.ts" />
+/// <reference path="../../../typings/materialize-css/materialize-css.d.ts" />
+/// <reference path="../../../typings/pickadate/pickadate.d.ts" />
 /// <reference path="WizardSteps.ts"/>
 /// <reference path="../events/WizardEvents.ts"/>
 var WizardSetup = (function () {
@@ -9,8 +11,11 @@ var WizardSetup = (function () {
         this.interactionId = "";
         this.nextBtn = nextBtn;
         this.prevBtn = prevBtn;
-        this.nextBtn.click(this.goNext);
-        this.prevBtn.click(this.goPrev);
+        var wizard = this;
+        var goNextFunc = function () { wizard.goNext(); };
+        var goPrevFunc = function () { wizard.goPrev(); };
+        this.nextBtn.click(goNextFunc);
+        this.prevBtn.click(goPrevFunc);
         var step1 = new Step1();
         var step2 = new Step2();
         var step3 = new Step3();
@@ -27,12 +32,23 @@ var WizardSetup = (function () {
         TweenLite.set(this.nextBtn, { css: { width: "70%", display: "none" } });
         //setup initial height
         var currentStepContainer = this.steps[this.currentStep].getContainer();
-        this.changeContainerSize(0, currentStepContainer.outerHeight());
+        this.changeContainerSize(0, currentStepContainer.outerHeight() - 7);
     };
     WizardSetup.prototype.onLoad = function () {
         //setup initial height
         var currentStepContainer = this.steps[this.currentStep].getContainer();
-        this.changeContainerSize(0, currentStepContainer.outerHeight());
+        this.changeContainerSize(0, currentStepContainer.outerHeight() - 7);
+        /*
+                let wiz:WizardSetup=this;
+                let func = function(){wiz.onLoad() };
+                setTimeout(func,1000);*/
+    };
+    WizardSetup.prototype.onResize = function () {
+        if (this.timeoutResize)
+            clearTimeout(this.timeoutResize);
+        var wiz = this;
+        var func = function () { wiz.onLoad(); };
+        this.timeoutResize = setTimeout(func, 200);
     };
     WizardSetup.prototype.setupEvents = function () {
         var wizard = this;
@@ -40,7 +56,8 @@ var WizardSetup = (function () {
         var disableNext = function (event) { wizard.enableButton(wizard.nextBtn, false); };
         var nextFunc = function () { wizard.goNext(); };
         //setup events
-        EventDispatcher.on(WizardEvents.interactionSelected, this.changeInteraction);
+        var changeInteraction = function (event, id) { wizard.changeInteraction(event, id); };
+        EventDispatcher.on(WizardEvents.interactionSelected, changeInteraction);
         EventDispatcher.on(WizardEvents.validForm, enableNext);
         EventDispatcher.on(WizardEvents.invalidForm, disableNext);
         EventDispatcher.on(WizardEvents.goNext, nextFunc);
@@ -97,14 +114,12 @@ var WizardSetup = (function () {
         });
     };
     WizardSetup.prototype.changeInteraction = function (event, id) {
-        console.log("interaction changed to " + id);
         this.interactionId = id;
+        console.log(this);
+        console.log("interaction changed to " + this.interactionId);
     };
     WizardSetup.prototype.goNext = function () {
-        //            console.log("going_next:"+$(this).hasClass("disabled"));
-        /*
-         if ($(this).hasClass("disabled"))
-         return;*/
+        console.log(this);
         if (this.currentStep < this.steps.length - 1) {
             var step = this.steps[this.currentStep];
             if (step.isValid()) {
@@ -137,6 +152,7 @@ var WizardSetup = (function () {
             $("#modal-summary-content").html("<pre>" +
                 JSON.stringify(this.steps[this.currentStep].getData(), null, '\t') +
                 "</pre>");
+            $("#modal-summary").openModal();
         }
     };
     WizardSetup.prototype.changeContainerSize = function (currentHeight, nextHeight) {

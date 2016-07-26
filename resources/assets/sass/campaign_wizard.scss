@@ -1,0 +1,46 @@
+.step1
+{
+  .interaction-icon
+  {
+    float: left;
+    width: 50px;
+    margin-left: -60px;
+  }
+
+  .animate-all
+  {
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .side-margin-20px
+  {
+    margin-left: -20px;
+    margin-right: -20px;
+  }
+
+  .clickable
+  {
+    cursor: pointer;
+  }
+
+  .hover-blue:hover
+  {
+    background-color: #00bcd4;
+  }
+
+  .price
+  {
+    font-size: 12px;
+  }
+
+}
+
+
+
+.overflow-hidden
+{
+  overflow: hidden;
+}

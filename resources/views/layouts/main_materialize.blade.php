@@ -215,17 +215,11 @@
     <div class="footer-copyright">
         <div class="container">
 
-            <a class="left grey-text text-lighten-2" href="{!! URL::route('terms') !!}"
-               class="grey-text text-lighten-4 left">Términos y
+            <a href="{!! URL::route('terms') !!}"
+               class="white-text left">Términos y
                 condiciones</a>
 
-        <!--
-            @if(!isset($hideTermsFooter) || !$hideTermsFooter)
-            <a href="{!! URL::route('terms') !!}" class="grey-text text-lighten-4 left">Términos y
-                    condiciones</a>
-            @endif
-                -->
-            <span class="grey-text text-lighten-4 right" style="color: #9e9e9e!important; font-size: 12px;"> © 2016 Enera Intelligence</span>
+            <span class="white-text right" style="font-size: 12px;"> © 2016 Enera Intelligence</span>
 
         </div>
     </div>
