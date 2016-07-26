@@ -1,5 +1,7 @@
 /// imports reference to jquery
 /// <reference path="../../../typings/jquery/jquery.d.ts" />
+/// <reference path="../../../typings/jquery.validation/jquery.validation.d.ts" />
+/// <reference path="../../../typings/cropperjs/cropperjs.d.ts" />
 /// <reference path="../events/EventDispatcher.ts"/>
 /// <reference path="../events/WizardEvents.ts"/>
 /// <reference path="../../../typings/materialize-css/materialize-css.d.ts" />
@@ -41,60 +43,6 @@ var Step1 = (function () {
 var Step2 = (function () {
     function Step2() {
         this.numQuestions = 5;
-        this.rules = {
-            onsubmit: false,
-            onfocusout: this.labelFix,
-            rules: {
-                link: {
-                    required: true,
-                    url: true
-                },
-                like: {
-                    required: true,
-                    url: true
-                },
-                captcha: {
-                    required: true
-                },
-                mail_name: {
-                    required: true
-                },
-                mail_subject: {
-                    required: true
-                },
-                mailing_content: {
-                    required: true
-                },
-                mail_address: {
-                    required: true,
-                    email: true
-                },
-                question_1: {
-                    required: true
-                },
-                answer_1_1: {
-                    required: true
-                },
-                answer_1_2: {
-                    required: true
-                },
-                image_small: {
-                    required: true
-                },
-                image_large: {
-                    required: true
-                },
-                image_survey: {
-                    required: true
-                },
-                image_video: {
-                    required: true
-                },
-                video: {
-                    required: true
-                }
-            }
-        };
         this.dataMasks = {
             "banner_link": { "link": true, "image_small": true, "image_large": true },
             "like": { "like": true, "image_small": true, "image_large": true },
@@ -193,13 +141,14 @@ var Step2 = (function () {
     };
     ;
     Step2.prototype.showPreview = function (event, previewId, width, height) {
+        console.log("showPreview: " + this);
         //initialize and clear image cropper
         var imageContainer = $("#image-cropper");
         imageContainer.empty();
         imageContainer.append('<img class="responsive-img" src="" alt="">');
         var output = imageContainer.find("img");
         output.attr("src", "");
-        var _URL = window.URL || window.webkitURL;
+        var _URL = window.URL;
         var input = event.target;
         var image = new Image();
         image.onload = function () {
@@ -213,7 +162,6 @@ var Step2 = (function () {
                     dismissible: false,
                     complete: function () {
                         //close on cancel
-                        var input = event.target;
                         input.value = "";
                     }
                 });
@@ -341,7 +289,8 @@ var Step2 = (function () {
         $(".data-" + interaction).css("display", "block");
     };
     Step2.prototype.labelFix = function (element, event) {
-        console.log("derp: " + this);
+        //console.log("herp: "+this);
+        //console.log("derp: "+this.validator);
         this.validator.element(element);
         Materialize.updateTextFields();
     };
@@ -349,8 +298,63 @@ var Step2 = (function () {
     Step2.prototype.getValidator = function (interactionId) {
         if (this.validator)
             return this.validator;
+        var step = this;
+        var labelFixFunc = function (element, event) { step.labelFix(element, event); };
         // var validatorObject = wizard_validators.validators[interactionId];
-        var validatorObject = this.rules;
+        var validatorObject = {
+            onsubmit: false,
+            onfocusout: labelFixFunc,
+            rules: {
+                link: {
+                    required: true,
+                    url: true
+                },
+                like: {
+                    required: true,
+                    url: true
+                },
+                captcha: {
+                    required: true
+                },
+                mail_name: {
+                    required: true
+                },
+                mail_subject: {
+                    required: true
+                },
+                mailing_content: {
+                    required: true
+                },
+                mail_address: {
+                    required: true,
+                    email: true
+                },
+                question_1: {
+                    required: true
+                },
+                answer_1_1: {
+                    required: true
+                },
+                answer_1_2: {
+                    required: true
+                },
+                image_small: {
+                    required: true
+                },
+                image_large: {
+                    required: true
+                },
+                image_survey: {
+                    required: true
+                },
+                image_video: {
+                    required: true
+                },
+                video: {
+                    required: true
+                }
+            }
+        };
         if (validatorObject) {
             this.validator = this.form.validate(validatorObject);
             return this.validator;

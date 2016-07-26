@@ -38,9 +38,30 @@
 
 }
 
-
-
 .overflow-hidden
 {
   overflow: hidden;
+}
+
+//validator styles
+label.error {
+  color:#f23;
+  //margin-left: 100px;
+  text-align: center;
+}
+.data-mailing_list
+{
+  label.error {
+    width:100%;
+  }
+}
+.btn
+{
+  //error label on buttons
+  label.error{
+    width: 100%;
+    transform: translateY(-104%);
+    font-size: 0.8rem;
+    text-transform: none;
+  }
 }

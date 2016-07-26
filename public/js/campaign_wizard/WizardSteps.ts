@@ -1,5 +1,7 @@
 /// imports reference to jquery
 /// <reference path="../../../typings/jquery/jquery.d.ts" />
+/// <reference path="../../../typings/jquery.validation/jquery.validation.d.ts" />
+/// <reference path="../../../typings/cropperjs/cropperjs.d.ts" />
 /// <reference path="../events/EventDispatcher.ts"/>
 /// <reference path="../events/WizardEvents.ts"/>
 /// <reference path="../../../typings/materialize-css/materialize-css.d.ts" />
@@ -21,7 +23,7 @@ interface BoolFunc {
 interface WizardStep {
     initialize:WizardInitFunc;
     getContainer:getContainerFunc;
-    getData:any;
+    getData:()=>{};
     isValid:BoolFunc;
 }
 
@@ -79,72 +81,6 @@ class Step2 implements WizardStep {
     form:JQuery;
     validator;
     interactionId:string;
-
-    rules= {
-        onsubmit: false,
-        onfocusout: this.labelFix,
-
-        rules: {
-            link: {
-                required: true,
-                url: true
-            },
-            like: {
-                required: true,
-                url: true
-            },
-            captcha: {
-                required: true
-            },
-            mail_name: {
-                required: true
-            },
-            mail_subject: {
-                required: true
-            },
-            mailing_content: {
-                required: true
-            },
-            mail_address:{
-                required:true,
-                email:true
-            },
-            question_1:
-            {
-                required:true
-            },
-            answer_1_1:
-            {
-                required:true
-            },
-            answer_1_2:
-            {
-                required:true
-            },
-            image_small:
-            {
-                required:true
-            },
-            image_large:
-            {
-                required:true
-
-            },
-            image_survey:
-            {
-                required:true
-            },
-            image_video:
-            {
-                required:true
-            },
-            video:
-            {
-                required:true
-            }
-        }
-
-    };
 
     dataMasks = {
         "banner_link": {"link": true, "image_small": true, "image_large": true},
@@ -268,19 +204,21 @@ class Step2 implements WizardStep {
         return $("#step_2");
     };
 
-    private showPreview(event, previewId, width, height) {
+    private showPreview(event:Event, previewId:string, width:number, height:number) {
 
+        console.log("showPreview: "+this);
         //initialize and clear image cropper
-        var imageContainer = $("#image-cropper");
+        let imageContainer:JQuery = $("#image-cropper");
         imageContainer.empty();
         imageContainer.append('<img class="responsive-img" src="" alt="">');
-        var output = imageContainer.find("img");
+        let output:JQuery = imageContainer.find("img");
         output.attr("src", "");
 
-        var _URL = window.URL || window.webkitURL;
-        var input = event.target;
+        let _URL:URL = window.URL;
+        let input:HTMLInputElement = event.target as HTMLInputElement;
 
-        var image:HTMLImageElement = new Image();
+
+        let image:HTMLImageElement = new Image();
         image.onload = function () {
             //load image on input field
             var reader = new FileReader();
@@ -294,7 +232,6 @@ class Step2 implements WizardStep {
                     dismissible: false, // Modal can't be dismissed by clicking outside of the modal
                     complete: function () {
                         //close on cancel
-                        var input = event.target;
                         input.value = "";
                     }
                 });
@@ -378,7 +315,7 @@ class Step2 implements WizardStep {
         input.value = "";
 
 
-        var form_data = new FormData($('#data-form')[0]);
+        var form_data = new FormData($('#data-form')[0] as HTMLFormElement);
         form_data.append("imgType", previewId);
         form_data.append("imgToSave", pic);
 
@@ -431,7 +368,7 @@ class Step2 implements WizardStep {
             dismissible: false // Modal can't be dismissed by clicking outside of the modal
         });
 
-        var form_data = new FormData($('#data-form')[0]);
+        var form_data = new FormData($('#data-form')[0] as HTMLFormElement);
 
         var inputId = "#video-input";
         var inputField = $(inputId);
@@ -482,7 +419,8 @@ class Step2 implements WizardStep {
 
 
     private labelFix(element, event){
-        console.log("derp: "+this);
+        //console.log("herp: "+this);
+        //console.log("derp: "+this.validator);
         this.validator.element(element);
         Materialize.updateTextFields();
     };
@@ -495,8 +433,74 @@ class Step2 implements WizardStep {
         if(this.validator)
             return this.validator;
 
+        var step:Step2 = this;
+        var labelFixFunc = function(element, event){step.labelFix(element, event)};
         // var validatorObject = wizard_validators.validators[interactionId];
-        var validatorObject = this.rules;
+        var validatorObject = {
+            onsubmit: false,
+            onfocusout: labelFixFunc,
+
+            rules: {
+                link: {
+                    required: true,
+                    url: true
+                },
+                like: {
+                    required: true,
+                    url: true
+                },
+                captcha: {
+                    required: true
+                },
+                mail_name: {
+                    required: true
+                },
+                mail_subject: {
+                    required: true
+                },
+                mailing_content: {
+                    required: true
+                },
+                mail_address:{
+                    required:true,
+                    email:true
+                },
+                question_1:
+                {
+                    required:true
+                },
+                answer_1_1:
+                {
+                    required:true
+                },
+                answer_1_2:
+                {
+                    required:true
+                },
+                image_small:
+                {
+                    required:true
+                },
+                image_large:
+                {
+                    required:true
+
+                },
+                image_survey:
+                {
+                    required:true
+                },
+                image_video:
+                {
+                    required:true
+                },
+                video:
+                {
+                    required:true
+                }
+            }
+
+        };
 
         if (validatorObject) {
             this.validator=this.form.validate(validatorObject);
