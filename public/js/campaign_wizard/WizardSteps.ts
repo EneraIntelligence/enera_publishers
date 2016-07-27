@@ -8,23 +8,11 @@
 /// <reference path="../../../typings/tinymce/tinymce.d.ts" />
 
 
-interface WizardInitFunc {
-    (interactionId:string):void;
-}
-
-interface getContainerFunc {
-    ():JQuery;
-}
-
-interface BoolFunc {
-    ():boolean;
-}
-
 interface WizardStep {
-    initialize:WizardInitFunc;
-    getContainer:getContainerFunc;
+    initialize:(interactionID:string)=>void;
+    getContainer:()=>JQuery;
     getData:()=>{};
-    isValid:BoolFunc;
+    isValid:()=>boolean;
 }
 
 class Step1 implements WizardStep {
@@ -76,7 +64,7 @@ class Step2 implements WizardStep {
     numQuestions:number = 5;
     video:string;
     cropData;
-    images;
+    images=[];
     currentMask;
     form:JQuery;
     validator;
@@ -206,7 +194,6 @@ class Step2 implements WizardStep {
 
     private showPreview(event:Event, previewId:string, width:number, height:number) {
 
-        console.log("showPreview: "+this);
         //initialize and clear image cropper
         let imageContainer:JQuery = $("#image-cropper");
         imageContainer.empty();
@@ -217,8 +204,11 @@ class Step2 implements WizardStep {
         let _URL:URL = window.URL;
         let input:HTMLInputElement = event.target as HTMLInputElement;
 
-
         let image:HTMLImageElement = new Image();
+        image.src = _URL.createObjectURL(input.files[0]);
+
+        let step2:Step2 = this;
+
         image.onload = function () {
             //load image on input field
             var reader = new FileReader();
@@ -245,15 +235,14 @@ class Step2 implements WizardStep {
                     rotatable: false,
                     multiple: true,
                     crop: function (e) {
-
                         // save the crop data to have it available when user clicks save
-                        this.cropData = e;
-                        this.cropData.previewId = previewId;
-                        this.cropData.imageWidth = width;
-                        this.cropData.imageHeight = height;
-                        this.cropData.image = image;
-                        this.cropData.previewId = previewId;
-                        this.cropData.input = input;
+                        step2.cropData = e;
+                        step2.cropData.previewId = previewId;
+                        step2.cropData.imageWidth = width;
+                        step2.cropData.imageHeight = height;
+                        step2.cropData.image = image;
+                        step2.cropData.previewId = previewId;
+                        step2.cropData.input = input;
 
                     }
                 });
@@ -263,13 +252,12 @@ class Step2 implements WizardStep {
             reader.readAsDataURL(input.files[0]);
 
         };
-        image.src = _URL.createObjectURL(input.files[0]);
 
 
     }
 
 
-    cropUploadImage() {
+    private cropUploadImage() {
 
         //show loader
         $('#modal-loader').openModal({
@@ -323,10 +311,11 @@ class Step2 implements WizardStep {
         //console.log("inputId: " + inputId);
         var inputField = $(inputId);
 
+        let step2:Step2 = this;
 
         //upload item via ajax
         $.ajax({
-            url: '/campaigns/save-image',
+            url: '/campaigns/save_item',
             type: 'POST',
             dataType: 'JSON',
             data: form_data,
@@ -335,13 +324,27 @@ class Step2 implements WizardStep {
             processData: false
         }).done(function (data) {
 
-            this.images[data.imageType] = data;
+            if( data.success )
+            {
+                step2.images[data.imageType] = data;
 
-            inputField.rules("remove");
+                inputField.rules("remove");
 
 
-            $('#modal-loader').closeModal();
-            $('#modal-image').closeModal();
+                $('#modal-loader').closeModal();
+                $('#modal-image').closeModal();
+            }
+            else
+            {
+                console.log("ajax success, image upload fail: "+data.msg);
+                alert("Hubo un problema al subir la imagen. Revisa tu conexión a internet e intenta de nuevo.");
+
+                setTimeout(function () {
+                    $('#modal-loader').closeModal();
+                }, 200);
+            }
+
+
 
         }).fail(function (jqXHR, textStatus, errorThrown) {
 
@@ -418,7 +421,7 @@ class Step2 implements WizardStep {
     }
 
 
-    private labelFix(element, event){
+    private labelFix(element, event) {
         //console.log("herp: "+this);
         //console.log("derp: "+this.validator);
         this.validator.element(element);
@@ -426,15 +429,15 @@ class Step2 implements WizardStep {
     };
 
 
+    public getValidator(interactionId) {
 
-
-    public getValidator (interactionId) {
-
-        if(this.validator)
+        if (this.validator)
             return this.validator;
 
         var step:Step2 = this;
-        var labelFixFunc = function(element, event){step.labelFix(element, event)};
+        var labelFixFunc = function (element, event) {
+            step.labelFix(element, event)
+        };
         // var validatorObject = wizard_validators.validators[interactionId];
         var validatorObject = {
             onsubmit: false,
@@ -461,49 +464,41 @@ class Step2 implements WizardStep {
                 mailing_content: {
                     required: true
                 },
-                mail_address:{
-                    required:true,
-                    email:true
+                mail_address: {
+                    required: true,
+                    email: true
                 },
-                question_1:
-                {
-                    required:true
+                question_1: {
+                    required: true
                 },
-                answer_1_1:
-                {
-                    required:true
+                answer_1_1: {
+                    required: true
                 },
-                answer_1_2:
-                {
-                    required:true
+                answer_1_2: {
+                    required: true
                 },
-                image_small:
-                {
-                    required:true
+                image_small: {
+                    required: true
                 },
-                image_large:
-                {
-                    required:true
+                image_large: {
+                    required: true
 
                 },
-                image_survey:
-                {
-                    required:true
+                image_survey: {
+                    required: true
                 },
-                image_video:
-                {
-                    required:true
+                image_video: {
+                    required: true
                 },
-                video:
-                {
-                    required:true
+                video: {
+                    required: true
                 }
             }
 
         };
 
         if (validatorObject) {
-            this.validator=this.form.validate(validatorObject);
+            this.validator = this.form.validate(validatorObject);
             return this.validator;
         }
         else {

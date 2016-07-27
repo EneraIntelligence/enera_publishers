@@ -43,6 +43,7 @@ var Step1 = (function () {
 var Step2 = (function () {
     function Step2() {
         this.numQuestions = 5;
+        this.images = [];
         this.dataMasks = {
             "banner_link": { "link": true, "image_small": true, "image_large": true },
             "like": { "like": true, "image_small": true, "image_large": true },
@@ -141,7 +142,6 @@ var Step2 = (function () {
     };
     ;
     Step2.prototype.showPreview = function (event, previewId, width, height) {
-        console.log("showPreview: " + this);
         //initialize and clear image cropper
         var imageContainer = $("#image-cropper");
         imageContainer.empty();
@@ -151,6 +151,8 @@ var Step2 = (function () {
         var _URL = window.URL;
         var input = event.target;
         var image = new Image();
+        image.src = _URL.createObjectURL(input.files[0]);
+        var step2 = this;
         image.onload = function () {
             //load image on input field
             var reader = new FileReader();
@@ -174,19 +176,18 @@ var Step2 = (function () {
                     multiple: true,
                     crop: function (e) {
                         // save the crop data to have it available when user clicks save
-                        this.cropData = e;
-                        this.cropData.previewId = previewId;
-                        this.cropData.imageWidth = width;
-                        this.cropData.imageHeight = height;
-                        this.cropData.image = image;
-                        this.cropData.previewId = previewId;
-                        this.cropData.input = input;
+                        step2.cropData = e;
+                        step2.cropData.previewId = previewId;
+                        step2.cropData.imageWidth = width;
+                        step2.cropData.imageHeight = height;
+                        step2.cropData.image = image;
+                        step2.cropData.previewId = previewId;
+                        step2.cropData.input = input;
                     }
                 });
             };
             reader.readAsDataURL(input.files[0]);
         };
-        image.src = _URL.createObjectURL(input.files[0]);
     };
     Step2.prototype.cropUploadImage = function () {
         //show loader
@@ -229,9 +230,10 @@ var Step2 = (function () {
         var inputId = "#" + previewId.substring(1, previewId.length);
         //console.log("inputId: " + inputId);
         var inputField = $(inputId);
+        var step2 = this;
         //upload item via ajax
         $.ajax({
-            url: '/campaigns/save-image',
+            url: '/campaigns/save_item',
             type: 'POST',
             dataType: 'JSON',
             data: form_data,
@@ -239,10 +241,19 @@ var Step2 = (function () {
             contentType: false,
             processData: false
         }).done(function (data) {
-            this.images[data.imageType] = data;
-            inputField.rules("remove");
-            $('#modal-loader').closeModal();
-            $('#modal-image').closeModal();
+            if (data.success) {
+                step2.images[data.imageType] = data;
+                inputField.rules("remove");
+                $('#modal-loader').closeModal();
+                $('#modal-image').closeModal();
+            }
+            else {
+                console.log("ajax success, image upload fail: " + data.msg);
+                alert("Hubo un problema al subir la imagen. Revisa tu conexión a internet e intenta de nuevo.");
+                setTimeout(function () {
+                    $('#modal-loader').closeModal();
+                }, 200);
+            }
         }).fail(function (jqXHR, textStatus, errorThrown) {
             console.log(jqXHR);
             console.log(textStatus);
@@ -299,7 +310,9 @@ var Step2 = (function () {
         if (this.validator)
             return this.validator;
         var step = this;
-        var labelFixFunc = function (element, event) { step.labelFix(element, event); };
+        var labelFixFunc = function (element, event) {
+            step.labelFix(element, event);
+        };
         // var validatorObject = wizard_validators.validators[interactionId];
         var validatorObject = {
             onsubmit: false,

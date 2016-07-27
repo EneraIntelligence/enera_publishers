@@ -411,25 +411,25 @@ class CampaignsController extends Controller
     public function saveItem(Request $request)
     {
 
-        //echo "{success: 'true', img_length:".print_r($request)."}";
+        $img = Input::get('imgToSave');
 
-
-        if (Input::get("imgType") == ".banner-1") {
+        if (Input::get("imgType") == "#image-small") {
             //saving small image
-            $img = Input::get('imgToSave');
             $imageType = "small";
-        } else if (Input::get("imgType") == ".banner-2") {
+        } else if (Input::get("imgType") == "#image-large") {
             //saving large image
-            $img = Input::get('imgToSave');
             $imageType = "large";
-
-        } else if (Input::get("imgType") == ".banner-survey") {
-
-            $img = Input::get('imgToSave');
+        } else if (Input::get("imgType") == "#image-survey") {
+            //survey image
             $imageType = "survey";
+        } else if (Input::get("imgType") == "#image-video") {
+            //video image
+            $imageType = "video";
         } else {
-            $res = array('success' => false, 'msg' => 'error with image type');
-            echo $res;
+            //not recognized image
+            $res = array('success' => false, 'msg' => 'error with image type: '.Input::get("imgType"));
+            echo json_encode($res);
+            return;
         }
 
         //transforming string to image file

@@ -138,7 +138,6 @@ class WizardSetup {
 
         if (direction == -1) {
             setTimeout(function () {
-//                    console.log(direction);
                 var targetY = $("#wizard-content").offset().top - container.offset().top + 20;
                 TweenLite.set(container, {y: targetY});
             }, 10);
@@ -166,14 +165,10 @@ class WizardSetup {
 
     private changeInteraction(event, id) {
         this.interactionId = id;
-        console.log(this);
-        console.log("interaction changed to " + this.interactionId);
     }
 
 
     private goNext() {
-
-        console.log(this);
 
         if (this.currentStep < this.steps.length - 1) {
             var step = this.steps[this.currentStep];
