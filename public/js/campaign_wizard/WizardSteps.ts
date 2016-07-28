@@ -2,6 +2,7 @@
 /// <reference path="../../../typings/jquery/jquery.d.ts" />
 /// <reference path="../../../typings/jquery.validation/jquery.validation.d.ts" />
 /// <reference path="../../../typings/cropperjs/cropperjs.d.ts" />
+/// <reference path="../../../typings/nouislider/nouislider.d.ts" />
 /// <reference path="../events/EventDispatcher.ts"/>
 /// <reference path="../events/WizardEvents.ts"/>
 /// <reference path="../../../typings/materialize-css/materialize-css.d.ts" />
@@ -119,6 +120,9 @@ class Step2 implements WizardStep {
     }
 
     isValid() {
+        //TODO remove line below
+        return true;
+
         if (!this.form.valid()) {
             //fields not valid
             this.validator.focusInvalid();
@@ -133,6 +137,7 @@ class Step2 implements WizardStep {
         }
 
         return this.form.valid();
+
     };
 
     getData() {
@@ -511,17 +516,241 @@ class Step2 implements WizardStep {
 }
 
 class Step3 implements WizardStep {
+
     validForm:boolean = false;
+    age_start:number;
+    age_end:number;
+    start_date:string;
+    end_date:string;
+
+    private maleSelected:boolean = true;
+    private femaleSelected:boolean = true;
+
+    constructor() {
+        //initialize rules for the form depending on the interaction
+        let slider:any = document.getElementById('slider');
+        let step3:Step3 = this;
+
+
+
+        this.setupGenreButtons();
+
+        noUiSlider.create(slider, {
+            start: [13, 100],
+            connect: true,
+            step: 1,
+            margin: 1,
+            range: {
+                'min': 0,
+                'max': 100
+            },
+            format: wNumb({
+                decimals: 0
+            })
+        });
+
+        slider.noUiSlider.on('slide', function () {
+            //console.log(slider.noUiSlider.get());
+            if (slider.noUiSlider.get()[0] < 13)
+                slider.noUiSlider.set([13]);
+            step3.age_start = slider.noUiSlider.get()[0];
+            step3.age_end = slider.noUiSlider.get()[1];
+            $("#age_text").text("Personas de  " + slider.noUiSlider.get()[0] + " a " + slider.noUiSlider.get()[1] + " años.")
+        });
+
+        $('#all').change(function () {
+            var checkboxes = $(this).closest('form').find(':checkbox');
+            if ($(this).is(':checked')) {
+                checkboxes.prop('checked', true);
+            } else {
+                checkboxes.prop('checked', false);
+            }
+        });
+
+        $('#sel').change(function () {
+            var checkboxes = $(this).closest('form').find(':checkbox');
+            if ($(this).is(':checked')) {
+                checkboxes.prop('checked', false);
+            } else {
+                checkboxes.prop('checked', true);
+            }
+        });
+
+        $(':checkbox').change(function () {
+            $("#sel").prop("checked", true);
+            $("#all").prop("checked", false);
+        });
+
+        let d:Date = new Date();
+
+        let month:number = d.getMonth();
+        let day:number = d.getDate() - 1;
+        let year:number = d.getFullYear();
+
+
+        let $input_date = $('#start').pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 15, // Creates a dropdown of 15 years to control year
+            container: "body",
+            monthsFull: ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'],
+            monthsShort: ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'],
+            weekdaysFull: ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'],
+            weekdaysShort: ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'],
+            formatSubmit: 'dd.mm.yyyy',
+            today: 'hoy',
+            clear: 'borrar',
+            close: 'cerrar',
+            onSet: function (arg) {
+
+                $("#end").prop('disabled', false);
+                if ('select' in arg) { //prevent closing on selecting month/year
+                    this.close();
+                }
+                let endDay:number = parseInt(picker_ini.get('select', 'dd'));
+                let endMonth:number = parseInt(picker_ini.get('select', 'mm'));
+                let endYear:number = parseInt(picker_ini.get('select', 'yyyy'));
+
+                var ev = EventDispatcher;
+                ev.trigger(WizardEvents.invalidForm);
+                step3.validForm = false;
+                picker_end.clear();
+                picker_end.set("min", [endYear, endMonth - 1, endDay + 1]);
+
+                step3.start_date = picker_ini.get("select", "dd.mm.yyyy");
+
+            },
+            disable: [
+                true,
+                {from: ['year', 'month', 'day'], to: [2300, 11, 31]}
+            ]
+        });
+
+        var picker_ini = $input_date.pickadate('picker');
+
+
+        var $input_end = $('#end').pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 15, // Creates a dropdown of 15 years to control year
+            container: "body",
+            monthsFull: ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'],
+            monthsShort: ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'],
+            weekdaysFull: ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'],
+            weekdaysShort: ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'],
+            formatSubmit: 'dd.mm.yyyy',
+            today: 'hoy',
+            clear: 'borrar',
+            close: 'cerrar',
+            onSet: function (arg) {
+                if ('select' in arg) { //prevent closing on selecting month/year
+                    var ev = EventDispatcher;
+                    ev.trigger(WizardEvents.validForm);
+                    step3.validForm = true;
+
+                    step3.end_date = picker_end.get("select", "dd.mm.yyyy");
+
+                    this.close();
+                }
+            },
+            onOpen: function () {
+                this.render(true)
+
+            }
+
+        });
+
+        var picker_end = $input_end.pickadate('picker');
+
+    };
+
+    setupGenreButtons():void
+    {
+        let femaleBtn:JQuery = $(".female-btn");
+        let maleBtn:JQuery = $(".male-btn");
+
+        let step3:Step3=this;
+        femaleBtn.click( function(){ step3.toggleGenre(0) });
+        maleBtn.click( function(){ step3.toggleGenre(1) });
+    }
+
+    toggleGenre(btnId:number):void
+    {
+        if(btnId==0)
+        {
+            if(this.maleSelected||!this.femaleSelected)
+            {
+                //toggle only if there will be a genre selected
+                this.femaleSelected=!this.femaleSelected;
+            }
+
+        }
+        else
+        {
+            if(this.femaleSelected||!this.maleSelected)
+            {
+                //toggle only if there will be a genre selected
+                this.maleSelected=!this.maleSelected;
+            }
+        }
+
+        let femaleBtn:JQuery = $(".female-btn");
+        let maleBtn:JQuery = $(".male-btn");
+        let text:JQuery = $("#genres-text");
+
+        text.html("");
+
+        if(this.femaleSelected && this.maleSelected)
+        {
+            femaleBtn.removeClass("grey");
+            maleBtn.removeClass("grey");
+            text.append("Mujeres y hombres")
+        }
+        else if(this.femaleSelected)
+        {
+            femaleBtn.removeClass("grey");
+            maleBtn.addClass("grey");
+            text.append("Sólo mujeres")
+        }
+        else
+        {
+            maleBtn.removeClass("grey");
+            femaleBtn.addClass("grey");
+            text.append("Sólo hombres")
+        }
+
+    }
 
     isValid() {
         return this.validForm;
     };
 
     getData() {
-        return {};
+        //return the json form data
+        let step3:Step3 = this;
+        let serialized = $("#data-filters").serializeArray();
+        let jsonCam = {'menor': step3.age_start, 'mayor': step3.age_end};
+
+        // build key-values
+        $.each(serialized, function () {
+            jsonCam [this.name] = this.value;
+        });
+        jsonCam["start"] = step3.start_date;
+        jsonCam["end"] = step3.end_date;
+
+        return jsonCam;
     };
 
     initialize(interacionId:string) {
+        //initialize
+
+        if(this.validForm)
+        {
+            setTimeout(function () {
+                $("#link-input").focus();
+
+                var ev = EventDispatcher;
+                ev.trigger(WizardEvents.validForm);
+            }, 400);
+        }
 
     };
 

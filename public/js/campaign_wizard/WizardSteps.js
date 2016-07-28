@@ -2,6 +2,7 @@
 /// <reference path="../../../typings/jquery/jquery.d.ts" />
 /// <reference path="../../../typings/jquery.validation/jquery.validation.d.ts" />
 /// <reference path="../../../typings/cropperjs/cropperjs.d.ts" />
+/// <reference path="../../../typings/nouislider/nouislider.d.ts" />
 /// <reference path="../events/EventDispatcher.ts"/>
 /// <reference path="../events/WizardEvents.ts"/>
 /// <reference path="../../../typings/materialize-css/materialize-css.d.ts" />
@@ -84,6 +85,8 @@ var Step2 = (function () {
         });
     }
     Step2.prototype.isValid = function () {
+        //TODO remove line below
+        return true;
         if (!this.form.valid()) {
             //fields not valid
             this.validator.focusInvalid();
@@ -382,16 +385,187 @@ var Step2 = (function () {
 var Step3 = (function () {
     function Step3() {
         this.validForm = false;
+        this.maleSelected = true;
+        this.femaleSelected = true;
+        //initialize rules for the form depending on the interaction
+        var slider = document.getElementById('slider');
+        var step3 = this;
+        this.setupGenreButtons();
+        noUiSlider.create(slider, {
+            start: [13, 100],
+            connect: true,
+            step: 1,
+            margin: 1,
+            range: {
+                'min': 0,
+                'max': 100
+            },
+            format: wNumb({
+                decimals: 0
+            })
+        });
+        slider.noUiSlider.on('slide', function () {
+            //console.log(slider.noUiSlider.get());
+            if (slider.noUiSlider.get()[0] < 13)
+                slider.noUiSlider.set([13]);
+            step3.age_start = slider.noUiSlider.get()[0];
+            step3.age_end = slider.noUiSlider.get()[1];
+            $("#age_text").text("Personas de  " + slider.noUiSlider.get()[0] + " a " + slider.noUiSlider.get()[1] + " años.");
+        });
+        $('#all').change(function () {
+            var checkboxes = $(this).closest('form').find(':checkbox');
+            if ($(this).is(':checked')) {
+                checkboxes.prop('checked', true);
+            }
+            else {
+                checkboxes.prop('checked', false);
+            }
+        });
+        $('#sel').change(function () {
+            var checkboxes = $(this).closest('form').find(':checkbox');
+            if ($(this).is(':checked')) {
+                checkboxes.prop('checked', false);
+            }
+            else {
+                checkboxes.prop('checked', true);
+            }
+        });
+        $(':checkbox').change(function () {
+            $("#sel").prop("checked", true);
+            $("#all").prop("checked", false);
+        });
+        var d = new Date();
+        var month = d.getMonth();
+        var day = d.getDate() - 1;
+        var year = d.getFullYear();
+        var $input_date = $('#start').pickadate({
+            selectMonths: true,
+            selectYears: 15,
+            container: "body",
+            monthsFull: ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'],
+            monthsShort: ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'],
+            weekdaysFull: ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'],
+            weekdaysShort: ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'],
+            formatSubmit: 'dd.mm.yyyy',
+            today: 'hoy',
+            clear: 'borrar',
+            close: 'cerrar',
+            onSet: function (arg) {
+                $("#end").prop('disabled', false);
+                if ('select' in arg) {
+                    this.close();
+                }
+                var endDay = parseInt(picker_ini.get('select', 'dd'));
+                var endMonth = parseInt(picker_ini.get('select', 'mm'));
+                var endYear = parseInt(picker_ini.get('select', 'yyyy'));
+                var ev = EventDispatcher;
+                ev.trigger(WizardEvents.invalidForm);
+                step3.validForm = false;
+                picker_end.clear();
+                picker_end.set("min", [endYear, endMonth - 1, endDay + 1]);
+                step3.start_date = picker_ini.get("select", "dd.mm.yyyy");
+            },
+            disable: [
+                true,
+                { from: ['year', 'month', 'day'], to: [2300, 11, 31] }
+            ]
+        });
+        var picker_ini = $input_date.pickadate('picker');
+        var $input_end = $('#end').pickadate({
+            selectMonths: true,
+            selectYears: 15,
+            container: "body",
+            monthsFull: ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'],
+            monthsShort: ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'],
+            weekdaysFull: ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'],
+            weekdaysShort: ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'],
+            formatSubmit: 'dd.mm.yyyy',
+            today: 'hoy',
+            clear: 'borrar',
+            close: 'cerrar',
+            onSet: function (arg) {
+                if ('select' in arg) {
+                    var ev = EventDispatcher;
+                    ev.trigger(WizardEvents.validForm);
+                    step3.validForm = true;
+                    step3.end_date = picker_end.get("select", "dd.mm.yyyy");
+                    this.close();
+                }
+            },
+            onOpen: function () {
+                this.render(true);
+            }
+        });
+        var picker_end = $input_end.pickadate('picker');
     }
+    ;
+    Step3.prototype.setupGenreButtons = function () {
+        var femaleBtn = $(".female-btn");
+        var maleBtn = $(".male-btn");
+        var step3 = this;
+        femaleBtn.click(function () { step3.toggleGenre(0); });
+        maleBtn.click(function () { step3.toggleGenre(1); });
+    };
+    Step3.prototype.toggleGenre = function (btnId) {
+        if (btnId == 0) {
+            if (this.maleSelected || !this.femaleSelected) {
+                //toggle only if there will be a genre selected
+                this.femaleSelected = !this.femaleSelected;
+            }
+        }
+        else {
+            if (this.femaleSelected || !this.maleSelected) {
+                //toggle only if there will be a genre selected
+                this.maleSelected = !this.maleSelected;
+            }
+        }
+        var femaleBtn = $(".female-btn");
+        var maleBtn = $(".male-btn");
+        var text = $("#genres-text");
+        text.html("");
+        if (this.femaleSelected && this.maleSelected) {
+            femaleBtn.removeClass("grey");
+            maleBtn.removeClass("grey");
+            text.append("Mujeres y hombres");
+        }
+        else if (this.femaleSelected) {
+            femaleBtn.removeClass("grey");
+            maleBtn.addClass("grey");
+            text.append("Sólo mujeres");
+        }
+        else {
+            maleBtn.removeClass("grey");
+            femaleBtn.addClass("grey");
+            text.append("Sólo hombres");
+        }
+    };
     Step3.prototype.isValid = function () {
         return this.validForm;
     };
     ;
     Step3.prototype.getData = function () {
-        return {};
+        //return the json form data
+        var step3 = this;
+        var serialized = $("#data-filters").serializeArray();
+        var jsonCam = { 'menor': step3.age_start, 'mayor': step3.age_end };
+        // build key-values
+        $.each(serialized, function () {
+            jsonCam[this.name] = this.value;
+        });
+        jsonCam["start"] = step3.start_date;
+        jsonCam["end"] = step3.end_date;
+        return jsonCam;
     };
     ;
     Step3.prototype.initialize = function (interacionId) {
+        //initialize
+        if (this.validForm) {
+            setTimeout(function () {
+                $("#link-input").focus();
+                var ev = EventDispatcher;
+                ev.trigger(WizardEvents.validForm);
+            }, 400);
+        }
     };
     ;
     Step3.prototype.getContainer = function () {

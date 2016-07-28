@@ -65,3 +65,27 @@ label.error {
     text-transform: none;
   }
 }
+
+.male-btn, .female-btn
+{
+  height: 80px;
+  padding: 10px;
+}
+
+.genre-container
+{
+  width: 164px;
+  margin: 0 auto;
+}
+
+@media only screen and(max-width: 1300px){
+  .main-container{
+    min-width: 90%;
+  }
+}
+
+.main-container
+{
+  max-width: 1200px;
+  margin: 0 auto;
+}
