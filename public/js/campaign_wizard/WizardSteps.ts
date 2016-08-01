@@ -120,9 +120,6 @@ class Step2 implements WizardStep {
     }
 
     isValid() {
-        //TODO remove line below
-        return true;
-
         if (!this.form.valid()) {
             //fields not valid
             this.validator.focusInvalid();
@@ -642,7 +639,7 @@ class Step3 implements WizardStep {
             close: 'cerrar',
             onSet: function (arg) {
                 if ('select' in arg) { //prevent closing on selecting month/year
-                    var ev = EventDispatcher;
+                    let ev = EventDispatcher;
                     ev.trigger(WizardEvents.validForm);
                     step3.validForm = true;
 
@@ -761,6 +758,18 @@ class Step3 implements WizardStep {
 
 class Step4 implements WizardStep {
     validForm:boolean = false;
+    interactionPrice:number=0;
+    constructor()
+    {
+        let step4:Step4 = this;
+
+        $("#budget_input").keyup(
+            function()
+            {
+                step4.validForm = step4.updateBudget(this.value);
+            }
+        );
+    }
 
     isValid() {
         return this.validForm;
@@ -771,16 +780,62 @@ class Step4 implements WizardStep {
     };
 
     initialize(interacionId:string) {
+        //hide other prices
+        this.hideAllExcept(interacionId);
+
+        let step4=this;
+        step4.validForm = step4.updateBudget($("#budget_input").val());
 
     };
 
     getContainer() {
         return $("#step_4");
     };
+
+    private hideAllExcept(interaction) {
+        $(".data-field").css("display", "none");
+        $(".data-" + interaction).css("display", "block");
+
+        let step4:Step4=this;
+        step4.interactionPrice = Number( $("#price-" + interaction).html().trim().substr(1).replace(",","") );
+        // console.log( "derp:"+interaction+" - price:"+$("#price-" + interaction).html() )
+    }
+
+
+    private updateBudget (val:string)
+    {
+        let current = $("#currentBalance");
+        let balance:number = Number( current.html().trim().substr(1).replace(",","") );
+        let amount:number = Number( val.substr(1).replace(",","") );
+        let total:number = balance-amount;
+
+        let balanceHtml:JQuery = $("#balance");
+        balanceHtml.removeClass("red-text");
+
+        let numInteractions = $("#num_interactions");
+        numInteractions.html("0");
+
+        if(total<0 || isNaN(total) || amount<100 )
+        {
+            balanceHtml.html("Cantidad inválida (mínimo $100.00)");
+            balanceHtml.addClass("red-text");
+            EventDispatcher.trigger(WizardEvents.invalidForm);
+            return false;
+        }
+        balanceHtml.html("$"+total);
+        numInteractions.html( ""+Math.floor( amount/this.interactionPrice ) );
+        EventDispatcher.trigger(WizardEvents.validForm);
+        return true;
+    }
 }
 
 class Step5 implements WizardStep {
     validForm:boolean = false;
+
+    constructor() {
+
+
+    }
 
     isValid() {
         return this.validForm;

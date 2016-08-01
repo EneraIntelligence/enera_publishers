@@ -85,8 +85,6 @@ var Step2 = (function () {
         });
     }
     Step2.prototype.isValid = function () {
-        //TODO remove line below
-        return true;
         if (!this.form.valid()) {
             //fields not valid
             this.validator.focusInvalid();
@@ -577,6 +575,11 @@ var Step3 = (function () {
 var Step4 = (function () {
     function Step4() {
         this.validForm = false;
+        this.interactionPrice = 0;
+        var step4 = this;
+        $("#budget_input").keyup(function () {
+            step4.validForm = step4.updateBudget(this.value);
+        });
     }
     Step4.prototype.isValid = function () {
         return this.validForm;
@@ -587,12 +590,43 @@ var Step4 = (function () {
     };
     ;
     Step4.prototype.initialize = function (interacionId) {
+        //hide other prices
+        this.hideAllExcept(interacionId);
+        var step4 = this;
+        step4.validForm = step4.updateBudget($("#budget_input").val());
     };
     ;
     Step4.prototype.getContainer = function () {
         return $("#step_4");
     };
     ;
+    Step4.prototype.hideAllExcept = function (interaction) {
+        $(".data-field").css("display", "none");
+        $(".data-" + interaction).css("display", "block");
+        var step4 = this;
+        step4.interactionPrice = Number($("#price-" + interaction).html().trim().substr(1).replace(",", ""));
+        // console.log( "derp:"+interaction+" - price:"+$("#price-" + interaction).html() )
+    };
+    Step4.prototype.updateBudget = function (val) {
+        var current = $("#currentBalance");
+        var balance = Number(current.html().trim().substr(1).replace(",", ""));
+        var amount = Number(val.substr(1).replace(",", ""));
+        var total = balance - amount;
+        var balanceHtml = $("#balance");
+        balanceHtml.removeClass("red-text");
+        var numInteractions = $("#num_interactions");
+        numInteractions.html("0");
+        if (total < 0 || isNaN(total) || amount < 100) {
+            balanceHtml.html("Cantidad inválida (mínimo $100.00)");
+            balanceHtml.addClass("red-text");
+            EventDispatcher.trigger(WizardEvents.invalidForm);
+            return false;
+        }
+        balanceHtml.html("$" + total);
+        numInteractions.html("" + Math.floor(amount / this.interactionPrice));
+        EventDispatcher.trigger(WizardEvents.validForm);
+        return true;
+    };
     return Step4;
 }());
 var Step5 = (function () {

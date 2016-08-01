@@ -30,26 +30,6 @@
                         <p>Genero:</p>
                         <br>
 
-                        <!--
-                        <div class="row">
-                            <div class="col s6 m4">
-                                <input class="with-gap" name="sex" type="radio" id="val1" value="caballeros"/>
-                                <label for="val1">Hombres</label>
-                            </div>
-
-                            <div class="col s6 m4">
-                                <input class="with-gap" name="sex" type="radio" id="val2" value="damas"/>
-                                <label for="val2">Mujeres</label>
-                            </div>
-
-                            <div class="col s6 m4">
-                                <input class="with-gap" name="sex" type="radio" id="val3" value="ambos" checked/>
-                                <label for="val3">Ambos</label>
-                            </div>
-
-                        </div>
-                        -->
-
                         <div class="row">
                             <div class="genre-container">
                                 <div class="female-btn btn">

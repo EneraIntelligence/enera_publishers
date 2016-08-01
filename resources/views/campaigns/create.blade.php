@@ -160,6 +160,9 @@
     {!! HTML::script('js/jquery-validation/dist/jquery.validate.min.js') !!}
     {!! HTML::script('js/jquery-validation/dist/localization/messages_es.min.js') !!}
 
+    {!! HTML::script('bower_components/jquery.inputmask/dist/jquery.inputmask.bundle.js') !!}
+
+
     <!-- wysiwyg -->
     {!! HTML::script('js/tinymce/tinymce.min.js') !!}
 
@@ -172,7 +175,7 @@
 
 
         $(document).ready(function () {
-
+            $(":input").inputmask();
             wizardSetup.onDocumentReady();
 
 
