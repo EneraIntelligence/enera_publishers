@@ -1,343 +1,349 @@
-<!-- first section -->
-<h3>Elementos</h3>
-<section>
-    <h2 class="heading_a">
-        Datos de interacción
-    </h2>
-    <hr class="md-hr"/>
+<div id="data_cont">
+    <h5>Contenido</h5>
 
-    <div class="uk-width-medium-1-1 uk-small-width-1-1 step2-field video">
+    {!! Form::open(array('id' => 'data-form')) !!}
 
-        <div id="file_upload-drop" class="uk-file-upload parsley-row">
-            <p class="uk-text">Video</p>
+    <div class="row">
 
-            <div class="parsley-errors-list filled video-errors"></div>
+        <!-- banner link URL -->
+        <div class="row data-field data-banner_link">
+            <div class="input-field col s12">
+                <label for="link-input">Enlace</label>
+                <input placeholder="http://misitio.com" name="link" id="link-input" type="text" class="validate">
+            </div>
+        </div>
 
-            <a class="uk-form-file md-btn">elige un archivo (10mb max)
-                <input id="video-input" name="video" type="file" required accept='video/mp4'>
-            </a>
+        <!-- like URL page -->
+        <div class="row data-field data-like">
+            <div class="input-field col s12">
+                <label for="like-input">Página de facebook</label>
+                <input placeholder="http://mipagina.com" name="like" id="like-input" type="text" class="validate">
+            </div>
+        </div>
+
+        <!-- captcha -->
+        <div class="row data-field data-captcha">
+            <div class="input-field col s12">
+                <label for="captcha">Captcha</label>
+                <input placeholder="mi producto" name="captcha" id="captcha" type="text" class="validate">
+            </div>
+        </div>
+
+        <!-- mailing list: name/email -->
+        <div class="row data-field data-mailing_list">
+            <div class="input-field col s12 m6">
+                <label for="mail_name">Remitente</label>
+                <input placeholder="Nombre" name="mail_name" id="mail_name" type="text">
+            </div>
+
+            <div class="input-field col s12 m6">
+                <label for="mail_address">E-mail</label>
+                <input placeholder="contacto@miempresa.com" name="mail_address" id="mail_address" type="email" required>
+            </div>
+        </div>
+
+        <div class="row data-field data-mailing_list">
+            <div class="input-field col s12">
+                <label for="mail_subject">Asunto</label>
+                <input placeholder="" name="mail_subject" id="mail_subject" type="text">
+            </div>
+        </div>
+
+        <div class="row data-field data-mailing_list">
+            <div class="input-field col s12">
+                <textarea style="height:450px" id="mailing_content" name="mailing_content"> </textarea>
+            </div>
+        </div>
+
+        <!-- video -->
+
+        <div class="row data-field data-video">
+            <div class="input-field file-field btn col s6 offset-s3 cyan waves-effect waves-light">
+
+                <span>Subir Video <i class="material-icons left">file_upload</i></span>
+                <input id="video-input" name="video" type="file" accept='video/mp4'>
+
+            </div>
+        </div>
+
+        <!-- survey image -->
+        <div class="row data-field data-survey">
+            <div class="input-field file-field btn col s6 offset-s3 cyan waves-effect waves-light">
+
+                <span> <i class="material-icons left">file_upload</i> <i class="material-icons left">collections</i> (684x400)</span>
+                <input id="image-survey" name="image_survey" type="file" accept='image/*'>
+
+            </div>
+
+            <img id="image-survey-cropped" class="responsive-img col s6 offset-s3 mBottom-20"
+                 src="http://placehold.it/684x400?text=684x400" alt="">
 
         </div>
+
+        <!-- video image -->
+        <div class="row data-field data-video">
+            <div class="input-field file-field btn col s6 offset-s3 cyan waves-effect waves-light">
+
+                <span> <i class="material-icons left">file_upload</i> <i class="material-icons left">collections</i> (640x360)</span>
+                <input id="image-video" name="image_video" type="file" accept='image/*'>
+
+            </div>
+
+            <img id="image-video-cropped" class="responsive-img col s6 offset-s3 mBottom-20"
+                 src="http://placehold.it/640x360?text=640x360" alt="">
+
+        </div>
+
+
+        <!-- survey questions -->
+        <ul class="collapsible data-field data-survey" data-collapsible="accordion">
+
+            <!-- 1era -->
+            <li>
+                <div class="collapsible-header active white-text teal lighten-2"><i class="material-icons">question_answer</i>Primera pregunta</div>
+
+                <div class="collapsible-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <label for="question_1">Pregunta</label>
+                                <input placeholder="" name="question_1" id="question_1" type="text" class="validate">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s12 m6">
+                                <label for="answer_1_1">Opción 1</label>
+                                <input placeholder="" name="answer_1_1" id="answer_1_1" type="text" class="validate">
+                            </div>
+
+                            <div class="input-field col s12 m6">
+                                <label for="answer_1_2">Opción 2</label>
+                                <input placeholder="" name="answer_1_2" id="answer_1_2" type="text" class="validate">
+                            </div>
+
+                            <div class="input-field col s12 m6">
+                                <label for="answer_1_3">Opción 3</label>
+                                <input placeholder="" name="answer_1_3" id="answer_1_3" type="text" class="validate">
+                            </div>
+
+                            <div class="input-field col s12 m6">
+                                <label for="answer_1_4">Opción 4</label>
+                                <input placeholder="" name="answer_1_4" id="answer_1_4" type="text" class="validate">
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </li>
+
+            <!-- 2da -->
+            <li>
+                <div class="collapsible-header white-text teal lighten-2"><i class="material-icons">question_answer</i>Segunda pregunta</div>
+
+                <div class="collapsible-body">
+
+                    <div class="container">
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input placeholder="" name="question_2" id="question_2" type="text" class="validate">
+                                <label for="question_2">Pregunta</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s12 m6">
+                                <input placeholder="" name="answer_2_1" id="answer_2_1" type="text" class="validate">
+                                <label for="answer_2_1">Opción 1</label>
+                            </div>
+
+                            <div class="input-field col s12 m6">
+                                <input placeholder="" name="answer_2_2" id="answer_2_2" type="text" class="validate">
+                                <label for="answer_2_2">Opción 2</label>
+                            </div>
+
+                            <div class="input-field col s12 m6">
+                                <input placeholder="" name="answer_2_3" id="answer_2_3" type="text" class="validate">
+                                <label for="answer_2_3">Opción 3</label>
+                            </div>
+
+                            <div class="input-field col s12 m6">
+                                <input placeholder="" name="answer_2_4" id="answer_2_4" type="text" class="validate">
+                                <label for="answer_2_4">Opción 4</label>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+            <!-- 3era -->
+            <li>
+                <div class="collapsible-header white-text teal lighten-2"><i class="material-icons">question_answer</i>Tercera pregunta</div>
+
+                <div class="collapsible-body">
+
+                    <div class="container">
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input placeholder="" name="question_3" id="question_3" type="text" class="validate">
+                                <label for="question_3">Pregunta</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s12 m6">
+                                <input placeholder="" name="answer_3_1" id="answer_3_1" type="text" class="validate">
+                                <label for="answer_3_1">Opción 1</label>
+                            </div>
+
+                            <div class="input-field col s12 m6">
+                                <input placeholder="" name="answer_3_2" id="answer_3_2" type="text" class="validate">
+                                <label for="answer_3_2">Opción 2</label>
+                            </div>
+
+                            <div class="input-field col s12 m6">
+                                <input placeholder="" name="answer_3_3" id="answer_3_3" type="text" class="validate">
+                                <label for="answer_3_3">Opción 3</label>
+                            </div>
+
+                            <div class="input-field col s12 m6">
+                                <input placeholder="" name="answer_3_4" id="answer_3_4" type="text" class="validate">
+                                <label for="answer_3_4">Opción 4</label>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </li>
+
+            <!-- 4ta -->
+            <li>
+                <div class="collapsible-header white-text teal lighten-2"><i class="material-icons">question_answer</i>Cuarta pregunta</div>
+
+                <div class="collapsible-body">
+
+                    <div class="container">
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input placeholder="" name="question_4" id="question_4" type="text" class="validate">
+                                <label for="question_4">Pregunta</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s12 m6">
+                                <input placeholder="" name="answer_4_1" id="answer_4_1" type="text" class="validate">
+                                <label for="answer_4_1">Opción 1</label>
+                            </div>
+
+                            <div class="input-field col s12 m6">
+                                <input placeholder="" name="answer_4_2" id="answer_4_2" type="text" class="validate">
+                                <label for="answer_4_2">Opción 2</label>
+                            </div>
+
+                            <div class="input-field col s12 m6">
+                                <input placeholder="" name="answer_4_3" id="answer_4_3" type="text" class="validate">
+                                <label for="answer_4_3">Opción 3</label>
+                            </div>
+
+                            <div class="input-field col s12 m6">
+                                <input placeholder="" name="answer_4_4" id="answer_4_4" type="text" class="validate">
+                                <label for="answer_4_4">Opción 4</label>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </li>
+
+            <!-- 5ta -->
+            <li>
+                <div class="collapsible-header white-text teal lighten-2"><i class="material-icons">question_answer</i>Quinta pregunta</div>
+
+                <div class="collapsible-body">
+
+                    <div class="container">
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input placeholder="" name="question_5" id="question_5" type="text" class="validate">
+                                <label for="question_5">Pregunta</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s12 m6">
+                                <input placeholder="" name="answer_5_1" id="answer_5_1" type="text" class="validate">
+                                <label for="answer_5_1">Opción 1</label>
+                            </div>
+
+                            <div class="input-field col s12 m6">
+                                <input placeholder="" name="answer_5_2" id="answer_5_2" type="text" class="validate">
+                                <label for="answer_5_2">Opción 2</label>
+                            </div>
+
+                            <div class="input-field col s12 m6">
+                                <input placeholder="" name="answer_5_3" id="answer_5_3" type="text" class="validate">
+                                <label for="answer_5_3">Opción 3</label>
+                            </div>
+
+                            <div class="input-field col s12 m6">
+                                <input placeholder="" name="answer_5_4" id="answer_5_4" type="text" class="validate">
+                                <label for="answer_5_4">Opción 4</label>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </li>
+
+        </ul>
+
+
+        <div class="row data-field data-banner_link data-captcha data-like">
+
+            <div class="col s6 offset-s3 m4 offset-m1">
+
+                <div class="input-field file-field btn cyan waves-effect waves-light"
+                     style="margin:0 -0.75em; width: calc(100% + 1.5em); padding:0;">
+                    <span>Banner (600x602)</span>
+                    <input id="image-small" name="image_small" type="file" accept='image/*'>
+
+                </div>
+                <img id="image-small-cropped" class="responsive-img" src="http://placehold.it/600x602?text=600x602"
+                     alt="">
+            </div>
+
+
+            <div class="col s6 offset-s3 m4 offset-m2">
+
+                <div class="input-field file-field btn cyan waves-effect waves-light"
+                     style="margin:0 -0.75em; width: calc(100% + 1.5em); padding:0;">
+
+                    <span>Banner (684x864)</span>
+                    <input id="image-large" name="image_large" type="file" accept='image/*'>
+
+
+                </div>
+
+                <img id="image-large-cropped" class="responsive-img" src="http://placehold.it/600x864?text=684x864"
+                     alt="">
+
+            </div>
+
+
+        </div>
+
+
     </div>
 
+    {!! Form::close() !!}
 
-    <div class="uk-grid step2-field banner_link like">
-        <div class="uk-width-medium-1-1 parsley-row">
-            <label for="banner_link">Link<span class="req">*</span> - incluyendo http:// ó https://</label>
-            <input type="text" name="banner_link" id="banner_link" data-parsley-url="true" required class="md-input" />
-        </div>
-    </div>
 
-    <div class="uk-grid step2-field captcha">
-        <div class="uk-width-medium-1-1 parsley-row">
-            <label for="captcha">Captcha<span class="req">*</span></label>
-            <input type="text" name="captcha" id="captcha" required class="md-input" />
-        </div>
-    </div>
-
-    <!-- mailing list wysiwyg -->
-    <div class="uk-grid step2-field mailing_list">
-
-
-
-        <div class="uk-width-medium-1-3">
-            <div class="uk-form-row">
-                <div class="md-input-wrapper">
-                    <label>Nombre del remitente</label>
-                    <input type="text" name="from" required class="md-input">
-                            <span class="md-input-bar">
-                            </span>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="uk-width-medium-1-3">
-            <div class="uk-form-row">
-
-                <div class="md-input-wrapper">
-                    <label>E-mail del remitente</label>
-                    <input type="email" name="from_mail" required class="md-input">
-                            <span class="md-input-bar">
-
-                            </span>
-                </div>
-            </div>
-        </div>
-
-        <div class="uk-width-medium-1-3">
-            <div class="uk-form-row">
-
-                <div class="md-input-wrapper">
-                    <label>Asunto</label>
-                    <input type="text" name="subject" required class="md-input">
-                            <span class="md-input-bar">
-                            </span>
-                </div>
-            </div>
-        </div>
-
-
-
-        <div class="uk-width-medium-1-1">
-
-            <br>
-            <br>
-            <label>Correo de suscripción</label>
-            <br>
-            <br>
-
-            <textarea name="mailing_content" id="wysiwyg_ckeditor" cols="30" rows="20"
-                      data-parsley-trigger="keyup" data-parsley-minlength="20"
-                      data-parsley-minlength-message="Tu correo debe incluir al menos 20 caracteres"
-                      data-parsley-validate-if-empty
-                      required="required">
-
-            </textarea>
-
-        </div>
-
-
-    </div>
-
-    <div class="uk-block step2-field survey questionContainer">
-
-        <!-- q1 -->
-        <div class="uk-grid question">
-            <div class="uk-grid uk-width-medium-1-1">
-                <div class="uk-width-medium-1-1 parsley-row">
-                    <label for="survey_q1">Pregunta 1<span class="req">*</span></label>
-                    <input type="text" name="survey_q1" id="survey_q1" required class="md-input" />
-                </div>
-            </div>
-
-            <div class="uk-grid uk-width-medium-1-1">
-
-                <div class="uk-width-medium-1-4 parsley-row">
-                    <label for="survey_q1_a1">Opción 1<span class="req">*</span></label>
-                    <input type="text" name="survey_q1_a1" id="survey_q1_a1" required class="md-input" />
-                </div>
-
-                <div class="uk-width-medium-1-4 parsley-row">
-                    <label for="survey_q1_a2">Opción 2<span class="req">*</span></label>
-                    <input type="text" name="survey_q1_a2" id="survey_q1_a2" required class="md-input" />
-                </div>
-
-                <div class="uk-width-medium-1-4 parsley-row">
-                    <label for="survey_q1_a3">Opción 3</label>
-                    <input type="text" name="survey_q1_a3" id="survey_q1_a3" class="md-input" />
-                </div>
-
-                <div class="uk-width-medium-1-4 parsley-row">
-                    <label for="survey_q1_a4">Opción 4</label>
-                    <input type="text" name="survey_q1_a4" id="survey_q1_a4" class="md-input" />
-                </div>
-
-            </div>
-        </div>
-
-        <!-- q2 -->
-        <div class="uk-grid question">
-            <div class="uk-grid uk-width-medium-1-1">
-                <div class="uk-width-medium-1-1 parsley-row">
-                    <label for="survey_q2">Pregunta 2<span class="req">*</span></label>
-                    <input type="text" name="survey_q2" id="survey_q2" required class="md-input" />
-                </div>
-            </div>
-
-            <div class="uk-grid uk-width-medium-1-1">
-
-                <div class="uk-width-medium-1-4 parsley-row">
-                    <label for="survey_q2_a1">Opción 1<span class="req">*</span></label>
-                    <input type="text" name="survey_q2_a1" id="survey_q2_a1" required class="md-input" />
-                </div>
-
-                <div class="uk-width-medium-1-4 parsley-row">
-                    <label for="survey_q2_a2">Opción 2<span class="req">*</span></label>
-                    <input type="text" name="survey_q2_a2" id="survey_q2_a2" required class="md-input" />
-                </div>
-
-                <div class="uk-width-medium-1-4 parsley-row">
-                    <label for="survey_q2_a3">Opción 3</label>
-                    <input type="text" name="survey_q2_a3" id="survey_q2_a3" class="md-input" />
-                </div>
-
-                <div class="uk-width-medium-1-4 parsley-row">
-                    <label for="survey_q2_a4">Opción 4</label>
-                    <input type="text" name="survey_q2_a4" id="survey_q2_a4" class="md-input" />
-                </div>
-
-            </div>
-        </div>
-
-        <!-- q3 -->
-        <div class="uk-grid question">
-            <div class="uk-grid uk-width-medium-1-1">
-                <div class="uk-width-medium-1-1 parsley-row">
-                    <label for="survey_q3">Pregunta 3<span class="req">*</span></label>
-                    <input type="text" name="survey_q3" id="survey_q3" required class="md-input" />
-                </div>
-            </div>
-
-            <div class="uk-grid uk-width-medium-1-1">
-
-                <div class="uk-width-medium-1-4 parsley-row">
-                    <label for="survey_q3_a1">Opción 1<span class="req">*</span></label>
-                    <input type="text" name="survey_q3_a1" id="survey_q3_a1" required class="md-input" />
-                </div>
-
-                <div class="uk-width-medium-1-4 parsley-row">
-                    <label for="survey_q3_a2">Opción 2<span class="req">*</span></label>
-                    <input type="text" name="survey_q3_a2" id="survey_q3_a2" required class="md-input" />
-                </div>
-
-                <div class="uk-width-medium-1-4 parsley-row">
-                    <label for="survey_q3_a3">Opción 3</label>
-                    <input type="text" name="survey_q3_a3" id="survey_q3_a3" class="md-input" />
-                </div>
-
-                <div class="uk-width-medium-1-4 parsley-row">
-                    <label for="survey_q3_a4">Opción 4</label>
-                    <input type="text" name="survey_q3_a4" id="survey_q3_a4" class="md-input" />
-                </div>
-
-            </div>
-        </div>
-
-        <!-- q4 -->
-        <div class="uk-grid question">
-            <div class="uk-grid uk-width-medium-1-1">
-                <div class="uk-width-medium-1-1 parsley-row">
-                    <label for="survey_q4">Pregunta 4<span class="req">*</span></label>
-                    <input type="text" name="survey_q4" id="survey_q4" required class="md-input" />
-                </div>
-            </div>
-
-            <div class="uk-grid uk-width-medium-1-1">
-
-                <div class="uk-width-medium-1-4 parsley-row">
-                    <label for="survey_q4_a1">Opción 1<span class="req">*</span></label>
-                    <input type="text" name="survey_q4_a1" id="survey_q4_a1" required class="md-input" />
-                </div>
-
-                <div class="uk-width-medium-1-4 parsley-row">
-                    <label for="survey_q4_a2">Opción 2<span class="req">*</span></label>
-                    <input type="text" name="survey_q4_a2" id="survey_q4_a2" required class="md-input" />
-                </div>
-
-                <div class="uk-width-medium-1-4 parsley-row">
-                    <label for="survey_q4_a3">Opción 3</label>
-                    <input type="text" name="survey_q4_a3" id="survey_q4_a3" class="md-input" />
-                </div>
-
-                <div class="uk-width-medium-1-4 parsley-row">
-                    <label for="survey_q4_a4">Opción 4</label>
-                    <input type="text" name="survey_q4_a4" id="survey_q4_a4" class="md-input" />
-                </div>
-
-            </div>
-        </div>
-
-        <!-- q5 -->
-        <div class="uk-grid question">
-            <div class="uk-grid uk-width-medium-1-1">
-                <div class="uk-width-medium-1-1 parsley-row">
-                    <label for="survey_q5">Pregunta 5<span class="req">*</span></label>
-                    <input type="text" name="survey_q5" id="survey_q5" required class="md-input" />
-                </div>
-            </div>
-
-            <div class="uk-grid uk-width-medium-1-1">
-
-                <div class="uk-width-medium-1-4 parsley-row">
-                    <label for="survey_q5_a1">Opción 1<span class="req">*</span></label>
-                    <input type="text" name="survey_q5_a1" id="survey_q5_a1" required class="md-input" />
-                </div>
-
-                <div class="uk-width-medium-1-4 parsley-row">
-                    <label for="survey_q5_a2">Opción 2<span class="req">*</span></label>
-                    <input type="text" name="survey_q5_a2" id="survey_q5_a2" required class="md-input" />
-                </div>
-
-                <div class="uk-width-medium-1-4 parsley-row">
-                    <label for="survey_q5_a3">Opción 3</label>
-                    <input type="text" name="survey_q5_a3" id="survey_q5_a3" class="md-input" />
-                </div>
-
-                <div class="uk-width-medium-1-4 parsley-row">
-                    <label for="survey_q5_a4">Opción 4</label>
-                    <input type="text" name="survey_q5_a4" id="survey_q5_a4" class="md-input" />
-                </div>
-
-            </div>
-        </div>
-
-    </div>
-
-    <div class="uk-block step2-field survey">
-
-        <div class="md-btn md-btn-danger uk-float-left disabled" id="remove_question">Quitar pregunta</div>
-        <div class="md-btn md-btn-success uk-float-right" id="add_question">Añadir pregunta</div>
-
-    </div>
-
-    <hr class="md-hr"/>
-
-    <h2 class="heading_a">
-        Imágenes
-    </h2>
-
-    <div class="uk-grid">
-
-        <div class="uk-width-medium-1-1 uk-small-width-1-1 step2-field survey">
-            <img style="max-height:200px" class="uk-align-center banner-survey" src="http://placehold.it/684x400?text=684x400" alt="">
-            <div class="parsley-errors-list filled banner-survey-errors"></div>
-
-            <div id="file_upload-drop" class="uk-file-upload parsley-row">
-                <p class="uk-text">Banner encuesta</p>
-                <a class="uk-form-file md-btn">elige un archivo
-                    <input id="banner-survey" name="image_survey" type="file" required accept='image/*'>
-                </a>
-
-            </div>
-        </div>
-
-
-        <div class="uk-width-medium-1-2 uk-small-width-1-1 step2-field like banner_link captcha mailing_list video">
-            <img style="max-height:200px" id="image-crop" class="uk-align-center banner-1" src="http://placehold.it/600x602?text=600x602" alt="">
-
-            <div class="parsley-errors-list filled banner-1-errors"></div>
-
-            <div id="file_upload-drop" class="uk-file-upload parsley-row">
-                <p class="uk-text">Banner dispositivos pequeños</p>
-                <a class="uk-form-file md-btn">elige un archivo
-                    <input id="banner-1" name="image_small" type="file" required accept='image/*'>
-                </a>
-
-            </div>
-        </div>
-
-
-
-        <div class="uk-width-medium-1-2 uk-small-width-1-1 step2-field  like banner_link captcha mailing_list video">
-
-            <img style="max-height:200px" class="uk-align-center banner-2" src="http://placehold.it/684x864?text=684x864" alt="">
-            <div class="parsley-errors-list filled banner-2-errors"></div>
-
-            <div id="file_upload-drop2" class="uk-file-upload parsley-row">
-                <p class="uk-text">Banner dispositivos altos</p>
-                <a class="uk-form-file md-btn">elige un archivo
-                    <input id="banner-2" name="image_large" type="file" required accept='image/*'>
-                </a>
-            </div>
-
-
-            {{--<p class="uk-text-center md-input-danger">El tamaño de la imagen no coincide</p>--}}
-
-        </div>
-
-
-    </div>
-
-
-</section>
+</div>

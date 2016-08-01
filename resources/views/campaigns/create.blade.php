@@ -5,6 +5,8 @@
     {!! HTML::style('css/nouislider.css') !!}
     {!! HTML::style('css/cropper.min.css') !!}
 
+    {!! HTML::style('assets/css/campaign_wizard.css') !!}
+
 @stop
 
 @section('content')
@@ -100,6 +102,45 @@
             </div>
         </div>
 
+
+        <!-- Modal image preview -->
+        <div id="modal-image" class="modal modal-fixed-footer">
+            <div class="modal-content">
+                <p>Recorta la imágen</p>
+                <div id="image-cropper">
+                    <img src="" alt="">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" id="crop-btn" class="modal-action waves-effect waves-green btn-flat ">Cortar</a>
+                <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Cancelar</a>
+            </div>
+        </div>
+
+        <!-- Modal uploading image -->
+        <div id="modal-loader" class="modal">
+            <div class="modal-content">
+
+                <p class="center-align">Espera un momento...</p>
+
+                <div class="preloader-wrapper small active centered-loader">
+                    <div class="spinner-layer spinner-green-only">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="gap-patch">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="circle-clipper right">
+                            <div class="circle"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
     </div>
 
 
@@ -142,7 +183,9 @@
 
         });
 
-
+        $( window ).resize(function() {
+            wizardSetup.onResize();
+        });
 
     </script>
 
