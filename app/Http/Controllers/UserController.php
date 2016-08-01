@@ -146,15 +146,15 @@ class UserController extends Controller
 
 
             $user->name = (object)array('first' => ucwords(Input::get('name')), 'last' => ucwords(Input::get('lastname')));
-            $user->phones = (object)array('number' => Input::get('phone'), 'type' => ucwords(Input::get('type')));
-            $user->socialnetwork = (object)array('facebook' => Input::get('facebook'), 'twitter' => Input::get('twitter'), 'googleplus' => Input::get('google'), 'linkedin' => Input::get('linkedin'));
+            $user->phones = (object)array('number' => Input::get('phone'), 'type' => Input::get('type'));
+            $user->socialnetwork = (object)array('facebook' => Input::get('facebook'), 'twitter' => Input::get('twitter'), 'googleplus' => Input::get('google'), 'linkedin' => Input::get('link'));
             $user->image = $filename;
             $user->save();
         }else
         {
-            $user->name = (object)array('first' => ucwords(Input::get('name')), 'last' => ucwords(Input::get('lastname')));
-            $user->phones = (object)array('number' => Input::get('phone'), 'type' => ucwords(Input::get('type')));
-            $user->socialnetwork = (object)array('facebook' => Input::get('facebook'), 'twitter' => Input::get('twitter'), 'googleplus' => Input::get('google'), 'linkedin' => Input::get('linkedin'));
+//            $user->name = (object)array('first' => ucwords(Input::get('name')), 'last' => ucwords(Input::get('lastname')));
+//            $user->phones = (object)array('number' => Input::get('phone'), 'type' => Input::get('type'));
+            $user->socialnetwork = (object)array('facebook' => Input::get('facebook'), 'twitter' => Input::get('twitter'), 'googleplus' => Input::get('google'), 'linkedin' => Input::get('link'));
             $user->save();
         }
         return redirect()->action('UserController@index')->with('data', 'active');

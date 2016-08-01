@@ -1,7 +1,18 @@
-@media (max-width: 340px) {
-  .profile_mobile {
-    padding-left: 0 !important; } }
+//colores
+$white: #fff;
 
+@media (max-width: 480px) {
+  .profile_mobile {
+    padding-left: 0 !important; }
+
+  .container{
+    margin: 0;
+    width: 100%;
+  }
+  .b-mobile{
+    margin: 10px 0;
+  }
+}
 
 .label_gray
 {
@@ -18,6 +29,10 @@
 
 .img{
   background-image:none!important;
+  margin: auto;
+  display: block;
+  width: 100px;
+  height: 100px;
 }
 
 .canvasloader-container{
@@ -25,3 +40,30 @@
   height: 70px;
   margin: -55px auto 0 auto;
 }
+
+.chip-profile{
+  max-width: 130px;
+  display: flex;
+  margin: 3px auto;
+}
+
+.name-profile{
+  color: $white;
+}
+
+.error-field{
+  height: 75px;
+}
+
+.error{
+  color: red;
+}
+input[type=text].error{
+  border-bottom: 1px solid #ff2123;
+  box-shadow: 0 1px 0 0 #ff2123;
+}
+
+.none{
+  display: none;
+}
+
