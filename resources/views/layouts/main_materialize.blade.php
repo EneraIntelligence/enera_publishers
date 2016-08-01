@@ -93,14 +93,11 @@
                         <li class="divider"></li>
                         <li><a href="{!! URL::route('auth.logout') !!}">Salir</a></li>
                     </ul>
-
                 </li>
-
                 <li class="{{ isset($navData["profileState"]) ?$navData["profileState"]:""  }}">
                 {{--<a href="{{ route("profile::index") }}"><i class="material-icons">perm_identity</i></a>--}}
 
                 <!-- avatar -->
-
                     {{--                    <a class="valign-wrapper profile-link" href="{{ route("profile::index") }}" style="padding: 7px 5px 0 0;">--}}
                     <a class="valign-wrapper profile-link" href="{{ route("profile::index") }}" style="padding: 7px 5px 0 0;">
 
@@ -111,10 +108,7 @@
                                 background-position: 50% 50%;
                                 ">
                         </div>
-
                     </a>
-
-
                 </li>
 
             </ul>
@@ -138,6 +132,10 @@
 
                 <li class="{{ isset($navData["campaigns"])?$navData["campaigns"]:""  }}">
                     <a href="{{ route("campaigns::index") }}">Campañas</a>
+                </li>
+
+                <li class="{{ isset($navData["budget"])?$navData["budget"]:""  }}">
+                    <a href="{{ route("budget::index") }}">Presupuesto</a>
                 </li>
 
                 <li class="{{ isset($navData["reports"])?$navData["reports"]:""  }}">
