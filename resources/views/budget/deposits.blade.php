@@ -27,10 +27,6 @@
                             <div class="card-content black-text">
                                 <span class="text-small">Balance actual</span>
                                 <h2 class="center-align amount" id="myTargetElement1" style="margin: 10px;"></h2>
-                                <div class="uk-width-medium-1 center-align">
-                                    <a class="waves-effect waves-light btn blue" href="{{ route("budget::deposits")}}"
-                                       style="margin: 10px;">Agregar fondos</a>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -200,9 +196,7 @@
                                                                            id="budget_input"
                                                                            name="money" type="text"
                                                                            data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'autoGroup': true, 'digits': 2, 'digitsOptional': false, 'prefix': '$ ', 'placeholder': '0'"
-                                                                           data-inputmask-showmaskonhover="false"
-                                                                           data-parsley-multipleof="3"
-                                                                           data-parsley-required/>
+                                                                           value="1000"/>
                                                                     <span class="md-input-bar"></span></div>
                                                                 <p id="balance"></p>
                                                             </div>

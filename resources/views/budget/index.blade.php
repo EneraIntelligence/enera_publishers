@@ -23,7 +23,7 @@
                                 <span class="text-small">Balance actual</span>
                                 <h2 class="center-align amount" id="myTargetElement1" style="margin: 10px;"></h2>
                                 <div class="uk-width-medium-1 center-align">
-                                    <a class="waves-effect waves-light btn blue" href="{{ route("budget::deposits")}}"
+                                    <a class="waves-effect waves-light btn blue budget-button" href="{{ route("budget::deposits")}}"
                                        style="margin: 10px;">Agregar fondos</a>
                                 </div>
                             </div>
