@@ -1,4 +1,4 @@
-//colores
+//colors
 $white: #fff;
 
 @media (max-width: 480px) {
@@ -11,6 +11,12 @@ $white: #fff;
   }
   .b-mobile{
     margin: 10px 0;
+  }
+}
+
+@media (min-width: 600px) {
+  .h-mobile{
+    height: 200px;
   }
 }
 
@@ -67,3 +73,46 @@ input[type=text].error{
   display: none;
 }
 
+input[type=text]:disabled{
+  color: rgba(0,0,0,1);
+  border-bottom: 1px dotted rgba(0,0,0,1);
+}
+
+.select-wrapper input.select-dropdown:disabled{
+  color: rgba(0,0,0,1);
+}
+
+.input-name input[type=text]+label{
+  color: #FFFFff!important;
+}
+
+.input-name i{
+  color: #FFFFff!important;
+}
+.input-name .error{
+  color: #FFFFff;
+}
+.input-name input[type=text].error{
+  border-bottom: 1px solid #FFFFff;
+  box-shadow: 0 1px 0 0 #FFFFff;
+}
+
+.input-name input[type=text].valid{
+  border-bottom: 1px solid #FFFFff!important;
+  box-shadow: 0 1px 0 0 #FFFFff;
+}
+
+.input-name input[type=text]{
+  border-bottom: 1px solid #FFFFff!important;
+  box-shadow: 0 1px 0 0 #FFFFff;
+}
+
+
+.file-button{
+  bottom: 40px;
+  left: 60px;
+}
+
+#img-button{
+  background-image: url("https://www.google.com.mx/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=0ahUKEwjb48fen6POAhVK3IMKHReOAFwQjRwIBw&url=http%3A%2F%2Fstackoverflow.com%2Fquestions%2F26795189%2Fhow-to-add-an-up-arrow-to-select-element-along-with-down-arrow-and-to-traverse-o&psig=AFQjCNHx_a0ZO6xg9t1qufXx7H8mZBgNFA&ust=1470245044089438") !important;
+}

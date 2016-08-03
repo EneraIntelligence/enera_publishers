@@ -122,13 +122,9 @@ class UserController extends Controller
                 $ext = $file->getClientOriginalExtension();
                 $filename = time() . '.' . $ext;
                 $file->move(storage_path() . '/app', $filename);
-
                 $uploadedFile = Storage::get($filename);
-
                 Storage::disk('s3')->put("avatars/" . $filename, $uploadedFile, "public");
                 Storage::delete($filename);
-
-
                 //get uploaded file and copy it to cloud
 //            $uploadedFile = Storage::get($filename);
 //            $filesystem->subir($filename, $uploadedFile );
@@ -152,8 +148,8 @@ class UserController extends Controller
             $user->save();
         }else
         {
-//            $user->name = (object)array('first' => ucwords(Input::get('name')), 'last' => ucwords(Input::get('lastname')));
-//            $user->phones = (object)array('number' => Input::get('phone'), 'type' => Input::get('type'));
+            $user->name = (object)array('first' => ucwords(Input::get('name')), 'last' => ucwords(Input::get('lastname')));
+            $user->phones = (object)array('number' => Input::get('phone'), 'type' => Input::get('type'));
             $user->socialnetwork = (object)array('facebook' => Input::get('facebook'), 'twitter' => Input::get('twitter'), 'googleplus' => Input::get('google'), 'linkedin' => Input::get('link'));
             $user->save();
         }
