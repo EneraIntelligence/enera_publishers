@@ -128,7 +128,7 @@ var WizardSetup = (function () {
                 step = this.steps[this.currentStep];
                 if (this.currentStep == this.steps.length - 1) {
                     //on summary step
-                    var dataCamp = {};
+                    var dataCamp = new CampaignData();
                     for (var i = 0; i < this.steps.length - 1; i++) {
                         var currentStep = this.steps[i];
                         $.extend(true, dataCamp, currentStep.getData());
@@ -190,6 +190,34 @@ var WizardSetup = (function () {
             btn.removeClass("disabled");
         else
             btn.addClass("disabled");
+    };
+    WizardSetup.prototype.openMailModal = function () {
+        var step5 = this.steps[4];
+        step5.openMailModal();
+    };
+    WizardSetup.prototype.openImgSmallModal = function () {
+        var step5 = this.steps[4];
+        step5.openImgSmallModal();
+    };
+    WizardSetup.prototype.openImgLargeModal = function () {
+        var step5 = this.steps[4];
+        step5.openImgLargeModal();
+    };
+    WizardSetup.prototype.openImgSurveyModal = function () {
+        var step5 = this.steps[4];
+        step5.openImgSurveyModal();
+    };
+    WizardSetup.prototype.openImgVideoModal = function () {
+        var step5 = this.steps[4];
+        step5.openImgVideoModal();
+    };
+    WizardSetup.prototype.openVideoModal = function () {
+        var step5 = this.steps[4];
+        step5.openVideoModal();
+    };
+    WizardSetup.prototype.openSurveyModal = function () {
+        var step5 = this.steps[4];
+        step5.openSurveyModal();
     };
     return WizardSetup;
 }());
