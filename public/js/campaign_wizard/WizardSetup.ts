@@ -187,7 +187,7 @@ class WizardSetup {
                 step = this.steps[this.currentStep];
                 if (this.currentStep == this.steps.length - 1) {
                     //on summary step
-                    var dataCamp = {};
+                    var dataCamp:CampaignData = new CampaignData();
                     for (var i = 0; i < this.steps.length - 1; i++) {
                         let currentStep:WizardStep = this.steps[i];
                         $.extend(true, dataCamp, currentStep.getData());
@@ -279,6 +279,44 @@ class WizardSetup {
     }
 
 
+
+    public openMailModal() {
+
+        let step5:Step5 = this.steps[4] as Step5;
+        step5.openMailModal();
+    }
+
+    public openImgSmallModal() {
+
+        let step5:Step5 = this.steps[4] as Step5;
+        step5.openImgSmallModal();
+    }
+
+    public openImgLargeModal() {
+
+        let step5:Step5 = this.steps[4] as Step5;
+        step5.openImgLargeModal();
+    }
+
+    public openImgSurveyModal() {
+        let step5:Step5 = this.steps[4] as Step5;
+        step5.openImgSurveyModal();
+    }
+
+    public openImgVideoModal() {
+        let step5:Step5 = this.steps[4] as Step5;
+        step5.openImgVideoModal();
+    }
+
+    public openVideoModal() {
+        let step5:Step5 = this.steps[4] as Step5;
+        step5.openVideoModal();
+    }
+
+    public openSurveyModal() {
+        let step5:Step5 = this.steps[4] as Step5;
+        step5.openSurveyModal();
+    }
 }
 
 

@@ -9,6 +9,7 @@
 /// <reference path="../../../typings/tinymce/tinymce.d.ts" />
 
 
+import interactionSelected = WizardEvents.interactionSelected;
 interface WizardStep {
     initialize:(interactionID:string)=>void;
     getContainer:()=>JQuery;
@@ -65,7 +66,7 @@ class Step2 implements WizardStep {
     numQuestions:number = 5;
     video:string;
     cropData;
-    images=[];
+    images = [];
     currentMask;
     form:JQuery;
     validator;
@@ -326,8 +327,7 @@ class Step2 implements WizardStep {
             processData: false
         }).done(function (data) {
 
-            if( data.success )
-            {
+            if (data.success) {
                 step2.images[data.imageType] = data;
 
                 inputField.rules("remove");
@@ -336,16 +336,14 @@ class Step2 implements WizardStep {
                 $('#modal-loader').closeModal();
                 $('#modal-image').closeModal();
             }
-            else
-            {
-                console.log("ajax success, image upload fail: "+data.msg);
+            else {
+                console.log("ajax success, image upload fail: " + data.msg);
                 alert("Hubo un problema al subir la imagen. Revisa tu conexión a internet e intenta de nuevo.");
 
                 setTimeout(function () {
                     $('#modal-loader').closeModal();
                 }, 200);
             }
-
 
 
         }).fail(function (jqXHR, textStatus, errorThrown) {
@@ -515,8 +513,8 @@ class Step2 implements WizardStep {
 class Step3 implements WizardStep {
 
     validForm:boolean = false;
-    age_start:number;
-    age_end:number;
+    age_start:number=13;
+    age_end:number=100;
     start_date:string;
     end_date:string;
 
@@ -527,7 +525,6 @@ class Step3 implements WizardStep {
         //initialize rules for the form depending on the interaction
         let slider:any = document.getElementById('slider');
         let step3:Step3 = this;
-
 
 
         this.setupGenreButtons();
@@ -659,33 +656,31 @@ class Step3 implements WizardStep {
 
     };
 
-    setupGenreButtons():void
-    {
+    setupGenreButtons():void {
         let femaleBtn:JQuery = $(".female-btn");
         let maleBtn:JQuery = $(".male-btn");
 
-        let step3:Step3=this;
-        femaleBtn.click( function(){ step3.toggleGenre(0) });
-        maleBtn.click( function(){ step3.toggleGenre(1) });
+        let step3:Step3 = this;
+        femaleBtn.click(function () {
+            step3.toggleGenre(0)
+        });
+        maleBtn.click(function () {
+            step3.toggleGenre(1)
+        });
     }
 
-    toggleGenre(btnId:number):void
-    {
-        if(btnId==0)
-        {
-            if(this.maleSelected||!this.femaleSelected)
-            {
+    toggleGenre(btnId:number):void {
+        if (btnId == 0) {
+            if (this.maleSelected || !this.femaleSelected) {
                 //toggle only if there will be a genre selected
-                this.femaleSelected=!this.femaleSelected;
+                this.femaleSelected = !this.femaleSelected;
             }
 
         }
-        else
-        {
-            if(this.femaleSelected||!this.maleSelected)
-            {
+        else {
+            if (this.femaleSelected || !this.maleSelected) {
                 //toggle only if there will be a genre selected
-                this.maleSelected=!this.maleSelected;
+                this.maleSelected = !this.maleSelected;
             }
         }
 
@@ -695,20 +690,17 @@ class Step3 implements WizardStep {
 
         text.html("");
 
-        if(this.femaleSelected && this.maleSelected)
-        {
+        if (this.femaleSelected && this.maleSelected) {
             femaleBtn.removeClass("grey");
             maleBtn.removeClass("grey");
             text.append("Mujeres y hombres")
         }
-        else if(this.femaleSelected)
-        {
+        else if (this.femaleSelected) {
             femaleBtn.removeClass("grey");
             maleBtn.addClass("grey");
             text.append("Sólo mujeres")
         }
-        else
-        {
+        else {
             maleBtn.removeClass("grey");
             femaleBtn.addClass("grey");
             text.append("Sólo hombres")
@@ -724,23 +716,24 @@ class Step3 implements WizardStep {
         //return the json form data
         let step3:Step3 = this;
         let serialized = $("#data-filters").serializeArray();
-        let jsonCam = {'menor': step3.age_start, 'mayor': step3.age_end};
+        let campData:CampaignData = new CampaignData();
+        campData.age_start = step3.age_start;
+        campData.age_end = step3.age_end;
 
         // build key-values
         $.each(serialized, function () {
-            jsonCam [this.name] = this.value;
+            campData [this.name] = this.value;
         });
-        jsonCam["start"] = step3.start_date;
-        jsonCam["end"] = step3.end_date;
+        campData.start_date = step3.start_date;
+        campData.end_date = step3.end_date;
 
-        return jsonCam;
+        return campData;
     };
 
     initialize(interacionId:string) {
         //initialize
 
-        if(this.validForm)
-        {
+        if (this.validForm) {
             setTimeout(function () {
                 $("#link-input").focus();
 
@@ -758,14 +751,14 @@ class Step3 implements WizardStep {
 
 class Step4 implements WizardStep {
     validForm:boolean = false;
-    interactionPrice:number=0;
-    constructor()
-    {
+    interactionPrice:number = 0;
+    amount:number;
+
+    constructor() {
         let step4:Step4 = this;
 
         $("#budget_input").keyup(
-            function()
-            {
+            function () {
                 step4.validForm = step4.updateBudget(this.value);
             }
         );
@@ -776,14 +769,15 @@ class Step4 implements WizardStep {
     };
 
     getData() {
-        return {};
+        let step4:Step4=this;
+        return {budget: step4.amount };
     };
 
     initialize(interacionId:string) {
         //hide other prices
         this.hideAllExcept(interacionId);
 
-        let step4=this;
+        let step4 = this;
         step4.validForm = step4.updateBudget($("#budget_input").val());
 
     };
@@ -796,18 +790,17 @@ class Step4 implements WizardStep {
         $(".data-field").css("display", "none");
         $(".data-" + interaction).css("display", "block");
 
-        let step4:Step4=this;
-        step4.interactionPrice = Number( $("#price-" + interaction).html().trim().substr(1).replace(",","") );
+        let step4:Step4 = this;
+        step4.interactionPrice = Number($("#price-" + interaction).html().trim().substr(1).replace(",", ""));
         // console.log( "derp:"+interaction+" - price:"+$("#price-" + interaction).html() )
     }
 
 
-    private updateBudget (val:string)
-    {
+    private updateBudget(val:string) {
         let current = $("#currentBalance");
-        let balance:number = Number( current.html().trim().substr(1).replace(",","") );
-        let amount:number = Number( val.substr(1).replace(",","") );
-        let total:number = balance-amount;
+        let balance:number = Step4.moneyToNumber( current.html() );
+        let amount:number = Step4.moneyToNumber( val );
+        let total:number = balance - amount;
 
         let balanceHtml:JQuery = $("#balance");
         balanceHtml.removeClass("red-text");
@@ -815,47 +808,382 @@ class Step4 implements WizardStep {
         let numInteractions = $("#num_interactions");
         numInteractions.html("0");
 
-        if(total<0 || isNaN(total) || amount<100 )
-        {
+        if (total < 0 || isNaN(total) || amount < 100) {
             balanceHtml.html("Cantidad inválida (mínimo $100.00)");
             balanceHtml.addClass("red-text");
             EventDispatcher.trigger(WizardEvents.invalidForm);
             return false;
         }
-        balanceHtml.html("$"+total);
-        numInteractions.html( ""+Math.floor( amount/this.interactionPrice ) );
+        balanceHtml.html("$" + total);
+        numInteractions.html("" + Math.floor(amount / this.interactionPrice));
         EventDispatcher.trigger(WizardEvents.validForm);
+
+        this.amount = amount;
+
         return true;
+    }
+
+    private static moneyToNumber(money:string):number
+    {
+        let cleanStr:string = money.trim();
+        if(cleanStr.indexOf("$")!==-1)
+            cleanStr = cleanStr.substr(1);
+
+        return Number(cleanStr.replace(",", ""));
     }
 }
 
 class Step5 implements WizardStep {
-    validForm:boolean = false;
+
+    //Summary step screen
+
+    validForm:boolean = true;
+    data:CampaignData;
+    dictInteractions = {
+        "banner_link": "Banner + Link",
+        "like": "Like",
+        "mailing_list": "Mailing list",
+        "captcha": "Captcha",
+        "survey": "Encuesta",
+        "video": "Video"
+    };
 
     constructor() {
 
 
     }
 
+
     isValid() {
         return this.validForm;
     };
 
     getData() {
-        return {};
+        let data:CampaignData = this.data;
+
+        //console.log(data);
+
+        let gender="both";
+        if(data.sex=="caballeros")
+        {
+            gender="male";
+        }
+        else if(data.sex=="damas")
+        {
+            gender="female";
+        }
+
+        //Not yet implemented branch selection
+        let branches="global";
+
+        let survey=[];
+        for(let q=1;q<=5;q++)
+        {
+            if(data["question_"+q])
+            {
+                let obj={
+                    question:data["question_"+q],
+                    answers:[]
+                };
+
+                for(var ans=1;ans<=4;ans++)
+                {
+                    if(data["answer_"+q+"_"+ans])
+                    {
+                        obj.answers.push(data["answer_"+q+"_"+ans]);
+                    }
+                }
+
+                survey.push(obj);
+
+            }
+        }
+
+
+        var images = {};
+        if(data.image_small)
+            images['small']=data.image_small.item_id;
+        if(data.image_large)
+            images['large']=data.image_large.item_id;
+        if(data.image_survey)
+            images['survey']=data.image_survey.item_id;
+        if(data.image_video)
+            images['video']=data.image_video.item_id;
+
+        var video = null;
+        if(data.video)
+            video = data.video.item_id;
+
+        var campaignData = {
+            "title":this.getUrlParameter("name"),
+            'start_date': data.start_date,
+            'end_date': data.end_date,
+            'time': '0;23',
+            'days': ["1","2","3","4","5","6","7"],
+            'gender': gender,
+            'age': data.age_start+";"+data.age_end,
+            'images': images,
+            'ubication': 'select',
+            'interactionId': data.interaction,
+            'budget': data.budget,
+
+            'banner_link': data.link,
+            'from': data.mail_name,
+            'from_mail': data.mail_address,
+            'subject': data.mail_subject,
+            'mailing_content': data.mailing_content,
+            'survey': survey,
+            'captcha': data.captcha,
+            'video': video,
+            'branches': branches
+        };
+
+        return campaignData;
     };
 
-    initialize(interacionId:string) {
+    private getUrlParameter(sParam:string) {
+        var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
 
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] === sParam) {
+                return sParameterName[1] === undefined ? true : sParameterName[1];
+            }
+        }
+    };
+
+    initialize(interactionId:string) {
+        //this step is always valid
+        setTimeout(function () {
+            //activate send btn
+            var ev = EventDispatcher;
+            ev.trigger(WizardEvents.validForm);
+        }, 400);
     };
 
     getContainer() {
         return $("#step_5");
     };
 
-    setSummaryData(data:{}) {
+    public setSummaryData(data:CampaignData) {
+        let step5:Step5 = this;
+        step5.data = data;
+        let campaignData:string = step5.getCampaignDataHTML(data);
+        let filtersData:string = Step5.getFiltersDataHTML(data);
 
+        $("#summary_container").html(
+            "<div>" +
+            "<h4>Resumen</h4> " +
+            "<div class='divider'></div>" +
+            "<h5>Interacción</h5><span>" + step5.dictInteractions[data.interaction] + "</span>" +
+            "<div class='row'>" +
+            "<div class='col s12 m6'>" +
+            "<h5>Contenido</h5>" +
+            campaignData +
+            "<br>" +
+            "</div> " +
+            "<div class='col s12 m6'>" +
+
+            "<h5>Segmentacion</h5>" +
+            filtersData +
+            "</div>" +
+            "</div>" +
+
+            "</div>"
+        );
+    }
+
+    private getCampaignDataHTML(data:CampaignData):string {
+
+        let step5:Step5 = this;
+
+        var content = "";
+        if (data.link) {
+            content += "<span><strong>Enlace:</strong> <a target='_blank' href='" + data.link + "'>" + data.link + "</a></span><br>";
+        }
+
+        if (data.like) {
+            content += "<span><strong>Página de fb:</strong> <a target='_blank' href='" + data.like + "'>" + data.like + "</a></span><br>";
+        }
+
+        if (data.captcha) {
+            content += "<span><strong>Captcha:</strong> " + data.captcha + "</span><br>";
+        }
+
+        if (data.mail_name) {
+            content += "<span><strong>Remitente:</strong> " + data.mail_name + "</span><br>";
+            content += "<span><strong>Email:</strong> " + data.mail_address + "</span><br>";
+            content += "<span><strong>Asunto:</strong> " + data.mail_subject + "</span><br>";
+            content += "<span> <a href='#!' onclick='wizardSetup.openMailModal()'> <strong>Correo </strong><i class='material-icons v-middle'>link</i> </a>  </span> <br>";
+        }
+
+
+        if (data.image_small) {
+            content += "<span> <a href='#!' onclick='wizardSetup.openImgSmallModal()'> <strong>Banner </strong>(600x602) <i class='material-icons v-middle'>link</i> </a>  </span> <br>";
+        }
+
+        if (data.image_large) {
+            content += "<span> <a href='#!' onclick='wizardSetup.openImgLargeModal()'>  <strong>Banner </strong>(684x864) <i class='material-icons v-middle'>link</i> </a> </span> <br>";
+        }
+
+        if (data.image_survey) {
+            content += "<span> <a href='#!' onclick='wizardSetup.openImgSurveyModal()'>  <strong>Imagen de encuesta </strong><i class='material-icons v-middle'>link</i> </a> </span> <br>";
+        }
+
+        if (data.video) {
+            content += "<span> <a href='#!' onclick='wizardSetup.openVideoModal()'>  <strong>Video </strong><i class='material-icons v-middle'>link</i> </a> </span> <br>";
+        }
+        if (data.image_video) {
+            content += "<span> <a href='#!' onclick='wizardSetup.openImgVideoModal()'>  <strong>Imagen de video</strong> <i class='material-icons v-middle'>link</i> </a> </span> <br>";
+        }
+
+
+        if (data.question_1) {
+            content += "<span> <a href='#!' onclick='wizardSetup.openSurveyModal()'> <strong>Encuesta </strong><i class='material-icons v-middle'>link</i> </a> </span> <br>";
+        }
+
+        return content;
+    }
+
+    private static getFiltersDataHTML(data:CampaignData):string {
+        let content:string = "";
+        if (data.sex == "damas") {
+            content += "<span>Mujeres </span>";
+        }
+        else if (data.sex == "caballeros") {
+            content += "<span>Hombres </span>";
+        }
+        else {
+            content += "<span>Mujeres y hombres </span>";
+        }
+
+        content += "<span>de " + data.age_start + " a " + data.age_end + " años</span><br>";
+
+        let startDate = data.start_date.replace(".", " de ");
+        startDate = startDate.replace(".", " de ");
+        let endDate = data.end_date.replace(".", " de ");
+        endDate = endDate.replace(".", " de ");
+
+        content += "<span>del " + startDate + " al " + endDate + ".</span><br>";
+
+        //no branches in publisher yet (Eder)
+        //content+=" <a href='#!' onclick='wizard_summary.openNodesModal()'> <span>Nodos ("+data.branches.length+") <i class='material-icons v-middle'>link</i></span>  </a> <br><br>";
+
+        return content;
+    }
+
+
+    public openMailModal() {
+
+        $("#modal-summary-content").html(
+            this.data.mailing_content
+        );
+
+        $("#modal-summary").openModal();
+    }
+
+    public openImgSmallModal() {
+
+        $("#modal-summary-content").html(
+            "<img class='responsive-img img-modal' src='https://s3-us-west-1.amazonaws.com/enera-publishers/items/" + this.data.image_small.filename + "' >"
+        );
+
+        $("#modal-summary").openModal();
+    }
+
+    public openImgLargeModal() {
+
+        $("#modal-summary-content").html(
+            "<img class='responsive-img img-modal' src='https://s3-us-west-1.amazonaws.com/enera-publishers/items/" + this.data.image_large.filename + "' >"
+        );
+
+        $("#modal-summary").openModal();
+    }
+
+    public openImgSurveyModal() {
+
+        $("#modal-summary-content").html(
+            "<img class='responsive-img img-modal' src='https://s3-us-west-1.amazonaws.com/enera-publishers/items/" + this.data.image_survey.filename + "' >"
+        );
+
+        $("#modal-summary").openModal();
+    }
+
+    public openImgVideoModal() {
+
+        $("#modal-summary-content").html(
+            "<img class='responsive-img img-modal' src='https://s3-us-west-1.amazonaws.com/enera-publishers/items/" + this.data.image_video.filename + "' >"
+        );
+
+        $("#modal-summary").openModal();
+    }
+
+    public openVideoModal() {
+
+        $("#modal-summary-content").html(
+            "<video class='responsive-video' id='myvideo' controls style='display:block; margin:0 auto;'>" +
+            "<source src='https://s3-us-west-1.amazonaws.com/enera-publishers/items/" + this.data.video.filename + "' type='video/mp4'>" +
+            "Tu navegador no soporta reproduccion de video." +
+            "</video>"
+        );
+
+        $("#modal-summary").openModal();
+    }
+
+    public openSurveyModal() {
+        var survey = "";
+        for (var q = 1; q <= 5; q++) {
+            if (this.data["question_" + q]) {
+                survey += "<ul class='collection with-header'>";
+
+                survey += "<li class='collection-header'><h4>" + this.data["question_" + q] + "</h4></li>";
+
+
+                for (var ans = 1; ans <= 4; ans++) {
+                    if (this.data["answer_" + q + "_" + ans]) {
+                        survey += "<li class='collection-item'>" + this.data["answer_" + q + "_" + ans] + "</li>";
+                    }
+                }
+
+                survey += "</ul>";
+
+            }
+        }
+
+        $("#modal-summary-content").html(
+            survey
+        );
+
+        $("#modal-summary").openModal();
     }
 }
 
 
+class CampaignData {
+    sex:string;
+    age_start:number;
+    age_end:number;
+    start_date:string;
+    end_date:string;
+    branches;
+    interaction:string;
+    mail_address:string;
+    mail_subject:string;
+    mailing_content:string;
+    budget:number;
+
+    link:string;
+    like:string;
+    captcha:string;
+    mail_name:string;
+    image_small;
+    image_large;
+    image_survey;
+    image_video;
+    video;
+    question_1:string;
+}

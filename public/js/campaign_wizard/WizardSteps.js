@@ -7,6 +7,7 @@
 /// <reference path="../events/WizardEvents.ts"/>
 /// <reference path="../../../typings/materialize-css/materialize-css.d.ts" />
 /// <reference path="../../../typings/tinymce/tinymce.d.ts" />
+var interactionSelected = WizardEvents.interactionSelected;
 var Step1 = (function () {
     function Step1() {
         this.validForm = false;
@@ -383,6 +384,8 @@ var Step2 = (function () {
 var Step3 = (function () {
     function Step3() {
         this.validForm = false;
+        this.age_start = 13;
+        this.age_end = 100;
         this.maleSelected = true;
         this.femaleSelected = true;
         //initialize rules for the form depending on the interaction
@@ -501,8 +504,12 @@ var Step3 = (function () {
         var femaleBtn = $(".female-btn");
         var maleBtn = $(".male-btn");
         var step3 = this;
-        femaleBtn.click(function () { step3.toggleGenre(0); });
-        maleBtn.click(function () { step3.toggleGenre(1); });
+        femaleBtn.click(function () {
+            step3.toggleGenre(0);
+        });
+        maleBtn.click(function () {
+            step3.toggleGenre(1);
+        });
     };
     Step3.prototype.toggleGenre = function (btnId) {
         if (btnId == 0) {
@@ -545,14 +552,16 @@ var Step3 = (function () {
         //return the json form data
         var step3 = this;
         var serialized = $("#data-filters").serializeArray();
-        var jsonCam = { 'menor': step3.age_start, 'mayor': step3.age_end };
+        var campData = new CampaignData();
+        campData.age_start = step3.age_start;
+        campData.age_end = step3.age_end;
         // build key-values
         $.each(serialized, function () {
-            jsonCam[this.name] = this.value;
+            campData[this.name] = this.value;
         });
-        jsonCam["start"] = step3.start_date;
-        jsonCam["end"] = step3.end_date;
-        return jsonCam;
+        campData.start_date = step3.start_date;
+        campData.end_date = step3.end_date;
+        return campData;
     };
     ;
     Step3.prototype.initialize = function (interacionId) {
@@ -586,7 +595,8 @@ var Step4 = (function () {
     };
     ;
     Step4.prototype.getData = function () {
-        return {};
+        var step4 = this;
+        return { budget: step4.amount };
     };
     ;
     Step4.prototype.initialize = function (interacionId) {
@@ -609,8 +619,8 @@ var Step4 = (function () {
     };
     Step4.prototype.updateBudget = function (val) {
         var current = $("#currentBalance");
-        var balance = Number(current.html().trim().substr(1).replace(",", ""));
-        var amount = Number(val.substr(1).replace(",", ""));
+        var balance = Step4.moneyToNumber(current.html());
+        var amount = Step4.moneyToNumber(val);
         var total = balance - amount;
         var balanceHtml = $("#balance");
         balanceHtml.removeClass("red-text");
@@ -625,23 +635,115 @@ var Step4 = (function () {
         balanceHtml.html("$" + total);
         numInteractions.html("" + Math.floor(amount / this.interactionPrice));
         EventDispatcher.trigger(WizardEvents.validForm);
+        this.amount = amount;
         return true;
+    };
+    Step4.moneyToNumber = function (money) {
+        var cleanStr = money.trim();
+        if (cleanStr.indexOf("$") !== -1)
+            cleanStr = cleanStr.substr(1);
+        return Number(cleanStr.replace(",", ""));
     };
     return Step4;
 }());
 var Step5 = (function () {
     function Step5() {
-        this.validForm = false;
+        //Summary step screen
+        this.validForm = true;
+        this.dictInteractions = {
+            "banner_link": "Banner + Link",
+            "like": "Like",
+            "mailing_list": "Mailing list",
+            "captcha": "Captcha",
+            "survey": "Encuesta",
+            "video": "Video"
+        };
     }
     Step5.prototype.isValid = function () {
         return this.validForm;
     };
     ;
     Step5.prototype.getData = function () {
-        return {};
+        var data = this.data;
+        //console.log(data);
+        var gender = "both";
+        if (data.sex == "caballeros") {
+            gender = "male";
+        }
+        else if (data.sex == "damas") {
+            gender = "female";
+        }
+        //Not yet implemented branch selection
+        var branches = "global";
+        var survey = [];
+        for (var q = 1; q <= 5; q++) {
+            if (data["question_" + q]) {
+                var obj = {
+                    question: data["question_" + q],
+                    answers: []
+                };
+                for (var ans = 1; ans <= 4; ans++) {
+                    if (data["answer_" + q + "_" + ans]) {
+                        obj.answers.push(data["answer_" + q + "_" + ans]);
+                    }
+                }
+                survey.push(obj);
+            }
+        }
+        var images = {};
+        if (data.image_small)
+            images['small'] = data.image_small.item_id;
+        if (data.image_large)
+            images['large'] = data.image_large.item_id;
+        if (data.image_survey)
+            images['survey'] = data.image_survey.item_id;
+        if (data.image_video)
+            images['video'] = data.image_video.item_id;
+        var video = null;
+        if (data.video)
+            video = data.video.item_id;
+        var campaignData = {
+            "title": this.getUrlParameter("name"),
+            'start_date': data.start_date,
+            'end_date': data.end_date,
+            'time': '0;23',
+            'days': ["1", "2", "3", "4", "5", "6", "7"],
+            'gender': gender,
+            'age': data.age_start + ";" + data.age_end,
+            'images': images,
+            'ubication': 'select',
+            'interactionId': data.interaction,
+            'budget': data.budget,
+            'banner_link': data.link,
+            'from': data.mail_name,
+            'from_mail': data.mail_address,
+            'subject': data.mail_subject,
+            'mailing_content': data.mailing_content,
+            'survey': survey,
+            'captcha': data.captcha,
+            'video': video,
+            'branches': branches
+        };
+        return campaignData;
     };
     ;
-    Step5.prototype.initialize = function (interacionId) {
+    Step5.prototype.getUrlParameter = function (sParam) {
+        var sPageURL = decodeURIComponent(window.location.search.substring(1)), sURLVariables = sPageURL.split('&'), sParameterName, i;
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+            if (sParameterName[0] === sParam) {
+                return sParameterName[1] === undefined ? true : sParameterName[1];
+            }
+        }
+    };
+    ;
+    Step5.prototype.initialize = function (interactionId) {
+        //this step is always valid
+        setTimeout(function () {
+            //activate send btn
+            var ev = EventDispatcher;
+            ev.trigger(WizardEvents.validForm);
+        }, 400);
     };
     ;
     Step5.prototype.getContainer = function () {
@@ -649,7 +751,135 @@ var Step5 = (function () {
     };
     ;
     Step5.prototype.setSummaryData = function (data) {
+        var step5 = this;
+        step5.data = data;
+        var campaignData = step5.getCampaignDataHTML(data);
+        var filtersData = Step5.getFiltersDataHTML(data);
+        $("#summary_container").html("<div>" +
+            "<h4>Resumen</h4> " +
+            "<div class='divider'></div>" +
+            "<h5>Interacción</h5><span>" + step5.dictInteractions[data.interaction] + "</span>" +
+            "<div class='row'>" +
+            "<div class='col s12 m6'>" +
+            "<h5>Contenido</h5>" +
+            campaignData +
+            "<br>" +
+            "</div> " +
+            "<div class='col s12 m6'>" +
+            "<h5>Segmentacion</h5>" +
+            filtersData +
+            "</div>" +
+            "</div>" +
+            "</div>");
+    };
+    Step5.prototype.getCampaignDataHTML = function (data) {
+        var step5 = this;
+        var content = "";
+        if (data.link) {
+            content += "<span><strong>Enlace:</strong> <a target='_blank' href='" + data.link + "'>" + data.link + "</a></span><br>";
+        }
+        if (data.like) {
+            content += "<span><strong>Página de fb:</strong> <a target='_blank' href='" + data.like + "'>" + data.like + "</a></span><br>";
+        }
+        if (data.captcha) {
+            content += "<span><strong>Captcha:</strong> " + data.captcha + "</span><br>";
+        }
+        if (data.mail_name) {
+            content += "<span><strong>Remitente:</strong> " + data.mail_name + "</span><br>";
+            content += "<span><strong>Email:</strong> " + data.mail_address + "</span><br>";
+            content += "<span><strong>Asunto:</strong> " + data.mail_subject + "</span><br>";
+            content += "<span> <a href='#!' onclick='wizardSetup.openMailModal()'> <strong>Correo </strong><i class='material-icons v-middle'>link</i> </a>  </span> <br>";
+        }
+        if (data.image_small) {
+            content += "<span> <a href='#!' onclick='wizardSetup.openImgSmallModal()'> <strong>Banner </strong>(600x602) <i class='material-icons v-middle'>link</i> </a>  </span> <br>";
+        }
+        if (data.image_large) {
+            content += "<span> <a href='#!' onclick='wizardSetup.openImgLargeModal()'>  <strong>Banner </strong>(684x864) <i class='material-icons v-middle'>link</i> </a> </span> <br>";
+        }
+        if (data.image_survey) {
+            content += "<span> <a href='#!' onclick='wizardSetup.openImgSurveyModal()'>  <strong>Imagen de encuesta </strong><i class='material-icons v-middle'>link</i> </a> </span> <br>";
+        }
+        if (data.video) {
+            content += "<span> <a href='#!' onclick='wizardSetup.openVideoModal()'>  <strong>Video </strong><i class='material-icons v-middle'>link</i> </a> </span> <br>";
+        }
+        if (data.image_video) {
+            content += "<span> <a href='#!' onclick='wizardSetup.openImgVideoModal()'>  <strong>Imagen de video</strong> <i class='material-icons v-middle'>link</i> </a> </span> <br>";
+        }
+        if (data.question_1) {
+            content += "<span> <a href='#!' onclick='wizardSetup.openSurveyModal()'> <strong>Encuesta </strong><i class='material-icons v-middle'>link</i> </a> </span> <br>";
+        }
+        return content;
+    };
+    Step5.getFiltersDataHTML = function (data) {
+        var content = "";
+        if (data.sex == "damas") {
+            content += "<span>Mujeres </span>";
+        }
+        else if (data.sex == "caballeros") {
+            content += "<span>Hombres </span>";
+        }
+        else {
+            content += "<span>Mujeres y hombres </span>";
+        }
+        content += "<span>de " + data.age_start + " a " + data.age_end + " años</span><br>";
+        var startDate = data.start_date.replace(".", " de ");
+        startDate = startDate.replace(".", " de ");
+        var endDate = data.end_date.replace(".", " de ");
+        endDate = endDate.replace(".", " de ");
+        content += "<span>del " + startDate + " al " + endDate + ".</span><br>";
+        //no branches in publisher yet (Eder)
+        //content+=" <a href='#!' onclick='wizard_summary.openNodesModal()'> <span>Nodos ("+data.branches.length+") <i class='material-icons v-middle'>link</i></span>  </a> <br><br>";
+        return content;
+    };
+    Step5.prototype.openMailModal = function () {
+        $("#modal-summary-content").html(this.data.mailing_content);
+        $("#modal-summary").openModal();
+    };
+    Step5.prototype.openImgSmallModal = function () {
+        $("#modal-summary-content").html("<img class='responsive-img img-modal' src='https://s3-us-west-1.amazonaws.com/enera-publishers/items/" + this.data.image_small.filename + "' >");
+        $("#modal-summary").openModal();
+    };
+    Step5.prototype.openImgLargeModal = function () {
+        $("#modal-summary-content").html("<img class='responsive-img img-modal' src='https://s3-us-west-1.amazonaws.com/enera-publishers/items/" + this.data.image_large.filename + "' >");
+        $("#modal-summary").openModal();
+    };
+    Step5.prototype.openImgSurveyModal = function () {
+        $("#modal-summary-content").html("<img class='responsive-img img-modal' src='https://s3-us-west-1.amazonaws.com/enera-publishers/items/" + this.data.image_survey.filename + "' >");
+        $("#modal-summary").openModal();
+    };
+    Step5.prototype.openImgVideoModal = function () {
+        $("#modal-summary-content").html("<img class='responsive-img img-modal' src='https://s3-us-west-1.amazonaws.com/enera-publishers/items/" + this.data.image_video.filename + "' >");
+        $("#modal-summary").openModal();
+    };
+    Step5.prototype.openVideoModal = function () {
+        $("#modal-summary-content").html("<video class='responsive-video' id='myvideo' controls style='display:block; margin:0 auto;'>" +
+            "<source src='https://s3-us-west-1.amazonaws.com/enera-publishers/items/" + this.data.video.filename + "' type='video/mp4'>" +
+            "Tu navegador no soporta reproduccion de video." +
+            "</video>");
+        $("#modal-summary").openModal();
+    };
+    Step5.prototype.openSurveyModal = function () {
+        var survey = "";
+        for (var q = 1; q <= 5; q++) {
+            if (this.data["question_" + q]) {
+                survey += "<ul class='collection with-header'>";
+                survey += "<li class='collection-header'><h4>" + this.data["question_" + q] + "</h4></li>";
+                for (var ans = 1; ans <= 4; ans++) {
+                    if (this.data["answer_" + q + "_" + ans]) {
+                        survey += "<li class='collection-item'>" + this.data["answer_" + q + "_" + ans] + "</li>";
+                    }
+                }
+                survey += "</ul>";
+            }
+        }
+        $("#modal-summary-content").html(survey);
+        $("#modal-summary").openModal();
     };
     return Step5;
+}());
+var CampaignData = (function () {
+    function CampaignData() {
+    }
+    return CampaignData;
 }());
 //# sourceMappingURL=WizardSteps.js.map
