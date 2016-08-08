@@ -11,7 +11,7 @@
             <div class="row">
                 <div class="col s12">
                     <div class="card">
-                        <div class="card-content blue h-mobile" >
+                        <div class="card-content blue h-mobile">
                             <div class="row">
                                 <div class="col s6 m2 l1">
                                     <img class="img" id="img"
@@ -59,7 +59,6 @@
                     <div class="card">
                         <div class="card-content white">
                             <div class="row">
-
                                 <fieldset>
                                     <legend>Infomación Personal</legend>
                                     <div class="input-field col s12 m6 error-field">
@@ -127,8 +126,14 @@
                                             </button>
                                         </p>
                                     </div>
+                                    <div class="col s12 m6 see" id="div-edit">
+                                        <br>
+                                        <p>
+                                            <a class="waves-effect waves-light btn blue modal-trigger"
+                                               href="#modal1">Contraseña</a>
+                                        </p>
+                                    </div>
                                 </fieldset>
-
                             </div>
                         </div>
                     </div>
@@ -136,10 +141,32 @@
             </div>
         </div>
     </form>
+
+
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <form id="myform" action="{!! route('edit.pass') !!}">
+                <div class="input-field col s12 m6 error-field">
+                    <i class="material-icons prefix">keyboard_arrow_right</i>
+                    <input id="password" name="password" type="password"/>
+                    <label for="email">Contraseña</label>
+                </div>
+                <div class="input-field col s12 m6 error-field">
+                    <i class="material-icons prefix">keyboard_arrow_right</i>
+                    <input class="left" id="password_again" type="password" name="password_again" />
+                    <label for="email">Confirmar contraseña</label>
+                </div>
+                <br>
+                <input type="submit" value="Actualizar" class="waves-effect waves-light btn blue" >
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            </form>
+        </div>
+    </div>
 @stop
 
 @section('scripts')
     {!! HTML::script('js/jquery-validation/dist/jquery.validate.js') !!}
+    {!! HTML::script('js/noty/packaged/jquery.noty.packaged.min.js') !!}
     <script>
         document.getElementById('sel').value = '{!! $user->phones['type'] !!}';
         $("#commentForm").validate({
@@ -213,6 +240,35 @@
             }
         });
 
+        $( "#myform" ).validate({
+            rules: {
+                password: {
+                    required: true,
+                    rangelength: [8,16]
+                },
+                password_again: {
+                    equalTo: "#password"
+                }
+            },messages:{
+                password: {
+                    required: "* Ingresa una contraseña"
+                },
+                password_again: {
+                    equalTo: "* Las contraseñas deben ser iguales",
+                    rangelength: "Debe tener entre 8 y 16 caracteres"
+                }
+            },
+            errorElement: 'div',
+            errorPlacement: function (error, element) {
+                var placement = $(element).data('error');
+                if (placement) {
+                    $(placement).append(error)
+                } else {
+                    error.insertAfter(element);
+                }
+            }
+        });
+
         $('select').material_select();
 
         $("#edit").click(function (event) {
@@ -240,7 +296,6 @@
         });
 
 
-
         function readURL(input) {
 
             if (input.files && input.files[0]) {
@@ -248,7 +303,7 @@
 
                 reader.onload = function (e) {
                     $('#img').attr('src', e.target.result);
-                }
+                };
 
                 reader.readAsDataURL(input.files[0]);
             }
@@ -257,5 +312,7 @@
         $("#user_edit_avatar_control").change(function () {
             readURL(this);
         });
+
+        $('.modal-trigger').leanModal();
     </script>
 @stop

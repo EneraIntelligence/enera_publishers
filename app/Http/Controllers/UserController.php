@@ -160,9 +160,9 @@ class UserController extends Controller
     public function editPass()
     {
         $user = Administrator::where('_id', Auth::user()->_id)->first();
-        $user->password = Hash::make(Input::get('pass'));
+        $user->password = Hash::make(Input::get('password'));
         $user->save();
 
-        return redirect()->action('UserController@index')->with('pass', 'active');
+        return redirect()->action('UserController@index')->with('password', 'active');
     }
 }

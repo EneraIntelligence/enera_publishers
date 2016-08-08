@@ -58,4 +58,8 @@ elixir(function(mix) {
         'node_modules/materialize-css/extras/noUiSlider/nouislider.js',
         'public/js/nouislider.js'
     );
+    mix.copy(
+        'node_modules/noty',
+        'public/js/noty'
+    );
 });
