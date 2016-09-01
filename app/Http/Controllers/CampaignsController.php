@@ -809,62 +809,68 @@ class CampaignsController extends Controller
 
             $count = 0;
             $chart5 = [];
-            foreach ($campaign->content['survey'] as $q) {
-                $survey = $collection->aggregate([
-                    [
-                        '$match' => [
-                            'campaign_id' => $campaign->_id,
-                            'survey.q' . $count => ['$exists' => true]
+            if (isset($campaign->content['survey'])) {
+                foreach ($campaign->content['survey'] as $q) {
+                    $survey = $collection->aggregate([
+                        [
+                            '$match' => [
+                                'campaign_id' => $campaign->_id,
+                                'survey.q' . $count => ['$exists' => true]
+                            ]
+                        ],
+                        [
+                            '$group' => [
+                                '_id' =>
+                                    ['answer' => '$survey.q' . $count,
+                                        'gender' => '$user.gender',
+                                        'question' => ['$literal' => 'q' . ($count)]
+                                    ],
+                                'cnt' => ['$sum' => 1]
+                            ]
+                        ],
+                        [
+                            '$sort' => ['_id' => 1]
                         ]
-                    ],
-                    [
-                        '$group' => [
-                            '_id' =>
-                                ['answer' => '$survey.q' . $count,
-                                    'gender' => '$user.gender',
-                                    'question' => ['$literal' => 'q' . ($count)]
-                                ],
-                            'cnt' => ['$sum' => 1]
-                        ]
-                    ],
-                    [
-                        '$sort' => ['_id' => 1]
-                    ]
-                ])['result'];
-                $count++;
-                array_push($chart5, $survey);
-            }
-
-            $json = "{}";
-            $json = json_decode($json);
-            foreach ($campaign->content['survey'] as $key => $value) {
-                $json->$key = array('total' => 0, 'a0' => array('male' => 0, 'female' => 0), 'data' => $value);
-            }
-            foreach ($chart5 as $v) {
-                foreach ($v as $c) {
-                    if ($c['_id']['gender'] == 'male') {
-                        $json->{$c['_id']['question']}['total'] += $c['cnt'];
-                        if (isset($json->{$c['_id']['question']}{$c['_id']['answer']})) {
-                            $json->{$c['_id']['question']}{$c['_id']['answer']}['male'] += $c['cnt'];
-                        } else {
-                            $json->{$c['_id']['question']}{$c['_id']['answer']} = array('male' => $c['cnt'], 'female' => 0);
-                        }
-                    } else {
-                        $json->{$c['_id']['question']}['total'] += $c['cnt'];
-                        if (isset($json->{$c['_id']['question']}{$c['_id']['answer']})) {
-                            $json->{$c['_id']['question']}{$c['_id']['answer']}['female'] += $c['cnt'];
-                        } else {
-                            $json->{$c['_id']['question']}{$c['_id']['answer']} = array('male' => 0, 'female' => $c['cnt']);
-                        }
-                    }
+                    ])['result'];
+                    $count++;
+                    array_push($chart5, $survey);
                 }
 
-            }
+
+                $json = "{}";
+                $json = json_decode($json);
+                foreach ($campaign->content['survey'] as $key => $value) {
+                    $json->$key = array('total' => 0, 'a0' => array('male' => 0, 'female' => 0), 'data' => $value);
+                }
+                foreach ($chart5 as $v) {
+                    foreach ($v as $c) {
+                        if ($c['_id']['gender'] == 'male') {
+                            $json->{$c['_id']['question']}['total'] += $c['cnt'];
+                            if (isset($json->{$c['_id']['question']}{$c['_id']['answer']})) {
+                                $json->{$c['_id']['question']}{$c['_id']['answer']}['male'] += $c['cnt'];
+                            } else {
+                                $json->{$c['_id']['question']}{$c['_id']['answer']} = array('male' => $c['cnt'], 'female' => 0);
+                            }
+                        } else {
+                            $json->{$c['_id']['question']}['total'] += $c['cnt'];
+                            if (isset($json->{$c['_id']['question']}{$c['_id']['answer']})) {
+                                $json->{$c['_id']['question']}{$c['_id']['answer']}['female'] += $c['cnt'];
+                            } else {
+                                $json->{$c['_id']['question']}{$c['_id']['answer']} = array('male' => 0, 'female' => $c['cnt']);
+                            }
+                        }
+                    }
+
+                }
+
 
 //            dd($campaign->administrator_id);
 
-            json_encode($json);
+                json_encode($json);
 
+            }else{
+                $json = [];
+            }
 
             return view('campaigns.show', [
                 'cam' => $campaign,
