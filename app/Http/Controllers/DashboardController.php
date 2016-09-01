@@ -49,7 +49,8 @@ class DashboardController extends Controller
             'total' => $osTotal,
             'devices' => $devices,
             'campañas' => $campañas,
-            'sitios' => $sitios
+            'sitios' => $sitios,
+            'user' => auth()->user()
         ]);
     }
 
