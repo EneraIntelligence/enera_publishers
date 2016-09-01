@@ -2,10 +2,10 @@
 <div class="preview-container">
 
     <img class="uk-align-center uk-responsive-width phone" src="{!! URL::asset('images/android_placeholder.png') !!}"
-         alt="">
+         alt="" style="position: relative; z-index: 10;">
 
     <!-- captcha preview -->
-    <div class="interaction uk-align-center uk-position-relative">
+    <div class="interaction uk-align-center uk-position-relative" style="overflow: hidden;">
 
         <img class="interaction-image"
              src="{!! "https://s3-us-west-1.amazonaws.com/enera-publishers/items/". $cam->content['images']['survey'] !!}"
