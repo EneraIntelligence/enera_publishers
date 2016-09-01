@@ -57,7 +57,7 @@
                     class="uk-modal-close uk-close uk-close-alt"></button>
             <img src="{!! "https://s3-us-west-1.amazonaws.com/enera-publishers/items/". $cam->content['images']['large'] !!}"
                  alt=""/>
-            <div class="uk-modal-caption">$cam->content['images']['large']</div>
+            <div class="uk-modal-caption">{!! $cam->content['images']['large'] !!}</div>
         </div>
     </div>
 
