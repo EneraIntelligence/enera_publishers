@@ -621,12 +621,14 @@ branchMap =
         var markerOffImg = iconBaseURL + 'enera_map_marker_off.png';
 
         if (branchMap.branches) {
+            console.log("creating map markers for:")
 
             for (var i = 0; i < branchMap.branches.length; i++) {
                 var branch = branchMap.branches[i];
-
+                
                 var marker = new BooleanMarker(branch.location[0], branch.location[1], markerOnImg, markerOffImg);
                 marker.setData(branch._id, branch.name, true);
+                console.log(branch.name);
 
                 branchMap.map.addMarker(marker);
             }
