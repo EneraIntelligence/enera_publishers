@@ -69,7 +69,7 @@
     MarkerMap.prototype.clusterMarkers = function()
     {
         this.markerCluster = new MarkerClusterer(this.map, this.originalMarkers);
-    }
+    };
 
     MarkerMap.prototype.refresh = function()
     {
