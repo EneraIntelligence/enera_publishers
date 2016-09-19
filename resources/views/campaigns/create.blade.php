@@ -201,7 +201,7 @@
 
 
 
-    {!! HTML::script('http://maps.google.com/maps/api/js?key=AIzaSyASNq_4yBm5CQFGXnkuMK6wkh_ESJeu9Cg') !!}
+    {!! HTML::script('https://maps.google.com/maps/api/js?key=AIzaSyASNq_4yBm5CQFGXnkuMK6wkh_ESJeu9Cg') !!}
     {!! HTML::script('js/maps/markerclusterer.js') !!}
     {!! HTML::script('js/maps/keydragzoom.js') !!}
     {!! HTML::script('js/maps/infobox_packed.js') !!}
