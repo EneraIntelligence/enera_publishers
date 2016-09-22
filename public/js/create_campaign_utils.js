@@ -250,6 +250,7 @@ create_campaign_helper =
             processData: false
         }).done(function (data) {
             inputField.removeAttr("required");
+            inputField.parsley().validate();
 
             console.log(inputField);
             console.log("success");
