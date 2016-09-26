@@ -71,7 +71,7 @@ altair_wizard = {
                     // check input fields for errors
                     // $current_step.find('[data-parsley-id]').each(function () {
                     $current_step.find('[required]').each(function () {
-                        //console.log(this+": validate()");
+                        //console.log($(this).name+": validate()");
                         $(this).parsley().validate();
                     });
 

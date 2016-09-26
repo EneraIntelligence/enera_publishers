@@ -69,7 +69,7 @@
 
                         <div class="uk-width-medium-1-5 uk-width-small-1-2">
                             <span class="icheck-inline">
-                                <input data-parsley-mincheck="1" required="" class="wizard-icheck" type="hidden" name="days" value="1" checked id="checkbox_demo_inline_1"/>
+                                <input data-parsley-mincheck="1" class="wizard-icheck" type="hidden" name="days" value="1" checked id="checkbox_demo_inline_1"/>
                                 {{--<label for="checkbox_demo_inline_1" class="inline-label">Lunes</label>--}}
                             </span>
                         </div>
